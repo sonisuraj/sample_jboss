@@ -1,0 +1,21 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  name: scopeplus
+spec:
+  replicas: 1
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        name: scopeplus
+    spec:
+      containers:
+      - image: appops.icp:8500/nextgen-tool/scopeplus:latest
+        name: scopeplus
+        ports:
+        - containerPort: 9080
+        resources: {}
+      restartPolicy: Always
+status: {}

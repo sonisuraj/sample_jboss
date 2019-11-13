@@ -1,0 +1,197 @@
+<div class="container" style="margin-top: 1%" ng-controller="NotesController">
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1 component-outer" style="border: 1px solid #ccc;background-color: #fff">
+            <div class="col-md-12">
+                <div class="col-md-6">
+                    <h4 class="fontHelvetica" style="padding-left:10px;padding-bottom:10px">
+                        <span style="color: #5392FF;font-size: 24px;border-right: 1px solid #5392FF;">Notes &nbsp;</span> &nbsp;<span style="color:#949394;;font-size:15px;">Notes > Notes</span>
+                    </h4>
+                </div>
+            </div>
+            <loading ng-show="notesSpinner"></loading>
+            <div class="col-md-12" style="padding: 0px 5px !important;">
+                <div class="col-md-4 col-item-pad">
+                    <div class="notes-item-outer">
+                        <h4>Description</h4>
+                        <div class="content-outer">
+                            <textarea class="form-control" rows="3" ng-blur="notes_adding(1)" ng-model="description" style="border: 0px;border-radius: 0px;width: 100%;height: 100%;font-size:16px;"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-item-pad">
+                    <div class="notes-item-outer">
+                        <h4>General Notes</h4>
+                        <div class="content-outer">
+                            <div class="ci-header" style="">
+
+                                <div class="form-group" id="generalNotesSave">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control fontHelveticaNeue" style="height: 30px;padding-left: 0px;color: #fff;border-radius: 0px;font-size:14px;border-right:0px;box-shadow:none;" aria-describedby="basic-addon1" ng-model="generalnotes">
+                                        <span class="input-group-addon"  style="border-radius: 0px;background-color: transparent;font-size:11px;cursor:pointer;border:0px;box-shadow:none" ng-if="roleBasedCanBeAssociated">  <img  src="img/disk.png" style="" ng-click ="notes_adding()"/></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="ci-content">
+                                <div class="ci-content-outer" style="height: auto !important;font-size:16px" ng-repeat="d in notes | filter:emptyOrNullG "  ng-mouseover="showNotes(d)" ng-mouseleave="hideNotesOverlay()">
+                                    {{d.createddate}}-{{d.createdby}}-{{d.generalnotes}}
+                                    <ul ng-show="shownotesOverlay" ng-mouseover="showOverlayonfocus()" ng-mouseleave="hideOverlayoutFocus()" id="demoDetail" class="border-outer parent-dp arrow_box2 closeoverlay1 " style="background-color: #ddd !important;margin-right: 1%;padding-left: 15px !important;position: absolute;z-index: 1000;margin-top: -15%;padding-right: 15px !important;padding-top: 11px !important;margin-left: -111%;width: 479px;">
+                                        <div class="row" style="word-wrap: break-word;height:auto;background-color: #fff;margin: 1%">
+                                            {{GeneralnotesData.createddate}}--{{GeneralnotesData.createdby}}--{{GeneralnotesData.generalnotes}}
+                                        </div>
+                                    </ul>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-item-pad">
+                    <div class="notes-item-outer">
+                        <h4>Review Notes</h4>
+                        <div class="content-outer">
+                            <div class="ci-header" style="">
+
+                                <div class="form-group">
+                                    <div class="input-group" >
+                                        <input type="text" id="setReviewNotesInput" class="form-control fontHelveticaNeue" style="height: 30px;padding-left: 0px;color: #fff;border-radius: 0px;font-size:14px;border-right:0px;box-shadow:none;" aria-describedby="basic-addon1" ng-model="reviewnotes">
+                                        <span class="input-group-addon" id="basic-addon1" style="border-radius: 0px;background-color: transparent;font-size:11px;cursor:pointer;border:0px;box-shadow:none" ng-if="roleBasedCanBeAssociated">  <img  src="img/disk.png" style="" ng-click ="notes_adding()"/></span>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="ci-content">
+                                <div class="ci-content-outer" style="height: auto !important;font-size:16px"ng-repeat="d in notes | filter:emptyOrNullR " ng-mouseover="showReviewNotes(d)" ng-mouseleave="hideReviewNotesOverlay()">
+                                    {{d.createddate}}-{{d.createdby}}-{{d.reviewnotes}}
+                                    <ul ng-show="showReviewnotesOverlay" id="demoDetail" ng-mouseover="showOverlayonfocusReview()" ng-mouseleave="hideOverlayoutFocusReview()" class="border-outer parent-dp arrow_box2 closeoverlay1 " style="background-color: #ddd !important;margin-right: 1%;padding-left: 15px !important;position: absolute;z-index: 1000;margin-top: -15%;padding-right: 15px !important;padding-top: 11px !important;margin-left: -111%;width: 479px;">
+                                        <div class="row" style="word-wrap: break-word;height:auto;background-color: #fff;margin: 1%">
+                                            {{ReviewnotesData.createddate}}--{{ReviewnotesData.createdby}}--{{ReviewnotesData.reviewnotes}}
+                                        </div>
+                                    </ul>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<br/><br/>
+
+<!-- Add your site or application content here -->
+<div class="footer">
+    <div class="container">
+        <!-- <p><span class="glyphicon glyphicon-heart"></span> Project</p> -->
+    </div>
+</div>
+<script>
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    })
+</script>
+
+
+<style>
+    .col-md-4.col-item-pad{
+        padding-right: 5px !important;
+        padding-left: 5px !important;
+    }
+    .notes-item-outer{
+        margin-bottom: 10px;
+    }
+    .notes-item-outer h4{
+        font-size: 18px;
+        line-height: 28px;
+        margin: 0px 0px 3px;
+        color: #777;
+    }
+    .notes-item-outer .content-outer{
+        border: 1px solid #ddd;
+        height: 400px;
+
+    }
+    .ci-header {
+        background: #25467a;
+    }
+    .ci-header .form-group{
+        padding: 2px 10px;
+        padding-bottom: 4px;
+        margin-bottom: 0px;
+    }
+    .ci-header .form-control{
+        border-radius: 0px;
+        border: 0px;
+        border-bottom: 1px solid #fff;
+        background-color: transparent;
+    }
+    .ci-content-outer{
+        padding: 10px 10px;
+    }
+    .ci-content-outer:nth-child(odd){
+        border-bottom: 1px solid #ddd;
+    }
+    .ci-content-outer:nth-child(even){
+        background: #EAEAEA;
+    }
+    .ci-content{
+        width: 100%;
+        height: 362px;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+    .form-control:focus{
+        outline: 0;
+        box-shadow: none;
+    }
+
+    textarea:focus{
+        background-color: #ffffff !important;
+    }
+    textarea{
+        background-color: #eaeaea !important;
+    }
+
+    .arrow_box2 {
+        position: relative;
+        background: #ddd;
+        border: 1px solid #ddd;
+    }
+   .arrow_box2:after, .arrow_box2:before {
+        bottom: 60%;
+        left: 103% !important;
+        border: solid transparent;
+        content: " ";
+        height: 0;
+        width: 0;
+        position: absolute;
+        pointer-events: none;
+        -moz-transform:rotate(90deg);
+        -webkit-transform:rotate(90deg);
+        -o-transform:rotate(90deg);
+        -ms-transform:rotate(90deg);
+    }
+
+    .arrow_box2:after {
+        border-color: rgba(255, 255, 255, 0);
+        border-bottom-color: #ddd;
+        border-width: 11px;
+        margin-left: -14px;
+    }
+    .arrow_box2:before {
+        border-color: rgba(221, 221, 221, 0);
+        border-bottom-color: #ddd;
+        border-width: 12px;
+        margin-left: -16px;
+    }
+</style>
+
+<script>
+    $(document).on('click',function(){
+        $('.closeoverlay1').collapse('hide');
+    })
+</script>

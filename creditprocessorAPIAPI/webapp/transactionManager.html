@@ -1,0 +1,105 @@
+<div class="modal-body" ng-show="ngShowModalTM" style="padding: 0 !important;">
+    <fieldset>
+        <div class="container-fluid">
+            <div class="row header" style="background-color: #25467a;height: 60px">
+                <p class="modal-title text-center" style="color: #fff;font-size: 20px;">
+                    <span style="font-size: 25px">Transaction Manager Excel</span><br>
+                    Select DeviceType
+                    <!--( Escape to cancel )-->
+                </p>
+                <i class="fa fa-times" aria-hidden="true" style="font-size: 20px; margin-top: -9%;margin-right: 3%;color: #fff !important;float: right;" ng-click="dismissModalPopup()"></i>
+
+            </div>
+            <div class="row addscroll">
+                <button class="exportbtn"  data-ng-disabled="!enabledButton" ng-click="generateTMFinal('logicaldevices')" >Export </button>
+                <button class="" style="font-size:16px; width: 100px;color: #FFF;background-color: #949394" ng-click="dismissModalPopup()" >Cancel </button>
+                <loading></loading>
+                <div class="col-md-12">
+                    <div class="col-md-9" style="padding-left: 15px !important;padding-right: 15px !important;margin-top: 5%;margin-left: 13%;border: 1px solid #eee">
+                        <table class="table table-striped" style="margin-top: 5%">
+                            <tr>
+                                <td> <b>Select All</b></td>
+                                <td style="width: 20px;float: left" ng-class="{'selected': model.selectedAll, 'default': !model.selectedAll}">
+                                    <input style="float: right;" type="checkbox"
+                                           ng-model="model.selectedAll"
+                                           ng-change="selectAll(FinalDisplayArr)"/>
+                                </td>
+                            </tr>
+                        </table>
+                        <table class="table table-striped">
+                            <tr>
+                                <td><b>Select</b></td>
+                                <td style="width: 20px"></td>
+                            </tr>
+                            <tr ng-repeat="x in FinalDisplayArr | unique:'displayname'" ng-class="{'selected': x.selected, 'default': !x.selected}">
+
+                                <td style="width: 30px !important;">{{x.displayname}}</td>
+                                <td style="width: 20px !important;">
+                                    <input type="checkbox" ng-change="checkIfAllSelected(FinalDisplayArr)" ng-model="x.Selected">
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-md-3"></div>
+                </div>
+                <div class="col-md-12" style="margin-bottom: 4%">
+                    <button class="exportbtn"  data-ng-disabled="!enabledButton" ng-click="generateTMFinal()" >Export </button>
+                    <button style="font-size:16px; width: 100px;color: #FFF;background-color: #949394" ng-click="dismissModalPopup()" >Cancel </button>
+                </div>
+            </div>
+        </div>
+    </fieldset>
+</div>
+
+<style>
+    .app-modal-window-sam-Plan  .modal-dialog{
+        width:500px;
+    }
+
+    .modal-content{
+        width: 60%; !important;
+        border-radius: 0px !important;
+    }
+
+    /*.table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
+
+        border-top: none !important;
+
+    }
+    .table{
+        margin-bottom: 0px !important;
+        border-top: 1px solid grey !important;
+    }*/
+
+    .exportbtn{
+        font-size:16px;
+        margin-left: 58% ;
+        width: 100px;
+        color: #FFF;
+        background-color: #5392ff;
+        margin-top: 5%;
+    }
+    .exportbtn[disabled] {
+        background-color: 	#ADD8E6
+    }
+
+    .modal-dialog{
+        /*top: -12% !important;*/
+    }
+
+    /* @media screen and (min-height: 500px) /!* Desktop *!/ {
+         .modal-dialog {
+             overflow-y: auto !important;
+         }
+     }*/
+
+    /* .modal-dialog{
+         overflow-y: initial !important
+     }*/
+    .addscroll{
+        height: auto;
+        max-height: 810px;
+        overflow-y:scroll;
+    }
+
+</style>

@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+<style type="text/css">
+body {
+  font: 300 11px "Verdana";
+}
+
+a:link, a:visited {
+  color: #777;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #666;
+}
+
+blockquote {
+  margin: 0;
+}
+
+blockquote:before {
+  content: "“";
+  position: absolute;
+  left: -.4em;
+}
+
+blockquote:after {
+  content: "”";
+  position: absolute;
+}
+
+body > ul {
+  margin: 0;
+  padding: 0;
+}
+
+h1 {
+  font-size: 164px;
+}
+
+h1, h2, h3 {
+  font-weight: inherit;
+  margin: 0;
+}
+
+h3 {
+  bottom: -20px;
+  font-size: 18px;
+}
+
+.invert {
+  background: #1f1f1f;
+  color: #dcdccc;
+}
+
+.invert h2, .invert h3 {
+  color: #7f9f7f;
+}
+
+.string, .regexp {
+  color: #f39;
+}
+
+.keyword {
+  color: #00c;
+}
+
+.comment {
+  color: #777;
+  font-style: oblique;
+}
+
+.number {
+  color: #369;
+}
+
+.class, .special {
+  color: #1181B8;
+}
+
+path.arc {
+ cursor: move;
+ fill: #fff;
+}
+
+.node {
+ font-size: 11px;
+}
+
+g.node:hover, g.hovered > text.node{
+ font-size: 14px;
+ fill: orange;
+}
+
+.link {
+ fill: none;
+ stroke: #1f77b4;
+ stroke-opacity: .4;
+ pointer-events: none;
+}
+
+.link.source, .link.target {
+ stroke-opacity: 1;
+ stroke-width: 2px;
+}
+
+.node.target {
+ fill: #d62728 !important;
+}
+
+.link.source {
+ stroke: #2ca02c;
+}
+
+.node.source {
+ fill: #2ca02c;
+}
+
+.link.target {
+ stroke-dasharray: 10,5;
+ stroke: orange;
+ stroke-width: 4px;
+}
+</style>
+<style type="text/css" media="screen">
+  div#image {
+    position: relative;
+    -webkit-backface-visibility: hidden;
+  }
+  #tension {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+  }
+  div#image > svg {
+    position: relative;
+  }
+  #appendix {
+    clear: both;
+  }
+</style>
+</head>
+  <body>
+    <div id='image'>
+      <form id='tension'>
+        Tension:
+        <input style='position:relative;top:3px;' type='range' min='0' max='100' value='85'>
+      </form>
+    </div>
+    <div id='appendix'>
+      <table dir="ltr">
+        <tr>
+          <td id='tr1' class='twisty closed' style='cursor: pointer'>&#9658;</td>
+          <td>Show Legend</td>
+        </tr>
+      </table>
+      <table class='tr1' dir="ltr" border="1" summary="Legend" >
+        <caption>
+          Legend
+        </caption>
+        <thead>
+          <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Side</th>
+          </tr>
+        </thead>
+        <tfoot>
+        </tfoot>
+        <tbody>
+          <tr>
+            <td>Unused/Isolated</td>
+            <td>
+              <svg xmlns="http://www.w3.org/2000/svg" version='1.1'
+              height=39 width=387>
+              <g class="hovered"><text x="1" y="22" class="node">Hovered Service</text></g>
+              </svg>
+            </td>
+          </tr>
+          <tr>
+            <td>Inbound Link</td>
+            <td>
+              <svg xmlns="http://www.w3.org/2000/svg" version='1.1'
+              height=39 width=387>
+              <g class="hovered"><text x="1" y="22" class="node">Hovered Service</text></g>
+              <line x1='125' y1="20" x2='280' y2='20' class="link source"></line>
+              <text x="285" y="22" class="node target">Outbound Service</text>
+              </svg>
+            </td>
+          </tr>
+          <tr>
+            <td>Outbound Link</td>
+            <td>
+              <svg xmlns="http://www.w3.org/2000/svg" version='1.1'
+              height=39 width=387>
+              <g class="hovered"><text x="1" y="22" class="node">Hovered Service</text></g>
+              <line x1='125' y1="20" x2='280' y2='20' class="link target"></line>
+              <text x="285" y="22" class="node source">Inbound Service</text>
+              </svg>
+            </td>
+          </tr>
+          <tr>
+            <td>Unhighlighted/backgound</td>
+            <td>
+              <svg xmlns="http://www.w3.org/2000/svg" version='1.1'
+              height=39 width=387>
+              <text x="8" y="22" class="node">Unhovered Service</text>
+              <line x1='125' y1="20" x2='280' y2='20' class="link"></line>
+              <text x="285" y="22" class="node">Service</text>
+              </svg>
+            </td>
+          </tr>
+          <tr>
+            <td>Self/Missing</td>
+            <td>
+              <svg xmlns="http://www.w3.org/2000/svg" version='1.1'
+              height=39 width=387>
+              <g class="hovered"><text x="1" y="22" class="node source target">Hovered Service</text></g>
+              <line x1='125' y1="20" x2='280' y2='20' class="link target"></line>
+              <text x="285" y="22" class="node source">Inbound Service</text>
+              </svg>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <table dir="ltr">
+        <tr>
+          <td id='tr2' class='twisty closed' style='cursor: pointer'>&#9658;</td>
+          <td>Show Supporting Data</td>
+        </tr>
+      </table>
+    </div>
+<script type="text/javascript">
+
+//]]>
+</script>
+  </body>
+</html>

@@ -1,0 +1,1774 @@
+<style>
+body{overflow-y: scroll;}
+    input.autoComplete {
+        background-image: url(./img/chevron-arrow-to-down.png);
+        background-position: 99% center;
+        background-repeat: no-repeat;
+        /*border: 1px solid #ccc;*/
+        -webkit-border-radius: 4px;
+        -moz-border-radius: 4px;
+        -ms-border-radius: 4px;
+        -o-border-radius: 4px;
+        border-radius: 4px;
+        padding: 10px 5px;
+        -webkit-transition: all 0.2s;
+        -moz-transition: all 2s;
+        transition: all 0.2s;
+    }
+    input.autoComplete:focus {
+        background-position: 99% center;
+    }
+    input.inputset{
+        padding:0px 0px 0px 5px;
+        margin:0px;
+
+    }
+    .dropdown-menu > .active > a, .dropdown-menu > .active > a:hover, .dropdown-menu > .active > a:focus {
+      color: black;
+    }
+
+</style>
+
+<div class="main-header-outer">
+    <div id="sticky-anchor"></div>
+    <div id="sticky" class="header-outer clearfix" style="padding: 1.5% 8%;">
+        <div class="ho-left pull-left">
+
+          <div class="form-group"  ng-if="showEnableUserIdName != true" >
+
+              <label ng-if="deviceDisplayName !='Component to Component' && deviceDisplayName !='Data Source'" style="color: #5392ff;font-size: 20px"> {{newStrDisplayName}} Name:</label>
+
+              <label ng-if="deviceDisplayName =='Component to Component'" style="color: #5392ff;font-size: 20px">Inbound Component:</label> &nbsp;
+              <label ng-if="deviceDisplayName =='Data Source'" style="color: #5392ff;font-size: 20px">DS Ref:</label> &nbsp;
+			  <div class="col-xs-12">
+			  <div class="col-xs-6">
+			  <input  ng-disabled="EditDisabled" name={{d.fieldname}} id={{d.fieldname}} class = "form-control inputset hide_input_box" ng-model="otherDeviceListing.deviceCollector.name"  required type="text" style="width:400px">
+			  </div>
+			  <div class="col-xs-6">
+			  <button ng-if="renameDevices" class="btn update-btn" ng-click="changeOnlyName(otherDeviceListing.deviceCollector.name,otherDeviceListing.deviceCollector.PKID)" style="background-color:#5392ff; border:1px solid #fff; color:#fff">Rename</button>
+			  </div>
+			  </div>
+          </div>
+            <label ng-if="deviceDisplayName =='Component to Component'" style="color: #5392ff;font-size: 20px">Outbound Component:</label> &nbsp;
+            <label style="color: #949394;font-size: 20px" >{{otherDeviceData[currentIndex].outboundcompname}}</label>
+            <div class="form-group"  ng-if="showEnableUserIdName == true" >
+                <label ng-if="deviceDisplayName !='Device Interfaces'" style="color: #5392ff;font-size: 20px">{{newStrDisplayName}} Name:</label> &nbsp;
+                <label ng-if="deviceDisplayName =='Device Interfaces'" style="color: #5392ff;font-size: 20px">{{newStrDisplayName}} Address:</label> &nbsp;
+              <input  ng-disabled="EditDisabled" name={{d.fieldname}} id={{d.fieldname}} class = "form-control inputset hide_input_box" ng-model="otherDeviceListing.deviceCollector.name"  required type="text" style="width:400px">
+            </div>
+        </div>
+
+        <div class="ho-right pull-right" style="width: 230px;" >
+            <div class="search-filter-outer" style="width: 120px;">
+                <button class="btn btn-default " data-ns-focus-id="searchtext" type="button"  style="border-radius:0px !important;font-size: 12px;line-height: 28px;font-weight: 600;color: #777;padding: 0px 8px;" data-toggle="collapse" data-target="#demo12">SEARCH BY
+                    <span class="" style="font-size: 18px;position: relative;top: 1px;">
+                      <i class="fa fa-angle-down"></i>
+                    </span>
+                </button>
+            </div>
+            <div class="list-outer" style="margin-left: 130px;">
+                <!--  <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion1" href="/#collapse1">
+                      <img src="img/grid.png"  style="margin-left: -7%"   data-toggle="tooltip" data-placement="top" title="Show Menu"/>
+                  </a>-->
+                <a href="javascript:void(0)"ng-click="showListView()" style="float: right" data-toggle="tooltip" data-placement="top" title="List View" style="cursor:pointer">
+                    <span style="margin-left: 5px;position: relative;top: 3px;font-size: 12px;line-height: 28px;font: Helvetica neue regular;color: #949394; font-size:14px;">List View</span>
+                </a>
+                <span style="top: 4px;line-height: 32px;font-size:12px;float:right">|</span>
+                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion1" href="/#collapse1" style="cursor:pointer;margin-left: -7%;position: relative;top: 3px;font-size: 12px;line-height: 28px;font: Helvetica neue regular;color: #949394; font-size:14px;">
+                    <!--<img src="img/grid.png"  style="margin-left: -7%"   data-toggle="tooltip" data-placement="top" title="Show Menu"/>-->
+                    Menu
+                </a>
+
+                <!-- <a  href="/#collapse1"style="" data-toggle="tooltip" data-placement="top" title="Show Menu"><i style="height: 34px;color:#949394" class="fa fa-list-bars" style="cursor:pointer"></i> </a> -->
+
+                <!--<a ng-click="showListView()" style="" data-toggle="tooltip" data-placement="top" title="List View"><i style="height: 34px;color:#949394" class="fa fa-list-ul fa" style="cursor:pointer"></i> </a>-->
+                <!-- <div>Test
+                  <div ng-repeat="(key,value) in association1">{{value}}</div>
+                </div> -->
+
+                <div class="clearfix" style="min-width: 180px;">
+                    <div class="accordion associationMapping" id="accordion1" style="position: absolute !important;">
+
+                        <div id="collapse1" class="accordion-body collapse" style="padding: 10px 20px;">
+                            <!--  -->
+                            <div class="accordion" id="accordion{{a.key}}" ng-repeat="a in association | filter:filterFnMenu" ng-if="a.key !='visualise'">
+                                <div class="accordion-heading" ng-if="a.submenu.length>0" style="" >
+                                    <label class="radio" class="accordion-toggle " data-toggle="collapse"    data-parent="#accordion{{a.key}}" data-target="#collapseOne{{a.key}}">
+                                        <span class="glyphicon glyphicon-plus test" aria-hidden="true"></span><span style="cursor:pointer">    {{a.displayname ? a.displayname : a.key}}   </span>
+                                    </label>
+                                </div>
+                                <div ng-click="assocationLowerpart(a.key,'0',a.displayname,'',a.canbeadded)" class="accordion-heading hover_color_blue" ng-if="a.submenu.length==0 && a.key !== 'heatmap'">
+                                    <label class="radio " class="accordion-toggle "data-toggle="collapse"    data-parent="#accordion{{a.key}}" data-target="#collapseOne{{a.key}}">
+                                        <span  style="cursor:pointer">     {{a.displayname ? a.displayname : a.key}} </span>
+                                    </label>
+                                </div>
+                                <div ng-click="showHeatMap(otherDeviceData[currentIndex].name)" class="accordion-heading" ng-if="a.submenu.length==0 && a.key == 'heatmap'">
+                                    <label class="radio " class="accordion-toggle" data-toggle="collapse"    data-parent="#accordion{{a.key}}" data-target="#collapseOne{{a.key}}">
+                                        <span class="" style="cursor:pointer">     {{a.displayname ? a.displayname : a.key}} </span>
+                                    </label>
+                                </div>
+                                <div id="collapseOne{{a.key}}" class="accordion-body collapse" ng-if="a.submenu.length >0" style="padding: 6px 10px;">
+                                    <div class="accordion-inner" style="" ng-repeat ="a1 in a.submenu" ng-if="a1.submenu.length==0">
+                                        <div class="hover_color_blue" ng-click="assocationLowerpart(a.key,a1.subkey,a.displayname,a1.displayname,a1.canbeadded)" style="margin: 4px 0px;cursor:pointer">    {{a1.displayname ? a1.displayname : a1.key}}</div>
+                                    </div>
+                                    <div class="accordion-heading" ng-repeat ="a1 in a.submenu" ng-if="a1.submenu.length> 0" style="" >
+                                        <label class="radio" class="accordion-toggle " data-toggle="collapse"    data-parent="#accordion{{a1.subkey}}" data-target="#collapseOne{{a1.subkey}}">
+                                            <span class="glyphicon glyphicon-plus test" aria-hidden="true"></span><span style="cursor:pointer">    {{a1.displayname ? a1.displayname : a1.subkey}}   </span>
+                                        </label>
+                                    </div>
+                                    <div class="accordion" id="accordion{{a1.subkey}}" ng-repeat="a1 in a.submenu | filter:filterFnMenu">
+
+                                        <div id="collapseOne{{a1.subkey}}" class="accordion-body collapse" ng-if="a1.submenu.length >0" style="padding: 6px 10px;">
+                                            <div class="accordion-inner" style="" ng-repeat ="a2 in a1.submenu" ng-if="a2.submenu.length==0">
+                                                <div class="hover_color_blue" ng-click="assocationLowerpart(a.key,a2.subkey,a1.displayname,a2.displayname,a2.canbeadded)" style="margin: 4px 0px;cursor:pointer">   {{a2.displayname ? a2.displayname : a2.key}}</div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+
+
+                            </div>
+                            <span ng-if="deviceDisplayName =='Services'">
+                            <div class="accordion" id="accordiongraph" >
+                                <div class="accordion-heading"  style="" >
+                                    <label class="radio" class="accordion-toggle " data-toggle="collapse"    data-parent="#accordiongraph" data-target="#collapseOnegraph">
+                                        <span class="glyphicon glyphicon-plus test" aria-hidden="true"></span><span style="cursor:pointer" >  Visualize </span>
+                                    </label>
+                                </div>
+
+                                <div id="collapseOnegraph" class="accordion-body collapse" style="padding: 6px 10px;">
+                                    <div class="accordion-inner" style="" >
+                                        <div class="hover_color_blue" style="margin: 4px 0px; font-size:13px;cursor:pointer" ng-click="currentlyDisplayService(otherDeviceData[currentIndex].name)" >   Currently Display Service</div>
+                                    </div>
+
+                                    <div class="accordion-inner" style="" >
+                                        <div class="hover_color_blue" style="margin: 4px 0px;font-size:13px;cursor:pointer" ng-click="AllServiceInCurrent(otherDeviceData[currentIndex].name)" >  All Service in Current Found Set </div>
+                                    </div>
+                                    <div class="accordion-inner" style="" >
+                                        <div  class="hover_color_blue" style="margin: 4px 0px;font-size:13px;cursor:pointer" ng-click="DisplayEachServiceInSet(otherDeviceData[currentIndex].name)" > Each Service in Current Found Set </div>
+                                    </div>
+                                    <div class="accordion-inner" style="" >
+                                        <div class="hover_color_blue"  style="margin: 4px 0px;font-size:13px;cursor:pointer" ng-click="ServiceToServiceVersion(otherDeviceData[currentIndex].name,0)" >Service to Service version-1   </div>
+                                    </div>
+                                    <div class="accordion-inner" style="" >
+                                        <div  class="hover_color_blue" style="margin: 4px 0px;font-size:13px;cursor:pointer" ng-click="ServiceToServiceVersion(otherDeviceData[currentIndex].name,1)" > Service to Service version-2  </div>
+                                    </div>
+
+                                </div>
+
+
+                            </div>
+                          </span>
+
+                        </div>
+
+                    </div>
+                </div>
+                <!-- Nikita -->
+                <style>
+                  .hover_color_blue:hover{
+                    background-color: #5392ff;
+                  }
+                    .associationMapping{
+                        width:inherit;
+                        background: white;
+                        z-index: 3 !important;
+                        border: 1px solid #ddd;
+                        box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.15)
+                    }
+                </style>
+
+                <!-- nikita -->
+            </div>
+        </div>
+        <loading></loading>
+    </div>
+    <!--</br>-->
+
+    <ul id="demo12"  class="collapse border-outer parent-dp arrow_box " style="padding: 20px 20px ;height: auto !important; width:100% important;  background-color: #fff !important;  list-style-type: none !important;">
+        <div class="search-input-outer " style="padding: 10px 0px 0px;">
+            <h5>Search By</h5>
+            <div class="input-group">
+                <input type="text" ng-model ="searchdevicename" id="searchtext" class="form-control" placeholder="Search for..." style="border-right:0px;">
+              <span class="input-group-btn">
+                <button class="btn btn-default" type="button"  style="border-left:0px;"><i class="fa fa-search" aria-hidden="true"></i></button>
+              </span>
+            </div><!-- /input-group -->
+        </div>
+        <hr style="border-style: solid;border-color: #ddd;" />
+        <div class="container-fluid search-filter-inner">
+            <div class="row">
+                <h5>Filter By</h5>
+                <div class="col-xs-3">
+
+                    <li class="dropdown-submenu list-right-margin" style="padding: 5px 0px;">
+                        <a class="test" tabindex="-1" href="#" onclick="test(event); $(this).next('ul.dropdown-menu').toggle();">
+                            <span class="caret"></span>
+                            Mandatory
+
+                        </a>
+                        <ul class="dropdown-menu dp-submenu-position" >
+
+                            <li class="dropdown-submenu dropx" ng-repeat="d in devicedata" ng-if="d.group =='mandatory' && d.key != 'name'">
+
+                                <a class="test" href="" onclick="$(this).parents('.dropx').find('.input-group').toggleClass('hidden');"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> {{d.fieldname}}</a>
+
+                                <div class="input-group hidden filter-input-size">
+                                    <input type="text" class="form-control" ng-model ="searchManRel[d.key]" placeholder="Search for..." style="border-right:0px;" uib-typeahead="object.value for object in getDropDowns(d.key) | filter: {value:$viewValue}"  typeahead-focus-on-select ="a" class="form-control inputset hide_input_box autoComplete" typeahead-show-hint="true" typeahead-min-length="0" typeahead-focus-first="true">
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-default" ng-click ="check()" type="button"  style="border-left:0px;"><i class="fa fa-search" aria-hidden="true"></i></button>
+                                        </span>
+                                </div>
+                            </li>
+
+                        </ul>
+
+                    </li>
+                    <li class="dropdown-submenu list-right-margin" style="padding: 5px 0px;" ng-if="showRelevant == true">
+                        <a class="test" tabindex="-1" href="#" onclick="test(event); $(this).next('ul.dropdown-menu').toggle();">
+                            <span class="caret"></span>
+                            Relevant
+                        </a>
+                        <ul class="dropdown-menu dp-submenu-position" >
+
+                            <li class="dropdown-submenu dropx" ng-repeat="d in devicedata" ng-if="d.group =='relevant'">
+                                <a class="test" href="" onclick="$(this).parents('.dropx').find('.input-group').toggleClass('hidden');"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> {{d.fieldname}}</a>
+
+                                <div class="input-group hidden filter-input-size">
+                                    <input type="text" class="form-control" ng-model ="searchManRel[d.key]"  placeholder="Search for..." style="border-right:0px;" uib-typeahead="object.value for object in getDropDowns(d.key) | filter: {value:$viewValue}"  typeahead-focus-on-select ="a" class="form-control inputset hide_input_box autoComplete" typeahead-show-hint="true" typeahead-min-length="0" typeahead-focus-first="true">
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-default" type="button"  style="border-left:0px;"><i class="fa fa-search" aria-hidden="true"></i></button>
+                                        </span>
+                                </div>
+                            </li>
+
+                        </ul>
+
+                    </li>
+                    <li class="dropdown-submenu list-right-margin" style="padding: 5px 0px;" ng-if="showCustomAttribute=='true'">
+                        <a class="test" tabindex="-1" href="#" onclick="test(event); $(this).next('ul.dropdown-menu').toggle();">
+                            <span class="caret"></span>
+                            Custom Attribute
+                        </a>
+                        <ul class="dropdown-menu dp-submenu-position" >
+
+                            <li class="dropdown-submenu dropx" ng-repeat="d in customAttributes">
+                                <a class="test" href="" onclick="$(this).parents('.dropx').find('.input-group').toggleClass('hidden');"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> {{d.attribute}}</a>
+
+                                <div class="input-group hidden filter-input-size">
+                                    <input type="text" class="form-control" ng-model ="searchCustomAttribute[d.attribute]"  placeholder="Search for..." style="border-right:0px;" uib-typeahead="object.value for object in getDropDowns(d.key) | filter: {value:$viewValue}"  typeahead-focus-on-select ="a" class="form-control inputset hide_input_box autoComplete" typeahead-show-hint="true" typeahead-min-length="0" typeahead-focus-first="true">
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-default" type="button"  style="border-left:0px;"><i class="fa fa-search" aria-hidden="true"></i></button>
+                                        </span>
+                                </div>
+                            </li>
+
+                        </ul>
+
+                    </li>
+                    <li class="dropdown-submenu list-right-margin" style="padding: 5px 0px;" ng-if="relatedCount.length>0">
+                        <a class="test" tabindex="-1" href="#" onclick="test(event); $(this).next('ul.dropdown-menu').toggle();">
+                            <span class="caret"></span>
+                            Related Count
+
+                        </a>
+                        <ul class="dropdown-menu dp-submenu-position" >
+
+                            <li class="dropdown-submenu dropx" ng-repeat="d in relatedCount">
+                                <a class="test" href="" onclick="$(this).parents('.dropx').find('.input-group').toggleClass('hidden');"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> {{d.id}}</a>
+
+                                <div class="input-group hidden filter-input-size">
+                                    <input type="text" class="form-control" ng-model ="searchRelatedCount[d.associationkey]"  placeholder="Search for..." style="border-right:0px;" uib-typeahead="object.value for object in getDropDowns(d.key) | filter: {value:$viewValue}"  typeahead-focus-on-select ="a" class="form-control inputset hide_input_box autoComplete" typeahead-show-hint="true" typeahead-min-length="0" typeahead-focus-first="true">
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-default" type="button"  style="border-left:0px;"><i class="fa fa-search" aria-hidden="true"></i></button>
+                                        </span>
+                                </div>
+                            </li>
+
+                        </ul>
+
+                    </li>
+
+                </div>
+                <div class="col-xs-3">
+
+                    <li class="dropdown-submenu list-right-margin" style="padding: 5px 0px;" ng-repeat="user in association" ng-if="user.flatkey =='logicaldevices' || user.flatkey =='services' || user.flatkey =='clusters' || user.flatkey =='stakeholders' || user.flatkey =='components' || user.flatkey =='documents'">
+                        <a class="test" tabindex="-1" href="#" onclick="test(event); $(this).next('ul.dropdown-menu').toggle();">
+                            <span class="caret"></span>
+                            {{user.displayname}}
+                        </a>
+                        <ul class="dropdown-menu dp-submenu-position" >
+                            <followers alldata="user" key="user.key" nik="user.key" ></followers>
+                            <li class="dropdown-submenu list-right-margin" style="padding: 5px 0px;" ng-if="a1.displayname!='Direct' && user.flatkey !='components' " ng-repeat="a1 in user.submenu" style="list-style-type: none !important; ">
+                                <a class="test" tabindex="-1" href="#" onclick="test(event); $(this).next('ul.dropdown-menu').toggle();">
+                                    <span class="caret"></span>
+                                    {{a1.displayname}}
+                                </a>
+                                <ul class="dropdown-menu dp-submenu-position" >
+
+                                <span ng-if="user.key !='Stakeholders'">
+                                <followers alldata="a1"  key="a1.subkey" nik="niktesting"></followers>
+                              </span>
+                              <span ng-if="user.key =='Stakeholders'">
+                              <stakeholders alldata="a1" key="a1.subkey" mainkey="user.flatkey"></stakeholders>
+                            </span>
+                                </ul>
+
+                            </li>
+                            <li class="dropdown-submenu list-right-margin" style="padding: 5px 0px;" ng-if="a1.displayname!='Component' && user.flatkey =='components'" ng-repeat="a1 in user.submenu" style="list-style-type: none !important; ">
+                                <a class="test" tabindex="-1" href="#" onclick="test(event); $(this).next('ul.dropdown-menu').toggle();">
+                                    <span class="caret"></span>
+                                    {{a1.displayname}}
+                                </a>
+                                <ul class="dropdown-menu dp-submenu-position" >
+
+                                <span ng-if="user.key !='Stakeholders'">
+                                <followers alldata="a1"  key="a1.subkey" nik="niktesting"></followers>
+                              </span>
+
+                                </ul>
+
+                            </li>
+
+                        </ul>
+                    </li>
+                </div>
+                <div class="col-xs-3">
+
+                    <li class="dropdown-submenu list-right-margin" style="padding: 5px 0px;" ng-repeat="user in association" ng-if="user.flatkey =='filesystems' || user.flatkey =='physicaldevices' || user.flatkey =='logicalnetworks' || user.flatkey =='deviceinterfaces' || user.flatkey =='interfacegroups' || user.flatkey =='events'">
+                        <a class="test" tabindex="-1" href="#" onclick="test(event); $(this).next('ul.dropdown-menu').toggle();">
+                            <span class="caret"></span>
+                            {{user.displayname}}
+                        </a>
+                        <ul class="dropdown-menu dp-submenu-position" >
+                            <span ng-if='deviceDisplayName !="File Systems"'>
+                            <followers alldata="user" key="user.key" nik="user.key" ></followers>
+                          </span>
+                            <li class="dropdown-submenu list-right-margin" style="padding: 5px 0px;" ng-repeat="a1 in user.submenu" style="list-style-type: none !important; ">
+                                <a class="test" tabindex="-1" href="#" onclick="test(event); $(this).next('ul.dropdown-menu').toggle();">
+                                    <span class="caret"></span>
+                                    {{a1.displayname}}
+                                </a>
+                                <ul class="dropdown-menu dp-submenu-position" >
+
+                                    <span ng-if="a1.flatkey == 'childfilesystems' || a1.flatkey =='parentfilesystems' || a1.flatkey =='indirectfilesystems'">
+
+                                      <filesystems  key="a1.flatkey" nik="niktesting"></filesystems>
+                                    </span>
+                                      <span ng-if="a1.flatkey !='childfilesystems' && a1.flatkey !='parentfilesystems' && a1.flatkey !='indirectfilesystems'">
+
+                                          <followers alldata="user" key="a1.subkey" nik="niktesting"></followers>
+                                      </span>
+
+                                </ul>
+                            </li>
+                       </ul>
+                    </li>
+
+                </div>
+
+                <div class="col-xs-3">
+                    <li class="dropdown-submenu list-right-margin" style="padding: 5px 0px;" ng-repeat="user in association" ng-if="user.flatkey !='filesystems' && user.flatkey !='physicaldevices' && user.flatkey !='logicalnetworks' && user.flatkey !='deviceinterfaces' && user.flatkey !='interfacegroups' && user.flatkey !='events' && user.flatkey !='logicaldevices' && user.flatkey !='services' && user.flatkey !='clusters' && user.flatkey !='stakeholders' && user.flatkey !='components' && user.flatkey !='documents' && user.flatkey !='planning' && user.flatkey !='aliases' && user.flatkey !='target' && user.flatkey !='notes' && user.flatkey !='audit' && user.flatkey !='customattributes' && user.flatkey !='servicedocumentation' && user.flatkey !='physicaldevicedocumentation' && user.flatkey !='visualise' && user.flatkey !='heatmap'">
+
+                        <a class="test" tabindex="-1" href="#" onclick="test(event); $(this).next('ul.dropdown-menu').toggle();">
+                            <span class="caret"></span>
+                            {{user.displayname}}
+                        </a>
+                        <ul class="dropdown-menu dp-submenu-position" >
+
+                          <span ng-if="user.flatkey !='inboundlogicaldevices' ||  user.flatkey !='outboundlogicaldevices'">
+                              <followers ng-if="user.flatkey !='componenttocomponents'" alldata="user" key="user.key" nik="user.key" ></followers>
+                          </span>
+
+                            <span ng-if="user.flatkey =='inboundlogicaldevices' ||  user.flatkey =='outboundlogicaldevices'">
+
+                                <filesystems alldata="user" key="user.key" nik="user.key" ></filesystems>
+                            </span>
+                            <li ng-if="deviceDisplayName !='Events'" class="dropdown-submenu list-right-margin" style="padding: 5px 0px;" ng-repeat="a1 in user.submenu" style="list-style-type: none !important; ">
+                                <a class="test" tabindex="-1" href="#" onclick="test(event); $(this).next('ul.dropdown-menu').toggle();">
+                                    <span class="caret"></span>
+                                    {{a1.displayname}}
+                                </a>
+                                <ul class="dropdown-menu dp-submenu-position">
+
+                                  <span ng-if="a1.flatkey =='inboundcomponents' || a1.flatkey =='outboundcomponents' ">
+
+                                      <derived  key="a1.flatkey" nik="niktesting"></derived>
+                                  </span>
+                                   <span ng-if=" user.flatkey =='derived'">
+                                      <derived  key="a1.subkey" nik="niktesting"></derived>
+                                  </span>
+                                  <span ng-if =" user.flatkey !='derived'">
+                                      <followers alldata="user" key="a1.subkey" nik="niktesting"></followers>
+                                  </span>
+
+                                </ul>
+                            </li>
+                              <li ng-if="deviceDisplayName =='Events'" class="dropdown-submenu list-right-margin" style="padding: 5px 0px;" ng-repeat="a1 in user.submenu" style="list-style-type: none !important; ">
+                                <a class="test" tabindex="-1" href="#" onclick="test(event); $(this).next('ul.dropdown-menu').toggle();">
+                                    <span class="caret"></span>
+                                    {{a1.displayname}}
+                                </a>
+                                <ul class="dropdown-menu dp-submenu-position">
+
+                                      <filesystems alldata="user" key="a1.flatkey" nik="niktesting"></filesystems>
+
+
+                                </ul>
+                            </li>
+
+                        </ul>
+                    </li>
+                </div>
+            </div>
+        </div>
+        <hr style="border-style: solid;border-color: #ddd;" />
+        <div class="text-center">
+          <img ng-if="table_loader_search" style="display: block;
+          margin: 0 auto;
+          height: 33px;" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="/>
+            <button class="btn update-btn" ng-click="submitSearch()" id="updateResult" style="background-color:#5392ff; border:1px solid #fff; color:#fff">Update Result</button>
+            <button class="btn update-btn dropdown dropdown-toggle" data-toggle="dropdown" style="background-color:#5392ff; border:1px solid #fff; color:#fff">Export Result</button>
+
+            <ul class="dropdown-menu" style="margin-top: -1%;margin-left: 55%;min-width: 85px !important;">
+                <li><a ng-click="exportSearch('csv')">CSV</a><br/></li>
+                <li><a ng-click="exportSearch('xlsx')">Excel</a><br/></li>
+            </ul>
+        </div>
+    </ul>
+
+
+
+</div>
+
+
+<div class="row">
+    <hr style="width: 100%;border-top: 1px solid #ccc !important;margin-top: 0px !important;
+        margin-bottom: 0px !important;">
+    <div class="col-xs-12" style="height: 4em;">
+        <div class="col-xs-10 col-xs-offset-1" style="margin-top: 1%;margin-left: 8.5%;min-height: 800px;">
+            <div class="col-xs-6" style="margin-top: 0.5%">
+
+                <!--  -->
+                <button  ng-if="LowerOtherDeviceName !='filesystems' && LowerOtherDeviceName !='documents' && LowerOtherDeviceName !='interfacegroups' && LowerOtherDeviceName !='logicalnetworks' && LowerOtherDeviceName !='events' && LowerOtherDeviceName !='deviceinterfaces' && LowerOtherDeviceName !='componenttocomponents' " style="border: 0px;background-color: #F7F7F7;padding-right: 0px !important;"  ng-click ="next_previous_data(otherDeviceData[currentIndex-1].name,-1)">
+                    <!--<img src="img/previous.jpg" alt="next" >-->
+                    <i class="fa fa-chevron-left" aria-hidden="true" style="color: #949394 !important;"></i>
+                </button>
+                <button  ng-if="LowerOtherDeviceName =='filesystems' || LowerOtherDeviceName =='documents' || LowerOtherDeviceName =='interfacegroups' || LowerOtherDeviceName =='logicalnetworks' || LowerOtherDeviceName =='events' || LowerOtherDeviceName =='deviceinterfaces' || LowerOtherDeviceName =='componenttocomponents'" style="border: 0px;background-color: #F7F7F7;padding-right: 0px !important;"  ng-click ="next_previous_data(otherDeviceData[currentIndex-1].PKID,-1)">
+                    <!--<img src="img/previous.jpg" alt="next" >-->
+                    <i class="fa fa-chevron-left" aria-hidden="true" style="color: #949394 !important;"></i>
+                </button>
+
+                <input type="number" value="{{recordID}}" id="recordID" ng-model="recordID" min="1" max="{{totalLDcount}}" class="recordCnt" ng-keyup="$event.keyCode == 13 ? getRowDevice(recordID) : null" style="width:auto;"/>
+                <button  ng-if="LowerOtherDeviceName !='filesystems' && LowerOtherDeviceName !='documents' && LowerOtherDeviceName !='interfacegroups' && LowerOtherDeviceName !='logicalnetworks' && LowerOtherDeviceName !='events' && LowerOtherDeviceName !='deviceinterfaces' && LowerOtherDeviceName !='componenttocomponents'" style="border: 0px;background-color: #F7F7F7;padding-left: 0px !important;"  ng-click ="next_previous_data(otherDeviceData[currentIndex+1].name,1)">
+                    <!--<img src="img/next.jpg" alt="next">-->
+                    <i class="fa fa-chevron-right" aria-hidden="true" style="color: #949394 !important;"></i>
+                </button>
+
+                <button  ng-if="LowerOtherDeviceName =='filesystems' || LowerOtherDeviceName =='documents' || LowerOtherDeviceName =='interfacegroups' || LowerOtherDeviceName =='logicalnetworks' || LowerOtherDeviceName =='events' || LowerOtherDeviceName =='deviceinterfaces' || LowerOtherDeviceName =='componenttocomponents'" style="border: 0px;background-color: #F7F7F7;padding-left: 0px !important;"  ng-click ="next_previous_data(otherDeviceData[currentIndex+1].PKID,1)">
+                    <!--<img src="img/next.jpg" alt="next">-->
+                    <i class="fa fa-chevron-right" aria-hidden="true" style="color: #949394 !important;"></i>
+                </button>
+                <label style="font-size: 14px" class="labelcolor">Records Out of {{totalLDcount}} </label>
+            </div>
+            <div class="col-xs-6">
+                <a href="" class="dropdown dropdown-toggle my-tooltip my-dropdown" data-placement="top" title="Export" ng-click="exportContent()" style="float: right;margin-left: 3%;">  <img style="height: 34px" src="img/exportUnselected.png">
+                    <loading></loading>
+                    <!--<ul class="dropdown-menu border-outer parent-dp" style="margin-left: 90%">
+                        <li><a ng-click="exportContent('csv')">CSV</a><br/></li>
+                        <li><a ng-click="exportContent('xlsx')">Excel</a><br/></li>
+                    </ul>-->
+                </a>
+                <!-- /0->n0 -->
+                <span ng-if="globals.currentUser.role !=='' && globals.currentUser.role == 'SCOPE+ Admin'">
+                <span ng-if="deviceDisplayName !='Data Source' && deviceDisplayName !='Events'">
+                <a data-toggle="tooltip"  ng-if="deviceID =='UnSetReviewNotes'" data-placement="top" title="SET REVIEW" href="" style="float: right;margin-left: 3%;" ng-click="reviewSetUnset(globalDeviceName,'Yes')"><i style="height: 34px;color:#949394" class="fa fa-unlock-alt fa-3x" style="cursor:pointer"></i> </a>
+                <a data-toggle="tooltip"  ng-if="deviceID =='SetReviewNotes'"  data-placement="top" title="UNSET REVIEW" href="" style="float: right;margin-left: 3%;" ng-click="reviewSetUnset(globalDeviceName,'No')"><i style="height: 34px;color:#949394" class="fa fa-unlock fa-3x" style="cursor:pointer"></i> </a>
+                <span ng-if="deviceID !='UnSetReviewNotes' && deviceID !='SetReviewNotes'">
+                  <a data-toggle="tooltip"  ng-if="device_add.setreview =='no' || device_add.setreview =='No' || device_add.setreview.length ==0 ||device_add.setreview =='NO'|| device_add.setreview == NULL " data-placement="top" title="SET REVIEW" href="" style="float: right;margin-left: 3%;" ng-click="reviewSetUnset(globalDeviceName,'Yes')"><i style="height: 34px;color:#949394" class="fa fa-unlock-alt fa-3x" style="cursor:pointer"></i> </a>
+                </span>
+                <span ng-if="deviceID !='UnSetReviewNotes' && deviceID !='SetReviewNotes'">
+                  <a data-toggle="tooltip"  ng-if="device_add.setreview=='yes' || device_add.setreview=='Yes'  ||device_add.setreview=='YES' && deviceID !='SetReviewNotes' && deviceID !='UnSetReviewNotes'"  data-placement="top" title="UNSET REVIEW" href="" style="float: right;margin-left: 3%;" ng-click="reviewSetUnset(globalDeviceName,'No')"><i style="height: 34px;color:#949394" class="fa fa-unlock fa-3x" style="cursor:pointer"></i> </a>
+                </span>
+                </span>
+
+                <span ng-if="deviceDisplayName !='Data Source'">
+                <a data-toggle="tooltip" ng-if="setMarkDeletion == false" data-placement="top" title="MARK DELETION" href="" style="float: right;margin-left: 3%;" ng-click="markForDeletion(globalDeviceName,'NON-CANDIDATE',otherDeviceListing.deviceCollector.PKID)"><i style="height: 34px;color:#949394" class="fa fa-trash-o fa-3x" style="cursor:pointer"></i> </a>
+                <a data-toggle="tooltip" ng-if="setMarkDeletion == true" data-placement="top" title="DELETION" href="" style="float: right;margin-left: 3%;" ><i style="height: 34px;color:#949394;" ng-click="deletionDevices(otherDeviceListing.deviceCollector.PKID)" ng-confirm-click="Would you like to Delete "  class="fa fa-times fa-3x" style="cursor:pointer;"> </i> </a>
+                <a data-toggle="tooltip" data-placement="top" title="UNMARK DELETION" ng-if="setMarkDeletion == true" href="" style="float: right;margin-left: 3%;" ng-click="markForDeletion(globalDeviceName,'CANDIDATE',otherDeviceListing.deviceCollector.PKID)"><i style="height: 34px;color:#949394" class="fa fa-undo fa-3x" style="cursor:pointer"></i> </a>
+                </span>
+                <!--<a data-toggle="tooltip" data-placement="top" title="Print" href="" style="float: right;margin-left: 3%;">  <img style="height: 34px" src="img/printUnselected.png"> </a>-->
+                <a data-toggle="tooltip" data-placement="top" title="Edit" href="" style="float: right;margin-left: 3%;">  <img ng-click="editContent()"  style="height: 34px" src="img/editUnselected.png"> </a>
+              </span>
+                <a data-toggle="tooltip" data-placement="top" title="Sort" href="" style="float: right;margin-left: 3%;">  <img ng-click="doSorting()" style="height: 34px" src="img/sortingUnselected.png"> </a>
+                <a href="javascript:void(0);" ng-click="showListView()" style="float: right;margin-left: 3%;" data-toggle="tooltip" data-placement="top" title="List View">
+                    <img style="height: 34px" src="img/listViewUnselected.png">
+                </a>
+                <!--<a data-toggle="tooltip" data-placement="top" title="Normal View" href="" style="float: right;margin-left: 3%;">  <img style="height: 34px" src="img/normailViewUnselected.png"> </a>-->
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-10 col-xs-offset-1" style="margin-top: 1%;width:1320px">
+        <div ng-class="changeClassMand" style="padding-left: 10px !important;" >
+
+            <div class="" style="border: 1px solid #ccc;border-bottom: 0px !important; ">
+                <label style="height:28px;background-color: #25467a;color: #fff;
+        font-size: 16px;font-weight: normal;width:100%">
+		<span style="margin-left: 4%;display: inline-block;margin-top: 1%">Mandatory Attributes</span>
+		</label>
+                <form name="myForm" id="myForms" role = "form" novalidate class="formsetwidth" style="border: 1px solid #ccc;border-top: 0px !important;">
+                    <div class="col-xs-12 addScroll" style="padding-left: 15px !important; padding-right: 15px !important; margin-top: 3%"  >
+                        <div ng-repeat="d in devicedata" ng-if="d.group =='mandatory'">
+
+                            <div class="form-group"  ng-if="d.fieldtype=='text' && d.key =='name' " ng-show="false">
+                                <input ng-if ="d.required=='required'" ng-disabled="EditDisabled" name={{d.key}} id={{d.key}} class = "form-control inputset hide_input_box" ng-model="otherDeviceListing.deviceCollector[d.key]" maxlength="{{d.maxlength}}" size="{{d.maxlength}}" minlength={{d.minlength}}  required type="text" limit-to-max max="{{getMaxValue(d.datatype)}}">
+                                <input ng-if ="d.required !='required'" ng-disabled="EditDisabled" name="myName" class = "form-control inputset hide_input_box" ng-model="otherDeviceListing.deviceCollector[d.key]" maxlength="{{d.maxlength}}" size="{{d.maxlength}}" minlength={{d.minlength}}  type="text" limit-to-max max="{{getMaxValue(d.datatype)}}">
+                            </div>
+
+                            <div class="form-group"  ng-if="d.fieldtype=='text' && d.key !='name'">
+                                <label ng-if ="d.required=='required'" class="labelcolor mandat control-label"> {{d.fieldname}}</label>
+                                <label ng-if ="d.required !='required'" class="labelcolor control-label"> {{d.fieldname}}</label>
+                                <!--CPCPCP-->
+                                <div class="input-group-cust">
+                                  <input ng-if ="d.required=='required' && d.autocalculation=='' " ng-disabled ="EditDisabled" name={{d.key}} id={{d.key}} class = "form-control inputset hide_input_box" ng-model="otherDeviceListing.deviceCollector[d.key]" maxlength="{{d.maxlength}}" size="{{d.maxlength}}" minlength={{d.minlength}}  required type="text" data-placement="bottom" data-toggle="tooltipInput" title="{{(otherDeviceListing.deviceCollector[d.key].length > 30) ? otherDeviceListing.deviceCollector[d.key] :'' }}" data-content="{{otherDeviceListing.deviceCollector[d.key]}}" data-trigger="hover" maxlength="{{d.maxlength}}" size="{{d.maxlength}}" minlength="{{d.minlength}}" limit-to-max max="{{getMaxValue(d.datatype)}}">
+                                  <input ng-if ="d.required !='required' && d.autocalculation=='' " ng-disabled ="EditDisabled" name="myName" class = "form-control inputset hide_input_box" id={{d.key}} ng-model="otherDeviceListing.deviceCollector[d.key]" maxlength="{{d.maxlength}}" size="{{d.maxlength}}" ng-minlength="{{d.minlength}}"  type="text" data-placement="bottom" data-toggle="tooltipInput" title="{{(otherDeviceListing.deviceCollector[d.key].length > 30) ? otherDeviceListing.deviceCollector[d.key] :'' }}" data-content="{{otherDeviceListing.deviceCollector[d.key]}}" data-trigger="hover" maxlength="{{d.maxlength}}" size="{{d.maxlength}}" minlength="{{d.minlength}}" limit-to-max max="{{getMaxValue(d.datatype)}}">
+                                  <input ng-if ="d.required !='required' && d.autocalculation !=''" only-double  ng-change="populateDependentFields(d.autocalculation,d.key)" ng-disabled ="EditDisabled" name={{d.key}} id={{d.key}} class = "form-control inputset hide_input_box" ng-model="otherDeviceListing.deviceCollector[d.key]" maxlength="{{d.maxlength}}" minlength="{{d.minlength}}"  required type="text" data-placement="bottom" data-toggle="tooltipInput" title="{{(otherDeviceListing.deviceCollector[d.key].length > 30) ? otherDeviceListing.deviceCollector[d.key] :'' }}" data-content="{{otherDeviceListing.deviceCollector[d.key]}}" data-trigger="hover" maxlength="{{d.maxlength}}" size="{{d.maxlength}}" minlength="{{d.minlength}}" limit-to-max max="{{getMaxValue(d.datatype)}}">
+                                    <span ng-if ="d.required =='required'" class="mandat-text" ng-show="myForm1.{{d.fieldname}}.$error.maxlength">{{d.fieldname}}  must be {{d.maxlength}} character maximum</span>
+                                    <span ng-if ="d.required =='required'" class="mandat-text" ng-show="myForm1.{{d.fieldname}}.$error.minlength">{{d.fieldname}}  must be {{d.minlength}} character minimum</span>
+                                    <span ng-if ="d.required =='required'" class="mandat-text" ng-show="myForm1.{{d.fieldname}}.$error.required && !userForm.username.$pristine">{{d.fieldname}}  is required</span>
+                                </div>
+
+                            </div>
+                            <div class="form-group"  ng-if="d.fieldtype=='text:readonly'">
+                                <label class="labelcolor control-label"> {{d.fieldname}}</label>
+                                <div class="input-group-cust" >
+                                    <input  ng-disabled ="true" class = "form-control inputset hide_input_box" ng-model="otherDeviceListing.deviceCollector[d.key]" maxlength="{{d.maxlength}}" size="{{d.maxlength}}" minlength={{d.minlength}}  required type="text" data-placement="bottom" data-toggle="tooltipInput" title="{{(otherDeviceListing.deviceCollector[d.key].length > 30) ? otherDeviceListing.deviceCollector[d.key] :'' }}" data-content="{{otherDeviceListing.deviceCollector[d.key]}}" data-trigger="hover" limit-to-max max="{{getMaxValue(d.datatype)}}">
+
+                                </div>
+                            </div>
+
+                            <div class="form-group"  ng-if="d.fieldtype=='file'">
+                                <label class="labelcolor mandat control-label"> {{d.fieldname}}</label>
+                                <button  ng-click ="downloadOpen(otherDeviceListing.deviceCollector.PKID)">Click here to open link</button>
+
+                            </div>
+
+                            <div class="form-group"  ng-if=d.fieldtype=='integer'>
+                                <label class="labelcolor control-label"> {{d.fieldname}}</label>
+                                <div class="controls" >
+                                    <input name="myName"  ng-disabled ="EditDisabled" only-digits class = "form-control inputset hide_input_box" ng-model="otherDeviceListing.deviceCollector[d.key]" maxlength="{{d.maxlength}}" size="{{d.maxlength}}" minlength={{d.minlength}} type="text" data-placement="bottom" data-toggle="tooltipInput" title="{{(otherDeviceListing.deviceCollector[d.key].length > 30) ? otherDeviceListing.deviceCollector[d.key] :'' }}" data-content="{{otherDeviceListing.deviceCollector[d.key]}}" data-trigger="hover" limit-to-max max="{{getMaxValue(d.datatype)}}">
+                                    <!--<span ng-show="showErrorAlert" style="color: #5392ff">This Name exists,please use unique name</span>-->
+                                </div>
+
+                            </div>
+
+
+                            <div class="form-group"  ng-if=d.fieldtype=='date'>
+                                <label class="labelcolor mandat control-label"> {{d.fieldname}}</label>
+                                <div class="input-group-cust" >
+                                    <datepicker date-format="yyyy-MM-dd">
+                                        <input type="text" ng-disabled ="EditDisabled" class = "form-control inputset hide_input_box" ng-model="otherDeviceListing.deviceCollector[d.key]" placeholder="YYYY-MM-DD" onkeypress="return false;"/>
+                                    </datepicker>
+                                </div>
+                            </div>
+                            <div class="form-group" ng-if="d.fieldtype=='select' &&  d.dropdowntype !=2 && d.key !='vlandescription' && d.key !='vlan' && d.key !='hourfrom' && d.key != 'hourto'">
+                                <label class="labelcolor" ng-if="d.required !='required'" >{{d.fieldname}}</label>
+                                <label class="labelcolor mandat" ng-if="d.required =='required'" >{{d.fieldname}}</label>
+                                <input type="text" ng-disabled ="EditDisabled"  ng-if ="d.required !='required'" ng-model="otherDeviceListing.deviceCollector[d.key]" uib-typeahead="object.value for object in getDropDowns(d.key) | filter: {value:$viewValue}"  typeahead-focus-on-select ="a" class="form-control inputset hide_input_box autoComplete" typeahead-show-hint="true" typeahead-min-length="0" typeahead-focus-first="true" data-placement="bottom" data-toggle="tooltipInput" title="{{(otherDeviceListing.deviceCollector[d.key].length > 30) ? otherDeviceListing.deviceCollector[d.key] :'' }}" data-content="{{otherDeviceListing.deviceCollector[d.key]}}" data-trigger="hover" maxlength="{{d.maxlength}}" size="{{d.maxlength}}" minlength="{{d.minlength}}" limit-to-max max="{{getMaxValue(d.datatype)}}">
+
+                                <input type="text" ng-disabled ="EditDisabled" ng-required="true" ng-if="d.required =='required'" ng-model="otherDeviceListing.deviceCollector[d.key]" uib-typeahead="object.value for object in getDropDowns(d.key) | filter: {value:$viewValue}"  typeahead-focus-on-select ="a" class="form-control inputset hide_input_box autoComplete" typeahead-show-hint="true" typeahead-min-length="0" typeahead-focus-first="true" data-placement="bottom" data-toggle="tooltipInput" title="{{(otherDeviceListing.deviceCollector[d.key].length > 30) ? otherDeviceListing.deviceCollector[d.key] :'' }}" data-content="{{otherDeviceListing.deviceCollector[d.key]}}" data-trigger="hover" maxlength="{{d.maxlength}}" size="{{d.maxlength}}" minlength="{{d.minlength}}" limit-to-max max="{{getMaxValue(d.datatype)}}">
+                            </div>
+                            <div class="form-group" ng-if="d.fieldtype=='select' &&  d.dropdowntype ==2 &&  d.key !='vlandescription' && d.key !='vlan' && d.key !='hourfrom' && d.key != 'hourto'">
+                                <label class="labelcolor" ng-if="d.required !='required'" >{{d.fieldname}}</label>
+                                <label class="labelcolor mandat" ng-if="d.required =='required'" >{{d.fieldname}}</label>
+                                <input type="text" ng-disabled ="EditDisabled" ng-class="getValueMine(d.key)" ng-if ="d.required !='required'" ng-model="otherDeviceListing.deviceCollector[d.key]" uib-typeahead="object.value for object in getDropDowns(d.key) | filter: {value:$viewValue}"  typeahead-focus-on-select ="a" class="form-control inputset hide_input_box autoComplete" typeahead-show-hint="true" typeahead-min-length="0" typeahead-focus-first="true" data-placement="bottom" data-toggle="tooltipInput" title="{{(otherDeviceListing.deviceCollector[d.key].length > 30) ? otherDeviceListing.deviceCollector[d.key] :'' }}" data-content="{{otherDeviceListing.deviceCollector[d.key]}}" data-trigger="hover" maxlength="{{d.maxlength}}" size="{{d.maxlength}}" minlength="{{d.minlength}}" limit-to-max max="{{getMaxValue(d.datatype)}}">
+
+                                <input type="text" ng-disabled ="EditDisabled" ng-class="getValueMine(d.key)" ng-required="true" ng-if="d.required =='required'" ng-model="otherDeviceListing.deviceCollector[d.key]" uib-typeahead="object.value for object in getDropDowns(d.key) | filter: {value:$viewValue}"  typeahead-focus-on-select ="a" class="form-control inputset hide_input_box autoComplete" typeahead-show-hint="true" typeahead-min-length="0" typeahead-focus-first="true" data-placement="bottom" data-toggle="tooltipInput" title="{{(otherDeviceListing.deviceCollector[d.key].length > 30) ? otherDeviceListing.deviceCollector[d.key] :'' }}" data-content="{{otherDeviceListing.deviceCollector[d.key]}}" data-trigger="hover" maxlength="{{d.maxlength}}" size="{{d.maxlength}}" minlength="{{d.minlength}}" limit-to-max max="{{getMaxValue(d.datatype)}}">
+                            </div>
+
+                            <!--cmt-242 and 260 starts-->
+                            <div class="form-group" ng-if="d.fieldtype=='select' &&  d.key =='vlan' && d.key !='hourfrom' && d.key != 'hourto'">
+                                <label class="labelcolor" ng-if="d.required !='required'" >{{d.fieldname}}</label>
+                                <label class="labelcolor mandat" ng-if="d.required =='required'" >{{d.fieldname}}</label>
+                                <div class="input-group-cust" >
+                                    <input type="text" ng-disabled ="EditDisabledVlan" ng-if ="d.required !='required'" ng-focus="onFocus($event)" ng-model="otherDeviceListing.deviceCollector[d.key]" style="border-right:0px;width: 100% !important;" uib-typeahead="object.value for object in getDropDowns(d.key) | filter: {value:$viewValue}"  class="form-control inputset hide_input_box" typeahead-show-hint="true" typeahead-min-length="0" data-placement="bottom" data-toggle="tooltipInput" title="{{(otherDeviceListing.deviceCollector[d.key].length > 30) ? otherDeviceListing.deviceCollector[d.key] :'' }}" data-content="{{otherDeviceListing.deviceCollector[d.key]}}" data-trigger="hover" maxlength="{{d.maxlength}}" size="{{d.maxlength}}" minlength="{{d.minlength}}" limit-to-max max="{{getMaxValue(d.datatype)}}">
+                                    <input type="text"  ng-disabled ="EditDisabledVlan" ng-required="true" ng-if="d.required =='required'" ng-focus="onFocus($event)" ng-model="otherDeviceListing.deviceCollector[d.key]" uib-typeahead="object.value for object in getDropDowns(d.key) | filter: {value:$viewValue}"  class="form-control inputset hide_input_box autoComplete" typeahead-show-hint="true" typeahead-min-length="0" data-placement="bottom" data-toggle="tooltipInput" title="{{(otherDeviceListing.deviceCollector[d.key].length > 30) ? otherDeviceListing.deviceCollector[d.key] :'' }}" data-content="{{otherDeviceListing.deviceCollector[d.key]}}" data-trigger="hover" maxlength="{{d.maxlength}}" size="{{d.maxlength}}" minlength="{{d.minlength}}" limit-to-max max="{{getMaxValue(d.datatype)}}">
+                                    <!--<span class="input-group-addon" id="basic-addon1" style="border-radius: 0px;background-color: #fff;font-size:11px;cursor:pointer ;width: 9.2% !important;"><i class="fa fa-chevron-down" style="cursor:pointer"></i></span>-->
+
+                                </div>
+                            </div>
+                            <div class="form-group" ng-if="d.fieldtype=='select' && d.key =='hourfrom' || d.key =='hourto'">
+                                <label  class="labelcolor mandat control-label">{{d.fieldname}}</label>
+                                <div class="row">
+                                    <div class="col-xs-6">
+                                        <div class="input-group-cust">
+
+                                         <input type="text" class="hourstofrom" ng-change="minMaxValidation(otherDeviceListing.deviceCollector[d.key],d.key)" ng-disabled ="EditDisabled" ng-focus="onFocus($event)" ng-model="otherDeviceListing.deviceCollector[d.key]" style="width: 80px !important; margin-left: 16px !important;" typeahead-min-length="0" uib-typeahead="object.value for object in getDropDowns(d.key) | filter: {value:$viewValue}"  uib-typeahead-no-results="noResults" class="form-control setwidth typeahead">
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <div class="input-group-cust" >
+                                <span ng-if="d.key =='hourfrom'">
+                                <input type="text"  ng-disabled ="EditDisabled" ng-change="minMaxValidation(otherDeviceListing.deviceCollector[d.key],'minfroms')"  ng-focus="onFocus($event)" ng-model="otherDeviceListing.deviceCollector.minfrom"  style="width: 80px !important;background-color:white !important"  typeahead-min-length="0" uib-typeahead="object.value for object in getDropDowns('minfrom') | filter: {value:$viewValue}"  uib-typeahead-no-results="noResults" class="form-control setwidth typeahead" typeahead-show-hint="true">
+                                </span>
+                                <span ng-if="d.key =='hourto'">
+                                <input type="text" ng-disabled ="EditDisabled" ng-change="minMaxValidation(otherDeviceListing.deviceCollector[d.key],'mintos')" ng-focus="onFocus($event)" ng-model="otherDeviceListing.deviceCollector.minto"  style="width: 80px !important;background-color:white !important"  typeahead-min-length="0" uib-typeahead="object.value for object in getDropDowns('minto') | filter: {value:$viewValue}"  uib-typeahead-no-results="noResults" class="form-control setwidth typeahead" typeahead-show-hint="true" >
+                                </span>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+                            <!-- cmt-242 and 260 ends-->
+
+                            <!-- <div class="form-group" ng-if="d.fieldtype=='select' &&  d.key =='vlandescription'">
+                                <label class="labelcolor mandat" ng-if="d.required =='required'" >{{d.fieldname}}</label>
+                              <div class="input-group" >
+                                <input type="text"  ng-disabled ="EditDisabled" ng-required="true" ng-if="d.required =='required'" ng-model="otherDeviceListing.deviceCollector[d.key]" style="border-right:0px;width: 100% !important;" uib-typeahead="object.value for object in getDropDownsVlan(d.key,d.key.name) | filter: {value:$viewValue}"  class="form-control inputset hide_input_box" typeahead-show-hint="true" typeahead-min-length="0">
+                                  <span class="input-group-addon" id="basic-addon1" style="border-radius: 0px;background-color: #fff;font-size:11px;cursor:pointer ;width: 9.2% !important;"><i class="fa fa-chevron-down" style="cursor:pointer"></i></span>
+
+                              </div>
+                            </div> -->
+
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div ng-if="showRelevant == true" class="col-xs-3" style="padding-left: 13px !important;">
+            <div class="" style="border: 1px solid #ccc;border-bottom:0px !important; ">
+                <label style="height:28px;color: #fff;
+        font-size: 16px; background-color: #25467a;width:100%;
+        font-weight: normal">
+		<span style="margin-left: 4%;margin-top: 1%;display: inline-block">Relevant Attributes</span>
+		</label>
+            </div>
+            <form name="myFormRel" id="myFormRel" role="form" novalidate class="formsetwidth1" style="border: 1px solid #ccc ; border-top: 0px !important;">
+                <div class="col-xs-12 addScroll" style="padding-left: 15px !important;padding-right: 15px !important; margin-top: 3%">
+                    <div ng-repeat="d in devicedata" ng-if="d.group =='relevant'">
+                        <div class="form-group"  ng-if=d.fieldtype=='text'>
+                            <label ng-if ="d.required=='required'" class="labelcolor mandat control-label"> {{d.fieldname}}</label>
+                            <label ng-if ="d.required !='required'" class="labelcolor control-label"> {{d.fieldname}}</label>
+                            <div class="input-group-cust" >
+                                <input ng-if ="d.required=='required'" ng-disabled ="EditDisabled" name={{d.fieldname}} id={{d.fieldname}} class = "form-control inputset hide_input_box" ng-model="otherDeviceListing.deviceCollector[d.key]" maxlength="{{d.maxlength}}" size="{{d.maxlength}}" minlength={{d.minlength}}  required type="text" data-placement="bottom" data-toggle="tooltipInput" title="{{(otherDeviceListing.deviceCollector[d.key].length > 30) ? otherDeviceListing.deviceCollector[d.key] :'' }}" data-content="{{otherDeviceListing.deviceCollector[d.key]}}" data-trigger="hover" maxlength="{{d.maxlength}}" size="{{d.maxlength}}" minlength="{{d.minlength}}" limit-to-max max="{{getMaxValue(d.datatype)}}">
+                                <input ng-if ="d.required !='required'" ng-disabled ="EditDisabled" name="myName" class = "form-control inputset hide_input_box" ng-model="otherDeviceListing.deviceCollector[d.key]" maxlength="{{d.maxlength}}" size="{{d.maxlength}}" minlength={{d.minlength}}  type="text" data-placement="bottom" data-toggle="tooltipInput" title="{{(otherDeviceListing.deviceCollector[d.key].length > 30) ? otherDeviceListing.deviceCollector[d.key] :'' }}" data-content="{{otherDeviceListing.deviceCollector[d.key]}}" data-trigger="hover" maxlength="{{d.maxlength}}" size="{{d.maxlength}}" minlength="{{d.minlength}}" limit-to-max max="{{getMaxValue(d.datatype)}}">
+                                <span ng-if ="d.required =='required'" class="mandat-text" ng-show="myForm1.{{d.fieldname}}.$error.maxlength">{{d.fieldname}}  must be {{d.maxlength}} character maximum</span>
+                                <span ng-if ="d.required =='required'" class="mandat-text" ng-show="myForm1.{{d.fieldname}}.$error.minlength">{{d.fieldname}}  must be {{d.minlength}} character minimum</span>
+                                <span ng-if ="d.required =='required'" class="mandat-text" ng-show="myForm1.{{d.fieldname}}.$error.required && !userForm.username.$pristine">{{d.fieldname}}  is required</span>
+
+                            </div>
+
+                        </div>
+                        <div class="form-group"  ng-if=d.fieldtype=='integer'>
+                            <label class="labelcolor control-label"> {{d.fieldname}}</label>
+                            <div class="controls" >
+                                <input name="myName" ng-disabled ="EditDisabled" only-digits class = "form-control inputset hide_input_box" ng-model="otherDeviceListing.deviceCollector[d.key]" maxlength="{{d.maxlength}}" size="{{d.maxlength}}" minlength={{d.minlength}} type="text" data-placement="bottom" data-toggle="tooltipInput" title="{{(otherDeviceListing.deviceCollector[d.key].length > 30) ? otherDeviceListing.deviceCollector[d.key] :'' }}" data-content="{{otherDeviceListing.deviceCollector[d.key]}}" data-trigger="hover" maxlength="{{d.maxlength}}" size="{{d.maxlength}}" minlength="{{d.minlength}}" limit-to-max max="{{getMaxValue(d.datatype)}}">
+                                <!--<span ng-show="showErrorAlert" style="color: #5392ff">This Name exists,please use unique name</span>-->
+                            </div>
+
+                        </div>
+
+                        <div class="form-group"  ng-if=d.fieldtype=='date'>
+                            <label class="labelcolor mandat control-label"> {{d.fieldname}}</label>
+                            <div class="input-group-cust" >
+                                <input name="myName" ng-disabled ="EditDisabled" class = "form-control inputset hide_input_box" ng-model="otherDeviceListing.deviceCollector[d.key]"  type="date" data-placement="bottom" data-toggle="tooltipInput" title="{{(otherDeviceListing.deviceCollector[d.key].length > 30) ? otherDeviceListing.deviceCollector[d.key] :'' }}" data-content="{{otherDeviceListing.deviceCollector[d.key]}}" data-trigger="hover" maxlength="{{d.maxlength}}" size="{{d.maxlength}}" minlength="{{d.minlength}}" limit-to-max max="{{getMaxValue(d.datatype)}}" onkeypress="return false;">
+                                <!--<span ng-show="showErrorAlert" style="color: #5392ff">This Name exists,please use unique name</span>-->
+                            </div>
+
+                        </div>
+
+                        <div class="form-group" ng-if=d.fieldtype=='select'>
+                            <label class="labelcolor">{{d.fieldname}}</label>
+                            <div class="input-group-cust" >
+                                <input type="text" ng-disabled ="EditDisabled" ng-class="getValueMine(d.key)"  ng-focus="onFocus($event)" ng-model="otherDeviceListing.deviceCollector[d.key]" uib-typeahead="object.value for object in getDropDowns(d.key) | filter: {value:$viewValue}"  class="form-control inputset hide_input_box autoComplete" typeahead-show-hint="true" typeahead-min-length="0" data-placement="bottom" data-toggle="tooltipInput" title="{{(otherDeviceListing.deviceCollector[d.key].length > 30) ? otherDeviceListing.deviceCollector[d.key] :'' }}" data-content="{{otherDeviceListing.deviceCollector[d.key]}}" data-trigger="hover" maxlength="{{d.maxlength}}" size="{{d.maxlength}}" minlength="{{d.minlength}}" limit-to-max max="{{getMaxValue(d.datatype)}}">
+                                <!--<span class="input-group-addon" id="basic-addon1" style="border-radius: 0px;background-color: #fff;font-size:11px;cursor:pointer ;width: 9.2% !important;"><i class="fa fa-chevron-down" style="cursor:pointer"></i></span>-->
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-xs-3" ng-if="showCustomAttribute=='true'" style="padding-left: 13px !important;">
+            <div class="" style="border: 1px solid #ccc ; border-bottom: 0px !important;">
+                <label style="height:28px;background-color: #25467a;color: #fff;font-size: 16px;font-weight: normal;width:100%">
+				<span style="margin-left: 4%;margin-top: 1%;display: inline-block">Custom Attributes</span>
+				</label>
+            </div>
+            <form name="myFormCounts" id="myFormCounts" role="form" novalidate class="formsetwidth1" style="border: 1px solid #ccc ; border-top: 0px !important;">
+                <div class="col-xs-12 addScroll" style="padding-left: 15px !important;padding-right: 15px !important; margin-top: 3%;">
+
+                    <div class="form-group" ng-repeat="ca in customAttributes | orderBy:'attribute'">
+                        <label class="labelcolor">
+                            {{ca.attribute}}
+                        </label>
+                        <input type="text" data-ng-disabled="disableFields" class="form-control inputset hide_input_box_extended" id="custAttributeInput_{{ca.attribute}}" value="{{ca.value}}" data-placement="bottom" data-toggle="tooltipInput" title="{{(ca.value.length > 30) ? ca.value :'' }}" data-content="{{ca.value}}" data-trigger="hover" maxlength ="100" />
+                    </div>
+                </div>
+            </form>
+        </div>
+        <!--End::Extented Attributes-->
+        <!-- Relevant Attributes-->
+
+        <div class="col-xs-3" style="padding-left: 13px !important;" ng-if="relatedCount.length>0">
+            <div class="" style="background-color: #25467a;border: 1px solid #ccc ;border-bottom: 0px !important;">
+                <label style="color: #fff;font-size: 16px;float: left;width: 100% !important;margin-bottom: 0px!important;background-color:#25467a;font-weight: normal;padding-top: 2%;padding-left: 5%;">Related Counts</label>
+            </div>
+            <form name="myFormCounts" role="form" novalidate class="formsetwidthRelatedCounts" style="border: 1px solid #ccc;border-top: 0px !important;">
+                <div class="col-xs-12" style="padding-left: 15px !important;padding-right: 15px !important;margin-top: 3%;">
+                    <div class="form-group" ng-repeat ="rc in relatedCount">
+
+                      <span ng-if="rc.isclickable =='true'">
+                        <i class="fa fa-tablet fontawesomeicon" style="cursor:pointer" ng-click ="relatedCountAssociation(rc.associationkey,rc.displaykey)"></i>
+                      </span>
+                        <label style="color: #fff">
+                            {{rc.id}}
+                        </label>
+                        <input id="{{rc.nospcaeid}}" type="text" disabled="disabled" class="form-control inputset" value="{{rc.count}}" data-placement="bottom" data-toggle="tooltipInput" title="{{(rc.count.length > 30) ? rc.count :'' }}" data-content="{{rc.count}}" data-trigger="hover"/>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+        <!-- adding schedule div in events code change starts-- manisha-->
+        <div class="col-xs-3" ng-show="showScheduleDiv"  style="padding-left: 13px !important;">
+            <div class="" style="background-color: #25467a;border: 1px solid #ccc ;border-bottom: 0px !important;">
+                <label style="color: #fff;font-size: 16px;float: left;width: 100% !important;margin-bottom: 0px!important;background-color:#25467a;font-weight: normal;padding-top: 2%;padding-left: 5%;">Schedule</label>
+            </div>
+            <div  ng-model="txtAreaVal2" style="min-height: 100px;height: auto;display: block;border: 1px solid #ccc">
+                <!--{{ScheduleChangeData}}-->
+                <p ng-repeat="p in ScheduleChangeData">
+                    {{p}}
+                </p></br>
+            </div>
+        </div>
+        <!-- adding schedule div in events code change ends-->
+
+        <span ng-if="deviceDisplayName !='Data Source' ">
+        <div ng-if="setMarkDeletion == true">
+
+
+            <span style="color:red">MARK FOR DELETION</span>
+        </div>
+      </span>
+
+      <div ng-if="relatedCountShowMark == false || device_add.setreview=='yes' || device_add.setreview=='Yes'  ||device_add.setreview=='YES' ">
+
+          <i style="height: 34px;color:#949394;color:red;margin-left: 10px;margin-top: 10px;" class="fa fa fa-exclamation-triangle fa-2x" style="cursor:pointer"></i>
+            <span  ng-if="device_add.setreview=='yes' || device_add.setreview=='Yes'  ||device_add.setreview=='YES' " style="color:red">MARK FOR REVIEW</span>
+      </div>
+
+      <div ng-if="relatedCountShowMark ==true || device_add.setreview=='no' || device_add.setreview=='No'  ||device_add.setreview=='NO' ">
+
+          <i style="height: 34px;color:#949394;color:green;margin-left: 10px;margin-top: 10px;" class="fa fa-check fa-2x" style="cursor:pointer"></i>
+
+      </div>
+        <span ng-if="deviceDisplayName !='Data Source' && deviceDisplayName !='Events' ">
+        <!-- <div ng-if="deviceID== 'SetReviewNotes' ">
+
+            <i style="height: 34px;color:#949394;color:red;margin-left: 10px;margin-top: 10px;" class="fa fa fa-exclamation-triangle fa-2x" style="cursor:pointer"></i>
+            <span  style="color:red">MARK FOR REVIEW</span>
+        </div>
+        <div ng-if="deviceID== 'UnSetReviewNotes' ">
+
+          <span ng-if="relatedCountShowMark ==true">
+              <i style="height: 34px;color:#949394;color:green;margin-left: 10px;margin-top: 10px;" class="fa fa-check fa-2x" style="cursor:pointer"></i>
+          </span>
+          <span ng-if="relatedCountShowMark == false">
+                <i style="height: 34px;color:#949394;color:red;margin-left: 10px;margin-top: 10px;" class="fa fa fa-exclamation-triangle fa-2x" style="cursor:pointer"></i>
+          </span>
+        </div> -->
+      </span>
+
+
+        <!--End::Defect21321 Made it disabled -->
+        <!--End::Extented Attributes-->
+    </div>
+</div>
+<loading ng-show="saveSpinner" style="margin-top: 2%"></loading>
+<div class="col-xs-12">
+    <!--<input type="submit"  id="submit" class="savebtn" ng-click="submitEditedData(logicalDeviceData[currentIndex].name)" data-ng-disabled="disableSave" value="SAVE"/>
+    <input type="submit"  id="submit" class="savebtn22" ng-click="reloadPage()"  value="CANCEL"/>-->
+    <input type="submit"  id="submit" class="savebtn" ng-click="submitEditedData(logicalDeviceData[currentIndex].name)" value="SAVE" ng-show="!(disableSave)"/>
+    <input type="submit"  id="submit" class="savebtn22" ng-click="reloadPage()"  value="CANCEL" ng-show="!(disableSave)"/>
+</div>
+<!-- export doc starts manisha code change-aug28-->
+
+<div id="page-content" class="row" ng-show="hideExportDoc" ng-controller="otherDevicesController">
+    <img  src="img/ibmLogoBlue.png" height="60" width="100"> <br>
+    <!--<div class="col-xs-12" style="height: 500px"></div>
+    <hr style="color: gray"/>-->
+    <div class="col-xs-12" style="margin-bottom: 500px;margin-top: 200px">
+        <hr style="color:gray;height: 2px"/>
+
+        <div class="col-xs-6 col-xs-offset-3">
+            <p style="font-size: 30px;color: #25467a;margin-bottom: 15px"><b>IBM SCOPEPLUS</b>
+            <p style="font-size: 25px;color: #25467a"><b>{{newStrDisplayName}} PROFILE DOCUMENT</b></p>
+            <hr style="color: #ccc;height: 1px"/>
+            <p style="font-size: 20px;color: #25467a"> {{NameofDevice}} </p>
+            <p style="font-size: 20px;color: gray">Service ID - {{IdofDevice}}</p>
+            <hr style="color: gray;height: 2px"/>
+        </div>
+
+    </div>
+    <!-- page 2 starts-->
+    <div class="row">
+        <span style="font-size: 30px;color: #25467a"> Version Control</span> <br/>
+        <div class="table-responsive" style="margin-bottom: 800px">
+            <table class="coltable table-bordered table-striped thead-inverse" style="width: 100%;border: 1px solid;border-collapse: collapse;">
+                <tr style="background-color: #005599;border: 1px solid">
+                    <th>
+                        Version
+                    </th>
+                    <th>
+                        Date Issued
+                    </th>
+                    <th>
+                        Author
+                    </th>
+                    <th>
+                        Status
+                    </th>
+                </tr>
+                <tr style="border: 1px solid">
+                    <td> </td>
+                    <td> </td>
+                    <td> </td>
+                    <td> </td>
+                </tr>
+                <tr style="border: 1px solid">
+                    <td> </td>
+                    <td> </td>
+                    <td> </td>
+                    <td> </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <!-- cmt-1893 starts-->
+    <div class="row" style="margin-bottom: 400px">
+        <span style="font-size: 30px;color: #25467a"> <b>Contents</b></span> <br/>
+        <p style="font-size:20px;color: #25467A "> 1. {{newStrDisplayName}} Summary </p>
+        <p style="font-size:12px;color: #25467A;margin-left: 4px"> 1.1 {{NameofDevice}}  {{newStrDisplayName}} Description</p>
+        <p style="font-size:12px;color: #25467A;margin-left: 4px"> 1.2 Summary of {{NameofDevice}}</p>
+        <p ng-if="deviceDisplayName == 'Services'" style="font-size:12px;color: #25467A;margin-left: 4px"> 1.3 Stakeholders</p>
+        <p style="font-size:20px;color: #25467A "> 2. {{newStrDisplayName}} Infrastructure</p>
+        <p style="font-size:12px;color: #25467A;margin-left: 4px ">  2.1 Infrastructure Diagram</p>
+        <div ng-repeat="section in dummyArray">
+            <p ng-repeat="(key1,value1) in section">
+                <span style="font-size: 12px;color: #25467A;margin-left: 4px">2.{{$parent.$index +2}} {{key1}} associated to {{NameofDevice}} </span>
+            </p>
+        </div>
+        <p ng-if="deviceDisplayName == 'Services'" style="font-size:20px;color: #25467A ">  3. Component Details</p>
+        <p  ng-if="deviceDisplayName == 'Services'"style="font-size:12px;color: #25467A;margin-left: 4px">  3.1 Component Associated to Logical Device</p>
+        <p  ng-if="deviceDisplayName == 'Services'"style="font-size:20px;color: #25467A ">  4. Interfaces Associated to Logical Device</p>
+        <p  ng-if="deviceDisplayName == 'Services'"style="font-size:20px;color: #25467A ">  5. Network Configuration Associated to {{NameofDevice}}</p>
+        <p  ng-if="deviceDisplayName == 'Services'"style="font-size:20px;color: #25467A ">  6. File Systems(Storage) Associated to {{NameofDevice}}</p>
+    </div>
+    <!-- cmt-1893 ends-->
+
+    <div class="row">
+        <p style="color: #25467a;font-size: 30px"><label> 1 {{newStrDisplayName}} Summary</label> <br/></p>
+        <p style="color: #25467a;font-size: 20px">1.1 {{NameofDevice}}  {{newStrDisplayName}} Description </p>
+        <p style="color: #25467a;font-size: 20px"> {{ServDescription}}</p>
+        <p style="color: #25467a;font-size: 20px">
+            1.2 Summary of {{NameofDevice}}
+        </p>
+        <table class="coltable table-bordered table-striped thead-inverse" style="width: 100%;border: 1px solid;border-collapse: collapse;">
+            <tr ng-if="deviceDisplayName =='Services'" ng-repeat="(key, value) in attrDataNew1" style="border: 1px solid #ccc;font-size: 15px;background-color: #ccc">
+                <td> {{key}} </td>
+                <td> {{ value }} </td>
+            </tr>
+            <tr ng-if="deviceDisplayName =='Physical Devices'" ng-repeat="(key, value) in attrDataNew2" style="border: 1px solid #ccc;font-size: 15px;background-color: #ccc">
+                <td> {{key}} </td>
+                <td> {{ value }} </td>
+            </tr>
+        </table>
+        <p ng-if="deviceDisplayName == 'Services'" style="color: #25467a;font-size: 20px">
+            1.3 Stakeholders
+        </p>
+        <table ng-if="deviceDisplayName == 'Services'" class="table table-bordered table-striped" style="width: 100%">
+            <thead>
+            <tr class="fontHelvetica" style="background-color:#25467A;color:#ffffff;font-size:10px;">
+
+
+                <td style="border:1px solid #25467A">
+                    Name
+                </td>
+                <td style="border:1px solid #25467A">
+                    Role
+                </td>
+                <td style="border:1px solid #25467A">
+                    Email Address
+                </td>
+                <td style="border:1px solid #25467A">
+                    Telephone No.
+                </td>
+
+            </tr>
+            </thead>
+            <tbody>
+
+            <tr class="page-break" ng-repeat="vals in StakeholderData" style="border: 1px solid;font-size: 10px;background-color: #ccc">
+
+                <!--<td ng-repeat="(key,value) in vals">{{value}}</td>-->
+                <td>{{vals.name}}</td>
+                <td>{{vals.role}}</td>
+                <td>{{vals.email}}</td>
+                <td>{{vals.telephone}}</td>
+
+            </tr>
+            </tbody>
+        </table>
+
+    </div>
+
+    <div class="row">
+        <p style="color: #25467a;font-size: 30px"> 2. {{newStrDisplayName}} Infrastructure</p>
+        <p style="color: #25467a;font-size: 18px"> 2.1 Infrastructure Diagram</p>
+        <div ng-repeat="section in dummyArray" style="width: 400%">
+            <div ng-repeat="(key1,value1) in section">
+                <p style="color: #25467a;font-size:18px">
+                    2.{{$parent.$index +2}}
+                    {{key1}} associated to {{NameofDevice}} </p>
+                <!-- creating a table for association data starts-->
+                <table class="table table-bordered table-striped" style="width: 100%">
+                    <thead>
+                    <tr class="fontHelvetica" style="background-color:#25467A;color:#ffffff;font-size:10px;">
+
+
+                        <td style="border:1px solid #25467A" ng-repeat="(key3,value) in value1[0]">
+                            {{key3}}
+                        </td>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    <tr class="page-break" ng-repeat="vals in value1" style="border: 1px solid;font-size: 10px;background-color: #ccc">
+
+                        <td ng-repeat="(key,value) in vals">{{value}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <!-- creating a table for association data ends-->
+            </div>
+        </div>
+    </div>
+
+    <div class="row" ng-if="deviceDisplayName == 'Services'">
+        <p style="color: #25467a;font-size: 30px"> 3 Component Details</p>
+        <table class="table table-bordered table-striped" style="width: 100%">
+            <thead>
+            <tr class="fontHelvetica" style="background-color:#25467A;color:#ffffff;font-size:10px;">
+
+
+                <td style="border:1px solid #25467A">
+                    Name
+                </td>
+                <td style="border:1px solid #25467A">
+                    Component Type
+                </td>
+                <td style="border:1px solid #25467A">
+                    Migration Approach
+                </td>
+                <td style="border:1px solid #25467A">
+                    Status
+                </td>
+                <td style="border:1px solid #25467A">
+                    Discovery Status
+                </td>
+                <td style="border:1px solid #25467A">
+                    Criticality
+                </td>
+
+            </tr>
+            </thead>
+            <tbody>
+
+            <tr class="page-break" ng-repeat="val3 in Section3Data" style="border: 1px solid;font-size: 10px;background-color: #ccc">
+
+                <!--<td ng-repeat="(key2,value2) in val3">{{value2}}</td>-->
+                <td>{{val3.Name}}</td>
+                <td>{{val3['Component Type']}}</td>
+                <td>{{val3['Migration Approach']}}</td>
+                <td>{{val3['Status']}}</td>
+                <td>{{val3['Discovery Status']}}</td>
+                <td>{{val3.Criticality}}</td>
+            </tr>
+            </tbody>
+        </table>
+
+        <p style="color: #25467a;font-size: 30px"> 3.1 Component Associated to Logical Device</p>
+        <table class="table table-bordered table-striped" style="width: 100%">
+            <thead>
+            <tr class="fontHelvetica" style="background-color:#25467A;color:#ffffff;font-size:10px;">
+
+
+                <!--<td style="border:1px solid #25467A" ng-repeat="(key,value) in Section31Data[0]">
+                    {{key}}
+                </td>-->
+                <td style="border:1px solid #25467A">
+                    Logical Device Name
+                </td>
+                <td style="border:1px solid #25467A">
+                    Environment
+                </td>
+                <td style="border:1px solid #25467A">
+                    Component Name
+                </td>
+
+            </tr>
+            </thead>
+            <tbody>
+
+            <tr class="page-break" ng-repeat="val3 in Section31Data" style="border: 1px solid;font-size: 10px;background-color: #ccc">
+
+                <!--<td ng-repeat="(key2,value2) in val3">{{value2}}</td>-->
+                <td>{{val3['Device Name']}}</td>
+                <td>{{val3.Environment}}</td>
+                <td>{{val3['Component Name']}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="row" ng-if="deviceDisplayName == 'Services'">
+        <p style="color: #25467a;font-size: 30px"> 4 Interfaces Associated to Logical Device</p>
+        <table class="table table-bordered table-striped" style="width: 100%">
+            <thead>
+            <tr class="fontHelvetica" style="background-color:#25467A;color:#ffffff;font-size:10px;">
+
+
+                <!--<td style="border:1px solid #25467A" ng-repeat="(key,value) in Section4Data[0]">
+                    {{key}}
+                </td>-->
+                <td style="border:1px solid #25467A">
+                    Device Name
+                </td>
+                <td style="border:1px solid #25467A">
+                    Connection Type
+                </td>
+                <td style="border:1px solid #25467A">
+                    Inbound Component Name
+                </td>
+                <td style="border:1px solid #25467A">
+                    Outbound Component Name
+                </td>
+                <td style="border:1px solid #25467A">
+                    Communication Type
+                </td>
+                <td style="border:1px solid #25467A">
+                    Protocol
+                </td>
+                <td style="border:1px solid #25467A">
+                    Port Numbers
+                </td>
+                <td style="border:1px solid #25467A">
+                    Discovery Status
+                </td>
+
+            </tr>
+            </thead>
+            <tbody>
+
+            <tr class="page-break" ng-repeat="val3 in Section4Data" style="border: 1px solid;font-size: 10px;background-color: #ccc">
+
+                <!--<td ng-repeat="(key2,value2) in val3">{{value2}}</td>-->
+                <td>{{val3['Device Name']}}</td>
+                <td>{{val3['Connection Type']}}</td>
+                <td>{{val3['Inbound Component Name']}}</td>
+                <td>{{val3['Outbound Component Name']}}</td>
+                <td>{{val3['Communication Type']}}</td>
+                <td>{{val3['Protocol']}}</td>
+                <td>{{val3['Port Numbers']}}</td>
+                <td>{{val3['Discovery Status']}}</td>
+            </tr>
+            </tbody>
+        </table>
+
+
+    </div>
+    <div class="row" ng-if="deviceDisplayName == 'Services'">
+        <p style="color: #25467a;font-size: 30px"> 5 Network Configuration Associated to {{NameofDevice}}</p>
+        <table class="table table-bordered table-striped" style="width: 100%">
+            <thead>
+            <tr class="fontHelvetica" style="background-color:#25467A;color:#ffffff;font-size:10px;">
+
+
+                <!--<td style="border:1px solid #25467A" ng-repeat="(key,value) in Section5Data[0]">
+                    {{key}}
+                </td>-->
+                <td style="border:1px solid #25467A">
+                    Logical Device Name
+                </td>
+                <td style="border:1px solid #25467A">
+                    IP Address
+                </td>
+                <td style="border:1px solid #25467A">
+                    Connection Name
+                </td>
+                <td style="border:1px solid #25467A">
+                    MAC Address
+                </td>
+                <td style="border:1px solid #25467A">
+                    Subnet Mask
+                </td>
+                <td style="border:1px solid #25467A">
+                    Default Gateway
+                </td>
+                <td style="border:1px solid #25467A">
+                    Discovery Status
+                </td>
+                <td style="border:1px solid #25467A">
+                    VLAN Model
+                </td>
+                <td style="border:1px solid #25467A">
+                    Dynamic IP Address
+                </td>
+
+            </tr>
+            </thead>
+            <tbody>
+
+            <tr class="page-break" ng-repeat="val3 in Section5Data" style="border: 1px solid;font-size: 10px;background-color: #ccc">
+
+                <!--<td ng-repeat="(key2,value2) in val3">{{value2}}</td>-->
+                <td>{{val3['Logical Device Name']}}</td>
+                <td>{{val3['IP Address']}}</td>
+                <td>{{val3['Connection Name']}}</td>
+                <td>{{val3['MAC Address']}}</td>
+                <td>{{val3['Subnet Mask']}}</td>
+                <td>{{val3['Default Gateway']}}</td>
+                <td>{{val3['Discovery Status']}}</td>
+                <td>{{val3['VLAN Model']}}</td>
+                <td>{{val3['Dynamic IP Address']}}</td>
+            </tr>
+            </tbody>
+        </table>
+
+
+    </div>
+    <div class="row" ng-if="deviceDisplayName == 'Services'">
+        <p style="color: #25467a;font-size: 30px"> 6 File Systems(Storage) Associated to {{NameofDevice}} </p>
+        <table class="table table-bordered table-striped" style="width: 100%">
+            <thead>
+            <tr class="fontHelvetica" style="background-color:#25467A;color:#ffffff;font-size:10px;">
+
+
+                <!--<td style="border:1px solid #25467A" ng-repeat="(key,value) in Section6Data[0]">
+                    {{key}}
+                </td>-->
+                <td style="border:1px solid #25467A">
+                    Logical Device Name
+                </td>
+                <td style="border:1px solid #25467A">
+                    Name
+                </td>
+                <td style="border:1px solid #25467A">
+                    Path
+                </td>
+                <td style="border:1px solid #25467A">
+                    Format
+                </td>
+                <td style="border:1px solid #25467A">
+                    Type
+                </td>
+                <td style="border:1px solid #25467A">
+                    Access Type
+                </td>
+                <td style="border:1px solid #25467A">
+                    Migration Approach
+                </td>
+                <td style="border:1px solid #25467A">
+                    Discovery Status
+                </td>
+                <td style="border:1px solid #25467A">
+                    RAID Level
+                </td>
+                <td style="border:1px solid #25467A">
+                    RAID TYPE
+                </td>
+                <td style="border:1px solid #25467A">
+                    Total Size MB
+                </td>
+                <td style="border:1px solid #25467A">
+                    Used Size GB
+                </td>
+
+            </tr>
+            </thead>
+            <tbody>
+
+            <tr class="page-break" ng-repeat="val3 in Section6Data" style="border: 1px solid;font-size: 10px;background-color: #ccc">
+
+                <!--<td ng-repeat="(key2,value2) in val3">{{value2}}</td>-->
+                <td>{{val3['Logical Device Name']}}</td>
+                <td>{{val3['Name']}}</td>
+                <td>{{val3['Path']}}</td>
+                <td>{{val3['Format']}}</td>
+                <td>{{val3['Type']}}</td>
+                <td>{{val3['Access Type']}}</td>
+                <td>{{val3['Migration Approach']}}</td>
+                <td>{{val3['Discovery Status']}}</td>
+                <td>{{val3['RAID Level']}}</td>
+                <td>{{val3['RAID TYPE']}}</td>
+                <td>{{val3['Total Size MB']}}</td>
+                <td>{{val3['Used Size GB']}}</td>
+            </tr>
+            </tbody>
+        </table>
+
+    </div>
+
+</div>
+
+<div id="Modal_heatmap" class="modal" style="border-radius:0px;">
+    <!-- Document Modal content -->
+    <div class="modal-content" style="width:70%;height:auto">
+        <div class="modal-header" style="background-color:#25477B">
+            <span>Heat Map for Service {{otherDeviceData[currentIndex].name}}</span>
+            <span class="modal-close" ng-click ="close_Modal('Modal_heatmap')">&times;</span>
+        </div>
+        <div class="modal-body">
+              <table class="table table-bordered table-striped">
+                <tr ng-repeat="row in rangeRowno">
+                  <td width="25%" align="center" ng-repeat="col in rangeColumnno" height="30" style="font-size:11px" id="display_cell_{{row}}_{{col}}" style="font-size:14px">
+                     <span id="display_{{row}}_{{col}}" style="font-size:14px"></span>
+                    {{getMapValDisplay(row,col)}}
+                  </td>
+                <tr>
+              </table>
+        </div>
+        <div class="modal-footer">
+            <!--<button id="import_true" class="btn fontHelveticaNeue" ng-click ="importTrue()" style="border-radius:0px;background-color: #5392FF;color:#FFFFFF;float: right;margin-top: 1%;cursor:pointer">Yes</button>-->
+            <button id="heatmap_close" class="btn fontHelveticaNeue" ng-click ="close_Modal('Modal_heatmap')" style="border-radius:0px;background-color: #666666;color:#FFFFFF;float: right; margin-right: 1%;margin-top: 1%;cursor:pointer">Close</button>
+        </div>
+    </div>
+</div>
+
+
+<!-- export doc ends-->
+
+<!--<div class="col-xs-12">
+    <input type="submit"  id="submit" class="savebtn" ng-click="submitEditedData(logicalDeviceData[currentIndex].name)" data-ng-disabled="disableSave" value="SAVE"/>
+</div>-->
+
+
+<ng-include ng-if="associationDevices" src="'./associationDevices.html'"></ng-include>
+
+
+
+<style>
+    #page-content{display: none;}
+
+    @media print {
+        tr.page-break  { display: block; page-break-before: always; }
+    }
+    .table-bordered {
+        border: 1px solid !important;
+    }
+
+
+    .inputset{
+        /*width: 96% !important;*/
+    <!-- height: 24px !important;-->
+        border-radius: 0px !important;
+    }
+    .labelcolor{
+        color: #949394;
+        font-weight: normal;
+        font-size: 16px;
+    }
+
+    .formsetwidth{
+        background: white !important;
+        float: left;
+        width: 100% !important;
+    }
+    .formsetwidth1{
+        background: white !important;
+        float: right;
+        width: 100% !important;
+    }
+
+    .formsetwidthRelatedCounts{
+        background: #25467a !important;
+        float: left;
+        width: 100% !important;
+    }
+
+
+    .setpadding{
+        padding-bottom: 0px !important;
+        padding-top: 0px !important;
+    }
+    .recordCnt
+    {
+        /*padding: 1% 2%;*/
+        padding: 0.7% 1.7%;
+        text-align: center;
+        font-size: 16px;
+        height: 37px;
+        width: 32px;
+        background-color: #ffffff;
+        border: 1px solid #949394;
+
+    }
+    .savebtn{
+        border: none;
+        margin-left: 37%;
+        margin-top: 4%;
+        font-size: 13px;
+        width: 13%;
+        height: 37px;
+        margin-bottom: 2%;
+        color: #FFF;
+        background-color: #5392ff;
+    }
+    .savebtn[disabled] {
+        background-color: 	#ADD8E6
+    }
+
+    .savebtn22{
+        border: none;
+        font-size: 13px;
+        width: 13%;
+        height: 37px;
+        margin-bottom: 2%;
+        color: #FFF;
+        background-color: #5392ff;
+    }
+
+    .selectbox2{
+        background-color: #fff;
+        height: 25px;
+        width: 108px;
+        border: 1px solid #ccc;
+        color: #949394;
+        float: left;
+        margin-right: 10px;
+    }
+</style>
+
+<script>
+    /*$(function() { $( ".dropdown-submenu .test span" ).click(function() {
+     //$('#outer_audit .inner_audit button').removeClass('active_button_audit');
+     //$(this).addClass('active_button_audit');
+     $(this).toggleClass("glyphicon glyphicon-plus glyphicon glyphicon-minus");
+     }); });*/
+    $(function() { $( ".dropdown-submenu .test span" ).click(function() {
+        //$('#outer_audit .inner_audit button').removeClass('active_button_audit');
+        //$(this).addClass('active_button_audit');
+        $(this).toggleClass("glyphicon glyphicon-plus glyphicon glyphicon-minus");
+    }); });
+
+</script>
+<script>
+    /*$(document).ready(function(){
+     $('.dropdown-submenu a.test').on("click", function(e){
+     $(this).next('ul').toggle();
+     e.stopPropagation();
+     e.preventDefault();
+     });
+     });*/
+
+
+    function test(e) {
+        e.preventDefault();
+    }
+</script>
+
+<style>
+    /* CSS used here will be applied after bootstrap.css */
+
+    .dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus {
+        background-image:none !important;
+    }
+    .dropdown-menu > li > a:hover {
+        background-color:transparent !important;
+    }
+    .dropdown-menu > li > a {
+        padding: 3px 20px !important;
+        cursor: pointer;
+    }
+
+    #demo12 h5{
+        color: #777 !important;
+    }
+    .main-header-outer .dropdown-menu {
+        width:100%;
+        background-color: #fff !important;
+        color: black !important;
+    }
+    .list-outer .dropdown-menu {
+        width: inherit;
+        background-color: #fff !important;
+        color: black !important;
+    }
+    .main-header-outer .dropdown-menu .dropdown-submenu{
+        margin: 4px 0px;
+    }
+    .main-header-outer .dropdown-menu .dropdown-submenu .test .glyphicon{
+        font-size: 10px;
+        top: 0px;
+    }
+    .main-header-outer .parent-dp{
+        min-width: 900px;
+        right: 0;
+        left: inherit;
+        border-radius: 0px;
+        border: 0px;
+        box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.15);
+
+    }
+    .main-header-outer .dropdown button{
+
+        border-radius: 0px;
+    }
+    .dp-input{
+        background: transparent;
+        border: 0px;
+        box-shadow: none;
+    }
+    .main-header-outer .dropdown-menu.device-type-list>li>a:focus, .dropdown-menu.device-type-list>li>a:hover{
+        background-color: transparent;
+        outline: 0;
+
+    }
+
+    .main-header-outer .dropdown-menu{
+        background: #fff;
+        /*border:none; CMT-2431*/
+        border:1px solid #ccc;
+        box-shadow:none;
+    }
+    ul.dropdown-menu.dp-submenu-position{
+      border:none;
+      list-style: none;
+       /*overflow-y: auto;*/
+    }
+    .main-header-outer .dp-input input{
+        margin-left: 32px;
+    }
+    .main-header-outer .search-filter-inner .form-control{
+        color: #777;
+        background: transparent;
+        font-weight: 400;
+        font-size: 13px;
+    }
+    .search-input-outer .btn, .parent-dp .btn{
+        font-size: 14px;
+        border-color: #ccc !important;
+        border-left: 0px !important;
+        border-radius: 0px;
+        color: #ddd !important;
+    }
+    .search-input-outer .btn, .parent-dp .btn:focus{
+        outline: 0;
+        box-shadow: none;
+        border: 0px;
+    }
+    .search-input-outer .btn, .parent-dp .btn i{
+        color: #555 !important;
+    }
+    .parent-dp .btn.update-btn{
+        color: #fff !important;
+        border: 0px;
+        border-color: transparent !important;
+        box-shadow: none;
+    }
+    .main-header-outer .input-group-btn .btn, .main-header-outer .input-group-btn .btn:hover, .main-header-outer .input-group-btn .btn:focus{
+        color: black !important;
+        background: transparent !important;
+        border: 1px solid #aaa;
+        outline: 0;
+    }
+    ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+        color: rgba(255, 255, 255, 0.5) !important;
+    }
+    ::-moz-placeholder { /* Firefox 19+ */
+        color: rgba(255, 255, 255, 0.5) !important;
+    }
+    :-ms-input-placeholder { /* IE 10+ */
+        color: rgba(255, 255, 255, 0.5) !important;
+    }
+    :-moz-placeholder { /* Firefox 18- */
+        color: rgba(255, 255, 255, 0.5) !important;
+    }
+    .main-header-outer .caret{
+        margin: 0px 5px;
+    }
+    .main-header-outer .border-outer{
+        border:1px solid #ddd;
+    }
+    .main-header-outer .dropdown-menu>li>a:hover {
+        background-color: black
+    }
+    .main-header-outer .caret{
+        position: initial;
+        top: 0px;
+        right: 0px;
+    }
+    .dp-submenu-position{
+        position: inherit;
+    }
+    .dp-submenu-position li .input-group{
+        margin-left: 24px;
+    }
+    .dp-submenu-position li.dropdown-submenu:nth-child(even) button{
+        font-size: 13px;
+    }
+    .search-filter-outer{
+        float: left;
+    }
+    .main-header-outer input{
+        border-radius:0px;
+        box-shadow: none;
+    }
+    .filter-input-size input{
+        font-size:13px;
+    }
+    .filter-input-size .input-group-btn i{
+        font-size: 13px;
+    }
+    li:nth-child(even) .filter-input-size .input-group-btn i{
+        font-size: 13px;
+        padding-bottom: 0.45em;
+    }
+    .list-right-margin{
+        margin-right: 10px;
+    }
+    .test, .test:hover, .test:focus{
+        color: #777 !important;
+        text-decoration: none !important;
+        background: transparent !important;
+        outline: 0;
+        text-decoration: none !important;
+    }
+    .select_remove_arrow {
+        -webkit-appearance: none !important;
+        -moz-appearance: none !important;
+        text-indent: 1px !important;
+        text-overflow: '';
+        background: transparent !important;
+        border:0px;
+        border-bottom: 1px solid #aaa;
+        -webkit-box-shadow: none !important;
+        box-shadow: none !important;
+    }
+    .hide_input_box{
+        background: transparent !important;
+        border:0px;
+        border-bottom: 1px solid #aaa;
+        /*border: 1px solid #ccc;*/
+        outline:0;
+        -webkit-box-shadow: none !important;
+        box-shadow: none !important;
+        border-radius:none;
+    }
+    .hide_input_box_extended{
+        background: transparent !important;
+        border:0px;
+        border-bottom: 1px solid #aaa;
+        outline:0;
+        /*border: 1px solid #ccc;*/
+        -webkit-box-shadow: none !important;
+        box-shadow: none !important;
+        border-radius:none;
+        /*color:#aaa !important*/
+    }
+    select.input-lg1 {
+        padding: 0 0 !important;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        -o-appearance: none;
+        /* no standardized syntax available, no ie-friendly solution available */
+    }
+    select + i.fa {
+        color: #949394;
+        float: right;
+        margin-top: -22px;
+        margin-right: 5px;
+        pointer-events: none;
+        background-color: #fff;
+        padding-right: 5px;
+    }
+    .pagination > li:last-child > a, .pagination > li:last-child > span {
+        border-top-right-radius: 0px !important;
+        border-bottom-right-radius: 0px !important;
+    }
+    .pagination > li:first-child > a, .pagination > li:first-child > span {
+
+        border-top-left-radius: 0px !important;
+        border-bottom-left-radius: 0px !important;
+    }
+    .table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td{
+        vertical-align: middle;
+        padding: 6px 8px 4px;
+    }
+    .pagination > .disabled > span, .pagination > .disabled > span:hover, .pagination > .disabled > span:focus, .pagination > .disabled > a, .pagination > .disabled > a:hover, .pagination > .disabled > a:focus{
+        color: #337ab7;
+    }
+    .component-outer .fa{
+        font-size: 25px;
+    }
+    .component-outer .fa.fa-trash{
+        position: relative;
+        top: 4px;
+    }
+    .component-outer .fa.fa-plus{
+        font-size: 18px;
+        top: 0px;
+    }
+    .component-outer .fa.fa-search{
+        font-size: 12px;
+        top: 0px;
+    }
+    .arrow_box {
+        position: relative;
+        background: #fff;
+        border: 1px solid #ddd;
+    }
+    .arrow_box:after, .arrow_box:before {
+        bottom: 100%;
+        left: 81%;
+        border: solid transparent;
+        content: " ";
+        height: 0;
+        width: 0;
+        position: absolute;
+        pointer-events: none;
+    }
+
+    .arrow_box:after {
+        border-color: rgba(255, 255, 255, 0);
+        border-bottom-color: #fff;
+        border-width: 11px;
+        margin-left: -14px;
+    }
+    .arrow_box:before {
+        border-color: rgba(221, 221, 221, 0);
+        border-bottom-color: #ddd;
+        border-width: 12px;
+        margin-left: -16px;
+    }
+    ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+        color: #aaa !important;
+    }
+    ::-moz-placeholder { /* Firefox 19+ */
+        color:  #aaa !important;
+    }
+    :-ms-input-placeholder { /* IE 10+ */
+        color:  #aaa !important;
+    }
+    :-moz-placeholder { /* Firefox 18- */
+        color:  #aaa !important;
+    }
+
+    .addScroll{
+        height: 570px;
+        overflow: auto;
+    }
+    .select_typehead{
+        border-bottom: 0px;
+        border-top: 0px;
+        border-right: 0px;
+    }
+    .input_right_border{
+        border-right: 0px;
+    }#myForms .input-group .form-control {
+         width:136% !important;
+     }
+    .mandat:after{
+        content: "*";
+        color: #5392ff;
+        font-size: 14px;
+    }
+    .mandat-text{
+        color: #5392ff;
+    }
+</style>
+<script>
+    $("#demo12 input[type=text]").keypress(function(e) {
+        if(e.which == 13) {
+            //alert('You pressed enter!');
+            var value = $(this).val();
+            if(!value){
+                alert("Please enter value");
+                return;
+            }
+            $('#updateResult').click();
+
+        }
+    });
+
+    $('.my-dropdown').dropdown();
+    $('.my-dropdown').tooltip();
+
+
+</script>
+<style>
+    #sticky.stick {
+        margin-top: 0 !important;
+        position: fixed;
+        top: 0;
+        z-index: 10000;
+        width: 100%;
+        background: #FFF;
+        border-bottom: 1px solid #ccc;
+    }
+    ul>li::before, ol>li::before {
+        color: #959595;
+        content: ' ' !important;
+        display: inline-block;
+        font-family: Arial, sans-serif;
+        font-size: 1.5rem;
+        margin-left: -1.3rem;
+        margin-left: -20px\9;
+        position: absolute;
+    }
+    ul>li, ol>li {
+        padding-left: 0px !important;
+    }
+</style>
+<script>
+    function sticky_relocate() {
+        var window_top = $(window).scrollTop();
+        var div_top = $('#sticky-anchor').offset().top;
+        if (window_top > div_top) {
+            $('#sticky').addClass('stick');
+            $('#sticky-anchor').height($('#sticky').outerHeight());
+        } else {
+            $('#sticky').removeClass('stick');
+            $('#sticky-anchor').height(0);
+        }
+    }
+
+    $(function() {
+        $(window).scroll(sticky_relocate);
+        sticky_relocate();
+    });
+</script>
+<!--CP Style for more text input-->
+<script>
+$("body").tooltip({
+    selector: "[data-toggle='tooltipInput']",
+    container: "body"
+});
+</script>
+<style>
+.tooltip-inner{
+  white-space: pre-line;
+  word-wrap: break-word;
+}
+</style>
+
+<!--CP Style for more text input -->
+<link href="css/Common.css" rel="stylesheet" /><!--
+<link href="css/style.css" rel="stylesheet" />-->
+</div>

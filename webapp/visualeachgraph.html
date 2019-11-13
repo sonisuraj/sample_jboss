@@ -1,0 +1,102 @@
+
+<div class="row" style="padding: 20px 100px;">
+    <div class="col-md-10 col-md-offset-1">
+
+<div class="header-outer clearfix" ng-controller ="markForDeletionController">
+  <div class="ho-left pull-left">
+    <label style="color: #5392ff;font-size: 20px">
+      Visual </br>
+    </label> &nbsp;
+    <div>
+    <label style="color: #949394;">  Visual >> Each Service in Current Found Set </label>
+  </div>
+  </div>
+
+</div>
+</div>
+<!-- <div class=" form-inline form-group pull-left" style="padding-top:10px;margin-left: 3%">
+    <div class="input-group" style="width:60%">
+        <input type="text" ng-model="q"  class="form-control fontHelveticaNeue" style="width:220px;border-radius: 0px;font-size:14px;height:26px;border-right:0px;box-shadow:none;" placeholder="{{headingAssociationTitle}} Filter" aria-describedby="basic-addon1" ng-model="searchCompName" ng-change="checkforEmpty()">
+        <span class="input-group-addon" id="basic-addon1" style="border-radius: 0px;background-color: #fff;font-size:11px;cursor:pointer">
+                   <i class="fa fa-search" ></i>
+                 </span>
+    </div>
+
+</div> -->
+</br>
+</br>
+<div class="col-md-offset-1" align="center" >
+    <div class="row" style="background-color: #fff;" id="top_div" >
+        <div class="col-md-10" style="height: 58px;width: 350px;margin-top:10px;background-color: #FBFCFC; margin-right: 50px; border: 1px solid #c7c7c7; margin-bottom:30px;" ng-repeat="(key,value) in data " >
+            <div>
+              <div style="height:20px;width:281px; color: #734098;font-size:18px; padding-top: 15px;cursor:pointer"  ng-click="openGraph(value)">
+
+                  <input class = "form-control inputset hide_input_box" maxlength="10" size="10" ng-minlength="2"  type="text" data-placement="bottom" data-toggle="tooltipInput" ng-model="key"  title="{{(key.length > 30) ? key :'' }}" data-content="{{key}}" data-trigger="hover" maxlength="10" size="10" minlength="2" limit-to-max max="10">
+
+                </div>
+                <!-- <div style="height:20px;width:200px; color: #734098;font-size:18px; padding-top: 15px;cursor:pointer"  ng-click="openGraph(value)">
+                    {{key}}
+
+                  </div> -->
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+
+    <style>
+    .col-md-10_active{
+     border-style: solid;
+     border-color: lightgray;
+}
+</style>
+
+<script>
+
+$(document).ready(function(){
+$('[data-toggle="tooltip"]').tooltip();
+});
+
+
+$('.my-dropdown').dropdown();
+$('.my-tooltip').tooltip();
+</script>
+<script>
+$("body").tooltip({
+    selector: "[data-toggle='tooltipInput']",
+    container: "body"
+});
+</script>
+<style>
+.tooltip-inner{
+  white-space: pre-line;
+  word-wrap: break-word;
+}
+input.inputset{
+    padding:0px 0px 0px 5px;
+    margin:0px;
+
+}
+.inputset{
+    /*width: 96% !important;*/
+<!-- height: 24px !important;-->
+    border-radius: 0px !important;
+}
+.hide_input_box{
+    background: transparent !important;
+    border:0px;
+    color: #734098;
+    /*border-bottom: 1px solid #aaa;*/
+    /*border: 1px solid #ccc;*/
+    outline:0;
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
+    border-radius:none;
+}
+</style>
+<link href="css/Common.css" rel="stylesheet" /><!--
+<link href="css/style.css" rel="stylesheet" />-->
+<!--  <div class="col-md-12"><a ng-click="moveToAnchor('top_div');">Go to top</a></div>-->
+</div>

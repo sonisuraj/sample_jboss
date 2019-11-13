@@ -1,0 +1,31 @@
+﻿.subDocument {
+    height: 44px;
+    font-family: 'Roboto Regular', 'Roboto';
+    font-weight: 400;
+    font-style: normal;
+    font-size: 14px;
+    color: #4C4C4C;
+    text-align: left;
+    line-height: 30px;
+    border-bottom:solid 2px #fff;
+}
+
+#container-middle {
+    margin-bottom: 70px;
+}
+
+.documentCount {
+    font-size: 12px;
+    color: white;
+    text-align:center;
+    line-height: 20px;
+    background-color: grey;
+    border-radius: 10px;
+    height: 20px;
+    width: 20px;
+}
+.documents-name-title{
+    font-size: 18px;
+    position: relative;
+    left: 4.2%;
+}

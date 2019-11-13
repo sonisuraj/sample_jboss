@@ -1,0 +1,92 @@
+
+
+/*------------------------------------------------------Start: Container CSS------------------------------------------------*/
+.view_note_lable {
+    color: #424242;
+    font-family: "Arial Bold","Arial";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    margin-top: 15px;
+}
+
+#container {
+    padding-top: 44px;
+}
+
+.view_note_moreinfo_first {
+    font-family: 'Helvetica';
+    font-weight: 400;
+    font-style: normal;
+    font-size: 14px;
+    color: #4C4C4C;
+    padding-bottom: 10px;
+}
+
+.view_note_moreinfo {
+    font-family: 'Helvetica';
+    font-weight: 400;
+    font-style: normal;
+    font-size: 14px;
+    color: #4C4C4C;
+    margin: 17px 0 0 10px;
+    padding-bottom: 10px;
+}
+
+.view_note_Info_date {
+    font-family: 'Helvetica';
+    font-weight: 400;
+    font-style: normal;
+    font-size: 14px;
+    color: #4C4C4C;
+    font-style: normal;
+    font-weight: 200;
+    margin: 3px 0 0 0px;
+}
+
+.view_note_patient-Info {
+    font-family: 'Helvetica';
+    font-weight: 400;
+    font-style: normal;
+    font-size: 14px;
+    color: #4C4C4C;
+    font-style: normal;
+    font-weight: 200;
+    margin: 4px 0 0 0px;
+}
+
+.view_Note_approved {
+    font-family: 'Helvetica';
+    font-weight: 400;
+    font-style: normal;
+    font-size: 14px;
+    color: #4C4C4C;
+    text-align: right;
+}
+
+p {
+    margin: 0 0 0 !important;
+}
+
+.view_horizontal_line {
+    border-bottom: solid 1px #E4E4E4;
+    display: block;
+}
+
+.view_container_data {
+    margin-left: 4.2%;
+}
+
+.view_ax_horizantalline {
+    margin-top: 10px;
+}
+
+.text-approved-align {
+    text-align: center;
+}
+
+#container-middle {
+    padding-bottom: 44px;
+}
+/*------------------------End: Container Middle CSS------------------------*/
+/*------------------------------------------------------End: Container CSS------------------------------------------------*/

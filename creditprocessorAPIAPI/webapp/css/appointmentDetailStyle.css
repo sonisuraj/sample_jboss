@@ -1,0 +1,104 @@
+
+
+
+/*------------------------------------------------------Start: Container CSS------------------------------------------------*/
+
+#container {
+    padding-top: 44px;
+    padding-bottom: 60px;
+}
+
+
+.patient-lable {
+    color: #424242;
+    font-family: "Arial Bold","Arial";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    margin: 10px 0 0 7px;
+}
+
+.patient-Exam_Rm {
+    color: #999999;
+    font-family: "Helvetica Light","Helvetica";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 200;
+    margin: 0 0 0 7px;
+}
+
+.patient-Exam_Rm_Time {
+    color: #999999;
+    font-family: "Helvetica Light","Helvetica";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 200;
+}
+
+.patient-Exam_Rm_Date {
+    color: #999999;
+    font-family: "Helvetica Light","Helvetica";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 200;
+    margin: 15px 0 0 7px;
+}
+
+.patient-Reminder-Time {
+    color: #999999;
+    font-family: "Helvetica Light","Helvetica";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 200;
+    padding-top: 8px;
+}
+
+.horizontal_line {
+    border-bottom: solid 1px #E4E4E4;
+    display: block;
+    margin-left: 1px;
+    padding: 5px 0px;
+}
+
+.patient-participants {
+    color: #424242;
+    font-family: "Arial Regular","Arial";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    text-align: left;
+    margin: 10px 0 0 7px;
+}
+
+
+/*------------------------Start: Container Middle CSS------------------------*/
+
+
+#container-middle div.white-shadow {
+    margin: 10px auto;
+    width: 300px;
+    background-color: #FFFFFF;
+    box-shadow: 2px 2px 5px #DCDCDC;
+    border-radius: 3px;
+}
+
+.content-row {
+    line-height: 20px;
+    padding: 10px 10px 10px 5px;
+}
+
+
+
+
+
+.title_appointmentdetail {
+    font-size: 18px;
+    text-align: center;
+}
+/*------------------------End: Container Middle CSS------------------------*/
+/*------------------------------------------------------End: Container CSS------------------------------------------------*/
+
+
+
+

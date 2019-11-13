@@ -1,0 +1,67 @@
+<div class="modal-body" ng-show="ngShowModalCounts" style="padding: 0 !important;">
+    <fieldset>
+        <div class="container-fluid">
+            <div class="row header" style="background-color: #25467a;height: 60px;">
+                <p class="modal-title text-center" style="color: #fff;font-size: 20px;">
+                    <span style="font-size: 25px"> Counts</span>
+                </p>
+                <i class="fa fa-times" aria-hidden="true" style="font-size: 20px; margin-top: -5%;margin-right: 3%;color: #fff !important;float: right;" ng-click="dismissPopup()"></i>
+            </div>
+            <div class="row addscroll" style="margin-top: 3%;margin-left: 3%">
+                <table class="coltable table-bordered table-striped thead-inverse" style="border: 1px solid;overflow-y: auto">
+                    <tr ng-repeat="value in CountTablesData | orderBy:'displayname'" style="border: 1px solid #ccc;font-size: 20px;">
+                        <td> {{value.displayname}} </td>
+                        <td> {{ value.count }} </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </fieldset>
+</div>
+<style>
+    .addscroll{
+        height: auto;
+        max-height: 500px;
+        overflow-y:scroll;
+    }
+
+    .app-modal-window-sam-Plan  .modal-dialog{
+        width:300px;
+    }
+
+    .modal-content{
+        width: 60%; !important;
+        border-radius: 0px !important;
+    }
+
+    /*.table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
+
+      border-top: none !important;
+
+    }
+    .table{
+      margin-bottom: 0px !important;
+    }*/
+
+    .table{
+        margin-bottom: 0px !important;
+        border-top: none !important;
+    }
+    .exportbtn{
+        font-size:16px;
+        /*margin-left: 30% ;*/
+        width: 100px;
+        color: #FFF;
+        background-color: #5392ff;
+    }
+
+    .exportbtn[disabled] {
+        background-color: 	#ADD8E6
+    }
+
+
+
+    /* .modal-dialog{
+         top: -12% !important;
+     }*/
+</style>

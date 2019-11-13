@@ -1,0 +1,73 @@
+
+
+/*------------------------------------------------------Start: Container CSS------------------------------------------------*/
+#container {
+    padding-bottom: 60px;
+      padding-top: 11px;
+}
+.title_name {
+      padding: 25px; 
+}
+#container-top {
+  
+  height: 36px;
+  font-family: 'Arial Regular', 'Arial';
+  font-weight: 400;
+  font-style: normal;
+  font-size: 18px;
+  color: #666666;
+  text-align: left;
+  background-color: #D7D7D7;
+  padding: 7px 7px 3px;
+}
+.content-row {
+  
+  font-family: 'Roboto Regular', 'Roboto';
+  font-weight: 400;
+  font-style: normal;
+  font-size: 18px;
+  text-align: left;
+  padding-top: 2px;
+  padding-left: 10px;
+  color: #4C4C4C;
+  background-color: #FAFAFA;
+}
+
+.section-left {
+    width: 65.63%;
+    float: left;
+    text-align: left;
+}
+
+.section-left-title {
+    width: 37.5%;
+}
+
+.section-left-middle, .section-left-bottom {
+    color: #A1A1A1;
+    font-size: 13px;
+}
+
+.section-left-middle {
+    padding-top: 7px;
+}
+.section-left_more {
+    margin-left: 10px;
+}
+.section-right {
+ 
+    margin: 3px;
+    padding-right:5px !important;
+}
+.section-right_addnew{
+    text-align: left;
+  
+}
+
+/*------------------------End: Container Middle CSS------------------------*/
+/*------------------------------------------------------End: Container CSS------------------------------------------------*/
+@media (min-width: 768px) {
+    .col-sm-12 {
+        width: 100%;
+    }
+}

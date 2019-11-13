@@ -1,0 +1,1225 @@
+<div class="container" style="margin-top: 1%" ng-if="deviceID!='first' && deviceID =='rationale' || deviceID =='fieldaudit' || headingAssociation =='RelationalAudit'" >
+    <div id="Modal_audit" class="modal" style="border-radius:0px;">
+        <!-- Document Modal content -->
+        <div class="modal-content">
+            <div class="modal-header" style="background-color:#25477B">
+                <span class="modal-close" ng-click ="close_Modal('Modal_audit')">&times;</span>
+                <span>Audit</span>
+            </div>
+            <div class="modal-body">
+                <p>Field Name :{{fieldnameCollector}}</p>
+                <input type="text" ng-model="pkidCollector" ng-show="false">
+                <p>Please Enter your Comments</p>
+                <input type="text" class="form-control" ng-model="valueAuditDescription">
+            </div>
+            <div class="modal-footer">
+                <button id="import_true" class="btn fontHelveticaNeue" ng-click="saveRationale(pkidCollector,valueAuditDescription)" style="border-radius:0px;background-color: #5392FF;color:#FFFFFF;float: right;margin-top: 1%;cursor:pointer">Yes</button>
+                <button id="import_close" class="btn fontHelveticaNeue" ng-click ="close_Modal('Modal_audit')" style="border-radius:0px;background-color: #666666;color:#FFFFFF;float: right; margin-right: 1%;margin-top: 1%;cursor:pointer">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1 component-outer" style="border: 1px solid #ccc;background-color: #fff">
+            <div class="col-md-12">
+                <div class="col-md-6">
+                    <h4 class="fontHelvetica" style="padding-left:10px;padding-bottom:10px">
+                        <span style="color: #5392FF;font-size: 24px;border-right: 1px solid #5392FF;">{{headingAssociationTitle}} &nbsp;</span> &nbsp;<span style="color:#949394;;font-size:15px;"{{headingAssociationTitle}} >{{associationSubHeading}}</span>
+                    </h4>
+                </div>
+                <div class="col-md-6" ng-show="showSelectionDiv">
+                    <button class="btn fontHelveticaNeue" ng-click="otdtable12()" style="border-radius:0px;background-color: #5392FF;color:#FFFFFF;float: right;
+                             margin-right: 1%;margin-top: 1%;cursor:pointer" data-toggle="collapse" data-target="#demo16">{{headingAssociationTitle}} Selection</button>
+                </div>
+            </div>
+            <ul id="demo16" class="collapse border-outer parent-dp arrow_box " style="background-color: #fff !important;margin-right: 1%">
+                <div class=" form-inline form-group pull-left" style="padding-top:10px;margin-left: 3%">
+                    <div class="input-group" style="width:60%">
+                        <input type="text" my-enter="searchOtherForLD(associationMainHeading,associationSubHeading)" class="form-control fontHelveticaNeue" style="width:220px;border-radius: 0px;font-size:14px;height:26px;border-right:0px;box-shadow:none;" placeholder="{{headingAssociationTitle}} Filter" aria-describedby="basic-addon1" ng-model="searchCompName" ng-change="checkforEmpty()">
+                        <span class="input-group-addon" id="basic-addon1" style="border-radius: 0px;background-color: #fff;font-size:11px;cursor:pointer">
+                                   <i class="fa fa-search" ng-click="searchOtherForLD(associationMainHeading,associationSubHeading)"></i>
+                                     <!--<i  class="fa fa-plus" style="cursor:pointer; color: #949394;width:26px;height:26px;line-height:26px;border-radius:100%;text-align:center;border:1px solid #949394;" ng-click="addServiceToLD()"/>-->
+                                 </span>
+                        <!--<span> <i  class="fa fa-plus" style="cursor:pointer; color: #949394;width:26px;height:26px;line-height:26px;border-radius:100%;text-align:center;border:1px solid #949394;" ng-click="addServiceToLD()"/></span>-->
+
+                    </div>
+                    <div class="input-group" ng-show="showadd">
+                        <i class="fa fa-plus" style="cursor:pointer; color: #949394;width:26px;height:26px;line-height:26px;border-radius:100%;text-align:center;border:1px solid #949394;" ng-click="addDevicesToLD(searchCompName,associationMainHeading,associationSubHeading)" />
+                    </div>
+                </div>
+            </ul>
+            <div class="col-md-12">
+
+                <loading ng-show="spinsleft"></loading>
+                <div class="table-responsive" style="padding:10px">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                        <tr class="fontHelvetica" style="background-color:#25467A;color:#ffffff;font-size:15px;">
+                            <td ng-if ="headingAssociation =='RelationalAudit'" style="border:1px solid #25467A">{{associationSubHeading | capitalize}} Name </td>
+                            <td style="border:1px solid #25467A">Created On</td>
+                            <td style="border:1px solid #25467A">Created By</td>
+                            <td ng-if ="headingAssociation =='RelationalAudit'" style="border:1px solid #25467A">Modified By </td>
+                            <td ng-if ="headingAssociation =='RelationalAudit'" style="border:1px solid #25467A">Modified On </td>
+                            <td ng-if ="headingAssociation !='RelationalAudit'" style="border:1px solid #25467A">Field Name</td>
+                            <td ng-if ="headingAssociation !='RelationalAudit'" style="border:1px solid #25467A">Original Value</td>
+                            <td ng-if ="headingAssociation !='RelationalAudit'"style="border:1px solid #25467A">New value</td>
+                            <td style="border:1px solid #25467A">Trust Level</td>
+                            <td style="border:1px solid #25467A" ng-if="deviceID =='fieldaudit' || headingAssociation =='RelationalAudit'">Data Source</td>
+                            <td style="border:1px solid #25467A" ng-if="deviceID =='rationale'">Rationale</td>
+                            <td style="border:1px solid #25467A" ng-if="deviceID =='rationale'">Add Rationale</td>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        <tr  dir-paginate="column in $parent.audit_data| itemsPerPage:5 " pagination-id="pageMsp" style="color:#666666 " >
+                        <td ng-class="{'red' : column.isdeleted =='Yes', 'red' : column.isdeleted =='YES'}" ng-if ="headingAssociation =='RelationalAudit'" >{{column.entityname}}</td>
+                            <td ng-class="{'red' : column.isdeleted =='Yes', 'red' : column.isdeleted =='YES'}">{{column.createdon}}</td>
+                            <td ng-class="{'red' : column.isdeleted =='Yes', 'red' : column.isdeleted =='YES'}">{{column.createdby}}</td>
+                            <td ng-class="{'red' : column.isdeleted =='Yes', 'red' : column.isdeleted =='YES'}" ng-if ="headingAssociation =='RelationalAudit'" >{{column.modifiedby}}</td>
+                            <td ng-class="{'red' : column.isdeleted =='Yes', 'red' : column.isdeleted =='YES'}" ng-if ="headingAssociation =='RelationalAudit'" >{{column.modifiedon}}</td>
+                            <td ng-class="{'red' : column.isdeleted =='Yes', 'red' : column.isdeleted =='YES'}" ng-if ="headingAssociation !='RelationalAudit'">{{column.fieldname}}</td>
+                            <td ng-if ="headingAssociation !='RelationalAudit'">{{column.orvalue}}</td>
+                            <td ng-if ="headingAssociation !='RelationalAudit'">{{column.nvalue}}</td>
+                            <td ng-class="{'red' : column.isdeleted =='Yes', 'red' : column.isdeleted =='YES'}">{{column.trustlevel}}</td>
+                            <td ng-class="{'red' : column.isdeleted =='Yes', 'red' : column.isdeleted =='YES'}" ng-if="deviceID =='fieldaudit' || headingAssociation =='RelationalAudit'">{{column.datasource}}</td>
+                            <td ng-if="deviceID =='rationale'" id= {{column.pkid}}>{{column.rationaleDesc}}</td>
+                            <!-- ng-click ="passData(column.pkid,column.fieldname)" -->
+                            <td style="border:1px solid #25467A" ng-if="deviceID =='rationale'"><button ng-click =open_Audit(column.pkid,column.fieldname)>Add Rationale</button></td>
+                        </tr>
+
+                        </tbody>
+                    </table>
+
+                    <ul id="demoDetail" class="collapse border-outer parent-dp arrow_box " style="background-color: #ddd !important;margin-right: 1%;padding-left: 15px !important;position: absolute;margin-top: -15%;z-index:10000;margin-left: 20%;width: 76%;">
+                        <div class="row">
+                            <div class="col-md-6" style="padding-left: 15px !important;">
+                                <table style="margin-top: 10px">
+                                    <tr style="width:30%">
+                                        <td style="color: #5392ff">Name:</td>
+                                        <td>{{AssociationDevInfo.name}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="color: #5392ff">Type:</td>
+                                        <td>{{AssociationDevInfo.devicetype}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="color: #5392ff">OS:</td>
+                                        <td>{{AssociationDevInfo.os}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="color: #5392ff">Status:</td>
+                                        <td>{{AssociationDevInfo.status}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="color: #5392ff">isVirtual:</td>
+                                        <td>{{AssociationDevInfo.isvirtual}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="color: #5392ff">Migration Approach:</td>
+                                        <td>{{AssociationDevInfo.migrationapproach}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="color: #5392ff">Logical Device Host:</td>
+                                        <td>{{AssociationDevInfo.logicaldevicehost}}</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="col-md-6"></div>
+
+                        </div>
+                    </ul>
+                    <dir-pagination-controls pagination-id="pageMsp" data-num-pages="noOfPages" data-current-page="currentPage" max-size="maxSize" class="Pagination" max-size="6" direction-links="true" boundary-links="true" style="float:right;padding:0px;padding:0px;border-radius:0px;margin-top:0px">
+                    </dir-pagination-controls>
+                </div>
+
+            </div>
+
+            <div class="otd-table-2" id="otd-table-2" ng-show="otdtable2">
+                <div class="clearfix">
+                    <loading ng-show="showSpinnerSearch"></loading>
+
+                    <!--div class="pull-right" style="width: 14%;text-align:center;padding-top:10px">
+                        <a href="javascript void(0);" data-toggle="tooltip" data-placement="top" title="Tooltip on top"><i style="color: #949394;cursor:pointer" class="fa fa-trash fa-lg" ></i></a>
+                    </div-->
+                </div>
+                <loading ng-show="spinsRight"></loading>
+                <loading ng-show="showassociateSpinner"></loading>
+                <div class="table-responsive" style="padding-top:5px;padding-right:10px;margin-top: 5%;" ng-show="showRightTable">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                        </thead>
+                        <tbody>
+                        <tr ng-if="searchCompName == '*'" ng-repeat="sc in $parent.otherSearchResult" style="color:#666666">
+                            <td><i class="fa fa-info-circle fa-lg" style="cursor:pointer"></i></td>
+                            <td style="font-size:16px">{{sc.name}}</td>
+                            <td> <i ng-click="associateDevicesToLD(sc.name)" class="fa fa-plus" style="color: #949394;width:26px;height:26px;line-height:26px;border-radius:100%;text-align:center;border:1px solid #949394;cursor:pointer" /></td>
+                            <td> <span class="glyphicon glyphicon-remove-circle" aria-hidden="true" style="font-size:25px;color:#9B9A9B;cursor:pointer"></span></td>
+                        </tr>
+                        <tr ng-if="searchCompName !== '*'" ng-repeat="sc in $parent.otherSearchResult " style="color:#666666">
+                            <td><i class="fa fa-info-circle fa-lg" style="cursor:pointer"></i></td>
+                            <td style="font-size:16px">{{sc.name}}</td>
+                            <td> <i ng-click="associateDevicesToLD(sc.name)" class="fa fa-plus" style="color: #949394;width:26px;height:26px;line-height:26px;border-radius:100%;text-align:center;border:1px solid #949394;cursor:pointer" /></td>
+                            <td> <span class="glyphicon glyphicon-remove-circle" aria-hidden="true" style="font-size:25px;color:#9B9A9B;cursor:pointer"></span></td>
+                        </tr>
+                        <!--<tr>
+                                     <td></td>
+                                     <td></td>
+                                     <td></td>
+                                     <td></td>
+                                 </tr>-->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+</div>
+<div class="container" style="margin-top: 1%" ng-if="deviceID!='first' && deviceID !='Notes' && deviceID !='SetReviewNotes' && deviceID !='UnSetReviewNotes' && deviceID !='Documents' && deviceID !='rationale' && deviceID !='fieldaudit' && headingAssociation !='RelationalAudit'" ng-controller="otherDevicesController">
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1 component-outer" style="border: 1px solid #ccc;background-color: #fff">
+            <div class="col-md-12">
+                <div class="col-md-6">
+                    <h4 class="fontHelvetica" style="padding-left:10px;padding-bottom:10px">
+                        <span style="color: #5392FF;font-size: 24px;border-right: 1px solid #5392FF;">{{headingAssociationTitle}} &nbsp;</span> &nbsp;
+                        <span style="color:#949394;;font-size:15px;"> {{associateLowerTitle != "0" ? associateLowerTitle : ""}} </span>
+                    </h4>
+                </div>
+                <div class="col-md-6" ng-show="showSelectionDiv" ng-if="roleBasedCanBeAssociated && canbeAssociated=='true'">
+                    <button ng-if="setSelectionButton  == 'normaView'" class="btn fontHelveticaNeue" ng-click="otdtable()" style="border-radius:0px;background-color: #5392FF;color:#FFFFFF;float: right;
+                             margin-right: 1%;margin-top: 1%;cursor:pointer" data-toggle="collapse" data-target="#demo16">{{headingAssociationTitle}} Selection</button>
+                    <button ng-if="setSelectionButton  == 'eventView'" class="btn fontHelveticaNeue" ng-click="otdtable()" style="border-radius:0px;background-color: #5392FF;color:#FFFFFF;float: right;
+                             margin-right: 1%;margin-top: 1%;cursor:pointer" data-toggle="collapse" data-target="#demoEvent">{{eventSelectionButton}} Selection</button>
+
+                    <button ng-if="setSelectionButton  == 'StaketoOtherView'" class="btn fontHelveticaNeue" ng-click="otdtable()" style="border-radius:0px;background-color: #5392FF;color:#FFFFFF;float: right;
+                             margin-right: 1%;margin-top: 1%;cursor:pointer" data-toggle="collapse" data-target="#demoStakeH">{{headingAssociationTitle}} Selection</button>
+
+                    <button ng-if="setSelectionButton  == 'clusterView'" class="btn fontHelveticaNeue" ng-click="otdtable()" style="border-radius:0px;background-color: #5392FF;color:#FFFFFF;float: right;
+                             margin-right: 1%;margin-top: 1%;cursor:pointer" data-toggle="collapse" data-target="#demo16">{{headingAssociationTitle}} Selection</button>
+                    <!-- show this button only when associating services to logicAL DEVICE-->
+                    <button ng-if="setSelectionButton == 'associateSerToLg'" class="btn fontHelveticaNeue" ng-click="otdtable()" style="border-radius:0px;background-color: #5392FF;color:#FFFFFF;float: right;
+                             margin-right: 1%;margin-top: 1%;cursor:pointer" data-toggle="collapse" data-target="#demo18"> Component Selection</button>
+                    <!-- code chnges ends-->
+                    <!-- show this button incase of stakeholder selection-->
+                    <button ng-if="setSelectionButton == 'stakeholders'" class="btn fontHelveticaNeue" ng-click="otdtable()" style="border-radius:0px;background-color: #5392FF;color:#FFFFFF;float: right;
+                             margin-right: 1%;margin-top: 1%;cursor:pointer" data-toggle="collapse" data-target="#"> Stakeholder Selection</button>
+                    <!-- code change ends-->
+
+                    <!-- cmt-1012 starts-->
+                    <button ng-if="setSelectionButton == 'associateFStoClusters'" class="btn fontHelveticaNeue" ng-click="otdtable()" style="border-radius:0px;background-color: #5392FF;color:#FFFFFF;float: right;
+                             margin-right: 1%;margin-top: 1%;cursor:pointer" data-toggle="collapse" data-target="#demoFsCluster"> Logical Device Selection</button>
+                    <!-- cmt-1012 ends-->
+
+                </div>
+            </div>
+            <!-- if service to Lg selection then show a different filter for component search-->
+            <ul id="demo18" class="collapse border-outer parent-dp arrow_box " style="background-color: #fff !important;margin-right: 1%">
+                <div class=" form-inline form-group pull-left" style="padding-top:10px;margin-left: 3%">
+                    <div class="input-group" style="width:60%">
+                        <input type="text" my-enter="searchOtherCompForLD(associationMainHeading,associationSubHeading,searchCompNameServAssociation)" class="form-control fontHelveticaNeue" style="width:220px;border-radius: 0px;font-size:14px;height:26px;border-right:0px;box-shadow:none;" placeholder="Component Filter" aria-describedby="basic-addon1" ng-model="searchCompNameServAssociation" ng-change="checkforEmpty()">
+                        <span class="input-group-addon" id="basic-addon1" style="border-radius: 0px;background-color: #fff;font-size:11px;cursor:pointer">
+                                   <i class="fa fa-search" ng-click="searchOtherCompForLD(associationMainHeading,associationSubHeading,searchCompNameServAssociation)"></i>
+                                     <!--<i  class="fa fa-plus" style="cursor:pointer; color: #949394;width:26px;height:26px;line-height:26px;border-radius:100%;text-align:center;border:1px solid #949394;" ng-click="addServiceToLD()"/>-->
+                                 </span>
+                        <!--<span> <i  class="fa fa-plus" style="cursor:pointer; color: #949394;width:26px;height:26px;line-height:26px;border-radius:100%;text-align:center;border:1px solid #949394;" ng-click="addServiceToLD()"/></span>-->
+
+                    </div>
+                    <div class="input-group" ng-show="showadd">
+                        <i class="fa fa-plus" style="cursor:pointer; color: #949394;width:26px;height:26px;line-height:26px;border-radius:100%;text-align:center;border:1px solid #949394;" ng-click="associateSerToLD(searchCompNameServAssociation,associationMainHeading,associationSubHeading)" />
+                    </div>
+                </div>
+            </ul>
+            <!-- code change ends-->
+            <!-- cmt -1012 strts-->
+            <ul id="demoFsCluster" class="collapse border-outer parent-dp arrow_box " style="background-color: #fff !important;margin-right: 1%">
+                <div class=" form-inline form-group pull-left" style="padding-top:10px;margin-left: 3%">
+                    <div class="input-group" style="width:60%">
+                        <input type="text" my-enter="searchOtherLDForClus(associationMainHeading,associationSubHeading,searchCompNameFSassociateToCluster)" class="form-control fontHelveticaNeue" style="width:220px;border-radius: 0px;font-size:14px;height:26px;border-right:0px;box-shadow:none;" placeholder="{{headingAssociationTitle}} Filter" aria-describedby="basic-addon1" ng-model="searchCompNameFSassociateToCluster" ng-change="checkforEmpty()">
+                        <span class="input-group-addon" id="basic-addon1" style="border-radius: 0px;background-color: #fff;font-size:11px;cursor:pointer">
+                                   <i class="fa fa-search" ng-click="searchOtherLDForClus(associationMainHeading,associationSubHeading,searchCompNameFSassociateToCluster)"></i>
+                                     <!--<i  class="fa fa-plus" style="cursor:pointer; color: #949394;width:26px;height:26px;line-height:26px;border-radius:100%;text-align:center;border:1px solid #949394;" ng-click="addServiceToLD()"/>-->
+                                 </span>
+                        <!--<span> <i  class="fa fa-plus" style="cursor:pointer; color: #949394;width:26px;height:26px;line-height:26px;border-radius:100%;text-align:center;border:1px solid #949394;" ng-click="addServiceToLD()"/></span>-->
+
+                    </div>
+                    <div class="input-group" ng-show="showadd">
+                        <i class="fa fa-plus" style="cursor:pointer; color: #949394;width:26px;height:26px;line-height:26px;border-radius:100%;text-align:center;border:1px solid #949394;" ng-click="associateFSToClus(searchCompNameFSassociateToCluster,associationMainHeading,associationSubHeading)" />
+                    </div>
+                </div>
+            </ul>
+            <!-- cmt 1012 ends-->
+            <ul id="demo16" class="collapse border-outer parent-dp arrow_box " style="background-color: #fff !important;margin-right: 1%">
+                <div class=" form-inline form-group pull-left" style="padding-top:10px;margin-left: 3%">
+                    <div class="input-group" style="width:60%">
+                        <input type="text" my-enter="searchOtherForLD(associationMainHeading,associationSubHeading)" class="form-control fontHelveticaNeue" style="width:220px;border-radius: 0px;font-size:14px;height:26px;border-right:0px;box-shadow:none;" placeholder="{{headingAssociationTitle}} Filter" aria-describedby="basic-addon1" ng-model="searchCompName" ng-change="checkforEmpty()">
+                        <span class="input-group-addon" id="basic-addon1" style="border-radius: 0px;background-color: #fff;font-size:11px;cursor:pointer">
+                                   <i class="fa fa-search" ng-click="searchOtherForLD(associationMainHeading,associationSubHeading)"></i>
+                                     <!--<i  class="fa fa-plus" style="cursor:pointer; color: #949394;width:26px;height:26px;line-height:26px;border-radius:100%;text-align:center;border:1px solid #949394;" ng-click="addServiceToLD()"/>-->
+                                 </span>
+                        <!--<span> <i  class="fa fa-plus" style="cursor:pointer; color: #949394;width:26px;height:26px;line-height:26px;border-radius:100%;text-align:center;border:1px solid #949394;" ng-click="addServiceToLD()"/></span>-->
+
+                    </div>
+                    <div class="input-group" ng-show="showadd">
+                        <i class="fa fa-plus" style="cursor:pointer; color: #949394;width:26px;height:26px;line-height:26px;border-radius:100%;text-align:center;border:1px solid #949394;" ng-click="addDevicesToLD(searchCompName,associationMainHeading,associationSubHeading)" />
+                    </div>
+                </div>
+            </ul>
+
+            <!-- event association starts-->
+            <ul id="demoEvent" class="collapse border-outer parent-dp arrow_box " style="background-color: #fff !important;margin-right: 1%">
+                <div class=" form-inline form-group pull-left" style="padding-top:10px;margin-left: 3%">
+                    <div class="input-group" style="width:60%">
+                        <input type="text" my-enter="searchOtherForLD(associationMainHeading,associationSubHeading)" class="form-control fontHelveticaNeue" style="width:220px;border-radius: 0px;font-size:14px;height:26px;border-right:0px;box-shadow:none;" placeholder="{{eventSelectionButton}} Filter" aria-describedby="basic-addon1" ng-model="searchCompName" ng-change="checkforEmpty()">
+                        <span class="input-group-addon" id="basic-addon1" style="border-radius: 0px;background-color: #fff;font-size:11px;cursor:pointer">
+                                   <i class="fa fa-search" ng-click="searchOtherForLD(associationMainHeading,associationSubHeading)"></i>
+                                     <!--<i  class="fa fa-plus" style="cursor:pointer; color: #949394;width:26px;height:26px;line-height:26px;border-radius:100%;text-align:center;border:1px solid #949394;" ng-click="addServiceToLD()"/>-->
+                                 </span>
+                        <!--<span> <i  class="fa fa-plus" style="cursor:pointer; color: #949394;width:26px;height:26px;line-height:26px;border-radius:100%;text-align:center;border:1px solid #949394;" ng-click="addServiceToLD()"/></span>-->
+
+                    </div>
+                    <div class="input-group" ng-show="showadd">
+                        <i class="fa fa-plus" style="cursor:pointer; color: #949394;width:26px;height:26px;line-height:26px;border-radius:100%;text-align:center;border:1px solid #949394;" ng-click="addDevicesToLD(searchCompName,associationMainHeading,associationSubHeading)" />
+                    </div>
+                </div>
+            </ul>
+            <!-- event association ends-->
+
+            <!-- association of stakeholder to otherdevice starts-->
+            <ul id="demoStakeH" class="collapse border-outer parent-dp arrow_box " style="background-color: #fff !important;margin-right: 1%;padding-left: 15px !important;">
+                <div class="clearfix" style="margin-top: 2%">
+                    <div class="form-group pull-left" style="width: 44%;">
+                        <div class="input-group">
+                            <input type="text" my-enter="searchStakeHolder(filterTextNew.name,associationMainHeading,associationSubHeading)" class="form-control" id="stakeholdernameVal" style="font-size:13px;height:26px;border-right: 0px;border-radius: 0px !important;" ng-model="filterTextNew.name" placeholder="Select a {{headingAssociationTitle}}" ng-change="checkforEmpty()" aria-describedby="basic-addon1">
+                            <span class="input-group-addon" id="basic-addon1" style="border-radius: 0px;background-color: #fff;font-size:10px;"><i class="fa fa-search" ng-click="searchStakeHolder(filterTextNew.name)"></i></span>
+                        </div>
+                    </div>
+                    <div class="input-group" style="width: 50%;">
+                        <select ng-model="selectedName" placeholder="Select a role" style="font-size:12px;margin-left: 5%;border: none;height: 26px;" ng-options="x1 for x1 in StakeHolderNames">
+                            <option value="" >Select A Role</option>
+                        </select>
+                        <span> <input type="submit"  id="submit" class="submitbtn" data-ng-disabled="!selectedName" ng-click="associateStakeholder(selectedName,stakeholdername,associationMainHeading,associationSubHeading,filterTextNew.name)"  value="Add"/></span>
+                        <!--<i ng-show="showadd" class="fa fa-plus" style="cursor:pointer; color: #949394;width:26px;height:26px;line-height:26px;border-radius:100%;text-align:center;border:1px solid #949394;margin-top: 1%;
+    margin-left: 5%;" ng-click="addNewStakeholder(filterTextNew.name)"></i>-->
+                    </div>
+                </div>
+            </ul>
+            <!-- association of stakeholder to Other devices ends-->
+            <loading ng-show="stakeholderSpinner"></loading>
+
+            <ul id="" class="collapse border-outer parent-dp arrow_box " style="background-color: #fff !important;margin-right: 1%;padding-left: 15px !important;">
+                <div class="clearfix" style="margin-top: 2%">
+                    <div class="form-group pull-left" style="width: 44%;">
+                        <div class="input-group">
+                            <input type="text" my-enter="searchStakeHolder(filterTextNew.name)" class="form-control" id="stakeholdernameVal" style="font-size:13px;height:26px;border-right: 0px;border-radius: 0px !important;" ng-model="filterTextNew.name" placeholder="Select a {{headingAssociationTitle}}" ng-change="checkforEmpty()" aria-describedby="basic-addon1">
+                            <span class="input-group-addon" id="basic-addon1" style="border-radius: 0px;background-color: #fff;font-size:10px;"><i class="fa fa-search" ng-click="searchStakeHolder(filterTextNew.name)"></i></span>
+                        </div>
+
+                    </div>
+                    <div class="input-group" style="width: 50%;">
+                        <select ng-model="selectedName" placeholder="Select a role" style="font-size:12px;margin-left: 5%;border: none;height: 26px;" ng-options="x for x in StakeHolderNames">
+                            <option value="" >Select A Role</option>
+                        </select>
+                        <span> <input type="submit"  id="submit" class="submitbtn" data-ng-disabled="!selectedName" ng-click="associateStakeholder(selectedName,stakeholdername,associationMainHeading,associationSubHeading,filterTextNew.name)"  value="Add"/></span>
+                        <!--<i ng-show="showadd" class="fa fa-plus" style="cursor:pointer; color: #949394;width:26px;height:26px;line-height:26px;border-radius:100%;text-align:center;border:1px solid #949394;margin-top: 1%;
+    margin-left: 5%;" ng-click="addNewStakeholder(filterTextNew.name)"></i>-->
+
+                    </div>
+
+                </div>
+            </ul>
+            <div class="col-md-12">
+                <!-- if user is in Edit this scdehule screen change starts-->
+                <div id="weeklySchedule" ng-if="headingAssociation =='Edit-This-Schedule' && associateLowerTitle == 'Weekly'" class="col-md-12 change_col" id="otd-table" >
+                    <!--inside edit this scdeuleee Weekly-->
+                    <div class="col-md-6">
+                        <form name="myForm" style="padding: 5%;margin-left: 30%;">
+                            <input type="checkbox" ng-model="checkboxModel.value1"   data-ng-disabled="disablevalEveryday" ng-change="UpdateDaysWeeklyScheduleNew(checkboxModel.value1,'Everyday','Day','Everyday')">
+                            <label class="labelcolor">Everyday
+                            </label><br/>
+                            <div ng-repeat="p1 in DayNames track by $index">
+                                <input type="checkbox" ng-value="DayNames[$index]" data-ng-disabled="disablevalEveryonly" ng-model="checkboxModel.value2[$index]" ng-change="UpdateDaysWeeklyScheduleNew(checkboxModel.value2[$index],DayNames[$index],'Day','Every')">
+                                &emsp;
+                                <label class="labelcolor">Every
+                                    &emsp;
+                                    <select ng-model="selectedName" ng-options="x4 for x4 in eventNames" ng-change="UpdateDaysWeeklyScheduleNew(checkboxModel.value2[$index],DayNames[$index],'Day',selectedName)"></select>
+                                    &emsp;
+                                </label><label class="labelcolor">{{p1}}</label> <br/>
+                            </div>
+
+                        </form>
+                    </div>
+                    <div class="col-md-6">
+                        <!--<form name="myForm2" class="col-md-12" style="padding: 5%">-->
+                        <div class="col-md-12" style="padding: 5%">
+                            <!--<input type="checkbox" ng-model="checkboxModel.valueEveryMonth" ng-change="UpdateMonthsinWeeklySch(checkboxModel.valueEveryMonth,'Every Month')">-->
+                            <input type="checkbox" ng-model="checkboxModel.valueEveryMonth" data-ng-disabled="disableEveryMonth" ng-change="UpdateDaysWeeklyScheduleNew(checkboxModel.valueEveryMonth,'EveryMonth','Month','EveryMonth')">
+                            <label class="labelcolor">Every Month
+                            </label><br/>
+                            <!--<input type="checkbox" ng-model="checkboxModel.value2" ng-change="UpdateMonthsinWeeklySch(checkboxModel.valueEveryMonth,'Every Month')">-->
+                            <input type="checkbox" ng-model="checkboxModel.value2sel" data-ng-disabled="disableSelectthese" ng-change="UpdateDaysWeeklyScheduleNew(checkboxModel.value2sel,'Select these Months','Month')">
+                            <label class="labelcolor">Select these Months
+                            </label><br/>
+
+                            <!-- left form starts-->
+                            <form name="formLeft" class="col-md-3">
+                                <div ng-repeat="month in MonthNamesLeft track by $index">
+                                    <input type="checkbox" ng-value="MonthNamesLeft[$index]" data-ng-disabled="disableleftMonths" ng-model="checkboxModel.model1[$index]" ng-change="UpdateDaysWeeklyScheduleNew(checkboxModel.model1[$index],MonthNamesLeft[$index],'Month')">
+                                    <label class="labelcolor">{{month}}</label>
+                                </div>
+
+                            </form>
+                            <form name="formright" class="col-md-3">
+                                <!-- right form starts-->
+                                <div ng-repeat="month in MonthNamesRight track by $index">
+                                    <input type="checkbox" ng-value="MonthNamesRight[$index]" data-ng-disabled="disableleftMonths" ng-model="checkboxModel.model2[$index]" ng-change="UpdateDaysWeeklyScheduleNew(checkboxModel.model2[$index],MonthNamesRight[$index],'Month')">
+                                    <label class="labelcolor">{{month}}
+                                    </label><br/>
+                                </div>
+
+                                <!-- right form ends-->
+                            </form>
+                            <!-- left form ends-->
+
+
+
+                            <!-- </form>-->
+                        </div>
+
+                    </div>
+                    <div style="margin-left: 25%;margin-bottom: 3%;" class="textAreaBox">
+                        <label style="display: block;color: #949394" for="title">Selected Options in Plain English</label>
+                        <!--<textarea id="title" name="title" rows="5" ng-model="txtAreaVal" style="width: 47%;min-height: 100px;height: auto;display: block"></textarea>-->
+                        <div id="title" name="title" ng-model="txtAreaVal" style="width: 47%;min-height: 100px;height: auto;display: block;border: 1px solid #ccc">
+                            <p ng-repeat="x in FinalScheduleArray">
+                                {{x}}
+                            </p><br/>
+                        </div>
+                        <!--<button> Commit Schedule Changes</button>-->
+                        <loading></loading>
+                        <button class="btn fontHelveticaNeue" ng-click="UpdateScheduleWeekly(FinalScheduleArray)" style="border-radius:0px;background-color: #5392FF;color:#FFFFFF;float: right;
+                                margin-right: 28%;margin-top: -4%;cursor:pointer
+                        margin-top: 1%;">Commit Schedule Changes</button>
+                    </div>
+                </div>
+                <div ng-if="headingAssociation =='Edit-This-Schedule' && associateLowerTitle == 'Monthly'" class="col-md-12 change_col" id="otd-table" >
+                    <!--inside edit this scdeuleee monthly-->
+                    <div class="col-md-6" style="padding: 3%">
+                        <form name="myFormMonthlyLeft" class="col-md-6" style="margin-left: 47%;">
+                            <input type="text" ng-model="checkboxModel.value24" style="width: 18%" ng-blur="UpdateDaysMonthlyScheduleNew(checkboxModel.value24,'Day','Certain','true')">
+                            <label class="labelcolor">Certain
+                            </label><br/>
+                            <input type="checkbox" ng-model="checkboxModel.value2" ng-change="UpdateDaysMonthlyScheduleNew(checkboxModel.value2,'Day','Last Day')">
+                            <label class="labelcolor">Last Day
+                            </label><br/>
+
+                            <input type="checkbox" ng-model="checkboxModel.value1" ng-change="UpdateDaysMonthlyScheduleNew(checkboxModel.value1,'Day','Last Working')">
+                            <label class="labelcolor">Last Working
+                            </label><br/>
+                        </form>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="col-md-12" style="padding: 5%">
+                            <!--<form name="myFormMonthlyRight" class="col-md-6">-->
+                            <input type="checkbox" ng-model="checkboxModel.value3" data-ng-disabled="disableMonthEvery" ng-change="UpdateDaysMonthlyScheduleNew(checkboxModel.value3,'Month','Every Month')">
+                            <label class="labelcolor">Every Month
+                            </label><br/>
+
+                            <input type="checkbox" ng-model="checkboxModel.value4" data-ng-disabled="disableMonthselective" ng-change="UpdateDaysMonthlyScheduleNew(checkboxModel.value4,'Month','Select these Months')">
+                            <label class="labelcolor">Select these Months
+                            </label><br/>
+                            <!--<div class="col-md-12">-->
+                            <form name="leftF" class="col-md-3">
+                                <div ng-repeat="month in MonthNamesLeft track by $index">
+                                    <input type="checkbox" ng-model="checkboxModel.model1[$index]" data-ng-disabled="disableLeftMonthsEditMonth" ng-value="MonthNamesLeft[$index]" ng-change="UpdateDaysMonthlyScheduleNew(checkboxModel.model1[$index],'Month',MonthNamesLeft[$index])">
+                                    <label class="labelcolor">{{month}}
+                                    </label><br/>
+                                </div>
+                            </form>
+                            <form class="col-md-3">
+                                <div name="rightF" ng-repeat="month in MonthNamesRight track by $index">
+                                    <input type="checkbox" ng-model="checkboxModel.model2[$index]" data-ng-disabled="disableLeftMonthsEditMonth" ng-value="MonthNamesRight[$index]" ng-change="UpdateDaysMonthlyScheduleNew(checkboxModel.model2[$index],'Month',MonthNamesRight[$index])">
+                                    <label class="labelcolor">{{month}}
+                                    </label><br/>
+                                </div>
+                            </form>
+                            <!--</div>-->
+
+
+                            <!--</form>-->
+                        </div>
+                    </div>
+                    <div style="margin-left: 25%;margin-bottom: 3%;" class="textAreaBox">
+                        <label style="display: block;color: #949394" for="title">Selected Options in Plain English</label>
+                        <!--<textarea id="title" name="title" rows="5" ng-model="txtAreaVal" style="width: 47%;min-height: 100px;height: auto;display: block"></textarea>-->
+                        <div id="title" name="title" ng-model="txtAreaVal" style="width: 47%;min-height: 100px;height: auto;display: block;border: 1px solid #ccc">
+                            <p ng-repeat="x in FinalScheduleArray">
+                                {{x}}
+                            </p><br/>
+                        </div>
+                        <!--<button> Commit Schedule Changes</button>-->
+                        <loading></loading>
+                        <button class="btn fontHelveticaNeue"  ng-click="UpdateScheduleWeekly(FinalScheduleArray)" style="border-radius:0px;background-color: #5392FF;color:#FFFFFF;float: right;
+                                margin-right: 28%;margin-top: -4%;cursor:pointer
+                        margin-top: 1%;">Commit Schedule Changes</button>
+                    </div>
+                </div>
+                <div ng-if="headingAssociation =='Edit-This-Schedule' && associateLowerTitle == 'Date'" class="col-md-12 col-md-offset-1 change_col" id="otd-table" >
+                    <!--inside edit this scdeuleee date-->
+                    <!--<div>
+                        <datepicker date-format="yyyy-MM-dd" date-month-title="Date From">
+                            <input type="text" ng-model="datefrom" placeholder="yyyy-MM-dd"/>
+                        </datepicker>
+                        <datepicker date-format="yyyy-MM-dd" date-month-title="Date To">
+                            <input type="text" ng-model="dateTo" placeholder="yyyy-MM-dd"/>
+                        </datepicker>
+                    </div>-->
+                    <form name="myFormDate">
+                        <div class="form-group" style="margin-left: 24%">
+
+                            <label class="labelcolor"> Date From</label>
+                            <div class="input-group" >
+                                <datepicker date-format="yyyy-MM-dd">
+                                    <input type="text" class="form-control setwidth"  ng-model="datefrom" placeholder="yyyy-MM-dd"/>
+                                </datepicker>
+                            </div>
+                        </div>
+                        <div class="form-group" style="margin-left: 24%">
+                            <label class="labelcolor"> Date To</label>
+                            <div class="input-group" >
+                                <datepicker date-format="yyyy-MM-dd">
+                                    <input type="text" class="form-control setwidth"  ng-model="dateTo" placeholder="yyyy-MM-dd"/>
+                                </datepicker>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div style="margin-left: 14%;margin-bottom: 3%;" class="textAreaBox">
+                                <label style="display: block;color: #949394" for="title11">Selected Options in Plain English</label>
+                                <!--<textarea id="title11" name="title11" rows="5" ng-model="txtAreaVal" style="width: 47%;min-height: 100px;height: auto;display: block">-->
+                                <div id="title11" name="title11" ng-model="txtAreaVal" style="width: 47%;min-height: 100px;height: auto;display: block;border: 1px solid #ccc">
+                                    {{datefrom}} <span ng-if="datefrom"><b>to</b></span> {{dateTo}}
+                                </div>
+                                <!--</textarea>-->
+                                <!--<button> Commit Schedule Changes</button>-->
+                                <loading></loading>
+                                <button ng-click="UpdateSchedule(datefrom,dateTo)" class="btn fontHelveticaNeue"  style="border-radius:0px;background-color: #5392FF;color:#FFFFFF;float: right;
+                                margin-right: 28%;margin-top: -5%;cursor:pointer
+                        margin-top: 1%;">Commit Schedule Change</button>
+                            </div>
+                        </div>
+                    </form>
+                    <!-- if user is in Edit this scdeule screen change ends-->
+                </div>
+                <!-- if user is in Edit this scdeule screen change ends-->
+                <div ng-if="headingAssociation !='Edit-This-Schedule'" class="col-md-12 change_col" id="otd-table">
+                    <div class="odth-sec clearfix" style="padding:10px;">
+                        <div class="odths-form" style="width: 90%;float: left;">
+                            <div class="form-inline">
+                                <div class="input-group">
+                                    <input type="text" class="form-control fontHelveticaNeue" style="width:200px;border-radius: 0px;font-size:14px;height:25px;border-right:0px;box-shadow:none;" placeholder="{{headingAssociationTitle}} Filter" aria-describedby="basic-addon1" ng-model="filterText" ng-change="filterAssociation(filterText)">
+
+                                    <span class="input-group-addon" id="basic-addon1" style="border-radius: 0px;background-color: #fff;font-size:11px;cursor:pointer"><i class="fa fa-search" style="cursor:pointer"></i></span>
+                                </div>
+                                <!--  <div class="input-group" ng-show="AddAssociationShowHide" ng-if="showAddoption(LowerOtherDeviceName,deviceID)">
+                                      <div class="form-inline">
+                                          <input type="text" class="form-control fontHelveticaNeue" style="width:220px;border-radius: 0px;margin-left:10px;font-size:14px;height:25px;box-shadow:none;float:left" placeholder="Add a new {{headingAssociationTitle}}" aria-describedby="basic-addon1" ng-model="newCompName"> &nbsp;
+                                          <i class="fa fa-plus" style="color: #949394;width:26px;height:26px;line-height:26px;border-radius:100%;text-align:center;border:1px solid #949394;cursor:pointer" ng-click="addDevicesToLD(newCompName,associationMainHeading,associationSubHeading)" />
+                                          <loading ng-show="showaddSpinner"></loading>
+                                      </div>
+
+                                  </div>-->
+                            </div>
+                        </div>
+                        <!--div class="pull-right" style="width: 7%;text-align:center">
+                            <a href="javascript void(0);" data-toggle="tooltip" data-placement="top" title="Remove All"><i style="color: #949394 " class="fa fa-trash fa-lg" style="cursor:pointer"></i></a>
+                        </div-->
+                    </div>
+                    <loading ng-show="spinsleft"></loading>
+                    <div class="table-responsive" style="padding:10px">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                            <tr class="fontHelvetica" style="background-color:#25467A;color:#ffffff;font-size:15px;">
+                                <td ng-if="deviceID !='aliases' && deviceID !='usage'" style="border:1px solid #25467A"></td>
+                                <!--Suruchi Start- DisAssociation-->
+                                <td ng-if="roleBasedCanBeAssociated && canbeAssociated  && canbeAssociated == 'true'" style="border:1px solid #25467A"></td>
+                                <!--Suruchi END- DisAssociation-->
+                                <td style="border:1px solid #25467A" ng-repeat="column in cols">{{column.fieldname}}
+                                </td>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            <tr dir-paginate="row in rows| itemsPerPage:5" pagination-id="pageMsp" style="color:#666666 ">
+                                <td ng-if="deviceID !='aliases' && deviceID !='usage'" style="text-align:center;color"><a>
+                                  <i ng-if="deviceID !='resourcesservices'" class="fa fa-info-circle fa-lg"  ng-click="navigationOther(row.name,row.id,headingAssociation,deviceID,row.componentname)" style="cursor:pointer"></i>
+                                  <i ng-if="deviceID =='resourcesservices'" class="fa fa-info-circle fa-lg"  ng-click="navigationOther(row.servicename,row.id,headingAssociation,deviceID)" style="cursor:pointer"></i>
+
+                                </a></td>
+                                <!--Suruchi Start- DisAssociation-->
+                                <td ng-if="roleBasedCanBeAssociated && canbeAssociated  && canbeAssociated == 'true'" style="font-size:25px;color:#9B9A9B;cursor:pointer"><i style="rotate:"class="glyphicon glyphicon-remove-circle" data-toggle="collapse" ng-confirm-click="Would you really like to Disassociate" ng-click="disassociateDevicesToDevices(associationSubHeading,row,row.role)" style="cursor:pointer"></i></td>
+                                <!--Suruchi End- DisAssociation-->
+                                <td ng-repeat="column in cols">{{row[column.key]}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <ul id="demoDetail" class="collapse border-outer parent-dp arrow_box " style="background-color: #ddd !important;margin-right: 1%;padding-left: 15px !important;position: absolute;margin-top: -15%;z-index:10000;margin-left: 20%;width: 76%;">
+                            <div class="row">
+                                <div class="col-md-6" style="padding-left: 15px !important;">
+                                    <table style="margin-top: 10px">
+                                        <tr style="width:30%">
+                                            <td style="color: #5392ff">Name:</td>
+                                            <td>{{AssociationDevInfo.name}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="color: #5392ff">Type:</td>
+                                            <td>{{AssociationDevInfo.devicetype}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="color: #5392ff">OS:</td>
+                                            <td>{{AssociationDevInfo.os}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="color: #5392ff">Status:</td>
+                                            <td>{{AssociationDevInfo.status}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="color: #5392ff">isVirtual:</td>
+                                            <td>{{AssociationDevInfo.isvirtual}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="color: #5392ff">Migration Approach:</td>
+                                            <td>{{AssociationDevInfo.migrationapproach}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="color: #5392ff">Logical Device Host:</td>
+                                            <td>{{AssociationDevInfo.logicaldevicehost}}</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div class="col-md-6"></div>
+
+                            </div>
+                        </ul>
+                        <dir-pagination-controls pagination-id="pageMsp" data-num-pages="noOfPages" data-current-page="currentPage" max-size="maxSize" class="Pagination" max-size="6" direction-links="true" boundary-links="true" style="float:right;padding:0px;padding:0px;border-radius:0px;margin-top:0px">
+                        </dir-pagination-controls>
+                    </div>
+
+                </div>
+
+                <div class="otd-table-2" id="otd-table-2" ng-show="otdtable2">
+                    <div class="clearfix">
+                        <loading ng-show="showSpinnerSearch"></loading>
+
+                        <!--div class="pull-right" style="width: 14%;text-align:center;padding-top:10px">
+                            <a href="javascript void(0);" data-toggle="tooltip" data-placement="top" title="Tooltip on top"><i style="color: #949394;cursor:pointer" class="fa fa-lg" ></i></a>
+                        </div-->
+                    </div>
+                    <loading ng-show="spinsRight"></loading>
+                    <loading ng-show="showassociateSpinner"></loading>
+                    <div class="table-responsive" style="padding-top:5px;padding-right:10px;margin-top: 5%;" ng-show="showRightTable">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                            </thead>
+                            <tbody>
+                            <tr ng-if="searchCompName == '*'" ng-repeat="sc in $parent.otherSearchResult" style="color:#666666">
+                                <td><i class="fa fa-info-circle fa-lg" style="cursor:pointer"></i></td>
+                                <td style="font-size:16px">{{sc.name}}</td>
+                                <td ng-if="compAdd == '3' "> <i ng-click="addDevicesToLD(sc.name,associationMainHeading,associationSubHeading,sc.PKID)" class="fa fa-plus" style="color: #949394;width:26px;height:26px;line-height:26px;border-radius:100%;text-align:center;border:1px solid #949394;cursor:pointer" /></td>
+                                <td ng-if="compAdd == '1' "> <i ng-click="associateSerToLD(sc.name,associationMainHeading,associationSubHeading)" class="fa fa-plus" style="color: #949394;width:26px;height:26px;line-height:26px;border-radius:100%;text-align:center;border:1px solid #949394;cursor:pointer" /></td>
+                                <td ng-if="compAdd == '2' "> <i ng-click="associateFSToClus(sc.name,associationMainHeading,associationSubHeading,sc.PKID)" class="fa fa-plus" style="color: #949394;width:26px;height:26px;line-height:26px;border-radius:100%;text-align:center;border:1px solid #949394;cursor:pointer" /></td>
+                                <td ng-if="compAdd == '4' "> <i ng-click="associateInboundToComp(sc.name,associationMainHeading,associationSubHeading)" class="fa fa-plus" style="color: #949394;width:26px;height:26px;line-height:26px;border-radius:100%;text-align:center;border:1px solid #949394;cursor:pointer" /></td>
+                                <td> <span class="glyphicon glyphicon-remove-circle" aria-hidden="true" style="font-size:25px;color:#9B9A9B;cursor:pointer"></span></td>
+                            </tr>
+                            <tr ng-if="searchCompName !== '*'" ng-repeat="sc in $parent.otherSearchResult " style="color:#666666">
+                                <td><i class="fa fa-info-circle fa-lg" style="cursor:pointer"></i></td>
+                                <td style="font-size:16px">{{sc.name}}</td>
+                                <td ng-if="compAdd == '3' "> <i ng-click="addDevicesToLD(sc.name,associationMainHeading,associationSubHeading,sc.PKID)" class="fa fa-plus" style="color: #949394;width:26px;height:26px;line-height:26px;border-radius:100%;text-align:center;border:1px solid #949394;cursor:pointer" /></td>
+                                <td ng-if="compAdd == '1' "> <i ng-click="associateSerToLD(sc.name,associationMainHeading,associationSubHeading)" class="fa fa-plus" style="color: #949394;width:26px;height:26px;line-height:26px;border-radius:100%;text-align:center;border:1px solid #949394;cursor:pointer" /></td>
+                                <td ng-if="compAdd == '2' "> <i ng-click="associateFSToClus(sc.name,associationMainHeading,associationSubHeading,sc.PKID)" class="fa fa-plus" style="color: #949394;width:26px;height:26px;line-height:26px;border-radius:100%;text-align:center;border:1px solid #949394;cursor:pointer" /></td>
+                                <td ng-if="compAdd == '4' "> <i ng-click="associateInboundToComp(sc.name,associationMainHeading,associationSubHeading)" class="fa fa-plus" style="color: #949394;width:26px;height:26px;line-height:26px;border-radius:100%;text-align:center;border:1px solid #949394;cursor:pointer" /></td>
+                                <td> <span class="glyphicon glyphicon-remove-circle" aria-hidden="true" style="font-size:25px;color:#9B9A9B;cursor:pointer"></span></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- showing stakeholdertable starts-->
+                    <div class="table-responsive" style="height: 300px;margin-top: 10%;" ng-show="showRightTableStakeholder">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                            </thead>
+                            <tbody>
+                            <tr ng-if="filterTextNew.name == '*'" ng-repeat="data in searchResultJson">
+                                <td></td>
+                                <td style="font-size:16px"><input type="radio" name="stakeholder" value="{{data.name}}" ng-model="stake" ng-click="stakeChange(stake)">{{data.name}}</input></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr ng-if="filterTextNew.name !== '*'" ng-repeat="data in searchResultJson">
+                                <td></td>
+                                <td style="font-size:16px"><input type="radio" name="stakeholder" value="{{data.name}}" ng-model="stake" ng-click="stakeChange(stake)">{{data.name}}</input></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- showing stakeholder table emds-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container" style="margin-top: 1%" ng-if="deviceID =='Notes' || deviceID =='SetReviewNotes' || deviceID =='UnSetReviewNotes'" ng-controller="otherDevicesController">
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1 component-outer" style="border: 1px solid #ccc;background-color: #fff">
+            <div class="col-md-12">
+                <div class="col-md-6">
+                    <h4 class="fontHelvetica" style="padding-left:10px;padding-bottom:10px">
+                        <span style="color: #5392FF;font-size: 24px;border-right: 1px solid #5392FF;">Notes &nbsp;</span> &nbsp;<span style="color:#949394;;font-size:15px;">Notes > Notes</span>
+                    </h4>
+                </div>
+            </div>
+            <loading ng-show="notesSpinner"></loading>
+            <div class="col-md-12" style="padding: 0px 5px !important;">
+                <div class="col-md-4 col-item-pad">
+                    <div class="notes-item-outer">
+                        <h4>Description</h4>
+                        <div class="content-outer">
+                            <textarea class="form-control" rows="3"  ng-blur="notes_add(associationMainHeading,associationSubHeading,1)" ng-model="notes_description" style="border: 0px;border-radius: 0px;width: 100%;height: 100%;font-size:16px;"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-item-pad">
+                    <div class="notes-item-outer">
+                        <h4>General Notes</h4>
+                        <div class="content-outer">
+                            <div class="ci-header" style="">
+
+                                <div class="form-group" id="generalNotesSave">
+                                    <div class="input-group" >
+
+                                        <input type="text" class="form-control fontHelveticaNeue" style="height: 30px;padding-left: 0px;color: #fff;border-radius: 0px;font-size:14px;border-right:0px;box-shadow:none;" aria-describedby="basic-addon1" ng-model="generalnotes">
+                                        <span class="input-group-addon" style="border-radius: 0px;background-color: transparent;font-size:11px;cursor:pointer;border:0px;box-shadow:none" ng-if="roleBasedCanBeAssociated">  <img  src="img/disk.png" style=""  ng-click ="notes_add(associationMainHeading,associationSubHeading)"/></span>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="ci-content">
+                                <div class="ci-content-outer" style="height: auto !important;font-size:16px" ng-repeat="d in notes_display | filter:emptyOrNullG "  ng-mouseover="showNotes(d)" ng-mouseleave="hideNotesOverlay()">
+                                    {{d.createddate}}-{{d.createdby}}-{{d.generalnotes}}
+                                    <ul ng-show="shownotesOverlay" ng-mouseover="showOverlayonfocus()" ng-mouseleave="hideOverlayoutFocus()" id="demoDetail" class="border-outer parent-dp arrow_box2 closeoverlay1 " style="background-color: #ddd !important;margin-right: 1%;padding-left: 15px !important;position: absolute;z-index: 1000;margin-top: -15%;padding-right: 15px !important;padding-top: 11px !important;margin-left: -111%;width: 479px;">
+                                        <div class="row" style="word-wrap: break-word;height:auto;background-color: #fff;margin: 1%">
+                                            {{GeneralnotesData.createddate}}--{{GeneralnotesData.createdby}}--{{GeneralnotesData.generalnotes}}
+                                        </div>
+                                    </ul>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-item-pad">
+                    <div class="notes-item-outer">
+                        <h4>Review Notes</h4>
+                        <div class="content-outer">
+                            <div class="ci-header" style="">
+
+                                <div class="form-group">
+                                    <div class="input-group" >
+                                        <input type="text" id="setReviewNotesInput" class="form-control fontHelveticaNeue" style="height: 30px;padding-left: 0px;color: #fff;border-radius: 0px;font-size:14px;border-right:0px;box-shadow:none;" aria-describedby="basic-addon1" ng-model="reviewnotes">
+                                        <span class="input-group-addon" id="basic-addon1" style="border-radius: 0px;background-color: transparent;font-size:11px;cursor:pointer;border:0px;box-shadow:none" ng-if="roleBasedCanBeAssociated">  <img  src="img/disk.png" style=""  ng-click ="notes_add(associationMainHeading,associationSubHeading)"/></span>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="ci-content">
+                                <div class="ci-content-outer" style="height: auto !important;font-size:16px"ng-repeat="d in notes_display | filter:emptyOrNullR " ng-mouseover="showReviewNotes(d)" ng-mouseleave="hideReviewNotesOverlay()">
+                                    {{d.createddate}}-{{d.createdby}}-{{d.reviewnotes}}
+                                    <ul ng-show="showReviewnotesOverlay" id="demoDetail" ng-mouseover="showOverlayonfocusReview()" ng-mouseleave="hideOverlayoutFocusReview()" class="border-outer parent-dp arrow_box2 closeoverlay1 " style="background-color: #ddd !important;margin-right: 1%;padding-left: 15px !important;position: absolute;z-index: 1000;margin-top: -15%;padding-right: 15px !important;padding-top: 11px !important;margin-left: -111%;width: 479px;">
+                                        <div class="row" style="word-wrap: break-word;height:auto;background-color: #fff;margin: 1%">
+                                            {{ReviewnotesData.createddate}}--{{ReviewnotesData.createdby}}--{{ReviewnotesData.reviewnotes}}
+                                        </div>
+                                    </ul>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<br/><br/>
+
+<!-- Add your site or application content here -->
+<!-- manisha code change for document association starts-->
+<div class="container" style="margin-top: 1%" ng-if="deviceID =='Documents'" ng-controller="otherDevicesController">
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1 component-outer" style="border: 1px solid #ccc;background-color: #fff">
+            <div class="col-md-12">
+                <div class="col-md-6">
+                    <h4 class="fontHelvetica" style="padding:10px"><span style="color: #5392FF;font-size: 24px;border-right: 1px solid #5392FF;">Documents &nbsp;</span> &nbsp;<span style="color:#949394;font-size:15px;">Documents</span></h4>
+                </div>
+                <div class="col-md-6">
+                    <button class="btn fontHelveticaNeue" ng-click ="otdtable12()" data-toggle="collapse" data-target="#demoDocs" style="border-radius:0px;background-color: #5392FF;color:#FFFFFF;float: right;
+                                margin-right: 1%;margin-top: 1%;cursor:pointer
+                        margin-top: 1%;">DOCUMENT SELECTION</button>
+                </div>
+            </div>
+            <ul id="demoDocs"  class="collapse border-outer parent-dp arrow_box " style="background-color: #fff !important;margin-right: 1%;padding-left: 15px !important;">
+                <form name="docForm" enctype="multipart/form-data">
+                    <div class="clearfix">
+                        <div class="form-group pull-left" style="width:60%;padding-top:10px">
+                            <div class="input-group">
+                                <input type="text" my-enter="searchDocument(filterTextNew.name)" class="form-control" id="documentnameVal" style="font-size:13px;height:26px;border-right: 0px;border-radius: 0px !important;" ng-model="filterTextNew.name" placeholder="Select a Document" ng-change="checkforEmpty()" aria-describedby="basic-addon1">
+                            <span class="input-group-addon" id="basic-addon1" style="border-radius: 0px;background-color: #fff;font-size:12px;">
+                              <i class="fa fa-search" ng-click="searchDocument(filterTextNew.name)"></i></span>
+                            </div>
+                        </div>
+                        <div class="input-group" style="width: 56%;margin-bottom: 2%">
+                            <!--<select ng-model="selectedName" placeholder="Select a role" style="font-size:12px;margin-left: 2%;border: none;height: 26px;" ng-options="x for x in StakeHolderNames">
+                              <option value="" >Select Document Type</option>
+                            </select>-->
+                            <select ng-model="documentType" id="documenttypeVal" placeholder="Select a Type" style="font-size:12px;margin-left: 5%;border: none;height: 26px;" ng-options="x for x in DocTypeNames">
+                                <option value="" >Select Document Type</option>
+                            </select>
+                            <!--<input type="text" class="form-control" id="documenttypeVal" style="width:167px;margin-right:2px;font-size:13px;height:26px;border-right: 0px;border-radius: 0px !important;" ng-model="documentType" placeholder="Enter Document Type" aria-describedby="basic-addon1"/>-->
+                            <!--<span class="input-group-addon" id="basic-addon1" style="border-radius: 0px;background-color: #fff;font-size:12px;height:26px">
+                              <i class="fa fa-search"></i></span>-->
+                            <input ng-show="showAddBtn" type="submit"  id="submit" class="submitbtn"  ng-click="addNewDocument(filterTextNew.name,documentname,documentType)"  value="Add" style="cursor:pointer;border-radius: 0px;background-color: #5392FF;  color: #FFFFFF;margin-left: 2%"/>
+                        </div><input type="file" id="fileinput" file-model="fileinput" onchange="angular.element(this).scope().doc_changed(this)" class="ng-hide"/>
+                    </div>
+                </form>
+            </ul>
+            <loading ng-show="documentSpinner"></loading>
+            <div class="col-md-12">
+                <div class="col-md-12 change_col" id="otd-table">
+                    <div class="odth-sec clearfix" style="padding:10px;">
+                        <div class="odths-form" style="width: 90%;float: left;">
+                            <div class="form-inline">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <input type="text" ng-model="search.name" class="form-control fontHelveticaNeue" style="font-size:14px;height:25px;border-right: 0px;box-shadow:none;border-radius: 0px"placeholder="Document Filter" aria-describedby="basic-addon1">
+                                        <span class="input-group-addon" id="basic-addon1" style="border-radius: 0px;background-color: #fff;font-size:11px;"><i class="fa fa-search"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--div class="pull-right" style="width: 7%;text-align:center" >
+                            <a href="javascript void(0);" data-toggle="tooltip" data-placement="top" title="Remove All"><i style="color: #949394 "class="fa fa-trash fa-lg" style="cursor:pointer"></i></a>
+                        </div-->
+                    </div>
+
+
+                    <div class="table-responsive" style="padding:10px">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                            <tr class="fontHelvetica" style="background-color:#25467A;color:#ffffff;font-size:15px">
+                                <td style="border:1px solid #25467A">&nbsp;</td>
+                                <td style="border:1px solid #25467A">&nbsp;</td>
+                                <td style="border:1px solid #25467A;font-size:18px">Documents Name</td>
+                                <td style="border:1px solid #25467A;font-size:18px">Documents Type</td>
+                                <td style="border:1px solid #25467A;font-size:18px">Link</td>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr dir-paginate="d in rows.slice().reverse() | itemsPerPage:5 | filter:search.name" pagination-id="pageMsp" style="color:#666666 ">
+                              <td style="text-align:center"><a><i class="fa fa-info-circle fa-lg" style="cursor:pointer"  ng-click="navigationOther(d.name,d.id,headingAssociation,deviceID)"></i></a></td>
+                                <!--Suruchi Start- DisAssociation-->
+                                <td ng-if="roleBasedCanBeAssociated && canbeAssociated  && canbeAssociated == 'true'" style="font-size:25px;color:#9B9A9B;cursor:pointer"><i style="rotate:"class="glyphicon glyphicon-remove-circle" data-toggle="collapse" ng-confirm-click="Would you Really like to Disassociate" ng-click="disassociateDevicesToDevices(associationSubHeading,d)" style="cursor:pointer"></i></td>
+                                <!--Suruchi End- DisAssociation-->
+
+                                <td style="font-size:16px">{{d.name}}</td>
+                                <td style="font-size:16px">{{d.documenttype}}</td>
+                                <td style="font-size:16px"><a href="{{document_download_url}}/{{d.id}}" target="_blank">{{d.links}}</a></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <ul id="demoDetail" class="collapse border-outer parent-dp arrow_box " style="background-color: #ddd !important;margin-right: 1%;padding-left: 15px !important;position: absolute;margin-top: -15%;z-index:10000;margin-left: 20%;width: 76%;">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <table style="margin-top: 10px">
+                                        <tr ng-repeat="(key ,value) in deviceInfo track by $index">
+                                            <td style="color: #5392ff">{{key|capitalize}}</td>
+                                            <td>{{value}}</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div class="col-md-6"></div>
+                            </div>
+                        </ul>
+
+                        <!--div class="otd-table-4" style="float:left;color:#949394;font-size:15px;" ng-if="devicesCount || devicesCount>0"><br/>
+                            {{recordStart}} - {{recordEnd}} Records Out of {{devicesCount}}
+                        </div-->
+                        <dir-pagination-controls pagination-id="pageMsp" data-num-pages="noOfPages" data-current-page="currentPage"  max-size="maxSize" class="Pagination"
+                                                 max-size="6"
+                                                 direction-links="true"
+                                                 boundary-links="true" style="float:right;padding:0px;padding:0px;border-radius:0px;margin-top:0px;list-style:none">
+                        </dir-pagination-controls>
+                    </div>
+
+                </div>
+                <div class="otd-table-2"  id="otd-table-2" ng-show="otdtable2" style="margin-top: 4.3%">
+                    <!--<form name="docForm" enctype="multipart/form-data">-->
+                    <!--<div class="clearfix">
+                        <div class="form-group pull-left" style="width:60%;padding-top:10px">
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="documentnameVal" style="font-size:13px;height:26px;border-right: 0px;border-radius: 0px !important;" ng-model="filterTextNew.name" placeholder="Select a Document" ng-change="searchDocument(filterTextNew.name)" aria-describedby="basic-addon1">
+                                <span class="input-group-addon" id="basic-addon1" style="border-radius: 0px;background-color: #fff;font-size:12px;">
+                                  <i class="fa fa-search" ng-click="searchDocument(filterTextNew.name)"></i></span>
+                            </div>
+                        </div>
+                        <div class="input-group" style="width: 56%;">
+                            &lt;!&ndash;<select ng-model="selectedName" placeholder="Select a role" style="font-size:12px;margin-left: 2%;border: none;height: 26px;" ng-options="x for x in StakeHolderNames">
+                              <option value="" >Select Document Type</option>
+                            </select>&ndash;&gt;
+                              <input type="text" class="form-control" id="documenttypeVal" style="width:150px;margin-right:2px;font-size:13px;height:26px;border-right: 0px;border-radius: 0px !important;" ng-model="documentType" placeholder="Enter Document Type" aria-describedby="basic-addon1"/>
+    &lt;!&ndash;<span class="input-group-addon" id="basic-addon1" style="border-radius: 0px;background-color: #fff;font-size:12px;height:26px">
+      <i class="fa fa-search"></i></span>&ndash;&gt;
+                              <input type="submit"  id="submit" class="submitbtn" data-ng-disabled="!documentType" ng-click="addNewDocument(documentname,documentType)"  value="Add" style="cursor:pointer;border-radius: 0px;background-color: #5392FF;  color: #FFFFFF;"/>
+                        </div><input type="file" id="fileinput" file-model="fileinput" onchange="angular.element(this).scope().doc_changed(this)" class="ng-hide"/>
+                    </div>-->
+
+                    <!--<div class="pull-right" style="width: 10%;text-align:center;" >
+                          <a href="javascript void(0);" data-toggle="tooltip" data-placement="top" title="Tooltip on top"><i class="fa fa-trash" ></i></a>
+                        </div>
+                      </div>-->
+                    <div class="table-responsive" style="padding-right:10px" ng-show="showRightTable">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped">
+                                <thead>
+
+                                </thead>
+                                <tbody>
+
+                                <tr ng-if="filterTextNew.name == '*'" ng-repeat="sd in $parent.searchDocumentJson.slice().reverse()">
+                                    <td width="3%"><input type="radio" name="documentName" value="{{sd.name}}" ng-model="doc" ng-change="documentChange(doc)"></input></td>
+                                    <td style="font-size:16px">{{sd.name}}</td>
+                                    <td style="font-size:16px">{{sd.documenttype}}</td>
+                                    <td> <i ng-click="associateDocToLD(sd.id,sd.name,sd.PKID)"  class="fa fa-plus" style="color: #949394;width:26px;height:26px;line-height:26px;border-radius:100%;text-align:center;border:1px solid #949394;"/></td>
+                                </tr>
+
+                                <tr ng-if="filterTextNew.name !== '*'" ng-repeat="sd in $parent.searchDocumentJson.slice().reverse()">
+                                    <td width="3%"><input type="radio" name="documentName" value="{{sd.name}}" ng-model="doc" ng-change="documentChange(doc)"></input></td>
+                                    <td style="font-size:16px">{{sd.name}}</td>
+                                    <td style="font-size:16px">{{sd.documenttype}}</td>
+                                    <td> <i ng-click="associateDocToLD(sd.id,sd.name,sd.PKID)"  class="fa fa-plus" style="color: #949394;width:26px;height:26px;line-height:26px;border-radius:100%;text-align:center;border:1px solid #949394;"/></td>
+                                </tr>
+
+                                </tbody>
+                            </table>
+                            <!-- The Modal -->
+                            <div id="Modal_doc" class="modal">
+                                <!-- Document Modal content -->
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <span class="modal-close">&times;</span>
+                                        <h4 style="color:black">Would you like to add a document  {{filterTextNew.name}} for document {{deviceName}}?</h4>
+                                    </div>
+                                    <div class="modal-body">
+
+                                        <form name="myForm" novalidate>
+                                            <div class="form-inline">
+
+                                                <div class="form-input-outer">
+                                                    <h6>  Please Select File </h6>
+                                                    <input type="file" ngf-select ng-model="picFile" name="file"
+                                                           ngf-max-size="maxUploadSize" required
+                                                           ngf-model-invalid="errorFile">
+                                                    <i ng-show="myForm.file.$error.required">*required</i>
+                                                    <i ng-show="myForm.file.$error.maxSize">File too large
+                                                        {{errorFile.size / 1000000|number:1}}MB: max {{maxUploadSize}}</i>
+                                <span class="progress" ng-show="picFile.progress >= 0">
+                                  <div style="width:{{picFile.progress}}%"
+                                       ng-bind="picFile.progress + '%'">
+                                  </div>
+                                </span>
+                                                    <span class="err" ng-show="errorMsg">{{errorMsg}}</span>
+                                                </div>
+
+                                                <div class="form-input-outer">
+                                                    <h6>Please Enter Link</h6>
+                                                    <div class="input-group">
+                                                        <input type="text" name="link" style="border-radius:0px !important;width:100%;"  ng-model ="doclinkVal" class="form-control" placeholder="Enter Link Value">
+
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-input-outer">
+                                                    <h6>Please Enter Link Description</h6>
+                                                    <div class="input-group">
+                                                        <input type="text"  name="description" style="border-radius:0px !important;width:100%;"  ng-model ="doclinkdescVal" class="form-control" placeholder="Enter Link Description" >
+
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button class="btn fontHelveticaNeue " ng-disabled="!myForm.$valid"
+										        ng-confirm-click="Would you like to add a document <<{{filterTextNew.name}} >> for {{deviceName}}"
+                                                ng-click="uploadPic(picFile,filterTextNew.name,documentType)" style="border-radius:0px;background-color: #5392FF;color:#FFFFFF;font-size: 14px;line-height: 25px;padding: 4px 12px;margin-top: 2px;">Submit</button>
+
+                                        <button id="doc_no" class="btn fontHelveticaNeue" ng-click ="docUpdateFalse('Modal_doc')" style="border-radius:0px;background-color: #5392FF;color:#FFFFFF;font-size: 14px;line-height: 25px;padding: 4px 12px;margin-top: 2px;">Close</button>
+                                    </div>
+                                    <!--</form>-->
+                                </div>
+
+                            </div>
+
+                            <!--Link Modal -->
+                            <div id="Modal_link" class="modal">
+                                <!-- Document Modal content -->
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <span class="modal-close">&times;</span>
+                                        <h2></h2>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>Would you like to add a document link {{filterTextNew.name}} for document {{deviceName}}?</p>
+
+
+                                    </div>
+                                    <div class="modal-footer">
+
+                                        <button id="link_close" class="btn fontHelveticaNeue" ng-click ="close_Modal('Modal_link')" style="border-radius:0px;background-color: #5392FF;color:#FFFFFF;float: right; margin-right: 1%;margin-top: 1%;">Cancel</button>
+
+                                        <button id="link_no" class="btn fontHelveticaNeue" ng-click ="docUpdateFalse('Modal_link')" style="border-radius:0px;background-color: #5392FF;color:#FFFFFF;float: right;margin-right: 1%;margin-top: 1%;">No</button>
+                                        <button id="link_yes" class="btn fontHelveticaNeue" ng-click ="docLinkTrue()" style="border-radius:0px;background-color: #5392FF;color:#FFFFFF;float: right;margin-top: 1%;">Yes</button>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div id="Modal_linkInput" class="modal">
+                                <!-- Document Modal content -->
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <span class="modal-close" ></span>
+                                        <p id="err_msg" style="color:red"></p>
+                                    </div>
+                                    <div class="modal-body" >
+                                        <div class="form-inline">
+                                            <h5>Please Enter Link</h5>
+                                            <div class="input-group">
+                                                <input type="text" ng-model ="doclinkVal" class="form-control" placeholder="Enter Link Value" style="width:100%;">
+
+                                            </div>
+                                            <h5>Please Enter Link Description</h5>
+                                            <div class="input-group">
+                                                <input type="text" ng-model ="doclinkdescVal" class="form-control" placeholder="Enter Link Description" style="width:100%;">
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <loading ng-show="docSpin"></loading>
+                                    <div class="modal-footer">
+                                        <button id="link_close" class="btn fontHelveticaNeue" ng-click ="close_Modal('Modal_linkInput')" style="border-radius:0px;background-color: #5392FF;color:#fff;float: right; margin-right: 1%;margin-top: 1%;">Cancel</button>
+                                        <button id="link_submit" class="btn fontHelveticaNeue" ng-click ="docUpdateSumit()" style="border-radius:0px;background-color: #5392FF;color:#fff;float: right;margin-right: 1%;margin-top: 1%;">Submit</button>
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+
+                            <div id="Modal_msg" class="modal">
+                                <!-- Document Modal content -->
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <span class="modal-close">&times;</span>
+                                        <h2></h2>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>Please select either a document or provide link information</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button id="link_close" class="btn fontHelveticaNeue" ng-click ="close_Modal('Modal_msg')" style="border-radius:0px;background-color: #5392FF;color:#FFFFFF;float: right; margin-right: 1%;margin-top: 1%;">OK</button>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                            <!--Link Modal-->
+
+                        </div>
+
+                    </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<!-- manisha code change for document association ends-->
+
+
+
+<script>
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    })
+</script>
+
+
+<style>
+    .col-md-4.col-item-pad{
+        padding-right: 5px !important;
+        padding-left: 5px !important;
+    }
+    .notes-item-outer{
+        margin-bottom: 10px;
+    }
+    .notes-item-outer h4{
+        font-size: 18px;
+        line-height: 28px;
+        margin: 0px 0px 3px;
+        color: #777;
+    }
+    .notes-item-outer .content-outer{
+        border: 1px solid #ddd;
+        height: 400px;
+
+    }
+    .ci-header {
+        background: #25467a;
+    }
+    .ci-header .form-group{
+        padding: 2px 10px;
+        padding-bottom: 4px;
+        margin-bottom: 0px;
+    }
+    .ci-header .form-control{
+        border-radius: 0px;
+        border: 0px;
+        border-bottom: 1px solid #fff;
+        background-color: transparent;
+    }
+    .ci-content-outer{
+        padding: 10px 10px;
+    }
+    .ci-content-outer:nth-child(odd){
+        border-bottom: 1px solid #ddd;
+    }
+    .ci-content-outer:nth-child(even){
+        background: #EAEAEA;
+    }
+    .ci-content{
+        width: 100%;
+        height: 362px;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+    .form-control:focus{
+        outline: 0;
+        box-shadow: none;
+    }
+</style>
+
+<script>
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    })
+</script>
+
+
+<style>
+    #demo16{
+        float: right;
+        width: 33.5%;
+        margin-top: 1% !important;
+        margin-bottom: 10px;
+    }
+    #demoDocs{
+        float: right;
+        width: 33.5%;
+        margin-top: 0;
+        margin-bottom: 10px;
+    }
+    #demoDetail{
+        /*float: right;*/
+        /*width: 33.5%;*/
+        margin-top: 0;
+        margin-bottom: 10px;
+    }
+
+    #demo18{
+        float: right;
+        width: 33.5%;
+        margin-top: 1% !important;
+        margin-bottom: 10px;
+    }
+
+    #demoDocs{
+        float: right;
+        width: 33.5%;
+        margin-top: 0;
+        margin-bottom: 10px;
+    }
+
+    #{
+        float: right;
+        width: 35.5%;
+        margin-top: 0;
+        margin-bottom: 10px;
+    }
+
+
+    #demoFsCluster{
+        float: right;
+        width: 35.5%;
+        margin-top: 0;
+        margin-bottom: 10px;
+    }
+
+    #demoEvent{
+        float: right;
+        width: 35.5%;
+        margin-top: 0;
+        margin-bottom: 10px;
+    }
+
+    .submitbtn{
+        color: #FFF;
+        background-color: #5392ff;
+        border: none;
+        margin-left: 8.5%;
+        /* margin-top: 4%; */
+        font-size: 14px;
+        /*width: 21%;*/
+        height: 29px;
+    }
+    .submitbtn[disabled] {
+        background-color: 	#ADD8E6
+    }
+    textarea:focus{
+        background-color: #ffffff !important;
+    }
+    textarea {
+        background-color: #eaeaea !important;
+    }
+    #demoStakeH {
+        float: right;
+        width: 35.5%;
+        margin-top: 0;
+        margin-bottom: 10px;
+    }
+    .red{
+        color:red;
+      }
+</style>

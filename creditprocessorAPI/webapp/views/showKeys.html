@@ -1,0 +1,127 @@
+<div class="container">
+    <div class="row main">
+        <div class="" style="text-align: center;">
+
+            <h2 style="color: #25467A;font-size: 20px"><b>Generated Authentication Keys</b></h2>
+
+                <!--<img ng-if="dataLoading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="/>-->
+
+                <form class="form-horizontal" name="form" id="form" role="form">
+
+                    <div class="input-group" style="width: 22%;margin-bottom: 2%;margin-left: 24%;">
+                        <input ng-model="customname" type="text" class="form-control fontHelveticaNeue" style="color:#666;font-size:14px;height:33px;border-right: 0px;border-radius:0px;box-shadow:none;" placeholder="Environment Filter" aria-describedby="basic-addon1">
+                            <span class="input-group-addon" id="basic-addon1" style="background-color: #fff;font-size:11px;border-radius:0px;">
+                              <i class="fa fa-search" style="cursor:pointer"></i></span>
+                    </div>&nbsp;
+                    <!--<div class="form-group">
+                        <input ng-model="customname" type="text" class="form-control fontHelveticaNeue" style="color:#666;font-size:14px;height:33px;border-right: 0px;border-radius:0px;box-shadow:none;" placeholder="Environment Filter..." aria-describedby="basic-addon1">
+                            <span class="input-group-addon" id="basic-addon1" style="background-color: #fff;font-size:11px;border-radius:0px;">
+                              <i class="fa fa-search" style="cursor:pointer"></i></span>
+
+                    </div>-->
+                    <div class="col-md-3"></div>
+                    <div class="form-group col-md-6">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                            <tr class="fontHelvetica" style="background-color:#25467A;color:#ffffff;font-size:15px;">
+                                <td style="border:1px solid #25467A">User ID </td>
+                                <td style="border:1px solid #25467A">Reason</td>
+                                <!--<td style="border:1px solid #25467A">Sort</td>-->
+                                <td style="border:1px solid #25467A"> Key</td>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            <tr  dir-paginate="x in Showkeys | filter:customname | itemsPerPage:10" pagination-id="pageMsp" style="color:#666666 " >
+                                <td>
+                                    {{x.userid.split(':')[0]}}
+                                </td>
+                                <td>
+                                    {{x.userid.split(':')[1]}}
+                                </td>
+                                <td>
+                                    {{x.key}}
+                                </td>
+                            </tr>
+
+                            </tbody>
+                        </table>
+                        <dir-pagination-controls pagination-id="pageMsp" data-num-pages="noOfPages" data-current-page="currentPage"  max-size="maxSize" class="Pagination"
+                                                 max-size="10"
+                                                 direction-links="true"
+                                                 boundary-links="true" style="float:right;padding:0px;padding:0px">
+                        </dir-pagination-controls>
+            </div>
+
+                    <div class="col-md-3"></div>
+
+                </form>
+
+        </div>
+    </div>
+</div>
+<style>
+    body, html{
+        height: 100%;
+        background-repeat: no-repeat;
+        background-color: #d3d3d3;
+        font-family: 'Oxygen', sans-serif;
+    }
+
+    .main{
+        margin-top: 70px;
+    }
+
+    h1.title {
+        font-size: 50px;
+        font-family: 'Passion One', cursive;
+        font-weight: 400;
+    }
+
+    hr{
+        width: 10%;
+        color: #fff;
+    }
+
+    .form-group{
+        margin-bottom: 15px;
+    }
+
+    label{
+        margin-bottom: 15px;
+    }
+
+    input,
+    input::-webkit-input-placeholder {
+        font-size: 11px;
+        padding-top: 3px;
+    }
+
+    .main-login{
+        background-color: #fff;
+        /* shadows and rounded borders */
+        -moz-border-radius: 2px;
+        -webkit-border-radius: 2px;
+        border-radius: 2px;
+        -moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+        -webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+        box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+
+    }
+
+    .main-center{
+        margin-top: 30px;
+        margin: 0 auto;
+        /*max-width: 330px;*/
+        /*max-width: 422px;*/
+        max-width: 550px;
+        padding: 40px 40px;
+        /*height: 372px;*/
+    }
+
+    .login-button{
+        margin-top: 5px;
+    }
+
+
+</style>

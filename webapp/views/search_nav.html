@@ -1,0 +1,128 @@
+<div class="header-outer clearfix">
+<!--  <div class="ho-left pull-left" ng-if="deviceID=='custom_attribute'">
+    <label style="color: #5392ff;font-size: 20px">
+      Data Model
+    </label> &nbsp;
+
+  </div>-->
+  <div class="ho-left pull-left">
+    <label style="color: #5392ff;font-size: 20px">
+      {{pageHeading}}
+    </label> &nbsp;
+    <!--<label style="color: #949394;">{{logicalDeviceData[currentIndex].name}}</label>-->
+  </div>
+</div>
+
+<style>
+/* CSS used here will be applied after bootstrap.css */
+.search-filter-outer .dropdown-menu {
+  min-width: auto;
+  width:100%;
+  background-color: #5392ff !important;
+  color: #fff !important;
+}
+.search-filter-outer .dropdown-menu.parent-dp{
+  min-width: 900px;
+  right: 0;
+  left: inherit;
+  border-radius: 0px;
+  border: 0px;
+  box-shadow:  0px 0px 6px 0px rgba(0,0,0,0.5);
+}
+.search-filter-outer .dropdown button{
+
+  border-radius: 0px;
+}
+.search-filter-outer .dropdown-menu.device-type-list, .dropdown-menu.dp-input{
+  background: transparent;
+  border: 0px;
+  box-shadow: none;
+}
+.search-filter-outer .dropdown-menu.device-type-list>li>a:focus, .dropdown-menu.device-type-list>li>a:hover{
+  background-color: transparent;
+  outline: 0;
+
+}
+.search-filter-outer .dropdown-menu{
+  background: #fff;
+  border:none;
+box-shadow:none;
+}
+.search-filter-outer .dp-input input{
+  margin-left: 32px;
+}
+.search-filter-outer .form-control{
+  color: #fff;
+  background: transparent;
+  border-color: #fff;
+  font-weight: 400;
+  font-size: 13px;
+}
+.search-filter-outer .form-control:focus{
+  border-color: #fff;
+}
+.search-filter-outer .input-group-btn .btn, .search-filter-outer .input-group-btn .btn:hover, .search-filter-outer .input-group-btn .btn:focus{
+  color: #fff !important;
+  background: transparent !important;
+  border-color: #fff !important;
+  border: 1px solid;
+  outline: 0;
+}
+::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  color: rgba(255, 255, 255, 0.5) !important;
+}
+::-moz-placeholder { /* Firefox 19+ */
+  color: rgba(255, 255, 255, 0.5) !important;
+}
+:-ms-input-placeholder { /* IE 10+ */
+  color: rgba(255, 255, 255, 0.5) !important;
+}
+:-moz-placeholder { /* Firefox 18- */
+  color: rgba(255, 255, 255, 0.5) !important;
+}
+.search-filter-outer .caret{
+  margin: 0px 5px;
+}
+.search-filter-outer .border-outer{
+  border:1px solid #aaa;
+}
+.search-filter-outer .dropdown-menu>li>a:hover {
+  background-color: white
+}
+.search-filter-outer .caret{
+  position: initial;
+  top: 0px;
+  right: 0px;
+}
+.dp-submenu-position{
+  position: inherit;
+}
+.dp-submenu-position li .input-group{
+  margin-left: 24px;
+}
+.search-filter-outer{
+      float: left;
+}
+.search-filter-outer input{
+  border-radius:0px;
+  box-shadow: none;
+}
+.filter-input-size input{
+  font-size:12px;
+}
+.filter-input-size .input-group-btn i{
+  font-size: 12px;
+}
+li:nth-child(even) .filter-input-size .input-group-btn i{
+  font-size: 12px;
+  padding-bottom: 0.45em;
+}
+.list-right-margin{
+  margin-right: 10px;
+}
+.test, .test:hover, .test:focus{
+  color: #fff !important;
+  text-decoration: none !important;
+  background: transparent !important;
+}
+</style>

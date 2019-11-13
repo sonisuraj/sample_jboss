@@ -1,0 +1,239 @@
+
+<script type="text/javascript" src="scripts/js/graph.js">>
+</script>
+<script type="text/javascript" src="scripts/js/graphs.js">>
+
+</script>
+<script type="text/javascript">
+
+</script>
+
+<script type="text/javascript">
+function toggle_visibility1(id) {
+   var e = document.getElementById(id);
+    if (e.style.display == 'none') {
+       e.style.display = 'block'; document.getElementById('triOpen1').innerHTML = '&#9660; Hide Legend';
+      } else
+       { e.style.display = 'none'; document.getElementById('triOpen1').innerHTML = '&#9658; Show Legend';
+      }
+ }
+</script>
+
+<div>
+<button id="png-save">Make PNG for Saving</button>
+<button id="svg-save">Make SVG for Saving</button>
+<span style="color:red">The PNG and SVG buttons are only supported when used from within a browser</span>
+<span style="color:red"> - IE 11 is not supported</span>
+</div>
+<a href="#tri" onclick="toggle_visibility1('tri1');return false;"><span id='triOpen1'>&#9660; Hide Legend</span></a>
+<div id="tri1" style="display:block;">
+<div class="legend-box">
+<table class='legend'>
+<tr>
+<td>
+<svg width="18px" height="18px" version="1.1" xmlns="http://www.w3.org/2000/svg">
+<circle cx="9" cy="9" r="6" style="fill: rgb(31, 119, 180); stroke: rgb(255, 255, 255); stroke-width: 1.5px;" />
+</svg>
+</td>
+<td>Service</td>
+<td>
+<input type="checkbox" id="fShowService" onclick="return false" checked>
+<label for="fShowService">Service</label>
+</td>
+<td>
+<input type="checkbox" id="fLabelService" onclick="showLabel(this)" checked>
+<label for="fLabelService">with label</label>
+</td>
+</tr>
+<tr>
+<td>
+<svg width="18px" height="18px" version="1.1" xmlns="http://www.w3.org/2000/svg">
+<circle cx="9" cy="9" r="5" style="fill: rgb(174, 199, 232); stroke: rgb(255, 255, 255); stroke-width: 1.5px;" />
+</svg>
+</td>
+<td>Component</td>
+<td>
+<input type="checkbox" id="fShowComponent" onchange="ShowCheckBoxOnClick( this )" checked>
+<label for="fShowComponent">Component</label>
+</td>
+<td>
+<input type="checkbox" id="fLabelComponent" onclick="showLabel(this)" checked>
+<label for="fLabelComponent">with label</label>
+</td>
+</tr>
+<tr>
+<td>
+<svg width="18px" height="18px" version="1.1" xmlns="http://www.w3.org/2000/svg">
+<circle cx="9" cy="9" r="5" style="fill: rgb(255, 0, 0); stroke: rgb(174, 199, 232); stroke-width: 2.30px;" />
+</svg>
+</td>
+<td>Dependent Component</td>
+<td>
+<input type="checkbox" id="fShowDependent_Component" onchange="ShowCheckBoxOnClick( this )" checked>
+<label for="fShowDependent_Component">Dependent Component</label>
+</td>
+<td>
+<input type="checkbox" id="fLabelDependent_Component" onclick="showLabel(this)" checked>
+<label for="fLabelDependent_Component">with label</label>
+</td>
+</tr>
+<tr>
+<td>
+<svg width="18px" height="18px" version="1.1" xmlns="http://www.w3.org/2000/svg">
+<circle cx="9" cy="9" r="6" style="fill: rgb(255, 0, 0); stroke: rgb(31, 119, 180); stroke-width: 2.30px;" />
+</svg>
+</td>
+<td>Dependent Service</td>
+<td>
+<input type="checkbox" id="fShowDependent_Service" onchange="ShowCheckBoxOnClick( this )" checked>
+<label for="fShowDependent_Service">Dependent Service</label>
+</td>
+<td>
+<input type="checkbox" id="fLabelDependent_Service" onclick="showLabel(this)" checked>
+<label for="fLabelDependent_Service">with label</label>
+</td>
+</tr>
+<tr>
+<td>
+<svg width="18px" height="18px" version="1.1" xmlns="http://www.w3.org/2000/svg">
+<rect x="4" y="4" width="10" height="10" style="fill: rgb(255, 127, 14)"/>
+</svg>
+</td>
+<td>Logical Device</td>
+<td>
+<input type="checkbox" id="fShowLogical_Device" onchange="ShowCheckBoxOnClick( this )" checked>
+<label for="fShowLogical_Device">Logical Device</label>
+</td>
+<td>
+<input type="checkbox" id="fLabelLogical_Device" onclick="showLabel(this)" checked>
+<label for="fLabelLogical_Device">with label</label>
+</td>
+</tr>
+<tr>
+<td>
+<svg width="18px" height="18px" version="1.1" xmlns="http://www.w3.org/2000/svg">
+<circle cx="9" cy="9" r="5" style="fill: rgb(255, 0, 0); stroke: rgb(174, 199, 232); stroke-width: 2.30px;" />
+</svg>
+</td>
+<td>Device Related Component</td>
+<td>
+<input type="checkbox" id="fShowDeviceRelated_Component" onchange="ShowCheckBoxOnClick( this )" checked>
+<label for="fShowDeviceRelated_Component">Device Related Component</label>
+</td>
+<td>
+<input type="checkbox" id="fLabelDeviceRelated_Component" onclick="showLabel(this)" checked>
+<label for="fLabelDeviceRelated_Component">with label</label>
+</td>
+</tr>
+<tr>
+<td>
+<svg width="18px" height="18px" version="1.1" xmlns="http://www.w3.org/2000/svg">
+<circle cx="9" cy="9" r="6" style="fill: rgb(255, 0, 0); stroke: rgb(31, 119, 180); stroke-width: 2.30px;" />
+</svg>
+</td>
+<td>Device Related Service</td>
+<td>
+<input type="checkbox" id="fShowDeviceRelated_Service" onclick="ShowCheckBoxOnClick( this )" checked>
+<label for="fShowDeviceRelated_Service">Device Releated Service</label>
+</td>
+<td>
+<input type="checkbox" id="fLabelDeviceRelated_Service" onclick="showLabel(this)" checked>
+<label for="fLabelDeviceRelated_Service">with label</label>
+</td>
+</tr>
+</table>
+</div>
+<div class="info-box">
+<h1 class="title">
+</h1>
+</div>
+</div>
+<div id="chart"></div>
+<script type="text/javascript">
+
+</script>
+
+
+<style type="text/css">
+circle.node {
+stroke: #fff;
+stroke-width: 1.5px;
+}
+line.link {
+stroke: #ddd;
+stroke-opacity: .6;
+}
+marker.arrow {
+fill: #999;
+fill-opacity: 0.6;
+}
+marker.arrow-dark {
+fill: #000;
+fill-opacity: 0.8;
+}
+path.error {
+pointer-events: none;
+}
+body {
+margin: 0;
+/* overflow:hidden; */
+height: 100%;
+font: 8px;
+}
+text {
+font: 5px sans-serif;
+}
+html {
+height: 100%;
+}
+rect {
+fill: #fff;
+}
+.label {
+font-size: 0.6875em;
+}
+.label {
+font-size: 0.6875em;
+}
+.legend-box {
+float: left;
+}
+.info-box {
+float: left;
+padding-left: 100px;
+}
+.legend tr td,
+td.legend {
+border: solid 1px #919191;
+font-size: 0.6875em;
+/* px/16 */
+}
+.legend td:first-child {
+text-align: right;
+}
+td.legend {
+vertical-align: centre;
+text-align: center;
+width: 20%;
+}
+td input[type="checkbox"] {
+width: 13px;
+height: 13px;
+padding: 0;
+margin: 0;
+vertical-align: bottom;
+position: relative;
+top: -2px;
+}
+/* DEBUG */
+svg,
+input {
+border: dotted 1px green;
+}
+a {
+color: #888;
+text-decoration: none;
+font-weight: bold;
+font-size: 10px;
+}
+</style>

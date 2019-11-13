@@ -1,0 +1,215 @@
+/*logical Devices Styles*/
+body{
+  background-color: #f6f6f6;
+  margin-left: 0px;
+  margin-right: 0px;
+  font-family: 'Helvetica' !important;
+  overflow: scroll;
+}
+
+#commonHeader
+{
+  margin-left: 100px;
+}
+
+#mainldDiv
+{
+text-align:left;
+  width: 100%;
+  border-top:1px solid #949394;
+  position: relative;
+}
+.lnav
+{
+
+padding-top:30px;
+padding-bottom:15px;
+font-size:20px;
+color: #5392ff;
+width:35%;
+float:left;
+
+}
+.rnav
+{
+
+float:right;
+width : 25%;
+padding-bottom:15px;
+margin-top: 25px
+
+}
+.navButton
+{
+
+margin-left: 5px;
+margin-top:30px;
+padding:3px;
+background-color: #ffffff;
+color: #949394;
+border: 1px solid #949394;
+font-size 14px;
+float:left;
+}
+.lnav2
+{
+font-size:20px;
+color: #949394;
+}
+.ldiv
+{
+float:left;
+margin-right: 5px;
+}
+
+#listActionDiv
+{
+ clear:both;
+ padding-left:10px;
+  width: 100%;
+  border-top:1px solid #ccc;
+  position: relative;
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+.listActionRight{
+
+
+float:right;
+margin-right: 50px;
+}
+
+.recordCnt
+{
+    padding: 1% 2%;
+    text-align: center;
+    font-size: 16px;
+    height: 37px;
+    width: 32px;
+    background-color: #ffffff;
+    border: 1px solid #949394;
+
+}  
+
+#detailsDiv
+{
+width:100%;
+position: relative;
+margin-top:15px;
+
+}
+
+.titleBox
+{
+  background-color:#25467a ;
+  height:32px;
+  color:#ffffff;
+  padding:5px 5px 3px 10px;
+  font-size:16px;
+text-align:left;
+
+  
+
+}
+
+#mAttributes{
+
+background-color: #ffffff;
+text-align:left;
+font-size:14px;
+float:left;
+margin-right:10px;
+border:1px solid #949394;
+
+overflow:visible;
+}
+#rAttributes{
+text-align:left;
+background-color: #ffffff;
+float:left;
+margin-right:10px;
+border:1px solid #949394;
+}
+#rCounts{
+background-color: #25467a;
+text-align:left;
+color:#ffffff;
+border:1px solid #949394;
+float: right;
+}
+
+.ttip{width: 32%;text-align:left;font-size:12px;}
+.textbox{height:20px;width:180px; border:1px solid #ccc;color:#949394;}
+
+.selectbox2{height:25px;width:100px; border:1px solid #ccc;color:#949394;float:left;margin-right:10px}
+
+
+#navlist {
+    position: relative;
+}
+
+#navlist li {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    position: absolute;
+    top: 0;
+}
+
+#navlist li, #navlist a {
+    height: 44px;
+    display: block;
+}
+
+#list1 {
+    left: 0px;
+    width: 46px;
+    background: url('img/DeviceListIcons.png') 0 0;
+}
+
+#list2 {
+    left: 63px;
+    width: 43px;
+    background: url('img/DeviceListIcons.png') -47px 0;
+}
+
+#list3 {
+    left: 129px;
+    width: 43px;
+    background: url('img/DeviceListIcons.png') -91px 0;
+}
+
+#list1 a:hover {
+    background: url('img/DeviceListIcons.png') 0 -45px;
+}
+
+#list2 a:hover {
+    background: url('img/DeviceListIcons.png') -47px -45px;
+}
+
+#list3 a:hover {
+    background: url('img/DeviceListIcons.png') -91px -45px;
+}
+/*logical Devices Styles*/
+
+.rotate_45{
+        -ms-transform: rotate(45deg); /* IE 9 */
+        -webkit-transform: rotate(45deg); /* Chrome, Safari, Opera */
+        transform: rotate(45deg);
+      }
+
+
+.savebtn{
+    border: none;
+    margin-left: 37%;
+    margin-top: 4%;
+    font-size: 14px;
+    width: 13%;
+    height: 37px;
+    margin-bottom: 2%;
+    color: #FFF;
+    background-color: #5392ff;
+}
+.savebtn[disabled] {
+    background-color: 	#ADD8E6
+}

@@ -1,0 +1,50 @@
+
+/*------------------------------------------------------Start: Impression Plan Container CSS------------------------------------------------*/
+#container-top {
+    margin-top: 44px;
+    height: 36px;
+    font-family: 'Arial Regular', 'Arial';
+    font-weight: 400;
+    font-style: normal;
+    font-size: 18px;
+    color: #666666;
+    text-align: left;
+    background-color: #D7D7D7;
+    padding: 7px 7px 3px;
+    position: fixed;
+    width: 100%;
+    z-index: 1001;
+}
+
+#container-middle {
+    padding-top: 80px;
+    margin-bottom: 70px;
+}
+
+.content-row {
+    font-family: 'Roboto Regular', 'Roboto';
+    font-weight: 400;
+    font-style: normal;
+    font-size: 18px;
+    text-align: left;
+    padding-top: 2px;    
+    color: #4C4C4C;
+    background-color: #FAFAFA;
+}
+
+.section-left-middle, .section-left-bottom {
+    color: #A1A1A1;
+    font-size: 13px;
+}
+
+.section-left-middle {
+    padding-top: 7px;
+}
+.journal-name-title{
+    font-size: 18px;
+    position: relative;
+    left: 4.2%;
+}
+
+
+/*------------------------End: Impression Plan Container CSS------------------------*/

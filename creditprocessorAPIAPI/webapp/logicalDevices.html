@@ -1,0 +1,1380 @@
+<style>
+    input.autoComplete {
+        background-image: url(./img/chevron-arrow-to-down.png);
+        background-position: 99% center;
+        background-repeat: no-repeat;
+        /*border: 1px solid #ccc;*/
+        -webkit-border-radius: 4px;
+        -moz-border-radius: 4px;
+        -ms-border-radius: 4px;
+        -o-border-radius: 4px;
+        border-radius: 4px;
+        padding: 6px 10px;
+        -webkit-transition: all 0.2s;
+        -moz-transition: all 2s;
+        transition: all 0.2s;
+    }
+    input.autoComplete:focus {
+        background-position: 99% center;
+    }
+    input.inputset{
+        padding:0px 0px 0px 5px;
+        margin:0px;
+    }
+    .dropdown-menu > .active > a, .dropdown-menu > .active > a:hover, .dropdown-menu > .active > a:focus {
+      color: black;
+    }
+
+</style>
+<script>
+
+</script>
+<div class="main-header-outer">
+    <div id="sticky-anchor"></div>
+    <div id="sticky" class="header-outer clearfix" style="padding: 1.5% 8%;">
+        <div class="ho-left pull-left">
+            <label style="color: #5392ff;font-size: 20px">Logical Device Name:</label>
+
+            <div class="col-xs-12">
+              <div class ="col-xs-6">
+               <input type="text"  id="devicetype" ng-model="logicalDeviceData[currentIndex].name" class="form-control inputset hide_input_box" data-ng-disabled="disableFields"  value="{{logicalDeviceData[currentIndex].name}}"/>
+
+              </div>
+              <div class ="col-xs-6 pull-right"  >
+                <button class="btn update-btn " ng-if="renameDevices" ng-click="changeOnlyName(logicalDeviceData[currentIndex].name,logicalDeviceData[currentIndex].PKID)" style="background-color:#5392ff; border:1px solid #fff; color:#fff;margin-left:4px;">Rename </button>
+
+              </div>
+                      <!--<label class="ibm-icononly"><a href="#" class="ibm-maximize-link" style="margin-bottom: 0;" id="dynoverlay"></a></label>-->
+                </div>
+          </br>
+        </div>
+        <script>
+            (function($, IBM){
+                $("#dynoverlay").on("click", function (evt) {
+                    evt.preventDefault();
+
+                    // Create the overlay object,
+                    // then init it,
+                    // then show it.
+                    var myOverlay = IBM.common.widget.overlay.createOverlay({
+                        contentHtml: '<p>This is the content of a dynamically generated overlay. This is the content of a dynamically generated overlay. This is the content of a dynamically generated overlay. This is the content of a dynamically generated overlay. This is the content of a dynamically generated overlay. </p>',
+                        classes: 'ibm-common-overlay ibm-overlay-alt-two'
+                    });
+
+                    myOverlay.init();
+                    myOverlay.show();
+                });
+            })(jQuery, IBMCore);
+        </script>
+
+        <style>
+            .ibm-close-link{
+                padding: 8px 26px 20px 10px !important;
+            }
+        </style>
+
+        <div class="ho-right pull-right" style="width: 215px; margin-bottom: 0px;">
+            <div class="list-outer">
+
+
+                <div class="dropdown ldiv clearfix">
+                    <div class="search-filter-outer">
+                        <!--<span class="newserach">
+                            <span class="dropdown" style=" padding: 0 20px 0 0 !important;">
+
+                                 <input placeholder="Search by Name" name="srch-term" id="srch-term" style="color: #949394; margin-left: 8px; padding-bottom: 4px;  width: 130px;" data-ns-focus-id="searchtext" type="text" data-toggle="dropdown">
+                                <style>
+                                    ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+                                        font-size: 12px;
+                                        line-height: 28px;
+                                        font-weight: 600;
+                                        color: #403C40 !important;
+                                        padding-left: 4px;
+
+
+                                    }
+                                    ::-moz-placeholder { /* Firefox 19+ */
+                                      font-size: 12px;
+                                        line-height: 28px;
+                                        font-weight: 600;
+                                        color: #403C40 !important;
+                                        padding-left: 4px;
+                                    }
+                                </style>
+
+                                <ul class="dropdown-menu border-outer parent-dp" style="padding: 20px 20px ;">
+                                    <div class="search-input-outer" style="padding: 10px 0px 0px;">
+                                        <h5 style="color:#949394">Search By</h5>
+                                        <div class="input-group">
+                                            <input type="text"  ng-model="q.name" id="searchtext" class="form-control" placeholder="Search for device name ..." style="border-right:0px;color: #949394">
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-default" type="button"  style="border-left:0px;"><i class="fa fa-search" aria-hidden="true"></i></button>
+                                    </span>
+                                        </div>
+                                    </div>
+                                </ul>
+                            </span>
+                        </span>-->
+                        <style>
+                        .hover_color_blue:hover{
+                          background-color: #5392ff;
+                        }
+                        </style>
+
+                        <button class="btn btn-default " data-ns-focus-id="searchtext" type="button"  style="border-radius:0px !important;font-size: 12px;line-height: 28px;font-weight: 600;color: #777;padding: 0px 8px;" data-toggle="collapse" data-target="#demo12">SEARCH BY
+                    <span class="" style="font-size: 18px;position: relative;top: 1px;">
+                      <i class="fa fa-angle-down"></i>
+                    </span>
+                        </button>
+                    </div>
+                    <a href="javascript:void(0);" ng-click="navigateViewList()" style="float: right" data-toggle="tooltip" data-placement="top" title="List View"  style="cursor:pointer">
+                        <span style="margin-left: 5px;position: relative;top: 3px;font-size: 12px;line-height: 28px;font: Helvetica neue regular;color: #949394; font-size:14px;cursor:pointer;">List View</span>
+                    </a>
+                    <a class="dropdown" data-toggle="dropdown" style="margin-left: 7px;position: relative;top: 2px;font-size: 12px;line-height: 28px;font: Helvetica neue regular;color: #949394; font-size:14px;cursor:pointer">Menu
+                    </a>
+                    <span style="top: 4px;line-height: 32px;font-size:12px">|</span>
+                    <!--<img src="img/grid.png"  style="margin-left: -7%" class="dropdown" data-toggle="dropdown" />-->
+                    <ul class="dropdown-menu" style="list-style-type: none; width: 100% !important;border: 1px solid #ccc !important;font-weight: bold !important;height: 600px;overflow: auto">
+                        <li style="" class="hover_color_blue"><a ng-click="getAssociatedDeviceDetail('false','services','true')"><span>Services</span></a></li>
+                        <li class="dropdown-submenu">
+                            <a class="test" href="javaScript:void(0)" ><span class="glyphicon glyphicon-plus" aria-hidden="true" style="margin-right:10px;"></span>Components</a>
+                            <ul class="dropdown-menu dp-submenu-position" style="font-size: 12px; margin-left: 30px; color: #939494 !important;">
+                                <!-- 3 parameters here are 1. can use common html , 2 deviceid 3 canbeadded -->
+                                <li ><a ng-click="getAssociatedDeviceDetail('false','components','true')"><span class="hover_color_blue">Components</span></a></li>
+                                <li ><a ng-click="getAssociatedDeviceDetail('true','componenttoservice','false','Component')"><span class="hover_color_blue">Component to Services</span></a></li>
+                                <li ><a ng-click="getAssociatedDeviceDetail('true','componenttocomponent','false','Component')"><span class="hover_color_blue">Component to Component</span></a></li>
+                            </ul>
+                        </li>
+                        <li style=""><a ng-click="getAssociatedDeviceDetail('true','logicalnetworks','true','Logical Networks')"><span class="hover_color_blue" >Networks</span></a></li>
+                        <li  style=""><a ng-click="getAssociatedDeviceDetail('false','physicaldevices','true')"><span class="hover_color_blue" >Physical Devices</span></a></li>
+                        <li class="dropdown-submenu">
+                            <a class="test" href="javaScript:void(0)" ><span class="glyphicon glyphicon-plus" aria-hidden="true" style="margin-right:10px;"></span>Clusters</a>
+                            <ul class="dropdown-menu dp-submenu-position" style="font-size: 12px; margin-left: 30px; color: #939494 !important;">
+                                <li ><a ng-click="getAssociatedDeviceDetail('false','service_cluster','true','Clusters')"><span class="hover_color_blue">Cluster Membership</span></a></li>
+                                <li ><a ng-click="getAssociatedDeviceDetail('true','clusterslogicaldevices','false','Clusters')"><span class="hover_color_blue">Cluster Resources</span></a></li>
+                                <li ><a ng-click="getAssociatedDeviceDetail('true','clusterslogicaldevices_servers','false','Clusters')"><span class="hover_color_blue">Servers in Cluster</span></a></li>
+                            </ul>
+                        </li>
+                        <li  style=""><a ng-click="getAssociatedDeviceDetail('true','filesystems','true','File Systems')"><span  >File Systems</span></a></li>
+                        <li  style=""><a ng-click="getAssociatedDeviceDetail('true','deviceinterfaces','true','Device Interfaces')"><span  >Device Interfaces</span></a></li>
+                        <li class="dropdown-submenu">
+                            <a class="test" href="javaScript:void(0)" ><span class="glyphicon glyphicon-plus" aria-hidden="true" style="margin-right:10px;"></span>Stakeholder</a>
+                            <ul class="dropdown-menu dp-submenu-position" style="font-size: 12px; margin-left: 30px; color: #939494 !important;">
+                                <li ><a ng-click="getAssociatedDeviceDetail('false','stakeholder','true')"><span class="hover_color_blue">Stakeholders Direct</span></a></li>
+                                <li ><a ng-click="getAssociatedDeviceDetail('true','stakeholderscomponents','false','Stakeholders')"><span class="hover_color_blue">Components</span></a></li>
+                                <li ><a ng-click="getAssociatedDeviceDetail('true','stakeholdersservices','false','Stakeholders')"><span class="hover_color_blue">Services</span></a></li>
+                                <li ><a ng-click="getAssociatedDeviceDetail('true','stakeholdersphysicaldevices','false','Stakeholders')"><span class="hover_color_blue">Physical Devices</span></a></li>
+                            </ul>
+                        </li>
+                        <li  style=""><a ng-click="getAssociatedDeviceDetail('false','document','true')"><span class="hover_color_blue">Documents</span></a></li>
+                        <li  style=""><a ng-click="getAssociatedDeviceDetail('true','events','true','Events')"><span class="hover_color_blue">Events</span></a></li>
+                        <li  style=""><a ng-click="getAssociatedDeviceDetail('false','notes','false')"><span class="hover_color_blue">Notes</span></a></li>
+                        <!--li style="margin-left: 25px;"><a ng-click="getAssociatedDeviceDetail('false','service_cluster')">Service Cluster</a><br/></li>
+                        <li style="margin-left: 25px;"><a ng-click="getAssociatedDeviceDetail('usecommonhtml','component_services')">Component Services</a><br/></li-->
+                        <!--  li style="margin-left: 25px;"><a ng-click="getAssociatedDeviceDetail('false','data_model')">Custom Attributes</a><br/></li-->
+                        <li class="dropdown-submenu">
+                            <a class="test" href="javaScript:void(0)"><span class="glyphicon glyphicon-plus" aria-hidden="true" style="margin-right:10px;"></span>Audit</a>
+                            <ul class="dropdown-menu dp-submenu-position" style="font-size: 12px; margin-left: 30px; color: #939494 !important;">
+                                <!-- 3 parameters here are 1. can use common html , 2 deviceid 3 canbeadded -->
+                                <li  style=""><a ng-click="getAssociatedDeviceDetail('false','audit')"><span class="hover_color_blue">Field Audit</span></a></li>
+                                <li  style=""><a ng-click="getAssociatedDeviceDetail('false','relationale')"><span class="hover_color_blue">Rationale</span></a></li>
+                                <li class="dropdown-submenu">
+                                    <a class="test"href="javaScript:void(0)" ><span class="glyphicon glyphicon-plus" aria-hidden="true" style="margin-right:10px;"></span>Relational Audit</a>
+                                    <ul class="dropdown-menu dp-submenu-position" style="font-size: 12px; color: #939494 !important;">
+                                        <!-- 3 parameters here are 1. can use common html , 2 deviceid 3 canbeadded -->
+                                        <li  style=""><a ng-click="getAuditDetail('components',logicalDeviceData[currentIndex].name)"><span class="hover_color_blue">Components</span></a></li>
+                                        <li  style=""><a ng-click="getAuditDetail('logicalnetworks',logicalDeviceData[currentIndex].name)"><span class="hover_color_blue">Logical Networks</span></a></li>
+                                        <li  style=""><a ng-click="getAuditDetail('clusters',logicalDeviceData[currentIndex].name)"><span class="hover_color_blue">Clusters</span></a></li>
+                                        <li  style=""><a ng-click="getAuditDetail('filesystems',logicalDeviceData[currentIndex].name)"><span class="hover_color_blue">File Systems</span></a></li>
+                                        <li  style=""><a ng-click="getAuditDetail('physicaldevices',logicalDeviceData[currentIndex].name)"><span class="hover_color_blue">Physical Devices</span></a></li>
+                                        <li  style=""><a ng-click="getAuditDetail('deviceinterfaces',logicalDeviceData[currentIndex].name)"><span class="hover_color_blue">Device Interfaces</span></a></li>
+                                        <li  style=""><a ng-click="getAuditDetail('documents',logicalDeviceData[currentIndex].name)"><span class="hover_color_blue">Documents</span></a></li>
+                                        <li  style=""><a ng-click="getAuditDetail('stakeholders',logicalDeviceData[currentIndex].name)"><span class="hover_color_blue">Stakeholders</span></a></li>
+
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                          <li  style=""><a ng-click="getAssociatedDeviceDetail('false','profile-doc','false')"><span class="hover_color_blue">Profile-Document</span></a></li>
+                    </ul>
+
+                    </div>
+            </div>
+        </div>
+    </div>
+    <!--</br>-->
+
+    <ul id="demo12"  class="collapse border-outer parent-dp arrow_box " style="padding: 20px 20px ;height: auto !important; width:100% important;  background-color: #fff !important;  list-style-type: none !important;">
+        <div class="search-input-outer " style="padding: 10px 0px 0px;">
+            <h5>Search By</h5>
+            <div class="input-group">
+                <input type="text" ng-model ="searchdevicename" id="searchtext" class="form-control" placeholder="Search for..." style="border-right:0px;" uib-typeahead="object.value for object in getObjbyKey(d.key) | filter: {value:$viewValue}"  ng-focus="onFocus($event)">
+              <span class="input-group-btn">
+                <button class="btn btn-default" type="button"  style="border-left:0px;"><i class="fa fa-search" aria-hidden="true"></i></button>
+              </span>
+            </div><!-- /input-group -->
+        </div>
+        <hr style="border-style: solid;border-color: #ddd;" />
+        <div class="container-fluid search-filter-inner">
+          <div class="row">
+              <h5>Filter By</h5>
+              <div class="col-xs-3">
+
+                  <li class="dropdown-submenu list-right-margin" style="padding: 5px 0px;">
+                      <a class="test" tabindex="-1" href="javascript:void();" onclick="test1(event);">
+                          <span class="caret"></span>
+                          Mandatory
+
+                      </a>
+                      <ul class="dropdown-menu dp-submenu-position" >
+
+                          <li class="dropdown-submenu dropx" ng-repeat="d in devicedata" ng-if="d.group =='mandatory' && d.key != 'name'">
+
+                              <a class="test" href="javascript:void();" onclick="$(this).parents('.dropx').find('.input-group').toggleClass('hidden');"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> {{d.fieldname}}</a>
+
+                              <div class="input-group hidden filter-input-size">
+                                    <input type="text" class="form-control" ng-model="searchManRel[d.key]" placeholder="Search for..." style="border-right:0px;" uib-typeahead="object.value for object in getObjbyKey(d.key) | filter: {value:$viewValue} " ng-focus="onFocus($event)" typeahead-show-hint="true" typeahead-min-length="0" >
+
+                                      <span class="input-group-btn">
+                                          <button class="btn btn-default" type="button"  style="border-left:0px;"><i class="fa fa-search" aria-hidden="true"></i></button>
+                                      </span>
+                              </div>
+                          </li>
+
+                      </ul>
+
+                  </li>
+                  <li class="dropdown-submenu list-right-margin" style="padding: 5px 0px;" >
+                      <a class="test" tabindex="-1" href="javaScript:void(0);" onclick="test1(event);">
+                          <span class="caret"></span>
+                          Relevant
+                      </a>
+                      <ul class="dropdown-menu dp-submenu-position" >
+
+                          <li class="dropdown-submenu dropx" ng-repeat="d in devicedata" ng-if="d.group =='relevant'">
+                              <a class="test" href="javascript:void();" onclick="$(this).parents('.dropx').find('.input-group').toggleClass('hidden');"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> {{d.fieldname}}</a>
+
+                              <div class="input-group hidden filter-input-size">
+                                  <input type="text" class="form-control" ng-model ="searchManRel[d.key]"  placeholder="Search for..." style="border-right:0px;" uib-typeahead="object.value for object in getObjbyKey(d.key) | filter: {value:$viewValue}"  ng-focus="onFocus($event)" typeahead-show-hint="true" typeahead-min-length="0">
+                                      <span class="input-group-btn">
+                                          <button class="btn btn-default" type="button"  style="border-left:0px;"><i class="fa fa-search" aria-hidden="true"></i></button>
+                                      </span>
+                              </div>
+                          </li>
+
+                      </ul>
+
+                  </li>
+                  <li class="dropdown-submenu list-right-margin" style="padding: 5px 0px;" >
+                      <a class="test" tabindex="-1" href="javaScript:void(0);" onclick="test1(event);">
+                          <span class="caret"></span>
+                          Custom Attribute
+                      </a>
+                      <ul class="dropdown-menu dp-submenu-position" >
+
+                          <li class="dropdown-submenu dropx" ng-repeat="d in customAttributes">
+                              <a class="test" href="javascript:void();" onclick="$(this).parents('.dropx').find('.input-group').toggleClass('hidden');"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> {{d.attribute}}</a>
+
+                              <div class="input-group hidden filter-input-size">
+                                  <input type="text" class="form-control" ng-model ="searchCustomAttribute[d.attribute]"  placeholder="Search for..." style="border-right:0px;" uib-typeahead="object.value for object in getObjbyKey(d.key) | filter: {value:$viewValue}"  ng-focus="onFocus($event)" typeahead-show-hint="true" typeahead-min-length="0">
+                                      <span class="input-group-btn">
+                                          <button class="btn btn-default" type="button"  style="border-left:0px;"><i class="fa fa-search" aria-hidden="true"></i></button>
+                                      </span>
+                              </div>
+                          </li>
+
+                      </ul>
+
+                  </li>
+                  <li class="dropdown-submenu list-right-margin" style="padding: 5px 0px;" >
+                      <a class="test" tabindex="-1" href="javaScript:void(0)" onclick="test1(event);">
+                          <span class="caret"></span>
+                          Related Count
+
+                      </a>
+                      <ul class="dropdown-menu dp-submenu-position" >
+
+                          <li class="dropdown-submenu dropx" ng-repeat="d in relatedCountLD">
+                              <a class="test" href="javascript:void();" onclick="$(this).parents('.dropx').find('.input-group').toggleClass('hidden');"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> {{d.id}}</a>
+
+                              <div class="input-group hidden filter-input-size">
+                                  <input type="text" class="form-control" ng-model ="searchRelatedCount[d.associationkey]"  placeholder="Search for..." style="border-right:0px;" uib-typeahead="object.value for object in drop_down_os | filter: {value:$viewValue}"  ng-focus="onFocus($event)" typeahead-show-hint="true" typeahead-min-length="0">
+                                      <span class="input-group-btn">
+                                          <button class="btn btn-default" type="button"  style="border-left:0px;"><i class="fa fa-search" aria-hidden="true"></i></button>
+                                      </span>
+                              </div>
+                          </li>
+
+                      </ul>
+
+                  </li>
+
+              </div>
+              <div class="col-xs-3">
+
+                  <li class="dropdown-submenu list-right-margin" style="padding: 5px 0px;" ng-repeat="user in association" ng-if="user.flatkey =='logicaldevices' || user.flatkey =='services' || user.flatkey =='clusters' || user.flatkey =='stakeholders' || user.flatkey =='components' || user.flatkey =='documents'">
+                      <a class="test" tabindex="-1" href="javaScript:void(0)" onclick="test(event); $(this).next('ul.dropdown-menu').toggle();">
+                          <span class="caret"></span>
+                          {{user.displayname}}
+                      </a>
+                      <ul class="dropdown-menu dp-submenu-position" >
+                          <followers alldata="user" key="user.key" nik="user.key" ></followers>
+
+                          <li class="dropdown-submenu list-right-margin" style="padding: 5px 0px;" ng-if="a1.displayname!='Direct' && user.flatkey !='components' " ng-repeat="a1 in user.submenu" style="list-style-type: none !important; ">
+                              <a class="test" tabindex="-1" href="" onclick="test(event); $(this).next('ul.dropdown-menu').toggle();">
+                                  <span class="caret"></span>
+                                  {{a1.displayname}}
+                              </a>
+                              <ul class="dropdown-menu dp-submenu-position" >
+
+                              <span ng-if="user.key !='Stakeholders'">
+                              <followers alldata="a1"  key="a1.subkey" nik="niktesting"></followers>
+                            </span>
+                            <span ng-if="user.key =='Stakeholders'">
+                            <stakeholders alldata="a1" key="a1.subkey" mainkey="user.flatkey"></stakeholders>
+                          </span>
+                              </ul>
+
+                          </li>
+                          <li class="dropdown-submenu list-right-margin" style="padding: 5px 0px;" ng-if="a1.displayname!='Component' && user.flatkey =='components'" ng-repeat="a1 in user.submenu" style="list-style-type: none !important; ">
+                              <a class="test" tabindex="-1" href="" onclick="test(event); $(this).next('ul.dropdown-menu').toggle();">
+                                  <span class="caret"></span>
+                                  {{a1.displayname}}
+                              </a>
+                              <ul class="dropdown-menu dp-submenu-position" >
+
+                              <span ng-if="user.key !='Stakeholders'">
+                              <followers alldata="a1"  key="a1.subkey" nik="niktesting"></followers>
+                            </span>
+
+                              </ul>
+
+                          </li>
+
+                      </ul>
+                  </li>
+              </div>
+              <div class="col-xs-3">
+
+                  <li class="dropdown-submenu list-right-margin" style="padding: 5px 0px;" ng-repeat="user in association" ng-if="user.flatkey =='filesystems' || user.flatkey =='physicaldevices' || user.flatkey =='logicalnetworks' || user.flatkey =='deviceinterfaces' || user.flatkey =='interfacegroups' || user.flatkey =='events'">
+                      <a class="test" tabindex="-1" href="" onclick="test(event); $(this).next('ul.dropdown-menu').toggle();">
+                          <span class="caret"></span>
+                          {{user.displayname}}
+                      </a>
+                      <ul class="dropdown-menu dp-submenu-position" >
+                          <followers alldata="user" key="user.key" nik="user.key" ></followers>
+                          <li class="dropdown-submenu list-right-margin" style="padding: 5px 0px;" ng-repeat="a1 in user.submenu" style="list-style-type: none !important; ">
+                              <a class="test" tabindex="-1" href="" onclick="test(event); $(this).next('ul.dropdown-menu').toggle();">
+                                  <span class="caret"></span>
+                                  {{a1.displayname}}
+                              </a>
+                              <ul class="dropdown-menu dp-submenu-position" >
+                                  <followers alldata="a1" key="a1.subkey" nik="niktesting"></followers>
+                              </ul>
+                          </li>
+                     </ul>
+                  </li>
+
+              </div>
+
+              <div class="col-xs-3">
+                  <li class="dropdown-submenu list-right-margin" style="padding: 5px 0px;" ng-repeat="user in association" ng-if="user.flatkey !='filesystems' && user.flatkey !='physicaldevices' && user.flatkey !='logicalnetworks' && user.flatkey !='deviceinterfaces' && user.flatkey !='interfacegroups' && user.flatkey !='events' && user.flatkey !='logicaldevices' && user.flatkey !='services' && user.flatkey !='clusters' && user.flatkey !='stakeholders' && user.flatkey !='components' && user.flatkey !='documents' && user.flatkey !='planning' && user.flatkey !='aliases'&& user.flatkey !='derived'&& user.flatkey !='target' && user.flatkey !='notes' && user.flatkey !='audit' && user.flatkey !='customattributes' && user.flatkey !='logicaldevicedocumentation'">
+
+                      <a class="test" tabindex="-1" href="" onclick="test(event); $(this).next('ul.dropdown-menu').toggle();">
+                          <span class="caret"></span>
+                          {{user.displayname}}
+                      </a>
+                      <ul class="dropdown-menu dp-submenu-position" >
+                          <followers alldata="user" key="user.key" nik="user.key" ></followers>
+                          <li class="dropdown-submenu list-right-margin" style="padding: 5px 0px;" ng-repeat="a1 in user.submenu" style="list-style-type: none !important; ">
+                              <a class="test" tabindex="-1" href="" onclick="test(event); $(this).next('ul.dropdown-menu').toggle();">
+                                  <span class="caret"></span>
+                                  {{a1.displayname}}
+                              </a>
+                              <ul class="dropdown-menu dp-submenu-position" >
+                                  <followers alldata="a1" key="a1.subkey" nik="niktesting"></followers>
+                              </ul>
+                          </li>
+                      </ul>
+                  </li>
+              </div>
+          </div>
+
+        </div>
+        <hr style="border-style: solid;border-color: #ddd;" />
+        <div class="text-center">
+          <img ng-if="table_loader_search" style="display: block;
+          margin: 0 auto;
+          height: 33px;" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="/>
+
+            <button class="btn update-btn" ng-click="submitSearch()" id="updateResult" style="background-color:#5392ff; border:1px solid #fff; color:#fff">Update Result</button>
+            <button class="btn update-btn dropdown dropdown-toggle" data-toggle="dropdown" style="background-color:#5392ff; border:1px solid #fff; color:#fff">Export Result</button>
+
+            <ul class="dropdown-menu" style="margin-top: -1%;margin-left: 55%;min-width: 85px !important;">
+                <li><a ng-click="exportSearch('csv')">CSV</a><br/></li>
+                <li><a ng-click="exportSearch('xlsx')">Excel</a><br/></li>
+            </ul>
+        </div>
+    </ul>
+
+
+
+
+</div>
+
+
+<div class="row">
+    <hr style="width: 100%;border-top: 1px solid #ccc !important;margin-top: 0px !important;
+        margin-bottom: 0px !important;">
+    <div class="col-xs-12" style="height: 4em;">
+        <div class="col-xs-10 col-xs-offset-1" style="margin-top: 1%;margin-left: 8.5%;">
+            <div class="col-xs-6" style="margin-top: 0.5%">
+
+                <!--  -->
+                <button  style="border: 0px;background-color: #F7F7F7;padding-right: 0px !important;"  ng-click ="next_previous_data(logicalDeviceData[currentIndex-1].name,-1)">
+                    <!--<img src="img/previous.jpg" alt="next" >-->
+                    <i class="fa fa-chevron-left" aria-hidden="true" style="color: #949394 !important;"></i>
+                </button>
+                <!--<span class="recordCnt">{{recordID}}</span>-->
+                <input type="number" value="{{recordID}}" id="recordID" ng-model="recordID" min="1" max="{{totalLDcount}}" class="recordCnt" ng-keyup="$event.keyCode == 13 ? inputDeviceIDView(recordID) : null" style="width:auto;"/>
+                <button  style="border: 0px;background-color: #F7F7F7;padding-left: 0px !important;"  ng-click ="next_previous_data(logicalDeviceData[currentIndex+1].name,1)">
+                    <!--<img src="img/next.jpg" alt="next">-->
+                    <i class="fa fa-chevron-right" aria-hidden="true" style="color: #949394 !important;"></i>
+                </button>
+                <label style="font-size: 14px" class="labelcolor">Records Out of {{totalLDcount}} </label>
+            </div>
+            <div class="col-xs-6">
+                <a href="" class="dropdown dropdown-toggle my-tooltip my-dropdown" data-placement="top" title="Export" ng-click="exportContent()" style="float: right;margin-left: 3%;">  <img style="height: 34px" src="img/exportUnselected.png">
+                    <!--<ul class="dropdown-menu border-outer parent-dp" style="margin-left: 90%">
+                        <loading></loading>
+                        <li><a ng-click="exportContent()">CSV</a><br/></li>
+                        <li><a ng-click="exportContent()">Excel</a><br/></li>
+                    </ul>-->
+                    <loading></loading>
+                </a>
+
+              <span ng-if="globals.currentUser.role !=='' && globals.currentUser.role == 'SCOPE+ Admin'">
+                <a data-toggle="tooltip"  ng-if="logicalDeviceData[currentIndex].setreview =='No' || logicalDeviceData[currentIndex].setreview.length ==0 ||logicalDeviceData[currentIndex].setreview =='NO'|| logicalDeviceData[currentIndex].setreview == NULL " data-placement="top" title="SET REVIEW" href="" style="float: right;margin-left: 3%;" ng-click="getAssociatedDeviceDetail('false','setforreview','false','',logicalDeviceData[currentIndex].name,currentIndex)"><i style="height: 34px;color:#949394" class="fa fa-unlock-alt fa-3x" style="cursor:pointer"></i> </a>
+                <a data-toggle="tooltip"  ng-if="logicalDeviceData[currentIndex].setreview=='Yes'  ||logicalDeviceData[currentIndex].setreview=='YES' && deviceID !='SetReviewNotes' && deviceID !='UnSetReviewNotes'"  data-placement="top" title="UNSET REVIEW" href="" style="float: right;margin-left: 3%;" ng-click="getAssociatedDeviceDetail('false','unsetforreview','false','',logicalDeviceData[currentIndex].name,currentIndex)"><i style="height: 34px;color:#949394" class="fa fa-unlock fa-3x" style="cursor:pointer"></i> </a>
+
+                <a data-toggle="tooltip" ng-if=" logicalDeviceData[currentIndex].sconstate =='CANDIDATE' ||  logicalDeviceData[currentIndex].sconstate.length ==0 ||  logicalDeviceData[currentIndex].sconstate == NULL || logicalDeviceData[currentIndex].sconstate =='NO' || logicalDeviceData[currentIndex].sconstate =='No'" data-placement="top" title="MARK DELETION" href="" style="float: right;margin-left: 3%;" ng-click="markForDeletion('NON-CANDIDATE',logicalDeviceData[currentIndex].name,currentIndex)"><i style="height: 34px;color:#949394" class="fa fa-trash-o fa-3x" style="cursor:pointer"></i> </a>
+                <a data-toggle="tooltip" data-placement="top" title="UNMARK DELETION" ng-if="logicalDeviceData[currentIndex].sconstate =='NON-CANDIDATE' || logicalDeviceData[currentIndex].sconstate =='YES'|| logicalDeviceData[currentIndex].sconstate =='Yes'" href="" style="float: right;margin-left: 3%;" ><i style="height: 34px;" ng-click="deletionDevices(logicalDeviceData[currentIndex].PKID)" ng-confirm-click="Would you like to Delete "  class="fa fa-times fa-3x" style="cursor:pointer;color:red"></i> </a>
+
+                <a data-toggle="tooltip" data-placement="top" title="UNMARK DELETION" ng-if="logicalDeviceData[currentIndex].sconstate =='NON-CANDIDATE' || logicalDeviceData[currentIndex].sconstate =='YES'|| logicalDeviceData[currentIndex].sconstate =='Yes'" href="" style="float: right;margin-left: 3%;" ng-click="markForDeletion('CANDIDATE',logicalDeviceData[currentIndex].name,currentIndex)"><i style="height: 34px;color:#949394" class="fa fa-undo fa-3x" style="cursor:pointer"></i> </a>
+
+                <!-- <a class="my-tooltip" data-toggle="tooltip" data-placement="top" title="Print" href="" style="float: right;margin-left: 3%;">  <img style="height: 34px" src="img/printUnselected.png"> </a> -->
+                <a  class="my-tooltip"  data-toggle="tooltip" data-placement="top" title="Edit" href="" style="float: right;margin-left: 3%;">  <img ng-click="editContent()"  style="height: 34px" src="img/editUnselected.png"> </a>
+              </span>
+                <a  class="my-tooltip"  data-toggle="tooltip" data-placement="top" title="Sort" href="" style="float: right;margin-left: 3%;">  <img ng-click="doSorting()"  style="height: 34px" src="img/sortingUnselected.png"> </a>
+                <a  class="my-tooltip"  href="javascript:void(0);" ng-click="navigateViewList()" style="float: right;margin-left: 3%;" data-toggle="tooltip" data-placement="top" title="List View">
+                    <img style="height: 34px" src="img/listViewUnselected.png">
+                </a>
+                <!-- <a  class="my-tooltip"  data-toggle="tooltip" data-placement="top" title="Normal View" href="" style="float: right;margin-left: 3%;">  <img style="height: 34px" src="img/normailViewUnselected.png"> </a> -->
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-10 col-xs-offset-1" style="margin-top: 1%;width:1320px">
+        <div class="col-xs-3" style="padding-left: 10px !important;">
+            <div class="" style="border: 1px solid #ccc;border-bottom: 0px !important; ">
+                <label style="height:28px;color: #fff;background-color: #25467a;width: 100%;
+        font-size: 16px;font-weight: normal">
+		<span style="margin-left: 4%;display: inline-block;margin-top: 1%">Mandatory Attributes</span>
+		</label>
+                <form name="myForm" id="myForms" role = "form" novalidate class="formsetwidth" style="border: 1px solid #ccc;border-top: 0px !important;">
+                    <div class="col-xs-12 " style="padding-left: 15px !important; padding-right: 15px !important; margin-top: 3%">
+                        <div class="form-group">
+                            <label class="labelcolor"> Device Type</label>
+                            <input type="text"  id="devicetype" class="form-control inputset hide_input_box" data-ng-disabled="disableFields"  value="{{logicalDeviceData[currentIndex].devicetype}}" data-placement="bottom" data-toggle="tooltipInput" title="{{(logicalDeviceData[currentIndex].devicetype.length > 30) ? logicalDeviceData[currentIndex].devicetype :'' }}" data-content="{{logicalDeviceData[currentIndex].devicetype}}" data-trigger="hover" size="50" maxlength="50"/>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="labelcolor">Environment</label>
+                            <div class="input-group-cust">
+                                <input type="text" ng-class="getValueMine('environment')" class="form-control inputset hide_input_box autoComplete" ng-model="drop_down_value_env" uib-typeahead="object.value for object in drop_down_env | filter: {value:$viewValue}"  ng-focus="onFocus($event)" typeahead-show-hint="true" typeahead-min-length="0" data-placement="bottom" data-toggle="tooltipInput" title="{{(drop_down_value_env.length > 30) ? drop_down_value_env :'' }}" data-content="{{drop_down_value_env}}" data-trigger="hover" size="50" maxlength="50">
+                                <!--<span class="input-group-addon select_typehead" id="basic-addon1" style="border-radius: 0px;background-color: #fff;font-size:11px;cursor:pointer ;width: 9.001% !important;"><i class="fa fa-chevron-down" style="cursor:pointer"></i></span>-->
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="labelcolor">OS</label>
+                            <div class="input-group-cust">
+                                <input type="text" ng-class="getValueMine('os')" class="form-control inputset hide_input_box autoComplete" ng-model="drop_down_value_os" uib-typeahead="object.value for object in drop_down_os | filter: {value:$viewValue}"  ng-focus="onFocus($event)" typeahead-show-hint="true" typeahead-min-length="0" data-placement="bottom" data-toggle="tooltipInput" title="{{(drop_down_value_os.length > 30) ? drop_down_value_os :'' }}" data-content="{{drop_down_value_os}}" data-trigger="hover" size="100" maxlength="100">
+                                <!--<span class="input-group-addon select_typehead" id="basic-addon1" style="border-radius: 0px;background-color: #fff;font-size:11px;cursor:pointer ;width: 9.001% !important;"><i class="fa fa-chevron-down" style="cursor:pointer"></i></span>-->
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="labelcolor">OS Version</label>
+                            <input type="text"  id="osversion" data-ng-disabled="disableFields" class="form-control inputset hide_input_box" value="{{logicalDeviceData[currentIndex].osversion}}" data-placement="bottom" data-toggle="tooltipInput" title="{{(logicalDeviceData[currentIndex].osversion.length > 30) ? logicalDeviceData[currentIndex].osversion :'' }}" data-content="{{logicalDeviceData[currentIndex].osversion}}" data-trigger="hover" size="255" maxlength="255"/>
+                        </div>
+                        <div class="form-group">
+                            <label class="labelcolor"> OS Arch</label>
+                            <input type="text"  id="osarch" data-ng-disabled="disableFields" class="form-control inputset hide_input_box" value="{{logicalDeviceData[currentIndex].osarchitecture}}" data-placement="bottom" data-toggle="tooltipInput" title="{{(logicalDeviceData[currentIndex].osarchitecture.length > 30) ? logicalDeviceData[currentIndex].osarchitecture :'' }}" data-content="{{logicalDeviceData[currentIndex].osarchitecture}}" data-trigger="hover" size="75" maxlength="75"/>
+                        </div>
+                        <div class="form-group">
+                            <label class="labelcolor"> OS Patch Level</label>
+                            <input type="text"  id="ospatch" data-ng-disabled="disableFields" class="form-control inputset hide_input_box" value="{{logicalDeviceData[currentIndex].ospatchlevel}}" data-placement="bottom" data-toggle="tooltipInput" title="{{(logicalDeviceData[currentIndex].ospatchlevel.length > 30) ? logicalDeviceData[currentIndex].ospatchlevel :'' }}" data-content="{{logicalDeviceData[currentIndex].ospatchlevel}}" data-trigger="hover" size="200" maxlength="200"/>
+                        </div>
+                        <div class="form-group">
+                            <label class="labelcolor">Memory</label>
+                            <input type="text"  only-digits id="memory" data-ng-disabled="disableFields" class="form-control inputset hide_input_box" ng-model="memorydetail" value="{{logicalDeviceData[currentIndex].memory}}" data-placement="bottom" data-toggle="tooltipInput" title="{{(logicalDeviceData[currentIndex].memory.length > 30) ? logicalDeviceData[currentIndex].memory :'' }}" data-content="{{logicalDeviceData[currentIndex].memory}}" data-trigger="hover" size="10" maxlength="10" limit-to-max min="0" max="2147483647"/>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label class="labelcolor">DR Required</label>
+                            <div class="input-group-cust">
+                                <input type="text" ng-class="getValueMine('drrequired')" class="form-control inputset hide_input_box  autoComplete" ng-model="drop_down_value_drRequired" uib-typeahead="object.value for object in drop_down_drRequired | filter: {value:$viewValue}"  ng-focus="onFocus($event)" typeahead-show-hint="true" typeahead-min-length="0" data-placement="bottom" data-toggle="tooltipInput" title="{{(drop_down_value_drRequired.length > 30) ? drop_down_value_drRequired :'' }}" data-content="{{drop_down_value_drRequired}}" data-trigger="hover" size="50" maxlength="50">
+                                <!--<span class="input-group-addon select_typehead" id="basic-addon1" style="border-radius: 0px;background-color: #fff;font-size:11px;cursor:pointer ;width: 9.001% !important;"><i class="fa fa-chevron-down" style="cursor:pointer"></i></span>-->
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="labelcolor">DR Process</label>
+                            <input type="text"  id="drprocess" class="form-control inputset hide_input_box" data-ng-disabled="disableFields" value="{{logicalDeviceData[currentIndex].drprocess}}" data-placement="bottom" data-toggle="tooltipInput" title="{{(logicalDeviceData[currentIndex].drprocess.length > 30) ? logicalDeviceData[currentIndex].drprocess :'' }}" data-content="{{logicalDeviceData[currentIndex].drprocess}}" data-trigger="hover" size="50" maxlength="50"/>
+                        </div>
+                        <div class="form-group">
+                            <label class="labelcolor">Logical Device Host</label>
+                            <input type="text"  id="devhost" data-ng-disabled="disableFields" class="form-control inputset hide_input_box" value="{{logicalDeviceData[currentIndex].logicaldevicehost}}" data-placement="bottom" data-toggle="tooltipInput" title="{{(logicalDeviceData[currentIndex].logicaldevicehost.length > 30) ? logicalDeviceData[currentIndex].logicaldevicehost :'' }}" data-content="{{logicalDeviceData[currentIndex].logicaldevicehost}}" data-trigger="hover" size="75" maxlength="75"/>
+                        </div>
+                        <div class="form-group">
+                            <label class="labelcolor">Host Type</label>
+                            <input id="hosttype" type="text" data-ng-disabled="disableFields" class="form-control inputset hide_input_box" value="{{logicalDeviceData[currentIndex].hosttype}}" data-placement="bottom" data-toggle="tooltipInput" title="{{(logicalDeviceData[currentIndex].hosttype.length > 30) ? logicalDeviceData[currentIndex].hosttype :'' }}" data-content="{{logicalDeviceData[currentIndex].hosttype}}" data-trigger="hover" size="50" maxlength="50"/>                            </div>
+
+                        <div class="form-group">
+                            <label class="labelcolor">Migration Approach</label>
+                            <div class="input-group-cust">
+                                <input type="text" ng-class="getValueMine('migrationapproach')"  class="form-control inputset hide_input_box  autoComplete" ng-model="drop_down_value_migrationApp" uib-typeahead="object.value for object in drop_down_migrationApp | filter: {value:$viewValue}"  ng-focus="onFocus($event)" typeahead-show-hint="true" typeahead-min-length="0" data-placement="bottom" data-toggle="tooltipInput" title="{{(drop_down_value_migrationApp.length > 30) ? drop_down_value_migrationApp :'' }}" data-content="{{drop_down_value_migrationApp}}" data-trigger="hover" size="255" maxlength="255">
+                                <!--<span class="input-group-addon select_typehead" id="basic-addon1" style="border-radius: 0px;background-color: #fff;font-size:11px;cursor:pointer ;width: 9.001% !important;"><i class="fa fa-chevron-down" style="cursor:pointer"></i></span>-->
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="labelcolor">Discovery Status</label>
+                            <div class="input-group-cust">
+                                <input id="discoverystatus" type="text" ng-class="getValueMine('discoverystatus')"  class="form-control inputset hide_input_box  autoComplete" ng-model="drop_down_value_discoverystatus" uib-typeahead="object.value for object in drop_down_discoverystatus | filter: {value:$viewValue}"  ng-focus="onFocus($event)" typeahead-show-hint="true" typeahead-min-length="0" data-placement="bottom" data-toggle="tooltipInput" title="{{(drop_down_value_discoverystatus.length > 30) ? drop_down_value_discoverystatus :'' }}" data-content="{{drop_down_value_discoverystatus}}" data-trigger="hover" size="20" maxlength="20">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="labelcolor">Sites</label>
+                            <input type="text"  id="sites" data-ng-disabled="disableFields" class="form-control inputset hide_input_box" value="{{logicalDeviceData[currentIndex].sites}}" data-placement="bottom" data-toggle="tooltipInput" title="{{(logicalDeviceData[currentIndex].sites.length > 30) ? logicalDeviceData[currentIndex].sites :'' }}" data-content="{{logicalDeviceData[currentIndex].sites}}" data-trigger="hover" size="50" maxlength="50"/>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="col-xs-3" style="padding-left: 13px !important;">
+            <div class="" style="border: 1px solid #ccc;border-bottom:0px !important; ">
+                <label style="height:28px;background-color: #25467a;color: #fff;width: 100%;
+        font-size: 16px;font-weight: normal">
+		<span style="margin-left: 4%;margin-top: 1%;display: inline-block">Relevant Attributes</span>
+		</label>
+            </div>
+            <form name="myFormRel" id="myFormRel" role="form" novalidate class="formsetwidth1" style="border: 1px solid #ccc ; border-top: 0px !important;">
+                <div class="col-xs-12 " style="padding-left: 15px !important;padding-right: 15px !important; margin-top: 3%">
+
+                    <div class="form-group">
+                        <label class="labelcolor">Windows Domain</label>
+                        <div class="input-group-cust">
+                            <input type="text"  ng-class="getValueMine('windowsdomain')" class="form-control inputset hide_input_box autoComplete" ng-model="drop_down_value_windowsDomain" uib-typeahead="object.value for object in drop_down_windowsDomain | filter: {value:$viewValue}"  ng-focus="onFocus($event)" typeahead-show-hint="true" typeahead-min-length="0" data-placement="bottom" data-toggle="tooltipInput" title="{{(drop_down_value_windowsDomain.length > 30) ? drop_down_value_windowsDomain :'' }}" data-content="{{drop_down_value_windowsDomain}}" data-trigger="hover" size="50" maxlength="50">
+                            <!--<span class="input-group-addon select_typehead" id="basic-addon1" style="border-radius: 0px;background-color: #fff;font-size:11px;cursor:pointer ;width: 9.001% !important;"><i class="fa fa-chevron-down" style="cursor:pointer"></i></span>-->
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="labelcolor">Backup Method</label>
+                        <div class="input-group-cust">
+                            <input type="text" ng-class="getValueMine('backupmethod')" class="form-control inputset hide_input_box autoComplete" ng-model="drop_down_value_backupMethod" uib-typeahead="object.value for object in drop_down_backupMethod | filter: {value:$viewValue}"  ng-focus="onFocus($event)" typeahead-show-hint="true" typeahead-min-length="0" data-placement="bottom" data-toggle="tooltipInput" title="{{(drop_down_value_backupMethod.length > 30) ? drop_down_value_backupMethod :'' }}" data-content="{{drop_down_value_backupMethod}}" data-trigger="hover" size="50" maxlength="50">
+                            <!--<span class="input-group-addon select_typehead" id="basic-addon1" style="border-radius: 0px;background-color: #fff;font-size:11px;cursor:pointer ;width: 9.001% !important;"><i class="fa fa-chevron-down" style="cursor:pointer"></i></span>-->
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="labelcolor"> Backup Schedule</label>
+                        <input type="text" id="backschedule"  data-ng-disabled="disableFields" class="form-control inputset hide_input_box" value="{{logicalDeviceData[currentIndex].backupschedule}}" data-placement="bottom" data-toggle="tooltipInput" title="{{(logicalDeviceData[currentIndex].backupschedule.length > 30) ? logicalDeviceData[currentIndex].backupschedule :'' }}" data-content="{{logicalDeviceData[currentIndex].backupschedule}}" data-trigger="hover" size="50" maxlength="50"/>
+                    </div>
+                    <div class="form-group">
+                        <label class="labelcolor">DR Physical Server Name</label>
+                        <input type="text"id="physerver"  data-ng-disabled="disableFields" class="form-control inputset hide_input_box" value="{{logicalDeviceData[currentIndex].drphysicalserver}}" data-placement="bottom" data-toggle="tooltipInput" title="{{(logicalDeviceData[currentIndex].drphysicalserver.length > 30) ? logicalDeviceData[currentIndex].drphysicalserver :'' }}" data-content="{{logicalDeviceData[currentIndex].drphysicalserver}}" data-trigger="hover" size="50" maxlength="50"/>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="labelcolor">Backup Offsite Location</label>
+                        <div class="input-group-cust">
+                            <input type="text" ng-class="getValueMine('backupoffsitelocation')" class="form-control inputset hide_input_box autoComplete" ng-model="drop_down_value_backupoffsitelocation" uib-typeahead="object.value for object in drop_down_backupoffsitelocation | filter: {value:$viewValue}"  ng-focus="onFocus($event)" typeahead-show-hint="true" typeahead-min-length="0" data-placement="bottom" data-toggle="tooltipInput" title="{{(drop_down_value_backupoffsitelocation.length > 30) ? drop_down_value_backupoffsitelocation :'' }}" data-content="{{drop_down_value_backupoffsitelocation}}" data-trigger="hover" size="50" maxlength="50">
+                            <!--<span class="input-group-addon select_typehead" id="basic-addon1" style="border-radius: 0px;background-color: #fff;font-size:11px;cursor:pointer ;width: 9.001% !important;"><i class="fa fa-chevron-down" style="cursor:pointer"></i></span>-->
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="labelcolor">Monitoring System</label>
+                        <input type="text" id="monsystem"  data-ng-disabled="disableFields" class="form-control textbox inputset hide_input_box" value="{{logicalDeviceData[currentIndex].monitoringsystem}}" data-placement="bottom" data-toggle="tooltipInput" title="{{(logicalDeviceData[currentIndex].monitoringsystem.length > 30) ? logicalDeviceData[currentIndex].monitoringsystem :'' }}" data-content="{{logicalDeviceData[currentIndex].monitoringsystem}}" data-trigger="hover" size="255" maxlength="255"/>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="labelcolor">Status</label>
+                        <div class="input-group-cust">
+                            <input type="text" ng-class="getValueMine('status')" class="form-control inputset hide_input_box autoComplete" ng-model="drop_down_value_status" uib-typeahead="object.value for object in drop_down_status | filter: {value:$viewValue}"  ng-focus="onFocus($event)" typeahead-show-hint="true" typeahead-min-length="0" data-placement="bottom" data-toggle="tooltipInput" title="{{(drop_down_value_status.length > 30) ? drop_down_value_status :'' }}" data-content="{{drop_down_value_status}}" data-trigger="hover" size="20" maxlength="20">
+                            <!--<span class="input-group-addon select_typehead" id="basic-addon1" style="border-radius: 0px;background-color: #fff;font-size:11px;cursor:pointer ;width: 9.001% !important;"><i class="fa fa-chevron-down" style="cursor:pointer"></i></span>-->
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="labelcolor">Logical CPU</label>
+                        <input only-digits type="text" id="logcpu" ng-model="logicalcpudetail"  data-ng-disabled="disableFields"  class="form-control inputset hide_input_box" value="{{logicalDeviceData[currentIndex].logicalcpu}}" data-placement="bottom" data-toggle="tooltipInput" title="{{(logicalDeviceData[currentIndex].logicalcpu.length > 30) ? logicalDeviceData[currentIndex].logicalcpu :'' }}" data-content="{{logicalDeviceData[currentIndex].logicalcpu}}" data-trigger="hover" size="50" maxlength="50" size="50" maxlength="50"/>
+                    </div>
+                    <div class="form-group">
+                        <label class="labelcolor">Role</label>
+                        <input id="role" data-ng-disabled="disableFields" type="text" class="form-control inputset hide_input_box" value="{{logicalDeviceData[currentIndex].role}}" data-placement="bottom" data-toggle="tooltipInput" title="{{(logicalDeviceData[currentIndex].role.length > 30) ? logicalDeviceData[currentIndex].role :'' }}" data-content="{{logicalDeviceData[currentIndex].role}}" data-trigger="hover" size="100" maxlength="100"/>
+                    </div>
+                    <div class="form-group">
+                        <label class="labelcolor">Is Virtual</label>
+                        <input type="text"  id="isvirt" data-ng-disabled="disableFields" class="form-control inputset hide_input_box" value="{{logicalDeviceData[currentIndex].isvirtual}}" data-placement="bottom" data-toggle="tooltipInput" title="{{(logicalDeviceData[currentIndex].isvirtual.length > 30) ? logicalDeviceData[currentIndex].isvirtual :'' }}" data-content="{{logicalDeviceData[currentIndex].isvirtual}}" data-trigger="hover" size="50" maxlength="50"/>
+                    </div>
+                    <div class="form-group">
+                        <label class="labelcolor">In Scope</label>
+                        <div class="input-group-cust">
+                            <input type="text" ng-class="getValueMine('inscope')" class="form-control inputset hide_input_box autoComplete" ng-model="drop_down_value_inscope" uib-typeahead="object.value for object in drop_down_inscope | filter: {value:$viewValue}"  ng-focus="onFocus($event)" typeahead-show-hint="true" typeahead-min-length="0" data-placement="bottom" data-toggle="tooltipInput" title="{{(drop_down_value_inscope.length > 30) ? drop_down_value_inscope :'' }}" data-content="{{drop_down_value_inscope}}" data-trigger="hover" size="50" maxlength="50">
+                            <!--<span class="input-group-addon select_typehead" id="basic-addon1" style="border-radius: 0px;background-color: #fff;font-size:11px;cursor:pointer ;width: 9.001% !important;"><i class="fa fa-chevron-down" style="cursor:pointer"></i></span>-->
+                        </div>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+        <div addScroll class="col-xs-3" style="padding-left: 13px !important;">
+            <div class="" style="border: 1px solid #ccc ; border-bottom: 0px !important;">
+                <label style="height:28px;background-color: #25467a;width:100%;color: #fff;font-size: 16px;font-weight: normal">
+				<span style="margin-left: 4%;margin-top: 1%;display: inline-block">Custom Attributes</span>
+				</label>
+            </div>
+            <form name="myFormCounts" id="myFormCounts" role="form" novalidate class="formsetwidth1" style="border: 1px solid #ccc ; border-top: 0px !important;">
+                <div class="col-xs-12 " style="padding-left: 15px !important;padding-right: 15px !important; margin-top: 3%;">
+                    <div class="form-group" ng-repeat="ca in customAttributes | orderBy:'attribute'">
+                        <label class="labelcolor">
+                            {{ca.attribute}}
+                        </label>
+                        <input type="text" data-ng-disabled="disableFields" class="form-control inputset hide_input_box_extended" id="custAttributeInput_{{ca.attribute}}" value="{{ca.value}}" data-placement="bottom" data-toggle="tooltipInput" title="{{(ca.value.length > 30) ? ca.value :'' }}" data-content="{{ca.value}}" data-trigger="hover" maxlength="100"/>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <!--End::Extented Attributes-->
+        <!-- Relevant Attributes-->
+        <div class="col-xs-3" style="padding-left: 13px !important;">
+            <div class="" style="background-color: #25467a;border: 1px solid #ccc ;border-bottom: 0px !important;">
+                <label style="color: #fff;font-size: 16px;float: left;width: 100% !important;margin-bottom: 0px!important;background-color:#25467a;font-weight: normal;padding-top: 2%;padding-left: 5%;">Related Counts</label>
+            </div>
+            <form name="myFormCounts" role="form" novalidate class="formsetwidthRelatedCounts" style="border: 1px solid #ccc;border-top: 0px !important;">
+                <div class="col-xs-12" style="padding-left: 15px !important;padding-right: 15px !important;margin-top: 3%;">
+                    <div class="form-group">
+                        <i class="fa fa-tablet fontawesomeicon" style="cursor:pointer" ng-click="getAssociatedDeviceDetail('false','services','true')"></i>
+                        <label style="color: #fff">
+                            Services
+                        </label>
+                        <input type="text" disabled="disabled" class="form-control inputset" value="{{logicalDeviceData.servicecount}}"/>
+                    </div>
+                    <div class="form-group">
+                        <i class="fa fa-tablet fontawesomeicon" style="cursor:pointer" ng-click="getAssociatedDeviceDetail('false','components','true')"></i>
+                        <label style="color: #fff">
+                            Components
+                        </label>
+                        <input type="text"disabled="disabled"  class="form-control inputset" value="{{logicalDeviceData.compcount}}"/>
+                    </div>
+                    <div class="form-group">
+                        <i class="fa fa-tablet fontawesomeicon" style="cursor:pointer" ng-click="getAssociatedDeviceDetail('false','service_cluster','true','Clusters')"></i>
+                        <label style="color: #fff">
+                            Cluster Membership
+                        </label>
+                        <input type="text" disabled="disabled" class="form-control inputset" value="{{logicalDeviceData.clustercount}}"/>
+                    </div>
+                    <div class="form-group">
+                        <i class="fa fa-tablet fontawesomeicon" style="cursor:pointer" ng-click="getAssociatedDeviceDetail('true','logicalnetworks','true','Logical Networks')"></i>
+                        <label style="color: #fff">
+                            Logical Networks
+                        </label>
+                        <input type="text" disabled="disabled" class="form-control inputset" value="{{logicalDeviceData.lncount}}"/>
+                    </div>
+
+                    <div class="form-group">
+                        <i class="fa fa-tablet fontawesomeicon" style="cursor:pointer" ng-click="getAssociatedDeviceDetail('true','filesystems','true','File Systems')"></i>
+                        <label style="color: #fff">
+                            File Systems
+                        </label>
+                        <input type="text" disabled="disabled" class="form-control inputset" value="{{logicalDeviceData.fscount}}"/>
+                    </div>
+
+                    <div class="form-group">
+                        <i class="fa fa-tablet fontawesomeicon" style="cursor:pointer" ng-click="getAssociatedDeviceDetail('true','deviceinterfaces','true','Device Interfaces')"></i>
+                        <label style="color: #fff">
+                            Interfaces
+                        </label>
+                        <input type="text" disabled="disabled" class="form-control inputset" value="{{logicalDeviceData.interfacecount}}"/>
+                    </div>
+
+                    <div class="form-group">
+                        <label style="color: #fff">
+                            Outbound Devices
+                        </label>
+                        <input type="text" disabled="disabled" class="form-control inputset" value="{{logicalDeviceData.outbounddevicescount}}"/>
+                    </div>
+                    <div class="form-group">
+                        <i class="fa fa-tablet fontawesomeicon" style="cursor:pointer" ng-click="getAssociatedDeviceDetail('false','physicaldevices','true','Physical Devices')"></i>
+                        <label style="color: #fff">
+                            Physical Devices
+                        </label>
+                        <input type="text"  disabled="disabled" class="form-control inputset" value="{{logicalDeviceData.pdcount}}"/>
+                    </div>
+
+                    <div class="form-group">
+                        <label style="color: #fff">
+                            Inbound Devices
+                        </label>
+                        <input type="text" disabled="disabled" class="form-control inputset" value="{{logicalDeviceData.inbounddevicescount}}"/>
+                    </div>
+                </div>
+            </form>
+            <div ng-if="logicalDeviceData[currentIndex].sconstate =='NON-CANDIDATE' || logicalDeviceData[currentIndex].sconstate =='YES' || logicalDeviceData[currentIndex].sconstate =='Yes'">
+                <span style="color:red">MARK FOR DELETION</span>
+            </div>
+
+                  <div ng-if="relatedCountShowMark == false || logicalDeviceData[currentIndex].setreview=='yes' || logicalDeviceData[currentIndex].setreview=='Yes'  ||logicalDeviceData[currentIndex].setreview=='YES' ">
+
+                      <i style="height: 34px;color:#949394;color:red;margin-left: 10px;margin-top: 10px;" class="fa fa fa-exclamation-triangle fa-2x" style="cursor:pointer"></i>
+                        <span  ng-if="logicalDeviceData[currentIndex].setreview=='yes' || logicalDeviceData[currentIndex].setreview=='Yes'  ||logicalDeviceData[currentIndex].setreview=='YES' " style="color:red">MARK FOR REVIEW</span>
+                  </div>
+
+                  <div ng-if="relatedCountShowMark ==true || logicalDeviceData[currentIndex].setreview=='no' || logicalDeviceData[currentIndex].setreview=='No'  ||logicalDeviceData[currentIndex].setreview=='NO' ">
+
+                      <i style="height: 34px;color:#949394;color:green;margin-left: 10px;margin-top: 10px;" class="fa fa-check fa-2x" style="cursor:pointer"></i>
+
+                  </div>
+
+            <!-- <span ng-if="deviceID != 'setforreview' && deviceID != 'unsetforreview' ">
+            <div ng-if="relatedCountShowMark == false ">
+
+                <i style="height: 34px;color:#949394;color:red;margin-left: 10px;margin-top: 10px;" class="fa fa fa-exclamation-triangle fa-2x" style="cursor:pointer"></i>
+                <span style="color:red"></span>
+            </div>
+            <div ng-if="relatedCountShowMark == true">
+                <i style="height: 34px;color:#949394;color:green;margin-left: 10px;margin-top: 10px;" class="fa fa fa-check fa-2x" style="cursor:pointer"></i>
+            </div>
+          </span>
+            <div ng-if="deviceID == 'unsetforreview'">
+                  <span ng-if="relatedCountShowMark == true">
+                      <i style="height: 34px;color:#949394;color:green;margin-left: 10px;margin-top: 10px;" class="fa fa fa-check fa-2x" style="cursor:pointer"></i>
+                  </span>
+                <span ng-if="relatedCountShowMark == false">
+                <i style="height: 34px;color:#949394;color:red;margin-left: 10px;margin-top: 10px;" class="fa fa fa-exclamation-triangle fa-2x" style="cursor:pointer"></i>
+              </span>
+            </div>
+            <div ng-if="deviceID =='setforreview'">
+                <i style="height: 34px;color:#949394;color:red;margin-left: 10px;margin-top: 10px;" class="fa fa fa-exclamation-triangle fa-2x" style="cursor:pointer"></i>
+                <span style="color:red">MARK FOR REVIEW</span>
+            </div> -->
+
+
+
+
+        <!--End::Defect21321 Made it disabled -->
+        <!--End::Extented Attributes-->
+    </div>
+</div>
+<loading ng-show="saveSpinner" style="margin-top: 2%"></loading>
+<div class="col-xs-12">
+    <input type="submit"  id="submit" class="savebtn" ng-click="submitEditedData(logicalDeviceData[currentIndex].name)" value="SAVE" ng-show="!(disableSave)"/>
+    <input type="submit"  id="submit" class="savebtn22" ng-click="reloadPage()"  value="CANCEL" ng-show="!(disableSave)"/>
+</div>
+
+<div id="page-content" class="row" ng-show="hideExportDoc" ng-controller="logicalDevicesController">
+    <img  src="img/ibmLogoBlue.png" height="60" width="100"> <br>
+    <div class="col-xs-12" style="margin-bottom: 500px;margin-top: 200px">
+        <hr style="color: gray;height:2px"/>
+
+        <div class="col-xs-6 col-xs-offset-3">
+            <p style="font-size: 30px;color: #25467a ;margin-bottom: 15px"><b>IBM SCOPEPLUS</b>
+            <p style="font-size: 25px;color: #25467a"><b>LOGICAL DEVICE PROFILE DOCUMENT</b></p>
+             <hr style="color: #ccc;height: 1px"/>
+            <p style="font-size: 20px;color: #25467a"> {{NameofDevice}} - SC and SM</p>
+            <p style="font-size: 20px;color: gray">Logical Device ID - {{IdofDevice}}</p>
+            <hr style="color: gray;height:2px;"/>
+        </div>
+
+    </div>
+    <!-- page 2 starts-->
+    <div class="row">
+        <span style="font-size: 30px;color: #25467a"> Version Control</span> <br/>
+        <div class="table-responsive" style="margin-bottom: 800px">
+            <table class="coltable table-bordered table-striped thead-inverse" style="width: 100%;border: 1px solid;border-collapse: collapse">
+                <tr style="background-color: #005599;border: 1px solid">
+                    <th>
+                        Version
+                    </th>
+                    <th>
+                        Date Issued
+                    </th>
+                    <th>
+                        Author
+                    </th>
+                    <th>
+                        Status
+                    </th>
+                </tr>
+                <tr style="border: 1px solid">
+                    <td> </td>
+                    <td> </td>
+                    <td> </td>
+                    <td> </td>
+                </tr>
+                <tr style="border: 1px solid">
+                    <td> </td>
+                    <td> </td>
+                    <td> </td>
+                    <td> </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <!-- cmt-1893 starts-->
+    <div class="row" style="margin-bottom: 500px">
+        <span style="font-size: 30px;color: #25467a"> <b>Contents</b></span> <br/>
+        <p style="font-size:20px;color: #25467A "> 1. Logical Device Summary </p>
+        <p style="font-size:12px;color: #25467A "> 1.1 Logical Device Attribute</p>
+        <div ng-repeat="section in dummyArray">
+            <p ng-repeat="(key1,value1) in section">
+                <span style="font-size: 12px;color: #25467A;margin-left: 4px">1.{{$parent.$index +2}} Summary of {{key1}} associated to {{NameofDevice}} </span>
+            </p>
+        </div>
+    </div>
+    <!-- cmt-1893 changes ends-->
+
+    <div class="row">
+        <p style="color: #25467a;font-size: 30px"><label> 1 Logical Device Summary</label> <br/></p>
+        <p style="color: #25467a;font-size: 18px">1.1 Logical Device Attributes</p>
+        <table id="activity1" class="coltable table-bordered table-striped thead-inverse" style="width: 100%">
+            <tr id="activity" ng-repeat="(key, value) in attrDataNew" style="border: 1px solid #ccc;font-size: 20px;background-color: #ccc">
+                <td> {{key}} </td>
+                <td> {{ value }} </td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="row">
+        <div ng-repeat="section in dummyArray">
+            <div ng-repeat="(key1,value1) in section">
+                <p style="color: #25467a;font-size:18px">
+                    1.{{$parent.$index +2}}
+                    Summary of {{key1}} associated to {{NameofDevice}} </p>
+                <!-- creating a table for association data starts-->
+                <table id="activity1" class="table table-bordered table-striped" style="width: 100%">
+                    <thead>
+                    <tr id="activity" class="fontHelvetica" style="border: 1px solid #ccc;font-size: 10px;background-color: #25467A;color: white">
+                        <td style="border:1px solid #25467A" ng-repeat="(key3,value) in value1[0]">
+                            {{key3}}
+                        </td>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    <tr class="page-break" ng-repeat="vals in value1" style="border: 1px solid;font-size: 10px;background-color: #ccc">
+
+                        <td ng-repeat="(key,value) in vals">{{value}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <!-- creating a table for association data ends-->
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+
+
+
+
+<ng-include ng-if="deviceID=='services'" src="'./services.html'"></ng-include>
+<ng-include ng-if="deviceID=='components'" src="'./component_component.html'"></ng-include>
+<ng-include ng-if="deviceID=='stakeholder'" src="'./stakeholder.html'"></ng-include>
+<ng-include ng-if="deviceID=='notes'" src="'./notes.html'"></ng-include>
+<ng-include ng-if="deviceID=='setforreview'" src="'./notes.html'"></ng-include>
+<ng-include ng-if="deviceID=='unsetforreview'" src="'./notes.html'"></ng-include>
+<ng-include ng-if="deviceID=='document'" src="'./document.html'"></ng-include>
+<ng-include ng-if="deviceID=='service_cluster'" src="'./service_cluster.html'"></ng-include>
+<ng-include ng-if="deviceID=='component_services'" src="'./component_services.html'"></ng-include>
+<ng-include ng-if="deviceID=='audit'" src="'./audit.html'"></ng-include>
+<ng-include ng-if="deviceID=='relationale'" src="'./audit.html'"></ng-include>
+<ng-include ng-if="deviceID=='cattributes'" src="'./cattributes.html'"></ng-include>
+<ng-include ng-if="deviceID=='physicaldevices'" src="'./physicaldevices.html'"></ng-include>
+<ng-include ng-if="associationDevices" src="'./LD_associationDevices.html'"></ng-include>
+<ng-include ng-if="checkOtherAudit == true" src="'./RelationalLogicalAudit.html'"></ng-include>
+
+
+
+<style>
+
+    @media print {
+        .row {page-break-before: always;}
+    }
+
+    #page-content{display: none;}
+    /*#activity {
+        text-align:center;border:1px solid !important;
+    }
+    #activity tr{
+        text-align:center;border:1px solid !important;
+    }
+    table #activity tr:nth-child(even) {
+        background-color:cornflowerblue !important;
+    }*/
+
+
+    @media print {
+        tr.page-break  { display: block; page-break-before: always; }
+    }
+
+    .table-bordered {
+        border: 1px solid !important;
+    }
+    /*table tr:nth-child(odd) td{
+        background:cornflowerblue;
+    }
+    table tr:nth-child(even) td{
+        background:#fff;
+    }*/
+
+    .inputset{
+        /*width: 96% !important;*/
+        height: 28px !important;
+        border-radius: 0px !important;
+    }
+    .labelcolor{
+        color: #949394;
+        font-weight: normal;
+        font-size: 16px;
+    }
+
+    .formsetwidth{
+        background: white !important;
+        float: left;
+        width: 100% !important;
+    }
+    .formsetwidth1{
+        background: white !important;
+        float: right;
+        width: 100% !important;
+    }
+
+    .formsetwidthRelatedCounts{
+        background: #25467a !important;
+        float: left;
+        width: 100% !important;
+    }
+
+
+    .setpadding{
+        padding-bottom: 0px !important;
+        padding-top: 0px !important;
+    }
+    .recordCnt
+    {
+        /*padding: 1% 2%;*/
+        padding: 0.7% 1.7%;
+        text-align: center;
+        font-size: 16px;
+        height: 37px;
+        width: 32px;
+        background-color: #ffffff;
+        border: 1px solid #949394;
+
+    }
+    .savebtn{
+        border: none;
+        margin-left: 37%;
+        margin-top: 4%;
+        font-size: 13px;
+        width: 13%;
+        height: 37px;
+        margin-bottom: 2%;
+        color: #FFF;
+        background-color: #5392ff;
+    }
+    .savebtn[disabled] {
+        background-color: 	#ADD8E6
+    }
+
+    .savebtn22{
+        border: none;
+        font-size: 13px;
+        width: 13%;
+        height: 37px;
+        margin-bottom: 2%;
+        color: #FFF;
+        background-color: #5392ff;
+    }
+
+    .selectbox2{
+        background-color: #fff;
+        height: 25px;
+        width: 108px;
+        border: 1px solid #ccc;
+        color: #949394;
+        float: left;
+        margin-right: 10px;
+    }
+</style>
+
+<script>
+    $(function() { $( ".dropdown-submenu .test span" ).click(function() {
+        //$('#outer_audit .inner_audit button').removeClass('active_button_audit');
+        //$(this).addClass('active_button_audit');
+        $(this).toggleClass("glyphicon glyphicon-plus glyphicon glyphicon-minus");
+    }); });
+
+</script>
+<script>
+    $(document).ready(function(){
+        $('.dropdown-submenu a.test').on("click", function(e){
+            $(this).next('ul').toggle();
+            e.stopPropagation();
+            e.preventDefault();
+        });
+    });
+</script>
+
+<style>
+
+    #page-content{display: none;}
+
+    #sticky.stick {
+        margin-top: 0 !important;
+        position: fixed;
+        top: 0;
+        z-index: 10000;
+        width: 100%;
+        background: #FFF;
+        border-bottom: 1px solid #ccc;
+    }
+
+    /* CSS used here will be applied after bootstrap.css */
+
+    .dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus {
+        background-image:none !important;
+    }
+    .dropdown-menu > li > a:hover {
+        background-color:transparent !important;
+    }
+    .dropdown-menu > li > a {
+        padding: 3px 20px !important;
+        cursor: pointer;
+    }
+
+    #demo12 h5{
+        color: #777 !important;
+    }
+    .main-header-outer .dropdown-menu {
+        width:100%;
+        background-color: #fff !important;
+        color: black !important;
+    }
+    .list-outer .dropdown-menu {
+        width: inherit;
+        background-color: #fff !important;
+        color: black !important;
+    }
+    .main-header-outer .dropdown-menu .dropdown-submenu{
+        margin: 4px 0px;
+    }
+    .main-header-outer .dropdown-menu .dropdown-submenu .test .glyphicon{
+        font-size: 10px;
+        top: 0px;
+    }
+    .main-header-outer .parent-dp{
+        min-width: 900px;
+        right: 0;
+        left: inherit;
+        border-radius: 0px;
+        border: 0px;
+        box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.15);
+
+    }
+    .main-header-outer .dropdown button{
+
+        border-radius: 0px;
+    }
+    .dp-input{
+        background: transparent;
+        border: 0px;
+        box-shadow: none;
+    }
+    .main-header-outer .dropdown-menu.device-type-list>li>a:focus, .dropdown-menu.device-type-list>li>a:hover{
+        background-color: transparent;
+        outline: 0;
+
+    }
+    .main-header-outer .dropdown-menu{
+        background: #fff;
+        /*border:none; CMT-2431*/
+        border:1px solid #ccc;
+        box-shadow:none;
+    }
+    ul.dropdown-menu.dp-submenu-position{
+      border:none;
+      list-style: none;
+       /*overflow-y: auto;*/
+    }
+    .main-header-outer .dp-input input{
+        margin-left: 32px;
+    }
+    .main-header-outer .search-filter-inner .form-control{
+        color: #777;
+        background: transparent;
+        font-weight: 400;
+        font-size: 13px;
+    }
+    .search-input-outer .btn, .parent-dp .btn{
+        font-size: 14px;
+        border-color: #ccc !important;
+        border-left: 0px !important;
+        border-radius: 0px;
+        color: #ddd !important;
+    }
+    .search-input-outer .btn, .parent-dp .btn:focus{
+        outline: 0;
+        box-shadow: none;
+        border: 0px;
+    }
+    .search-input-outer .btn, .parent-dp .btn i{
+        color: #555 !important;
+    }
+    .parent-dp .btn.update-btn{
+        color: #fff !important;
+        border: 0px;
+        border-color: transparent !important;
+        box-shadow: none;
+    }
+    .main-header-outer .input-group-btn .btn, .main-header-outer .input-group-btn .btn:hover, .main-header-outer .input-group-btn .btn:focus{
+        color: black !important;
+        background: transparent !important;
+        border: 1px solid #aaa;
+        outline: 0;
+    }
+    ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+        color: rgba(255, 255, 255, 0.5) !important;
+    }
+    ::-moz-placeholder { /* Firefox 19+ */
+        color: rgba(255, 255, 255, 0.5) !important;
+    }
+    :-ms-input-placeholder { /* IE 10+ */
+        color: rgba(255, 255, 255, 0.5) !important;
+    }
+    :-moz-placeholder { /* Firefox 18- */
+        color: rgba(255, 255, 255, 0.5) !important;
+    }
+    .main-header-outer .caret{
+        margin: 0px 5px;
+    }
+    .main-header-outer .border-outer{
+        border:1px solid #ddd;
+    }
+    .main-header-outer .dropdown-menu>li>a:hover {
+        background-color: black
+    }
+    .main-header-outer .caret{
+        position: initial;
+        top: 0px;
+        right: 0px;
+    }
+    .dp-submenu-position{
+        position: inherit;
+    }
+    .dp-submenu-position li .input-group{
+        margin-left: 24px;
+    }
+    .dp-submenu-position li.dropdown-submenu:nth-child(even) button{
+        font-size: 13px;
+    }
+    .search-filter-outer{
+        float: left;
+    }
+    .main-header-outer input{
+        border-radius:0px;
+        box-shadow: none;
+    }
+    .filter-input-size input{
+        font-size:13px;
+    }
+    .filter-input-size .input-group-btn i{
+        font-size: 13px;
+    }
+    li:nth-child(even) .filter-input-size .input-group-btn i{
+        font-size: 13px;
+        padding-bottom: 0.45em;
+    }
+    .list-right-margin{
+        margin-right: 10px;
+    }
+    .test, .test:hover, .test:focus{
+        color: #777 !important;
+        text-decoration: none !important;
+        background: transparent !important;
+        outline: 0;
+        text-decoration: none !important;
+    }
+    .select_remove_arrow {
+        -webkit-appearance: none !important;
+        -moz-appearance: none !important;
+        text-indent: 1px !important;
+        text-overflow: '';
+        background: transparent !important;
+        border:0px;
+        border-bottom: 1px solid #aaa;
+        -webkit-box-shadow: none !important;
+        box-shadow: none !important;
+    }
+    .hide_input_box{
+        background: transparent !important;
+        border:0px;
+        border-bottom: 1px solid #aaa;
+        outline:0;
+        -webkit-box-shadow: none !important;
+        box-shadow: none !important;
+        border-radius:none;
+    }
+    .hide_input_box_extended{
+        background: transparent !important;
+        border:0px;
+        border-bottom: 1px solid #aaa;
+        outline:0;
+        -webkit-box-shadow: none !important;
+        box-shadow: none !important;
+        border-radius:none;
+        /*color:#aaa !important*/
+    }
+    select.input-lg1 {
+        padding: 0 0 !important;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        -o-appearance: none;
+        /* no standardized syntax available, no ie-friendly solution available */
+    }
+    select + i.fa {
+        color: #949394;
+        float: right;
+        margin-top: -22px;
+        margin-right: 5px;
+        pointer-events: none;
+        background-color: #fff;
+        padding-right: 5px;
+    }
+    .pagination > li:last-child > a, .pagination > li:last-child > span {
+        border-top-right-radius: 0px !important;
+        border-bottom-right-radius: 0px !important;
+    }
+    .pagination > li:first-child > a, .pagination > li:first-child > span {
+
+        border-top-left-radius: 0px !important;
+        border-bottom-left-radius: 0px !important;
+    }
+    .table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td{
+        vertical-align: middle;
+        padding: 6px 8px 4px;
+    }
+    .pagination > .disabled > span, .pagination > .disabled > span:hover, .pagination > .disabled > span:focus, .pagination > .disabled > a, .pagination > .disabled > a:hover, .pagination > .disabled > a:focus{
+        color: #337ab7;
+    }
+    .component-outer .fa{
+        font-size: 25px;
+    }
+    .component-outer .fa.fa-trash{
+        position: relative;
+        top: 4px;
+    }
+    .component-outer .fa.fa-plus{
+        font-size: 18px;
+        top: 0px;
+    }
+    .component-outer .fa.fa-search{
+        font-size: 12px;
+        top: 0px;
+    }
+    .arrow_box {
+        position: relative;
+        background: #fff;
+        border: 1px solid #ddd;
+    }
+    .arrow_box:after, .arrow_box:before {
+        bottom: 100%;
+        left: 81%;
+        border: solid transparent;
+        content: " ";
+        height: 0;
+        width: 0;
+        position: absolute;
+        pointer-events: none;
+    }
+
+    .arrow_box:after {
+        border-color: rgba(255, 255, 255, 0);
+        border-bottom-color: #fff;
+        border-width: 11px;
+        margin-left: -14px;
+    }
+    .arrow_box:before {
+        border-color: rgba(221, 221, 221, 0);
+        border-bottom-color: #ddd;
+        border-width: 12px;
+        margin-left: -16px;
+    }
+    ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+        color: #aaa !important;
+    }
+    ::-moz-placeholder { /* Firefox 19+ */
+        color:  #aaa !important;
+    }
+    :-ms-input-placeholder { /* IE 10+ */
+        color:  #aaa !important;
+    }
+    :-moz-placeholder { /* Firefox 18- */
+        color:  #aaa !important;
+    }
+
+    .addScroll{
+        height: 570px;
+        overflow: auto;
+    }
+    .select_typehead{
+        border-bottom: 0px;
+        border-top: 0px;
+        border-right: 0px;
+    }
+    .input_right_border{
+        border-right: 0px;
+    }
+    ul>li::before, ol>li::before {
+        color: #959595;
+        content: ' ' !important;
+        display: inline-block;
+        font-family: Arial, sans-serif;
+        font-size: 1.5rem;
+        margin-left: -1.3rem;
+        margin-left: -20px\9;
+        position: absolute;
+    }
+    ul>li, ol>li {
+        padding-left: 0px !important;
+    }
+</style>
+<script>
+$("body").tooltip({
+    selector: "[data-toggle='tooltipInput']",
+    container: "body"
+});
+</script>
+<style>
+.tooltip-inner{
+  white-space: pre-line;
+  word-wrap: break-word;
+}
+</style>
+<link href="css/Common.css" rel="stylesheet" /><!--
+<link href="css/style.css" rel="stylesheet" />-->
+</div>

@@ -1,0 +1,49 @@
+<div ng-controller="autoLoadController">
+	<div ng-if="progress">
+  <div class="progress">
+    <div class="progress-bar" role="progressbar" aria-valuenow="{{progress}}" aria-valuemin="0" aria-valuemax="100" style="width: {{progress}};">
+      {{progress}}
+    </div>
+  </div>
+  <hr>
+  <ul>
+    <li ng-repeat="f in gFiles" style="font:smaller">{{f.name}}</li>
+  </ul>
+	</div>
+
+  <div class="dropzone" ng-hide="progress" ngf-drop ngf-select ng-model="gFiles"  ngf-multiple="true" ngf-drag-over-class="'dragover'">
+    <div class="sm-hidden">
+      <h3>Drag files here</h3>
+      <h3>or</h3>
+    </div>
+    <p><span class="btn btn-primary">Select files from your computer</span></p>
+    <p ngf-no-file-drop>File Drag/Drop is not supported for this browser</p>
+    <!-- <p><small>Accepts jpgs up to 500MB each</small></p> -->
+
+  </div>
+  <!-- end .dropzone -->
+
+
+</div>
+<style>
+.dropzone {
+  padding-top: 120px;
+  padding-bottom: 95px;
+  position: relative;
+  overflow: hidden;
+  background-color: #f4f2ef;
+  border: 1px dashed #b8b8b8;
+  text-align: center;
+  color: #656d78;
+  &.dragover {
+    border-color: blue;
+  }
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: #60b8d4;
+  border-color: #60b8d4;
+}
+
+</style>

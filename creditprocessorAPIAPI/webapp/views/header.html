@@ -1,0 +1,1035 @@
+<div class="container" style="background-color: #ffffff;border-bottom: 1px solid #cccccc;" ng-controller="landingController2" ng-if="!globals.currentUser.changePassword && !globals.currentUser.expiryPassword">
+    <div class="row" style="margin-bottom: 0.5%;">
+        <div class="col-md-10 col-md-offset-1" style="margin-top: 1%;">
+            <div class="col-md-2">
+                <img width="105px" src="img/ibmLogo.png" height="44px">
+            </div>
+            <div class="col-md-10" >
+                <div class="col-md-5"></div>
+                <div class="col-md-7" style="text-align: right !important;">
+                    <!--<img alt="" src="img/loginLogo.png" class="img-circle">-->
+                    <!--Start::Defect21519-->
+                    <img alt="" height="45" width="45" src="{{urlProtocol}}//w3-services1.w3-969.ibm.com/myw3/unified-profile-photo/v1/image/{{globals.currentUser.username}}?def=null" class="img-circle"/>
+                    <!--End::Defect21519-->
+                    <a  style="font: Helvetica neue regular;font-size:14px;color:#5392ff; margin-right: 3%; ">{{globals.currentUser.username}}&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-down" aria-hidden="true" style="font-size:10px"></span> </a>
+                    <a style="font: Helvetica neue regular;color: #949394; font-size:14px; margin-right: 3%; " ng-if="globals.currentUser.role !== '' && globals.currentUser.newRole !== 'Super User'">{{globals.currentUser.role}}</a>
+					<a style="color: #949394; font-size:14px; margin-right: 3%; " ng-if="globals.currentUser.newRole == 'Super User'">{{globals.currentUser.newRole}}</a>
+                    <a style="font: Helvetica neue regular;color: #949394; font-size:14px; margin-right: 3%; " ng-if="!globals.currentUser.role">Architect</a>
+                    <a  href="#/changePassword" style="font: Helvetica neue regular;color: #949394; font-size:14px;text-align: right !important; margin-right: 2%; " ng-if="loginModeValue == 'LOCALAUTH'">Change Password</a>
+                    <a  href="javascript:void(0);" ng-click="logout()" style="font: Helvetica neue regular;color: #949394; font-size:14px;text-align: right !important; margin-right: 2%; ">Logout</a>
+                    &nbsp;&nbsp;<span class="glyphicon glyphicon-align-justify" height="25px" width="30px" aria-hidden="true" style="font-size:30px;color:#949394;">
+                </span>
+                </div>
+
+            </div>
+        </div>
+        <div class="col-md-10 col-md-offset-1" style="margin-top: 2%;">
+            <div class="col-md-7">
+                <a href="javascript:void(0);" ng-click="navigateHome()" > <img alt="" src="img/homeMenu.png"  width="33" height="26" style="margin-bottom:-5px;margin-right: 5%;"/></a>
+                <a  class="" ng-click="openimporttab()"  data-toggle="collapse" data-target="#importtab" style ="color: #949394; font: Helvetica Normal regular; font-size: 16px ;margin-right: 5%;cursor:pointer;" ng-if="globals.currentUser.role !=='' && globals.currentUser.role == 'SCOPE+ Admin'">Import<span class="glyphicon glyphicon-chevron-down" aria-hidden="true" style="position:relative; top:3px;left:10px"></span></a>
+                <!--Import links-->
+                <ul id="importtab"  ng-show="showimporttab"   class="collapse border-outer parent-dp arrow_box2 closeoverlay" style="padding: 16px 16px ; width: 172%;position: absolute;z-index:1000">
+                    <div class="search-input-outer row" style="padding: 10px 0px 0px; background-color: #fff" >
+                        <loading></loading>
+                        <div class="vertical-menu col-xs-4" >
+                            <ul>
+
+                                <p>
+                                    <i class="fa fa-object-group fontawesomeicon" aria-hidden="true"></i>
+                                    <label class="exportlabel"  style ="cursor:pointer;" ng-click="openautoload()" > Auto Load</label>
+
+                                </p>
+                                </br>
+                                <p>
+                                    <i class="fa fa-handshake-o fontawesomeicon" aria-hidden="true"></i>
+                                    <label class="exportlabel"> Services</label> <br>
+                                    <a class="setlink" ng-click="import_LD(relatedVersions[1]['id'])" style="cursor:pointer">
+                                        <!--<input type="file" ngf-select ng-model="importfile" id="importfile" on-read-file="importFileChange($fileContent)" class="ng-hide"/>-->
+                                        <input type="file" ngf-select ng-model="importfile" id="importfile" on-read-file="importFileSelect($fileContent)" class="ng-hide"/>
+                                        Services
+                                        <!--<br/>
+                                        Logical Device to Physical Device-->
+                                    </a>
+                                    <a class="setlink" ng-click="import_LD('services-aliases')" style="cursor:pointer">
+                                        Services Aliases
+                                        <!--<br/>
+                                        Logical Device to Physical Device-->
+                                    </a>
+
+                                </p>
+                                <p>
+                                    <i class="fa fa-microchip fontawesomeicon" aria-hidden="true"></i>
+                                    <label class="exportlabel">Components</label>
+                                    <a class="setlink" ng-click="import_LD(relatedVersions[2]['id'])" style="cursor:pointer">
+                                        Components
+                                    </a>
+                                    <a class="setlink" ng-click="import_LD(relatedVersions[12]['id'])" style="cursor:pointer">
+                                        Component to Component
+                                    </a>
+                                    <a class="setlink" ng-click="import_LD('components-logicaldevices')" style="cursor:pointer">
+                                        Component to Logical Device
+                                    </a>
+                                    <a class="setlink" ng-click="import_LD('components-services')" style="cursor:pointer">
+                                        Component to Services
+                                    </a>
+                                </p>
+                                <p>
+                                    <i class="fa fa-puzzle-piece fontawesomeicon" aria-hidden="true"></i>
+                                    <label class="exportlabel">Logical Devices</label>
+                                    <a class="setlink" ng-click="import_LD(relatedVersions[0]['id'])" style="cursor:pointer">
+                                        Logical Devices
+                                    </a>
+                                    <a class="setlink" ng-click="import_LD('logicaldevices-clusters')" style="cursor:pointer">
+                                        Logical Device to Cluster
+                                    </a>
+                                    <a class="setlink" ng-click="import_LD('logicaldevices-physicaldevices')" style="cursor:pointer">
+                                        Logical Device to Physical Device
+                                    </a>
+
+
+                                </p>
+                                <p>
+                                    <i class="fa fa-laptop fontawesomeicon" aria-hidden="true"></i>
+                                    <label class="exportlabel"> Physical Devices</label>
+                                    <a class="setlink" ng-click="import_LD(relatedVersions[6]['id'])" style="cursor:pointer">
+                                        Physical Device
+                                    </a>
+                                    <a class="setlink" ng-click="import_LD(relatedVersions[6]['id'],'bySerial')" style="cursor:pointer">
+                                        Physical Device by Serial No
+                                    </a>
+                                    <a class="setlink" ng-click="import_LD('physicaldevices-physicaldevices')" style="cursor:pointer">
+                                        Physical Device to Physical Device
+                                    </a>
+                                </p>
+                                <p>
+                                    <i class="fa fa-link fontawesomeicon" aria-hidden="true"></i>
+                                    <label class="exportlabel"> Logical Networks</label>
+                                    <a class="setlink" ng-click="import_LD(relatedVersions[7]['id'])" style="cursor:pointer">
+                                        Logical Networks
+                                    </a>
+                                </p>
+                            </ul>
+
+                        </div>
+                        <div class="vertical-menu col-xs-4">
+                            <ul>
+                                <p>
+                                    <i class="fa fa-sitemap fontawesomeicon" aria-hidden="true"></i>
+                                    <label class="exportlabel"> Clusters</label> <br>
+                                    <a class="setlink" ng-click="import_LD(relatedVersions[3]['id'])" style="cursor:pointer">
+                                        Clusters
+                                    </a>
+                                    <a class="setlink" ng-click="import_LD('clusters-resources')" style="cursor:pointer">
+                                        Clusters Resources
+                                    </a>
+                                </p>
+                                <!--<p>
+                                    <i class="fa fa-floppy-o fontawesomeicon" aria-hidden="true"></i>
+                                    <label class="exportlabel">File System</label>
+                                    <a class="setlink" ng-click="import_LD(relatedVersions[5]['id'])" style="cursor:pointer">
+                                        File Systems
+                                    </a>
+                                </p>-->
+                                <p>
+                                    <i class="fa fa-tablet fontawesomeicon" aria-hidden="true"></i>
+                                    <label class="exportlabel">Device Interface</label>
+                                    <a class="setlink" ng-click="import_LD(relatedVersions[8]['id'])" style="cursor:pointer">
+                                        Device Interfaces
+                                    </a>
+                                    <a class="setlink" ng-click="import_LD('deviceinterfaces-deviceinterfaces')" style="cursor:pointer">
+                                        Device Interface - Device Interface
+                                    </a>
+                                </p>
+                                <p>
+                                    <i class="fa fa-user fontawesomeicon" aria-hidden="true"></i>
+                                    <label class="exportlabel"> Stake Holders</label>
+                                    <a class="setlink" ng-click="import_LD(relatedVersions[4]['id'])" style="cursor:pointer">
+                                        Stakeholders
+                                    </a>
+                                    <a class="setlink" ng-click="import_LD('stakeholders-logicaldevices')" style="cursor:pointer">
+                                        Stakeholder to LogicalDevice
+                                    </a>
+                                    <a class="setlink" ng-click="import_LD('stakeholders-components')" style="cursor:pointer">
+                                        Stakeholder to Component
+                                    </a>
+                                    <a class="setlink" ng-click="import_LD('stakeholders-services')" style="cursor:pointer">
+                                        Stakeholder to Service
+                                    </a>
+                                    <a class="setlink" ng-click="import_LD('stakeholders-physicaldevices')" style="cursor:pointer">
+                                        Stakeholder to PhysicalDevice
+                                    </a>
+                                </p>
+                                <p>
+                                    <i class="fa fa-floppy-o fontawesomeicon" aria-hidden="true"></i>
+                                    <label class="exportlabel">File Systems</label>
+                                    <a class="setlink" ng-click="import_LD('filesystems-logicaldevices')" style="cursor:pointer">
+                                        File Systems to Logical Devices
+                                    </a>
+                                    <a class="setlink" ng-click="import_LD('filesystems-filesystemschild')" style="cursor:pointer">
+                                        File System with Child
+                                    </a>
+                                    <a class="setlink" ng-click="import_LD('filesystems-filesystems')" style="cursor:pointer">
+                                        File System to File System
+                                    </a>
+                                    <a class="setlink" ng-click="import_LD('filesystems-filesystemsid')" style="cursor:pointer">
+                                        File System to File System [ ID ]
+                                    </a>
+
+                                </p>
+                            </ul>
+                        </div>
+                        <div class="vertical-menu col-xs-4">
+                            <ul>
+                                <p>
+                                    <i class="fa fa-object-group fontawesomeicon" aria-hidden="true"></i>
+                                    <label class="exportlabel"> Interface Groups</label> <br>
+                                    <a class="setlink" ng-click="import_LD(relatedVersions[9]['id'])" style="cursor:pointer">
+                                        Interface Groups
+                                    </a>
+
+                                </p>
+                                <p>
+                                    <i class="fa fa-file fontawesomeicon" aria-hidden="true"></i>
+                                    <label class="exportlabel">Documents</label>
+                                    <a class="setlink" ng-click="import_LD('documents-logicaldevices')" style="cursor:pointer">
+                                        Documents to LogicalDevices
+                                    </a>
+                                    <a class="setlink" ng-click="import_LD('documents-services')" style="cursor:pointer">
+                                        Documents to Services
+                                    </a>
+                                    <a class="setlink" ng-click="import_LD('documents-components')" style="cursor:pointer">
+                                        Documents to Components
+                                    </a>
+                                    <a class="setlink" ng-click="import_LD('documents-physicaldevices')" style="cursor:pointer">
+                                        Documents to Physicaldevices
+                                    </a>
+                                </p>
+                                <p>
+                                    <i class="fa fa-calendar fontawesomeicon" aria-hidden="true"></i>
+                                    <label class="exportlabel">Events</label>
+                                    <!--<a class="setlink" ng-click="import_LD(relatedVersions[11]['id'])" style="cursor:pointer">
+                                        Events
+                                    </a>-->
+                                    <a class="setlink" ng-click="import_LD('events-logicaldevices')" style="cursor:pointer">
+                                        Events to Logicaldevices
+                                    </a>
+                                    <a class="setlink" ng-click="import_LD('events-services')" style="cursor:pointer">
+                                        Events to Services
+                                    </a>
+                                    <a class="setlink" ng-click="import_LD('events-components')" style="cursor:pointer">
+                                        Events to Components
+                                    </a>
+                                    <a class="setlink" ng-click="import_LD('events-physicaldevices')" style="cursor:pointer">
+                                        Events to Physicaldevices
+                                    </a>
+                                </p>
+                            </ul>
+                        </div>
+                    </div>
+
+                </ul>
+                <!--Import Links-->
+
+                <a  class="" ng-click="openexportstab()" data-toggle="collapse" data-target="#exporttab" style ="color: #949394; font: Helvetica Normal regular; font-size: 16px ;margin-right: 5%;cursor:pointer;">Export<span class="glyphicon glyphicon-chevron-down" aria-hidden="true" style="position:relative; top:3px;left:10px"></span></a>
+                <ul id="exporttab" class="collapse border-outer parent-dp arrow_box1 closeoverlay" style="padding: 16px 16px ; width: 172%;position: absolute;z-index:1000">
+                    <div class="search-input-outer row" style="padding: 10px 0px 0px; background-color: #fff;margin-left: 1%">
+                        <loading></loading>
+                        <div class="vertical-menu col-xs-4">
+                            <ul>
+                                <p>
+                                    <i class="fa fa-handshake-o fontawesomeicon" aria-hidden="true"></i>
+                                    <label class="exportlabel"> Services</label> <br>
+                                    <a class="setlink" ng-mouseover="showServ = true" ng-mouseleave="showServ = false"> Services
+                                        <span ng-show="showServ"> <button ng-click="openlogDevice('services','csv')" style="border: none;margin-left: 5%">CSV </button></span>
+                                        <span ng-show="showServ"> <button ng-click="openlogDevice('services','xlsx')" style="border: none">Excel</button></span>
+                                    </a>
+                                    <a class="setlink" ng-mouseover="showServcsv = true" ng-mouseleave="showServcsv = false"> Service Aliases
+                                        <span ng-show="showServcsv"> <button ng-click="ExportIndirect('services-aliases','csv')" style="border: none;margin-left: 5%">CSV </button></span>
+                                        <span ng-show="showServcsv"> <button ng-click="ExportIndirect('services-aliases','xlsx')" style="border: none">Excel</button></span>
+                                    </a>
+                                    <!-- reports for orphan devices / services starts-->
+                                    <a class="setlink" ng-mouseover="showServonly = true" ng-mouseleave="showServonly = false"> Services/ABB/LD/PD
+                                        <span ng-show="showServonly"> <button ng-click="ExportReports('No','No','Yes','csv','Service/ABB/LD/PD')" style="border: none;margin-left: 5%">CSV </button></span>
+                                        <span ng-show="showServonly"> <button ng-click="ExportReports('N0','No','Yes','xlsx','Service/ABB/LD/PD')" style="border: none">Excel</button></span>
+                                    </a>
+                                    <a class="setlink" ng-mouseover="showServnameonly = true" ng-mouseleave="showServnameonly = false"> Services/ABB/LD/PD(Names only)
+                                        <span ng-show="showServnameonly"> <button ng-click="ExportReports('Yes','No','No','csv','Service/ABB/LD/PD(Names only)')" style="border: none;margin-left: 5%">CSV </button></span>
+                                        <span ng-show="showServnameonly"> <button ng-click="ExportReports('Yes','No','No','xlsx','Service/ABB/LD/PD(Names only)')" style="border: none">Excel</button></span>
+                                    </a>
+                                    <a class="setlink" ng-mouseover="showServOrphan = true" ng-mouseleave="showServOrphan = false"> Services/ABB/LD/PD + Orphan Devices
+                                        <span ng-show="showServOrphan"> <button ng-click="ExportReports('No','Yes','No','csv','Service/ABB/LD/PD + Orphan Devices')" style="border: none;margin-left: 5%">CSV </button></span>
+                                        <span ng-show="showServOrphan"> <button ng-click="ExportReports('No','Yes','No','xlsx','Service/ABB/LD/PD + Orphan Devices')" style="border: none">Excel</button></span>
+                                    </a>
+                                    <!-- reports for orphan devices/services ends-->
+                                </p>
+                                <p>
+                                    <i class="fa fa-microchip fontawesomeicon" aria-hidden="true"></i>
+                                    <label class="exportlabel">Components</label>
+                                    <a class="setlink" ng-mouseover="showcomp = true" ng-mouseleave="showcomp = false"> Components
+                                        <span ng-show="showcomp"> <button ng-click="openlogDevice('components','csv')" style="border: none;margin-left: 5%">CSV </button></span>
+                                        <span ng-show="showcomp"> <button ng-click="openlogDevice('components','xlsx')" style="border: none">Excel</button></span>
+                                    </a>
+
+                                    <a class="setlink" ng-mouseover="showcompcsv = true" ng-mouseleave="showcompcsv = false"> Components to Components
+                                        <span ng-show="showcompcsv"> <button ng-click="openlogDevice('componenttocomponents','csv')" style="border: none;margin-left: 5%">CSV </button></span>
+                                        <span ng-show="showcompcsv"> <button ng-click="openlogDevice('componenttocomponents','xlsx')" style="border: none">Excel</button></span>
+                                    </a>
+                                    <a class="setlink" ng-mouseover="showcompToServ = true" ng-mouseleave="showcompToServ = false"> Components to Services
+                                        <span ng-show="showcompToServ"> <button ng-click="ExportIndirect('components-services','csv')" style="border: none;margin-left: 5%">CSV </button></span>
+                                        <span ng-show="showcompToServ"> <button ng-click="ExportIndirect('components-services','xlsx')" style="border: none">Excel</button></span>
+                                    </a>
+                                    <a class="setlink" ng-mouseover="showcomptoLg = true" ng-mouseleave="showcomptoLg = false"> Components to Logical Device
+                                        <span ng-show="showcomptoLg"> <button ng-click="ExportIndirect('components-logicaldevices','csv')" style="border: none;margin-left: 5%">CSV </button></span>
+                                        <span ng-show="showcomptoLg"> <button ng-click="ExportIndirect('components-logicaldevices','xlsx')" style="border: none">Excel</button></span>
+                                    </a>
+                                </p>
+                                <p>
+                                    <i class="fa fa-puzzle-piece fontawesomeicon" aria-hidden="true"></i>
+                                    <label class="exportlabel">Logical Devices</label>
+                                    <a class="setlink" ng-mouseover="showLg = true" ng-mouseleave="showLg = false"> Logical Devices
+                                        <span ng-show="showLg"> <button style="border: none" ng-click="openlogDevice('logicaldevices','csv')">CSV </button></span>
+                                        <span ng-show="showLg"> <button style="border: none" ng-click="openlogDevice('logicaldevices','xlsx')">Excel</button></span>
+                                    </a>
+
+                                    <a class="setlink" ng-mouseover="showLgtoPd = true" ng-mouseleave="showLgtoPd = false"> Logical Device to Physical Device
+                                        <span ng-show="showLgtoPd"> <button style="border: none" ng-click="ExportIndirect('logicaldevices-physicaldevices','csv')">CSV </button></span>
+                                        <span ng-show="showLgtoPd"> <button style="border: none" ng-click="ExportIndirect('logicaldevices-physicaldevices','xlsx')">Excel</button></span>
+                                    </a>
+                                </p>
+                                <p>
+                                    <i class="fa fa-laptop fontawesomeicon" aria-hidden="true"></i>
+                                    <label class="exportlabel"> Physical Devices</label>
+                                    <a class="setlink" ng-mouseover="showPD1 = true" ng-mouseleave="showPD1 = false"> Physical Devices
+                                        <span ng-show="showPD1"> <button style="border: none" ng-click="openlogDevice('physicaldevices','csv')">CSV </button></span>
+                                        <span ng-show="showPD1"> <button style="border: none" ng-click="openlogDevice('physicaldevices','xlsx')">Excel</button></span>
+                                    </a>
+                                    <a class="setlink" ng-mouseover="showPD = true" ng-mouseleave="showPD = false"> Physical Device to Physical Device
+                                        <span ng-show="showPD"> <button style="border: none" ng-click="ExportIndirect('physicaldevices-physicaldevices','csv')">CSV </button></span>
+                                        <span ng-show="showPD"> <button style="border: none" ng-click="ExportIndirect('physicaldevices-physicaldevices','xlsx')">Excel</button></span>
+                                    </a>
+                                </p>
+
+                            </ul>
+                            <!-- <a  style="border: none"  class="dropdown-toggle"  data-toggle="dropdown" >
+                                 Logical Devices
+                                 <span> <button style="border: none" ng-click="openlogDevice('logicaldevices','CSV')">CSV </button></span>
+                                 <span> <button style="border: none" ng-click="openlogDevicexls('logicaldevices','XLS')">Excel</button></span>
+                             </a>
+                             <a>
+                                 Components
+                                 <span> <button ng-click="exportLDCsv('components')" style="border: none;margin-left: 5%">CSV </button></span>
+                                 <span> <button ng-click="exportLDXls('components')" style="border: none">Excel</button></span>
+                             </a>
+                             <a>
+                                 Stakeholders
+                                 <span> <button ng-click="exportLDCsv('stakeholders')" style="border: none;margin-left: 5%">CSV </button></span>
+                                 <span> <button ng-click="exportLDXls('stakeholders')" style="border: none">Excel</button></span>
+                             </a>-->
+                        </div>
+                        <div class="vertical-menu col-xs-4">
+                            <ul>
+                                <p>
+                                    <i class="fa fa-link fontawesomeicon" aria-hidden="true"></i>
+                                    <label class="exportlabel"> Logical Networks</label>
+                                    <a class="setlink" ng-mouseover="showLN = true" ng-mouseleave="showLN = false">Logical Networks
+                                        <span ng-show="showLN"> <button style="border: none" ng-click="openlogDevice('logicalnetworks','csv')">CSV </button></span>
+                                        <span ng-show="showLN"> <button style="border: none" ng-click="openlogDevice('logicalnetworks','xlsx')">Excel</button></span>
+                                    </a>
+                                </p>
+                                <p>
+                                    <i class="fa fa-sitemap fontawesomeicon" aria-hidden="true"></i>
+                                    <label class="exportlabel"> Clusters</label> <br>
+                                    <a class="setlink" ng-mouseover="showCluster = true" ng-mouseleave="showCluster = false"> Clusters
+                                        <span ng-show="showCluster"> <button ng-click="openlogDevice('clusters','csv')" style="border: none;margin-left: 5%">CSV </button></span>
+                                        <span ng-show="showCluster"> <button ng-click="openlogDevice('clusters','xlsx')" style="border: none">Excel</button></span>
+                                    </a>
+
+                                    <a class="setlink" ng-mouseover="showLDtoCluster = true" ng-mouseleave="showLDtoCluster = false"> Logical Device to Cluster
+                                        <span ng-show="showLDtoCluster"> <button ng-click="ExportIndirect('logicaldevices-clusters','csv')" style="border: none;margin-left: 5%">CSV </button></span>
+                                        <span ng-show="showLDtoCluster"> <button ng-click="ExportIndirect('logicaldevices-clusters','xlsx')" style="border: none">Excel</button></span>
+                                    </a>
+                                    <a class="setlink" ng-mouseover="showClusRes = true" ng-mouseleave="showClusRes = false"> Cluster Resources
+                                        <span ng-show="showClusRes"> <button ng-click="ExportIndirect('clusterresources','csv')" style="border: none;margin-left: 5%">CSV </button></span>
+                                        <span ng-show="showClusRes"> <button ng-click="ExportIndirect('clusterresources','xlsx')" style="border: none">Excel</button></span>
+                                    </a>
+                                </p>
+                                <!--<p>
+                                    <i class="fa fa-floppy-o fontawesomeicon" aria-hidden="true"></i>
+                                    <label class="exportlabel">File System</label>
+                                </p>-->
+                                <p>
+                                    <i class="fa fa-tablet fontawesomeicon" aria-hidden="true"></i>
+                                    <label class="exportlabel">Device Interface</label>
+                                    <a class="setlink" ng-mouseover="showStake1 = true" ng-mouseleave="showStake1 = false"> Device Interfaces
+                                        <span ng-show="showStake1"> <button ng-click="openlogDevice('deviceinterfaces','csv')" style="border: none;margin-left: 5%">CSV </button></span>
+                                        <span ng-show="showStake1"> <button ng-click="openlogDevice('deviceinterfaces','xlsx')" style="border: none">Excel</button></span>
+                                    </a>
+                                    <a class="setlink" ng-mouseover="showdevInterface = true" ng-mouseleave="showdevInterface = false"> Device Interface to Device Interface
+                                        <span ng-show="showdevInterface"> <button ng-click="ExportIndirect('deviceinterfaces-deviceinterfaces','csv')" style="border: none;margin-left: 5%">CSV </button></span>
+                                        <span ng-show="showdevInterface"> <button ng-click="ExportIndirect('deviceinterfaces-deviceinterfaces','xlsx')" style="border: none">Excel</button></span>
+                                    </a>
+                                </p>
+                                <p>
+                                    <i class="fa fa-user fontawesomeicon" aria-hidden="true"></i>
+                                    <label class="exportlabel"> Stake Holders</label>
+                                    <a class="setlink" ng-mouseover="showStake = true" ng-mouseleave="showStake = false"> Stakeholders
+                                        <span ng-show="showStake"> <button ng-click="openlogDevice('stakeholders','csv')" style="border: none;margin-left: 5%">CSV </button></span>
+                                        <span ng-show="showStake"> <button ng-click="openlogDevice('stakeholders','xlsx')" style="border: none">Excel</button></span>
+                                    </a>
+                                    <a class="setlink" ng-mouseover="showStakeToSer = true" ng-mouseleave="showStakeToSer = false"> Stakeholder to Service
+                                        <span ng-show="showStakeToSer"> <button ng-click="ExportIndirect('stakeholders-services','csv')" style="border: none;margin-left: 5%">CSV </button></span>
+                                        <span ng-show="showStakeToSer"> <button ng-click="ExportIndirect('stakeholders-services','xlsx')" style="border: none">Excel</button></span>
+                                    </a>
+                                    <a class="setlink" ng-mouseover="showStakeToComp = true" ng-mouseleave="showStakeToComp = false"> Stakeholder to Component
+                                        <span ng-show="showStakeToComp"> <button ng-click="ExportIndirect('stakeholders-components','csv')" style="border: none;margin-left: 5%">CSV </button></span>
+                                        <span ng-show="showStakeToComp"> <button ng-click="ExportIndirect('stakeholders-components','xlsx')" style="border: none">Excel</button></span>
+                                    </a>
+                                    <a class="setlink" ng-mouseover="showStakeToLd = true" ng-mouseleave="showStakeToLd = false"> Stakeholder to Logical Device
+                                        <span ng-show="showStakeToLd"> <button ng-click="ExportIndirect('stakeholders-logicaldevices','csv')" style="border: none;margin-left: 5%">CSV </button></span>
+                                        <span ng-show="showStakeToLd"> <button ng-click="ExportIndirect('stakeholders-logicaldevices','xlsx')" style="border: none">Excel</button></span>
+                                    </a>
+                                    <a class="setlink" ng-mouseover="showStakeToPd = true" ng-mouseleave="showStakeToPd = false"> Stakeholder to Physical Device
+                                        <span ng-show="showStakeToPd"> <button ng-click="ExportIndirect('stakeholders-physicaldevices','csv')" style="border: none;margin-left: 5%">CSV </button></span>
+                                        <span ng-show="showStakeToPd"> <button ng-click="ExportIndirect('stakeholders-physicaldevices','xlsx')" style="border: none">Excel</button></span>
+                                    </a>
+                                </p>
+                                <!-- adding FS indirect export starts-->
+                                <p>
+                                    <i class="fa fa-floppy-o fontawesomeicon" aria-hidden="true"></i>
+                                    <label class="exportlabel"> File Systems</label>
+                                    <a class="setlink" ng-mouseover="showFSLD = true" ng-mouseleave="showFSLD = false"> File Systems to Logical Devices
+                                        <span ng-show="showFSLD"> <button ng-click="ExportIndirect('filesystems-logicaldevices','csv')" style="border: none;margin-left: 5%">CSV </button></span>
+                                        <span ng-show="showFSLD"> <button ng-click="ExportIndirect('filesystems-logicaldevices','xlsx')" style="border: none">Excel</button></span>
+                                    </a>
+                                    <a class="setlink" ng-mouseover="showFsToFs = true" ng-mouseleave="showFsToFs = false"> File Systems to File Systems
+                                        <span ng-show="showFsToFs"> <button ng-click="ExportIndirect('filesystems-filesystems','csv')" style="border: none;margin-left: 5%">CSV </button></span>
+                                        <span ng-show="showFsToFs"> <button ng-click="ExportIndirect('filesystems-filesystems','xlsx')" style="border: none">Excel</button></span>
+                                    </a>
+                                </p>
+                                <!-- adding FS indirect export ends-->
+                            </ul>
+                        </div>
+                        <div class="vertical-menu col-xs-4">
+                            <ul>
+                                <p>
+                                    <i class="fa fa-object-group fontawesomeicon" aria-hidden="true"></i>
+                                    <label class="exportlabel"> Interface Groups</label> <br>
+                                    <a class="setlink" ng-mouseover="showDevInt = true" ng-mouseleave="showDevInt = false">Interface Groups
+                                        <span ng-show="showDevInt"> <button style="border: none" ng-click="openlogDevice('interfacegroups','csv')">CSV </button></span>
+                                        <span ng-show="showDevInt"> <button style="border: none" ng-click="openlogDevice('interfacegroups','xlsx')">Excel</button></span>
+                                    </a>
+
+                                </p>
+                                <p>
+                                    <i class="fa fa-file fontawesomeicon" aria-hidden="true"></i>
+                                    <label class="exportlabel">Documents</label>
+                                    <a class="setlink" ng-mouseover="showDoc = true" ng-mouseleave="showDoc = false">Documents
+                                        <span ng-show="showDoc"> <button ng-click="openlogDevice('documents','csv')" style="border: none">CSV </button></span>
+                                        <span ng-show="showDoc"> <button ng-click="openlogDevice('documents','xlsx')" style="border: none">Excel</button></span>
+                                    </a>
+                                    <a class="setlink" ng-mouseover="showDocToLd = true" ng-mouseleave="showDocToLd = false"> Document to Logical Device
+                                        <span ng-show="showDocToLd"> <button ng-click="ExportIndirect('documents-logicaldevices','csv')" style="border: none;margin-left: 5%">CSV </button></span>
+                                        <span ng-show="showDocToLd"> <button ng-click="ExportIndirect('documents-logicaldevices','xlsx')" style="border: none">Excel</button></span>
+                                    </a>
+                                    <a class="setlink" ng-mouseover="showDocToServ = true" ng-mouseleave="showDocToServ = false"> Document to Service
+                                        <span ng-show="showDocToServ"> <button ng-click="ExportIndirect('documents-services','csv')" style="border: none;margin-left: 5%">CSV </button></span>
+                                        <span ng-show="showDocToServ"> <button ng-click="ExportIndirect('documents-services','xlsx')" style="border: none">Excel</button></span>
+                                    </a>
+                                    <a class="setlink" ng-mouseover="showDocToComp = true" ng-mouseleave="showDocToComp = false"> Document to Component
+                                        <span ng-show="showDocToComp"> <button ng-click="ExportIndirect('documents-components','csv')" style="border: none;margin-left: 5%">CSV </button></span>
+                                        <span ng-show="showDocToComp"> <button ng-click="ExportIndirect('documents-components','xlsx')" style="border: none">Excel</button></span>
+                                    </a>
+
+                                    <a class="setlink" ng-mouseover="showDocToPd = true" ng-mouseleave="showDocToPd = false"> Document to Physical Device
+                                        <span ng-show="showDocToPd"> <button ng-click="ExportIndirect('documents-physicaldevices','csv')" style="border: none;margin-left: 5%">CSV </button></span>
+                                        <span ng-show="showDocToPd"> <button ng-click="ExportIndirect('documents-physicaldevices','xlsx')" style="border: none">Excel</button></span>
+                                    </a>
+
+                                    <!--<a class="setlink" ng-mouseover="showDocImport = true" ng-mouseleave="showDocImport = false">Documents Imports
+                                        <span ng-show="showDocImport"> <button ng-click="openlogDevice('documents','csv')" style="border: none">CSV </button></span>
+                                        <span ng-show="showDocImport"> <button ng-click="openlogDevice('documents','xlsx')" style="border: none">Excel</button></span>
+                                    </a>-->
+                                </p>
+                                <p>
+                                    <i class="fa fa-calendar fontawesomeicon" aria-hidden="true"></i>
+                                    <label class="exportlabel">Events</label>
+                                    <a class="setlink" ng-mouseover="showFileImp1 = true" ng-mouseleave="showFileImp1 = false"> Events
+                                        <span ng-show="showFileImp1"> <button ng-click="openlogDevice('events','csv')" style="border: none">CSV </button></span>
+                                        <span ng-show="showFileImp1"> <button ng-click="openlogDevice('events','xlsx')" style="border: none">Excel</button></span>
+                                    </a>
+                                    <!-- indirect export for events starts-->
+                                    <a class="setlink" ng-mouseover="showEventToLd = true" ng-mouseleave="showEventToLd = false"> Events to Logical Devices
+                                        <span ng-show="showEventToLd"> <button ng-click="ExportIndirect('events-logicaldevices','csv')" style="border: none">CSV </button></span>
+                                        <span ng-show="showEventToLd"> <button ng-click="ExportIndirect('events-logicaldevices','xlsx')" style="border: none">Excel</button></span>
+                                    </a>
+                                    <a class="setlink" ng-mouseover="showEventToServ = true" ng-mouseleave="showEventToServ = false"> Events to Services
+                                        <span ng-show="showEventToServ"> <button ng-click="ExportIndirect('events-services','csv')" style="border: none">CSV </button></span>
+                                        <span ng-show="showEventToServ"> <button ng-click="ExportIndirect('events-services','xlsx')" style="border: none">Excel</button></span>
+                                    </a>
+                                    <a class="setlink" ng-mouseover="showEventToComp = true" ng-mouseleave="showEventToComp = false"> Events to Components
+                                        <span ng-show="showEventToComp"> <button ng-click="ExportIndirect('events-components','csv')" style="border: none">CSV </button></span>
+                                        <span ng-show="showEventToComp"> <button ng-click="ExportIndirect('events-components','xlsx')" style="border: none">Excel</button></span>
+                                    </a>
+                                    <a class="setlink" ng-mouseover="showEventToPd = true" ng-mouseleave="showEventToPd = false"> Events to Physical Devices
+                                        <span ng-show="showEventToPd"> <button ng-click="ExportIndirect('events-physicaldevices','csv')" style="border: none">CSV </button></span>
+                                        <span ng-show="showEventToPd"> <button ng-click="ExportIndirect('events-physicaldevices','xlsx')" style="border: none">Excel</button></span>
+                                    </a>
+                                    <!-- indirect export for event ends-->
+                                    <!--<a class="setlink" ng-mouseover="showFileImp = true" ng-mouseleave="showFileImp = false"> File System Imports
+                                        <span ng-show="showDocImport"> <button ng-click="openlogDevice('filesystems','csv')" style="border: none">CSV </button></span>
+                                        <span ng-show="showDocImport"> <button ng-click="openlogDevice('filesystems','xlsx')" style="border: none">Excel</button></span>
+                                    </a>-->
+                                    <!--<a class="setlink" ng-mouseover="showAldm = true" ng-mouseleave="showAldm = false"> ALDM Imports
+                                        <span ng-show="showAldm"> <button style="border: none">CSV </button></span>
+                                        <span ng-show="showAldm"> <button style="border: none">Excel</button></span>
+                                    </a>-->
+                                </p>
+                                <p>
+                                    <label class="exportlabel">Transaction Manager </label>
+                                    <a class="setlink"  ng-mouseover="showTM = true" ng-mouseleave="showTM = false"> Transaction Manager Excel
+                                        <span ng-show="showTM"> <button ng-click="generateTMExcel()" style="border: none">Excel</button></span>
+                                    </a>
+                                </p>
+                            </ul>
+                        </div>
+                    </div>
+
+                </ul>
+                <a  class="dropdown dropdown-toggle" ng-click="openreport()" id="myTab11" data-toggle="dropdown" style =" color: #949394; font: Helvetica Normal regular; font-size: 16px;cursor:pointer;">Reporting<span class="glyphicon glyphicon-chevron-down" aria-hidden="true" style="position:relative; top:3px;left:10px"></span>
+                    <ul ng-show="showreport" class="dropdown-menu" role="menu" style="margin-left:32%;">
+                        <!--  <li>
+                             <a for="dd" ng-click="navigateReview()" style ="color: #949394; font: Helvetica Normal regular; font-size: 16px;margin-right: 5%;cursor:pointer;">Review</a>
+
+                         </li> -->
+                        <li>
+                            <a for="dd" style ="color: #949394; font: Helvetica Normal regular; font-size: 16px;margin-right: 0%;cursor:pointer;">Dashboards<span class="glyphicon glyphicon-chevron-right" aria-hidden="true" style="position:relative; top:3px;left:10px; float:right"></span></a>
+                            <ul class="sub-menu dropdown-menu">
+                                <li>
+                                    <a target="_blank" ng-href="{{getCognoServerURL('Overview Dashboard')}}" for="dd"  style ="color: #949394; font: Helvetica Normal regular; font-size: 16px;margin-right: 5%;cursor:pointer;">Overview Dashboard</a>
+                                </li>
+                                <li>
+                                    <a target="_blank" ng-href="{{getCognoServerURL('logical device Completeness by Os')}}" for="dd"  style ="color: #949394; font: Helvetica Normal regular; font-size: 16px;margin-right: 5%;cursor:pointer;">Logical device Completeness by Os</a>
+                                </li>
+                                <li>
+                                    <a target="_blank" ng-href="{{getCognoServerURL('Discovery Status as per OS')}}" for="dd"  style ="color: #949394; font: Helvetica Normal regular; font-size: 16px;margin-right: 5%;cursor:pointer;">Discovery Status as per OS</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a for="dd" style ="color: #949394; font: Helvetica Normal regular; font-size: 16px;margin-right: 0%;cursor:pointer;">Orphans<span class="glyphicon glyphicon-chevron-right" aria-hidden="true" style="position:relative; top:3px;left:10px; float:right"></span></a>
+                            <ul class="sub-menu dropdown-menu" style="width: 400%;position: absolute;">
+                                <div class="vertical-menu col-xs-6" >
+                                    <li>
+                                        <a target="_blank" ng-href="{{getCognoServerURL('Cluster with no cluster resource')}}" for="dd"  style ="color: #949394; font: Helvetica Normal regular; font-size: 16px;margin-right: 5%;cursor:pointer;">Cluster with No cluster resource</a>
+                                    </li>
+                                    <li>
+                                        <a  target="_blank" ng-href="{{getCognoServerURL('Cluster with no Logical device')}}" for="dd"  style ="color: #949394; font: Helvetica Normal regular; font-size: 16px;margin-right: 5%;cursor:pointer;">Cluster with No Logical device</a>
+                                    </li>
+                                    <li>
+                                        <a  target="_blank" ng-href="{{getCognoServerURL('Component with no services')}}" for="dd"  style ="color: #949394; font: Helvetica Normal regular; font-size: 16px;margin-right: 5%;cursor:pointer;">Component with No services</a>
+                                    </li>
+                                    <li>
+                                        <a  target="_blank" ng-href="{{getCognoServerURL('Component with no logical device')}}" for="dd"  style ="color: #949394; font: Helvetica Normal regular; font-size: 16px;margin-right: 5%;cursor:pointer;">Component with No logical device</a>
+                                    </li>
+                                    <li>
+                                        <a  target="_blank" ng-href="{{getCognoServerURL('Component with no Physical Device')}}" for="dd"  style ="color: #949394; font: Helvetica Normal regular; font-size: 16px;margin-right: 5%;cursor:pointer;">Component with No Physical Device</a>
+                                    </li>
+                                    <li>
+                                        <a  target="_blank" ng-href="{{getCognoServerURL('New-Component with no services and no logical devices')}}" for="dd"  style ="color: #949394; font: Helvetica Normal regular; font-size: 16px;margin-right: 5%;cursor:pointer;">New-Component with no services and no logical devices</a>
+                                    </li>
+                                    <li>
+                                        <a  target="_blank" ng-href="{{getCognoServerURL('Filesystem with not logical device')}}" for="dd"  style ="color: #949394; font: Helvetica Normal regular; font-size: 16px;margin-right: 5%;cursor:pointer;">Filesystem with No logical device</a>
+                                    </li>
+                                    <li>
+                                        <a  target="_blank" ng-href="{{getCognoServerURL('Logical Device with no file system')}}" for="dd"  style ="color: #949394; font: Helvetica Normal regular; font-size: 16px;margin-right: 5%;cursor:pointer;">Logical Device with No file system</a>
+                                    </li>
+                                    <li>
+                                        <a  target="_blank" ng-href="{{getCognoServerURL('Logical Device with logical network')}}" for="dd"  style ="color: #949394; font: Helvetica Normal regular; font-size: 16px;margin-right: 5%;cursor:pointer;">Logical Device with No logical network</a>
+                                    </li>
+                                    <li>
+                                        <a  target="_blank" ng-href="{{getCognoServerURL('Logical Device with no Physical Device')}}" for="dd"  style ="color: #949394; font: Helvetica Normal regular; font-size: 16px;margin-right: 5%;cursor:pointer;">Logical Device with No Physical Device</a>
+                                    </li>
+                                    <li>
+                                        <a target="_blank" ng-href="{{getCognoServerURL('Logical Device with No Component')}}" for="dd"  style ="color: #949394; font: Helvetica Normal regular; font-size: 16px;margin-right: 5%;cursor:pointer;">Logical Device with No Component</a>
+                                    </li>
+                                </div>
+                                <div class="vertical-menu col-xs-6" >
+                                    <li>
+                                        <a  target="_blank" ng-href="{{getCognoServerURL('Logical Device with no Services')}}" for="dd"  style ="color: #949394; font: Helvetica Normal regular; font-size: 16px;margin-right: 5%;cursor:pointer;">Logical Device with No Services</a>
+                                    </li>
+                                    <li>
+                                        <a  target="_blank" ng-href="{{getCognoServerURL('New-Logical Device with no Services')}}" for="dd"  style ="color: #949394; font: Helvetica Normal regular; font-size: 16px;margin-right: 5%;cursor:pointer;">New-Logical Device with no Services</a>
+                                    </li>
+                                    <li>
+                                        <a  target="_blank" ng-href="{{getCognoServerURL('Physical Device with no logical device')}}" for="dd"  style ="color: #949394; font: Helvetica Normal regular; font-size: 16px;margin-right: 5%;cursor:pointer;">Physical Device with No logical device</a>
+                                    </li>
+                                    <li>
+                                        <a  target="_blank" ng-href="{{getCognoServerURL('Physical Device with no Component')}}" for="dd"  style ="color: #949394; font: Helvetica Normal regular; font-size: 16px;margin-right: 5%;cursor:pointer;">Physical Device with No Component</a>
+                                    </li>
+                                    <li>
+                                        <a  target="_blank" ng-href="{{getCognoServerURL('Physical Device with no Services')}}" for="dd"  style ="color: #949394; font: Helvetica Normal regular; font-size: 16px;margin-right: 5%;cursor:pointer;">Physical Device with No Services</a>
+                                    </li>
+                                    <li>
+                                        <a  target="_blank" ng-href="{{getCognoServerURL('Services with no Components')}}" for="dd"  style ="color: #949394; font: Helvetica Normal regular; font-size: 16px;margin-right: 5%;cursor:pointer;">Services with No Components</a>
+                                    </li>
+                                    <li>
+                                        <a  target="_blank" ng-href="{{getCognoServerURL('New-Services with no Components and no Logical Device')}}" for="dd"  style ="color: #949394; font: Helvetica Normal regular; font-size: 16px;margin-right: 5%;cursor:pointer;">New-Services with no Components and no Logical Device</a>
+                                    </li>
+                                    <li>
+                                        <a  target="_blank" ng-href="{{getCognoServerURL('Services with no Logical Devices')}}" for="dd"  style ="color: #949394; font: Helvetica Normal regular; font-size: 16px;margin-right: 5%;cursor:pointer;">Services with No Logical Devices</a>
+                                    </li>
+                                    <li>
+                                        <a  target="_blank" ng-href="{{getCognoServerURL('Services with no Physical Devices')}}" for="dd"  style ="color: #949394; font: Helvetica Normal regular; font-size: 16px;margin-right: 5%;cursor:pointer;">Services with No Physical Devices</a>
+                                    </li>
+                                    <li>
+                                        <a target="_blank" ng-href="{{getCognoServerURL('Services with no Stakeholder')}}" for="dd"  style ="color: #949394; font: Helvetica Normal regular; font-size: 16px;margin-right: 5%;cursor:pointer;">Services with No Stakeholder</a>
+                                    </li>
+                                    <li>
+                                        <a  target="_blank" ng-href="{{getCognoServerURL('Stakeholder with no relationship')}}" for="dd"  style ="color: #949394; font: Helvetica Normal regular; font-size: 16px;margin-right: 5%;cursor:pointer;">Stakeholder with No relationship</a>
+                                    </li>
+                                </div>
+                            </ul>
+
+                        </li>
+                        <li>
+                            <a for="dd" style ="color: #949394; font: Helvetica Normal regular; font-size: 16px;margin-right: 0%;cursor:pointer;">Entities<span class="glyphicon glyphicon-chevron-right" aria-hidden="true" style="position:relative; top:3px;left:10px; float:right"></span></a>
+                            <ul class="sub-menu dropdown-menu">
+                                <li>
+                                    <a target="_blank" ng-href="{{getCognoServerURL('Component by Type')}}" for="dd"  style ="color: #949394; font: Helvetica Normal regular; font-size: 16px;margin-right: 5%;cursor:pointer;">Component by Type</a>
+                                </li>
+                                <li>
+                                    <a  target="_blank" ng-href="{{getCognoServerURL('Logical Device by Services')}}" for="dd"  style ="color: #949394; font: Helvetica Normal regular; font-size: 16px;margin-right: 5%;cursor:pointer;">Logical Device by Services</a>
+                                </li>
+                                <li>
+                                    <a  target="_blank" ng-href="{{getCognoServerURL('Logical Devies by Site')}}" for="dd"  style ="color: #949394; font: Helvetica Normal regular; font-size: 16px;margin-right: 5%;cursor:pointer;">Logical Devies by Site</a>
+                                </li>
+                                <li>
+                                    <a  target="_blank" ng-href="{{getCognoServerURL('Operating Systems by Environment')}}" for="dd"  style ="color: #949394; font: Helvetica Normal regular; font-size: 16px;margin-right: 5%;cursor:pointer;">Operating Systems by Environment</a>
+                                </li>
+                                <li>
+                                    <a  target="_blank" ng-href="{{getCognoServerURL('Physical Devices by Services')}}" for="dd"  style ="color: #949394; font: Helvetica Normal regular; font-size: 16px;margin-right: 5%;cursor:pointer;">Physical Devices by Services</a>
+                                </li>
+                                <li>
+                                    <a  target="_blank" ng-href="{{getCognoServerURL('Physical Devices by Site')}}" for="dd"  style ="color: #949394; font: Helvetica Normal regular; font-size: 16px;margin-right: 5%;cursor:pointer;">Physical Devices by Site</a>
+                                </li>
+                                <li>
+                                    <a  target="_blank" ng-href="{{getCognoServerURL('Physical Devices by Type')}}" for="dd"  style ="color: #949394; font: Helvetica Normal regular; font-size: 16px;margin-right: 5%;cursor:pointer;">Physical Devices by Type</a>
+                                </li>
+                                <li>
+                                    <a  target="_blank" ng-href="{{getCognoServerURL('Services by Site')}}" for="dd"  style ="color: #949394; font: Helvetica Normal regular; font-size: 16px;margin-right: 5%;cursor:pointer;">Services by Site</a>
+                                </li>
+                                <li>
+                                    <a  target="_blank" ng-href="{{getCognoServerURL('Services by Type')}}" for="dd"  style ="color: #949394; font: Helvetica Normal regular; font-size: 16px;margin-right: 5%;cursor:pointer;">Services by Type</a>
+                                </li>
+                            </ul>
+
+                        </li>
+                        <li>
+                            <a for="dd" style ="color: #949394; font: Helvetica Normal regular; font-size: 16px;margin-right: 0%;cursor:pointer;">Other<span class="glyphicon glyphicon-chevron-right" aria-hidden="true" style="position:relative; top:3px;left:10px; float:right"></span></a>
+                            <ul class="sub-menu dropdown-menu" style="top:27%">
+                                <li>
+                                    <a target="_blank" ng-href="{{getCognoServerURL('Service with Out of Scope Device')}}" for="dd"  style ="color: #949394; font: Helvetica Normal regular; font-size: 16px;margin-right: 5%;cursor:pointer;">Service with Out of Scope Device</a>
+                                </li>
+                                <li>
+                                    <a  target="_blank" ng-href="{{getCognoServerURL('Service with OS / Env Count')}}" for="dd"  style ="color: #949394; font: Helvetica Normal regular; font-size: 16px;margin-right: 5%;cursor:pointer;">Service with OS / Env Count</a>
+                                </li>
+                                <li>
+                                    <a  for="dd" style ="color: #949394; font: Helvetica Normal regular; font-size: 16px;margin-right: 0%;cursor:pointer;">Review<span class="glyphicon glyphicon-chevron-right" aria-hidden="true" style="position:relative; top:3px;left:10px; float:right"></span></a>
+                                    <ul class="sub-menu dropdown-menu">
+                                        <li>
+                                            <a target="_blank" ng-href="{{getCognoServerURL('Service')}}" for="dd"  style ="color: #949394; font: Helvetica Normal regular; font-size: 16px;margin-right: 5%;cursor:pointer;">Service</a>
+                                        </li>
+                                        <li>
+                                            <a target="_blank" ng-href="{{getCognoServerURL('Components')}}" for="dd"  style ="color: #949394; font: Helvetica Normal regular; font-size: 16px;margin-right: 5%;cursor:pointer;">Components</a>
+                                        </li>
+                                        <li>
+                                            <a target="_blank" ng-href="{{getCognoServerURL('Logical Devices')}}" for="dd"  style ="color: #949394; font: Helvetica Normal regular; font-size: 16px;margin-right: 5%;cursor:pointer;">Logical Devices</a>
+                                        </li>
+                                        <li>
+                                            <a target="_blank" ng-href="{{getCognoServerURL('Physical Devices')}}" for="dd"  style ="color: #949394; font: Helvetica Normal regular; font-size: 16px;margin-right: 5%;cursor:pointer;">Physical Devices</a>
+                                        </li>
+                                        <li>
+                                            <a target="_blank" ng-href="{{getCognoServerURL('Logical Networks')}}" for="dd"  style ="color: #949394; font: Helvetica Normal regular; font-size: 16px;margin-right: 5%;cursor:pointer;">Logical Networks</a>
+                                        </li>
+                                        <li>
+                                            <a target="_blank" ng-href="{{getCognoServerURL('Clusters')}}" for="dd"  style ="color: #949394; font: Helvetica Normal regular; font-size: 16px;margin-right: 5%;cursor:pointer;">Clusters </a>
+                                        </li>
+                                        <li>
+                                            <a target="_blank" ng-href="{{getCognoServerURL('File Systems')}}" for="dd"  style ="color: #949394; font: Helvetica Normal regular; font-size: 16px;margin-right: 5%;cursor:pointer;">File Systems </a> </li>
+                                        <li>
+                                            <a target="_blank" ng-href="{{getCognoServerURL('Interfaces')}}" for="dd"  style ="color: #949394; font: Helvetica Normal regular; font-size: 16px;margin-right: 5%;cursor:pointer;"> Interfaces</a>
+                                        </li>
+                                        <li>
+                                            <a target="_blank" ng-href="{{getCognoServerURL('Interface Group')}}" for="dd"  style ="color: #949394; font: Helvetica Normal regular; font-size: 16px;margin-right: 5%;cursor:pointer;">Interface Group</a>
+                                        </li>
+                                        <!-- <li>
+                                            <a target="_blank" href="http://9.17.237.53:9300/bi/v1/disp?b_action=cognosViewer&run.outputFormat=spreadsheetML&run.prompt=true&ui.object=storeID (%22iBB943D7A881D45C58C9E7C3A1129CDE0%22)&ui.action=run&cv.header=false&cv.toolbar=false
+                                        " for="dd"  style ="color: #949394; font: Helvetica Normal regular; font-size: 16px;margin-right: 5%;cursor:pointer;">Component by Type</a>
+                                        </li>
+                                        <li>
+                                            <a target="_blank" href="http://9.17.237.53:9300/bi/v1/disp?b_action=cognosViewer&run.outputFormat=spreadsheetML&run.prompt=true&ui.object=storeID (%22i3F3F1770147545438698BC3CCC1E285C%22)&ui.action=run&cv.header=false&cv.toolbar=false
+                                        " for="dd"  style ="color: #949394; font: Helvetica Normal regular; font-size: 16px;margin-right: 5%;cursor:pointer;">Logical Device by Services</a>
+                                        </li> -->
+                                    </ul>
+                                </li>
+                            </ul>
+
+                        </li>
+
+                        <!-- <li>
+                            <a target="_blank" href="http://9.17.237.53:9300/bi/v1/disp?b_action=cognosViewer&run.outputFormat=spreadsheetML&run.prompt=true&ui.object=storeID (%22i2D8C240B7D0B430B8B526F894289C772%22)&ui.action=run&cv.header=false&cv.toolbar=false" for="dd"  style ="color: #949394; font: Helvetica Normal regular; font-size: 16px;margin-right: 5%;cursor:pointer;">Service with Out of Scope Device</a>
+
+                        </li>
+                        <li>
+                            <a  target="_blank" href="http://9.17.237.53:9300/bi/v1/disp?b_action=cognosViewer&run.outputFormat=spreadsheetML&run.prompt=true&ui.object=storeID (%22i2574966BE710410BA10DD3521D74CE66%22)&ui.action=run&cv.header=false&cv.toolbar=false" for="dd"  style ="color: #949394; font: Helvetica Normal regular; font-size: 16px;margin-right: 5%;cursor:pointer;">Service with OS / Env Count</a>
+
+                        </li> -->
+                    </ul>
+                </a>
+                <a  class="dropdown dropdown-toggle" ng-click="opencustatt()" id="myTab" data-toggle="dropdown" style =" color: #949394; font: Helvetica Normal regular; font-size: 16px;padding-left:5%;cursor:pointer;" ng-if="globals.currentUser.role !=='' && globals.currentUser.role == 'SCOPE+ Admin'">Administration<span class="glyphicon glyphicon-chevron-down" aria-hidden="true" style="position:relative; top:3px;left:10px"></span>
+                    <ul ng-show="showcustatt" class="dropdown-menu" role="menu" style="margin-left:58%;">
+                        <li ng-if="loginModeValue =='LOCALAUTH' && globals.currentUser.username !=='' && globals.currentUser.newRole == 'Super User'">
+                            <a   style ="color: #949394; font: Helvetica Normal regular; font-size: 16px;margin-right: 5%;cursor:pointer;" ng-click="generateKeys()">Generate Authentication Key</a>
+                        </li>
+                        <li ng-if="loginModeValue =='LOCALAUTH' && globals.currentUser.username !=='' && globals.currentUser.newRole == 'Super User'">
+                            <a   style ="color: #949394; font: Helvetica Normal regular; font-size: 16px;margin-right: 5%;cursor:pointer;" ng-click="showKeys()">Show All keys</a>
+                        </li>
+                        <li>
+                            <a for="dd" style ="color: #949394; font: Helvetica Normal regular; font-size: 16px;margin-right: 5%;cursor:pointer;">Settings<span class="caret" style="top:69%"></span></a>
+                            <input type="checkbox" id="dd" hidden>
+                            <ul class="sub-menu dropdown-menu">
+                                <li>
+                                    <a href="javascript:void(0);" ng-click="navigateCustAtt()" style ="color: #949394; font: Helvetica Normal regular; font-size: 16px;margin-right: 5%;cursor:pointer;">Data Model</a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0);" ng-click="navigateHeatMap()" style ="color: #949394; font: Helvetica Normal regular; font-size: 16px;margin-right: 5%;cursor:pointer;">Heat Map</a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0);" ng-click="navigateMarkDeletion()" style ="color: #949394; font: Helvetica Normal regular; font-size: 16px;margin-right: 5%;cursor:pointer;">Mark Deletion</a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0);" ng-click="navigateFramework()" style ="color: #949394; font: Helvetica Normal regular; font-size: 16px;margin-right: 5%;cursor:pointer;">Framework</a>
+                                </li>
+
+                            </ul>
+                        </li>
+                        <li>
+                            <a  style ="color: #949394; font: Helvetica Normal regular; font-size: 16px;margin-right: 5%;cursor:pointer;" ng-click="ShowCounts()">Counts</a>
+                        </li>
+                    </ul>
+                </a>
+
+            </div>
+            <div class="col-md-5 pull-right text-right">
+                <a  href="#/register" class="btn btn-default" style="font: Helvetica Normal regular; font-size: 14px;background-color: #5392ff;border-radius: 0px !important; color:white;border: none" ng-if="loginModeValue =='LOCALAUTH' && globals.currentUser.username !=='' && globals.currentUser.role == 'SCOPE+ Admin'">Register New User</a>
+                <a  href="#/updateUser" class="btn btn-default" style="font: Helvetica Normal regular; font-size: 14px;background-color: #5392ff;border-radius: 0px !important; color:white;border: none" ng-if="loginModeValue =='LOCALAUTH' && globals.currentUser.username !=='' && globals.currentUser.role == 'SCOPE+ Admin'">Update User</a>
+                <a  href="#/deleteUser" class="btn btn-default" style="font: Helvetica Normal regular; font-size: 14px;background-color: #5392ff;border-radius: 0px !important; color:white;border: none" ng-if="loginModeValue =='LOCALAUTH' && globals.currentUser.username !=='' && globals.currentUser.role == 'SCOPE+ Admin'">Delete User</a>
+                <!--Start::Defect21651-->
+                <a  href="javascript:void(0);" class="btn btn-default" ng-click="navigateimport()"  style="font: Helvetica Normal regular; font-size: 14px;background-color: #5392ff;border-radius: 0px !important; color:white;border: none">JOB LISTING</a>
+                <!--End::Defect21651-->
+                <!--<button type="button" class="btn" style="font: Helvetica Normal regular; font-size: 14px;background-color: #5392ff; padding:5px 10px 5px 10px;   border-radius: 0px !important; color:white;border: none">PLANNING&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-down" aria-hidden="true" ></button>-->
+            </div>
+
+            <!-- <div class="col-md-6" style="background-color: #5392ff; color:white;border: solid 1px font-size: 14px;">
+                     Job Listing <b>&or;</b>
+             </div>
+             <div class="col-md-1"  style="background-color: #5392ff; color:white; font-size: 14px; margin-left: 2%">
+
+                     Planning <b>&or;</b>
+
+             </div>-->
+
+
+        </div>
+    </div>
+    <div id="Modal_import" class="modal" style="border-radius:0px;">
+        <!-- Document Modal content -->
+        <div class="modal-content">
+            <div class="modal-header" style="background-color:#25477B">
+                <span ng-if="deviceDisplayNames[import_type]">{{deviceDisplayNames[import_type]}} Import</span>
+                <span ng-if="!deviceDisplayNames[import_type]">{{importDisplayName}} Import</span>
+                <span class="modal-close" ng-click ="close_Modal('Modal_import')">&times;</span>
+
+            </div>
+            <div class="modal-body">
+                <p ng-if="deviceDisplayNames[import_type]">Do you want to import new set of {{deviceDisplayNames[import_type]}} records {{bySerialTxt}} ?</p>
+                <p ng-if="!deviceDisplayNames[import_type]">Do you want to import new set of {{importDisplayName}} records {{bySerialTxt}} ?</p>
+            </div>
+            <div class="modal-footer">
+                <button id="import_true" class="btn fontHelveticaNeue" ng-click ="importTrue()" style="border-radius:0px;background-color: #5392FF;color:#FFFFFF;float: right;margin-top: 1%;cursor:pointer">Yes</button>
+                <button id="import_close" class="btn fontHelveticaNeue" ng-click ="close_Modal('Modal_import')" style="border-radius:0px;background-color: #666666;color:#FFFFFF;float: right; margin-right: 1%;margin-top: 1%;cursor:pointer">Cancel</button>
+            </div>
+        </div>
+    </div>
+    <div id="Modal_importSuccess" class="modal" style="border-radius:0px;">
+        <!-- Document Modal content -->
+        <div class="modal-content">
+            <div class="modal-header" style="background-color:#25477B">
+              <span ng-if="deviceDisplayNames[import_type]">{{deviceDisplayNames[import_type]}} Import</span>
+              <span ng-if="!deviceDisplayNames[import_type]">{{importDisplayName}} Import</span>
+                <span class="modal-close" ng-click ="close_Modal('Modal_importSuccess')">&times;</span>
+
+            </div>
+            <div class="modal-body">
+                <p ng-if="deviceDisplayNames[import_type]">{{deviceDisplayNames[import_type]}} document successfully imported!</p>
+                <p ng-if="!deviceDisplayNames[import_type]">{{importDisplayName}} document successfully imported!</p>
+            </div>
+            <div class="modal-footer">
+                <a id="import_true" class="btn fontHelveticaNeue"  href="#/importLog/{{import_type}}/{{importID}}/{{fileName}}"  ng-click ="close_Modal('Modal_importSuccess')" style="border-radius:0px;background-color: #5392FF;color:#FFFFFF;float: right;margin-top: 1%;cursor:pointer">Log View</a>
+                <button id="import_close" class="btn fontHelveticaNeue" ng-click ="close_Modal('Modal_importSuccess')" style="border-radius:0px;background-color: #666666;color:#FFFFFF;float: right; margin-right: 1%;margin-top: 1%;cursor:pointer">Cancel</button>
+            </div>
+        </div>
+    </div>
+    <div id="Modal_importPost" class="modal" style="border-radius:0px;">
+        <!-- Document Modal content -->
+        <div class="modal-content">
+            <div class="modal-header" style="background-color:#25477B">
+              <span ng-if="deviceDisplayNames[import_type]">{{deviceDisplayNames[import_type]}} Import</span>
+              <span ng-if="!deviceDisplayNames[import_type]">{{importDisplayName}} Import</span>
+                <span class="modal-close" ng-click ="close_Modal('Modal_importPost')">&times;</span>
+
+            </div>
+            <div class="modal-body">
+                <p>Your file has been sent for import processing. You will get alert when Log View is Ready!</p>
+            </div>
+            <div class="modal-footer">
+                <button id="import_close" class="btn fontHelveticaNeue" ng-click ="close_Modal('Modal_importPost')" style="border-radius:0px;background-color: #666666;color:#FFFFFF;float: right; margin-right: 1%;margin-top: 1%;cursor:pointer">Ok</button>
+
+            </div>
+        </div>
+
+    </div>
+    <div id="Modal_importPost_Indirect" class="modal" style="border-radius:0px;">
+        <!-- Document Modal content -->
+        <div class="modal-content">
+          <div class="modal-header" style="background-color:#25477B">
+            <span ng-if="deviceDisplayNames[import_type]">{{deviceDisplayNames[import_type]}} Import</span>
+            <span ng-if="!deviceDisplayNames[import_type]">{{importDisplayName}} Import</span>
+                <span class="modal-close" ng-click ="close_Modal('Modal_importPost_Indirect')">&times;</span>
+
+            </div>
+            <div class="modal-body">
+                <p>{{importDisplayName}} document successfully imported!</p>
+            </div>
+            <div class="modal-footer">
+                <a id="import_true" class="btn fontHelveticaNeue"  href="#/importDetails/{{import_type}}/{{importID}}/{{fileName}}"  ng-click ="close_Modal('Modal_importPost_Indirect')" style="border-radius:0px;background-color: #5392FF;color:#FFFFFF;float: right;margin-top: 1%;cursor:pointer">Import View</a>
+                <button id="import_close" class="btn fontHelveticaNeue" ng-click ="close_Modal('Modal_importPost_Indirect')" style="border-radius:0px;background-color: #666666;color:#FFFFFF;float: right; margin-right: 1%;margin-top: 1%;cursor:pointer">Ok</button>
+
+            </div>
+        </div>
+
+    </div>
+    <div id="Modal_importError" class="modal" style="border-radius:0px;">
+        <!-- Document Modal content -->
+        <div class="modal-content">
+          <div class="modal-header" style="background-color:#25477B">
+                <span ng-if="deviceDisplayNames[import_type]">{{deviceDisplayNames[import_type]}} Import</span>
+                <span ng-if="!deviceDisplayNames[import_type]">{{importDisplayName}} Import</span>
+                <span class="modal-close" ng-click ="close_Modal('Modal_importError')">&times;</span>
+
+            </div>
+            <div class="modal-body">
+                <p>{{errorMsg}}</p>
+            </div>
+            <div class="modal-footer">
+
+                <button id="import_close" class="btn fontHelveticaNeue" ng-click ="close_Modal('Modal_importError')" style="border-radius:0px;background-color: #5392FF;color:#FFFFFF;float: right; margin-left: 1%;margin-top: 1%;cursor:pointer">Ok</button>
+            </div>
+        </div>
+    </div>
+    <div id="Modal_tabSelection" class="modal" style="border-radius:0px;">
+        <!-- Document Modal content -->
+        <div class="modal-content">
+            <div class="modal-header" style="background-color:#25477B">
+                <span class="modal-close" ng-click ="close_Modal('Modal_tabSelection')">&times;</span>
+                <span>Please select worksheet for import</span>
+            </div>
+            <div class="modal-body">
+                <ul>
+                    <li ng-repeat="wb in wbObj">
+                        <a style="cursor:pointer"  ng-click="importFileChange(wb['wbContent'])">{{wb['wbTitle']}}</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <button id="import_close" class="btn fontHelveticaNeue" ng-click ="close_Modal('Modal_tabSelection')" style="border-radius:0px;background-color: #666666;color:#FFFFFF;float: right; margin-left: 1%;margin-top: 1%;cursor:pointer">Cancel</button>
+            </div>
+        </div>
+
+    </div>
+
+    <div id="Modal_fieldMap" class="modal" style="border-radius:0px;">
+        <!-- Document Modal content -->
+        <div class="modal-content">
+            <div class="modal-header" style="background-color:#25477B">
+                <span>Import Field Mapping [Source: {{fileName}}]</span>
+                <span class="modal-close" ng-click ="close_Modal('Modal_fieldMap')">&times;</span>
+
+            </div>
+            <div class="modal-body"> <span class="pull-left" style="color:red">{{errorMsg}}</span>
+                <button id="import_now" class="btn fontHelveticaNeue" ng-click ="importNow()" style="border-radius:0px;background-color: #5392FF;color:#FFFFFF;float: right;margin-bottom: 10px;cursor:pointer">Start Import</button>
+                <button id="import_close" class="btn fontHelveticaNeue" ng-click ="close_Modal('Modal_fieldMap')" style="border-radius:0px;background-color: #666666;color:#FFFFFF;float: right; margin-right: 1%;margin-bottom: 10px;cursor:pointer">Cancel</button>
+
+                <br/>
+            </div>
+            <div class="modal-footer" style="color:#000;">
+                <div class="col-md-12" id="otd-table" style="overflow-y:scroll;height:450px;">
+                    <div class="col-md-12">
+                        <table  class="table table-bordered table-striped table-hover table-sm" id="inner-wrap" width="100%">
+                            <th align="right" style="text-align:right"> Target Fields </th>
+                            <td></th>
+                            <th align="left" > Source Fields </th>
+                            <tr ng-repeat="ca in csvfieldObj_final" style="color:#666666" ng-if="ca['csvfieldkey'] !==''">
+                                <td align="right">{{ca['fieldname']}}</td>
+                                <td></td>
+                                <td align="left" >
+                                    <select name="{{ca['csvfieldkey']}}" id="{{ca['fieldkey']}}" value="{{ca['fieldkey']}}" ng-model="selectedFields[$index]" ng-init="selectedFields[$index] = ca['csvfieldkey']" ng-change="fieldMapChange(ca['fieldkey'])" ng-options="x.csvfieldkey as x.csvfieldname for x in csv_all_Opt | orderBy:'csvfieldname'" style="border:0px;background-color:transparent">
+                                        <option value="" ng-if="ca['fieldkey'] !=='name'">--Select Source Field--</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3" align="left" style="background-color:#25477B;color:white">
+                                    No matching source items for following fields:</td>
+                            </tr>
+                            <tr ng-repeat="ca in csvfieldObj_final" style="color:#666666" ng-if="ca['csvfieldkey'] ===''">
+                                <td align="right">{{ca['fieldname']}}</td>
+                                <td></td>
+                                <td align="left">
+                                    <select name="{{ca['fieldkey']}}" id="{{ca['fieldkey']}}" value="{{ca['fieldkey']}}" ng-model="selectedFields[$index]" ng-init="selectedFields[$index] = ca['fieldkey']" ng-change="fieldMapChange(ca['fieldkey'])" ng-options="x.csvfieldkey as x.csvfieldname for x in csv_all_Opt | orderBy:'csvfieldname'" style="border:0px;background-color:transparent">
+                                        <option value="">--Select Source Field--</option>
+                                    </select>
+
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <img ng-if="table_loader" style="display: block;
+margin: 0 auto;
+height: 33px;" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="/>
+
+</div>
+<link href="css/Common.css" rel="stylesheet" />
+<!--
+<link href="css/style.css" rel="stylesheet" />-->
+<style>
+
+    .dropdown-menu .sub-menu {
+        left: 100%;
+        position: absolute;
+        top: 0;
+        visibility: hidden;
+        margin-top: -1px;
+    }
+    #dd:checked ~ .sub-menu .dropdown-menu{
+        display:block;
+    }
+    .dropdown-menu li:hover > .sub-menu {
+        visibility: visible;
+        display: block;
+    }
+    .vertical-menu {
+        /*width: 200px;*/ /* Set a width if you like */
+    }
+
+    .vertical-menu a {
+        /*background-color: #5392ff;*/ /* Grey background color */
+        color: black; /* Black text color */
+        display: block; /* Make the links appear below each other */
+        padding: 7px; /* Add some padding */
+        text-decoration: none; /* Remove underline from links */
+    }
+
+    .vertical-menu a:hover {
+        background-color: #ccc; /* Dark grey background on mouse-over */
+    }
+
+    .vertical-menu a.active {
+        /* background-color: #4CAF50;*/ /* Add a green color to the "active/current" link */
+        color: black;
+    }
+
+    .arrow_box1 {
+        position: relative;
+        background: #fff;
+        border: 1px solid #ddd;
+    }
+    .arrow_box1:after, .arrow_box1:before {
+        bottom: 100%;
+        left: 15% !important;
+        border: solid transparent;
+        content: " ";
+        height: 0;
+        width: 0;
+        position: absolute;
+        pointer-events: none;
+    }
+
+    .arrow_box1:after {
+        border-color: rgba(255, 255, 255, 0);
+        border-bottom-color: #fff;
+        border-width: 11px;
+        margin-left: -14px;
+    }
+    .arrow_box1:before {
+        border-color: rgba(221, 221, 221, 0);
+        border-bottom-color: #ddd;
+        border-width: 12px;
+        margin-left: -16px;
+    }
+    /*Arrow box2 for import*/
+
+    .arrow_box2 {
+        position: relative;
+        background: #fff;
+        border: 1px solid #ddd;
+    }
+    .arrow_box2:after, .arrow_box2:before {
+        bottom: 100%;
+        left: 6% !important;
+        border: solid transparent;
+        content: " ";
+        height: 0;
+        width: 0;
+        position: absolute;
+        pointer-events: none;
+    }
+
+    .arrow_box2:after {
+        border-color: rgba(255, 255, 255, 0);
+        border-bottom-color: #fff;
+        border-width: 11px;
+        margin-left: -14px;
+    }
+    .arrow_box2:before {
+        border-color: rgba(221, 221, 221, 0);
+        border-bottom-color: #ddd;
+        border-width: 12px;
+        margin-left: -16px;
+    }
+    /*Arrow box2 for import*/
+    .fontawesomeicon{
+        color: #5392ff;
+        font-size: 20px;
+    }
+    .exportlabel{
+        margin-left: 3%;
+        color: #949394;
+    }
+
+    .setlink{
+        margin-left: 9.4%;
+        color: #949394 !important;
+        font-size: 13px;
+    }
+</style>
+
+<script>
+    $(document).on('click',function(){
+        $('.closeoverlay').collapse('hide');
+    })
+</script>

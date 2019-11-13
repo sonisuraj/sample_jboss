@@ -1,0 +1,58 @@
+/*------------------------------------------------------Start: Container CSS------------------------------------------------*/
+#container {
+    padding-top: 44px;
+	padding-bottom: 60px;
+}
+
+.fixfixed .container #header, 
+.fixfixed .container #footer { 
+    position: absolute; 
+} 
+
+#u9 {
+	font-family: 'Roboto Regular', 'Roboto';	
+	font-size: 16px;
+	margin-top: 20px;
+	color: #5A6673;
+}
+
+#u10 {
+	font-family: 'Roboto Regular', 'Roboto';	
+	font-size: 16px;
+	color: #5A6673;
+}
+
+.textarea {
+ width: 100%;
+    height: 165px !important;
+    font-family: 'Arial Regular', 'Arial';
+    font-size: 13px;
+    margin-top: 2px;
+    text-align: left;
+    resize: none;
+}
+.name-title{
+    font-size: 18px;
+    position: relative;
+    left: 4.2%;
+}
+
+
+
+
+
+
+
+.create_complaint_button_Text {
+    font-family: 'Roboto Medium', 'Roboto';
+    font-weight: 500;
+    font-size: 16px;
+    color: #FFFFFF;
+    background-color: #1bbc9c;
+    border: transparent;
+    min-width: 180px;
+    min-height: 45px;
+    margin: 0 auto;
+}
+/*------------------------End: Container Middle CSS------------------------*/
+/*------------------------------------------------------End: Container CSS------------------------------------------------*/

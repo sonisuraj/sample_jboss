@@ -1,0 +1,281 @@
+<div class="row" style="padding: 20px 100px;">
+    <div class="col-md-10 col-md-offset-1">
+        <ng-include src="'views/search_nav.html'"></ng-include>
+    </div>
+</div>
+
+<div class="row" style="background-color: #f7f7f7;">
+    <hr style="width: 100%;border-top: 1px solid #ccc !important;margin-top: 0px !important;
+        margin-bottom: 0px !important;">
+    <div class="col-md-10 col-md-offset-1">
+        <div class="odth-first clearfix fontHelvetica" style="padding:10px 0px;">
+            <h4 class="pull-left fontHelvetica" style="margin:0px;font-size: 14px;line-height: 24px;">
+
+                </span>
+                <span style="color:#949394">Administrator&nbsp;&nbsp;>&nbsp;&nbsp;Import&nbsp;&nbsp;>&nbsp;&nbsp;{{importType}}&nbsp;&nbsp;></span>
+              <span style="color: #5392FF;">&nbsp;&nbsp;{{importTitle}}&nbsp;
+            </h4>
+            <!--<button class="btn  pull-right fontHelveticaNeue" ng-click ="otdtable()" style="border-radius:0px;background-color: #5392FF;color:#FFFFFF">COMPONENT SELECTION</button>-->
+            <div class="otd-table" style="background-color:#fff;">
+                <div class="form-group">
+                    <div class="col-md-12" id="otd-table">
+                        <div class="odth-sec clearfix" style="margin-top:10px;background-color:#fff;padding:20px 20px;border:1px solid #ccc">
+                            <div class="col-md-12" style="padding-bottom:10px">
+                                <div class="col-md-1" style="color:#5c5c5c;font-size:16px;font-weight:bold;">Filtered:&nbsp;{{recordFiltered}}</div>
+                                <div class="col-md-1" style="color:#5c5c5c;width:13px">&nbsp;</div>
+                                <div class="col-md-1" style="border-left:1px solid #999;color:#5c5c5c;width:10px">&nbsp;</div>
+                                <div class="col-md-2" style="color:#5c5c5c;font-size:16px;font-weight:bold;">Logged:&nbsp;?</div>
+
+                            </div>
+                            <div class="col-md-12" style="background-color:#25467A;color:#fff;padding:8px;font-weight:bold">&nbsp;&nbsp;{{importTitle}}</div>
+                            <div class="col-md-12" style="padding:10px;border:1px solid #ccc;color:#666">
+                                <div class="col-md-2" align="center" style="border-right:1px solid #999">Data Item Creates:&nbsp;{{recordCreated}}</div>
+                                <div class="col-md-2" align="center" style="border-right:1px solid #999;">Data Item Updates:&nbsp;{{recordUpdated}}</div>
+                                <div class="col-md-2" align="center" style="border-right:1px solid #999;">Trust Level Updates:&nbsp;{{trustLevelUpdated}}</div>
+                                <div class="col-md-3" align="center" style="border-right:1px solid #999;">Data Item Not being Updated:&nbsp;{{recordNotUpdated}}</div>
+                                <div class="col-md-2" align="center" style="margin-left:20px">Records Imported:&nbsp;{{recordImport}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div></div>
+        <div class="otd-table">
+            <div class="col-md-12" id="otd-table">
+                <div class="odth-sec clearfix" style="padding: 1px 0px 0px 0px;text-align:right;border:1px solid #ccc;background:#FFFFFF;">
+                    <div class="odths-form">
+                        <div class="form-inline">
+                            <!--left side area-->
+                            <div class="input-group pull-left" style="padding:20px 0px 0px 20px;">
+                              <input type="text" class="form-control fontHelveticaNeue" style="width:150px;border-radius: 0px;font-size:14px;height:28px;border-right:0px;box-shadow:none;" placeholder="Component Filter" aria-describedby="basic-addon1" ng-model="filterText">
+
+                                <span class="input-group-addon" id="basic-addon1" style="border-radius: 0px;background-color: #fff;font-size:11px;cursor:pointer"><i class="fa fa-search" style="cursor:pointer;font-size:14px"></i></span>
+                            </div>
+                            <div class="input-group pull-left" style="padding:20px 20px 0px 20px;font-size:14px;">
+                              <div class="form-inline">  <lable style="float:left;top:20px;font-size:14px;">Search  By:&nbsp;</lable>
+                                <select name="searchby"  ng-model="searchby" style="height:28px;float:left;border-radius: 0px;padding:0px;margin:0px" class="form-control fontHelveticaNeue">
+                                    <option name="{{header.key}}" value="{{header.key}}" ng-repeat="header in columnName" ng-if="header.key =='entityname'" selected="selected" ng-init="header = header.name">{{header.name}}</option>
+                                    <option name="{{header.key}}" value="{{header.key}}" ng-repeat="header in columnName" ng-if="header.key !='entityname' && header.key !='commit' && header.key !='commited'">{{header.name}}</option>
+                                </select>
+                            </div>
+                          </div>
+                            <div class="form-group" style="padding:20px 0px 0px 0px;">
+                              <div style="padding-right:50px;float:left">
+
+                                <a onclick="scrollFull('Go_L')" id='scroll_L_Arrow' type="button" class="btn btn-default btn-circle btn-sm" style="border-radius: 4px;"><i class="glyphicon glyphicon-chevron-left" style="color:#5339FF"/><i class="glyphicon glyphicon-chevron-left" style="color:#5339FF"></i></a>
+                                <a onclick="scrollThumb('Go_L')" id='scroll_L_Arrow' type="button" class="btn btn-default btn-circle btn-sm" style="border-radius: 4px;"><i class="glyphicon glyphicon-chevron-left" style="color:#5339FF"></i></a>
+                                <a onclick="scrollThumb('Go_R')" id='scroll_R_Arrow' type="button" class="btn btn-default btn-circle btn-sm" style="border-radius: 4px;"><i class="glyphicon glyphicon-chevron-right" style="color:#5339FF"></i></a>
+                                <a onclick="scrollFull('Go_R')" id='scroll_R_Arrow' type="button" class="btn btn-default btn-circle btn-sm" style="border-radius: 4px;"><i class="glyphicon glyphicon-chevron-right" style="color:#5339FF"/><i class="glyphicon glyphicon-chevron-right" style="color:#5339FF"></i></a>
+                                  &nbsp;
+                                <a style="cursor:pointer" href="javascript:void(0);" ng-click="navigateImportlog()">
+                                  <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" style="cursor:pointer;border-radius: 0px">Import View</button></a>
+                                &nbsp;
+                                <div class="input-group" style="color:#939493">
+                                    <!--&nbsp;<a style="cursor:pointer" href="#/importLog/{{importID}}/{{importTitle}}"><button class="btn btn-default" type="button"  style="cursor:pointer;border-radius: 0px">Filter by&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-down" aria-hidden="true" style="color:#949394;top:3px"></button></a>-->
+
+                                    <div class="input-group" style="color:#939493">
+                                        <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" style="border:1px solid #ccc;cursor:pointer;border-radius: 0px" ng-click="openimporAction()" data-toggle="dropdown">Import Actions&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-down" aria-hidden="true" style="color:#949394;top:3px"></button>
+                                        <!--Import links-->
+                                        <ul ng-show="showimportaction" class="dropdown-menu border-outer parent-dp" style="padding: 16px 16px ; width: 100%;border-radius: 0px">
+                                            <div class="search-input-outer row" style="padding: 0px 0px 0px;">
+                                                <div class="vertical-menu col-xs-12">
+                                                    <span ng-if="globals.currentUser.role !=='' && globals.currentUser.role == 'SCOPE+ Admin'">
+                                                    <a style="cursor:pointer" ng-click="toggleRecords()" ng-if="totalrestDataCount <= offsetPage || filterFlag == true">Toggle Commit</a>
+                                                    <a style="cursor:pointer" ng-click="commitField()" ng-if="totalrestDataCount <= offsetPage || filterFlag == true">Commit Changes</a>
+                                                    <!--<a style="cursor:pointer">Return Logging</a>
+                                                    <a style="cursor:pointer">Show All</a>
+                                                    <a style="cursor:pointer">Find Exceptions</a>
+                                                    <a style="cursor:pointer">Omit Exception</a>
+                                                    <a style="cursor:pointer">Export Exceptions</a>-->
+                                                    <a style="cursor:pointer" ng-click="commitAll()">Commit All</a>
+
+                                                    </span>
+                                                    <a style="cursor:pointer" ng-click="exportLDLogXLS()">Export Log</a>
+                                                </div>
+                                            </div>
+                                        </ul>
+                                    </div>
+
+                                    &nbsp;
+                                    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" style="border:1px solid #ccc;cursor:pointer;border-radius: 0px" ng-click="showimportfilterAction()" data-toggle="dropdown">Filter By&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-down" aria-hidden="true" style="color:#949394;top:3px"></button>
+
+                                    <ul ng-show="showimportfilteraction" class="dropdown-menu border-outer parent-dp" style="padding: 16px 16px ; width: 100%;border-radius: 0px">
+                                        <div class="search-input-outer row" style="padding: 0px 0px 0px;">
+                                            <div class="vertical-menu col-xs-12">
+                                    <!--<a style="cursor:pointer" ng-repeat="fa in filteractions" ng-click="filterBy(fa.filter)">{{fa.filter}}</a>-->
+                                    <!--<a style="cursor:pointer" ng-if="recordUpdated > 0" ng-click="filterBy_UPDATE()">Update</a>
+                                    <a style="cursor:pointer" ng-if="recordCreated > 0" ng-click="filterBy_CREATE()">Create</a>
+                                    <a style="cursor:pointer" ng-if="recordNotUpdated > 0" ng-click="filterBy_NOUPDATE()">Create</a>-->
+                                    <div class="vertical-menu col-xs-12" ng-repeat="fa in filteractions">
+                                    <label style="font-weight:normal;padding-left:2px">
+                                      <input type="checkbox" model="fa.filter" ng-click="filterBy(fa.filter)">&nbsp;{{fa.filter}}
+                                    </label>
+                                    </div>
+                          </div>
+                          </div>
+                            </ul>
+
+
+                            </div>
+                        </div>
+                    </div>
+                    <img ng-if="table_loader" style="display: block;
+    margin: 0 auto;
+    height: 33px;" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="/>
+                    <div class="otd-table" style="background:#FFFFFF;" id="importContent">
+
+                        <div class="col-md-12" style="text-align:center;" ng-if="!table_loader">
+                              <span style="color:red;align:center" ng-if="errorMsg !==''">{{errorMsg}}</span>
+                            <div class="table-responsive" style="margin:10px 20px 20px 337px;background-color:#ffffff;" id="slide-wrap" scroll>
+                                <table  class="table table-bordered table-striped table-hover table-sm" id="inner-wrap">
+                                    <th align="left" ng-if="header.key == 'entityname'" class="headcol" ng-repeat="header in columnName" style="top:10px;border:2px solid #25467A;white-space: nowrap; color:white;background-color:#25467A;">
+                                      {{header.name}}
+                                    </th>
+
+
+                                    <th align="left"  ng-if="header.key != 'entityname' && header.key != 'commit' && header.key != 'commited'"  class="long" ng-repeat="header in columnName" style="border:2px solid #25467A;white-space: nowrap;padding-right:16px;color:white;background-color:#25467A;">
+                                        {{header.name}}
+                                    </th>
+                                    <th align="left"  ng-if="header.key == 'commit' || header.key == 'commited'"  class="long" ng-repeat="header in columnName" style="border:2px solid #25467A;white-space: nowrap;padding-right:16px;color:white;background-color:#25467A;">
+                                      {{header.name}}
+                                    </th>
+                                    <tbody>
+                                    <!--<tr dir-paginate="x in filtered = (restData | filter:q) | itemsPerPage:5 " pagination-id="pageMsp" style="color:#666666 ">-->
+                                    <tr ng-repeat="x in filtered = (restData | filter:q) | customFilterSearch:{term:filterText, type:searchby.toLowerCase()} | filter: filterText" style="color:#666666">
+                                        <!--<td align="left" ng-repeat="key in tempkeys" ng-if="key !='filter' && key !='importid'">
+
+                                            <span ng-if="key == 'name'">{{x.name}}</span>
+                                            <span ng-if="key == 'commit'"><input type="checkbox" ng-model="x.commit" ng-true-value="'Y'" ng-false-value="'N'"></input></span>
+                                            <span ng-if="key == 'commited'"><input type="checkbox" ng-model="x.commited" ng-true-value="'Y'" ng-false-value="'N'"></input></span>
+                                            <span ng-if="key != 'name' && key != 'commit' && key != 'commited'">{{x[key]}}</span>
+                                        </td> -->
+                                        <td align="left" ng-repeat="key in columnName" class="headcol name_content" ng-if="key.key == 'entityname'" style="height: 40px;word-break: break-all;white-space: normal;" data-placement="bottom" data-toggle="tooltip" title="{{x.fieldkey}} - {{x.importvalue}}" data-content="{{x.fieldkey}} - {{x.importvalue}}" data-trigger="hover">
+                                            <span ng-if="key.key == 'entityname'" >{{x.entityname}}</span>
+                                        </td>
+
+                                        <td align="left" ng-repeat="key in columnName" ng-if="key.key != 'entityname' && key.key !='filter' && key.key !='importid' && key.key != 'commited' && key.key != 'commit' && key.key != 'fieldkey'">
+                                            <span ng-if="key.key != 'entityname'" >{{x[key.key]}}</span>
+                                        </td>
+                                        <td align="left" ng-repeat="key in columnName" ng-if="key.key == 'commit' ">
+                          <span ng-if="key.key == 'commit'">
+                            <!--API respose getting commit=N always<input type="checkbox" ng-model="x.commit" ng-true-value="'Y'" ng-false-value="'N'"  ng-disabled="true" selected="selected"></input>-->
+
+                            <input type="checkbox" id="commit_{{x.entityname}}_{{x.fieldkey}}" ng-model="x.commit" ng-if="x.commit=='Y' && (!x.summary || x.summary =='' || x.summary =='Exist')" ng-true-value="'Y'" ng-false-value="'N'" selected="selected" disabled="disabled"></input>
+                            <input type="checkbox" id="commit_{{x.entityname}}_{{x.fieldkey}}_{{getUniqueName(x.entityname+'_'+x.fieldkey,x)}}" ng-model="x.commit"  ng-click="commitFieldChange(x.entityname,x.fieldkey,x)" ng-if="x.commit!=='Y' && (!x.summary || x.summary =='' || x.summary =='Exist')"></input>
+                            <input type="checkbox"  disabled="disabled" ng-if="(x.summary && x.summary !=='' && x.summary !=='Exist')"></input>
+
+                          </span>
+                                        </td>
+                                        <td align="left" ng-repeat="key in columnName" ng-if="key.key == 'commited'" >
+                          <span ng-if="key.key == 'commited'" >
+                            <input type="checkbox" id="commited_{{x.entityname}}" ng-model="x.commited" ng-true-value="'Y'" ng-false-value="'N'" disabled="true"></input>
+                            <!--<input type="checkbox" id="commited_{{x.name}}" ng-model="x.commited" ng-change="commitFieldChange(x.name)" ng-if="x.commited!=='Y'"></input>-->
+                          </span>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <!--<div style="position:fixed; top:540px;float:left;" onclick="scrollThumb('Go_L')">
+                                    <a id='scroll_L_Arrow' type="button" class="btn btn-default btn-circle btn-sm" style="border-radius: 25px;"><i class="glyphicon glyphicon-chevron-left" style="color:#5339FF"></i></a>
+                                </div>
+                                <div style="position:fixed; top:540px;margin-left:830px" onclick="scrollThumb('Go_R')">
+                                    <a id='scroll_R_Arrow' type="button" class="btn btn-default btn-circle btn-sm" style="border-radius: 25px;"><i class="glyphicon glyphicon-chevron-right" style="color:#5339FF"></i></a>
+                                </div>-->
+                            </div>
+
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+
+
+        <div class="otd-table-2"  id="otd-table-2" ng-show="otdtable2">
+            <div class="clearfix">
+                <!--<div class="form-group pull-left" style="width:60%;">
+                  <div class="input-group">
+
+
+                  </div>-->
+            </div>
+            <div class="pull-right" style="width: 10%;text-align:right" >
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+</div>
+</div>
+</div>
+ <div id="waiting_overlay">Loading Content...</div>
+<script>
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    })
+</script>
+<style>
+#waiting_overlay {
+    position: fixed; /* Sit on top of the page content */
+    display: none; /* Hidden by default */
+    width: 100%; /* Full width (cover the whole page) */
+    height: 100%; /* Full height (cover the whole page) */
+    top: 0px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding-top:120px;
+    color:white;
+    font-size:40px;
+    font-style:bold;
+    text-align:center;
+    vertical-align: middle;
+    background-color: rgba(1,1,0,0.3); /* Black background with opacity */
+    z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
+    cursor: pointer; /* Add a pointer on hover */
+}
+
+    /*Import first column fix styles*/
+    .headcol {
+        position:absolute;
+        width:320px;
+        left:20px;
+        top:auto;
+        height:auto;
+        border-right: 0px none black;
+        border-top-width:1px; /*only relevant for first row*/
+        marging-left:3px;
+    }
+    .long {  }
+
+
+    table { }
+    td, th {
+        margin:0;
+        border:1px solid grey;
+        border-top-width:0px;
+        white-space:nowrap;
+    }
+    div .table-responsive {
+
+        overflow-x:scroll;
+        margin-left:5em;
+        overflow-y:visible;
+
+    }
+    .headcol:nth-child(odd){
+        background: white;
+    }
+    .name_content{
+        width: 320px !important;
+        height:auto;
+    }
+    /*Import first column fix styles*/
+</style>

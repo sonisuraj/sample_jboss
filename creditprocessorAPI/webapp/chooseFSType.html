@@ -1,0 +1,55 @@
+<div class="modal-body" ng-show="ngShowModalFSFileType" style="padding: 0 !important;">
+    <fieldset>
+        <div class="container-fluid">
+            <div class="row header" style="background-color: #25467a;height: 39px">
+                <p class="modal-title text-center" style="color: #fff;font-size: 20px;">
+                    Select AccessType
+                    <!--( Escape to cancel )-->
+                </p>
+                <i class="fa fa-times" aria-hidden="true" style="font-size: 20px; margin-top: -6%;margin-right: 3%;color: #fff !important;float: right;" ng-click="dismissPopup()"></i>
+            </div>
+            <!--<div class="row" style="margin: 2%">
+                Exclusive : <input type="radio" ng-model="protocolname" style="margin-left: 23%">
+            </div>
+            <div class="row" style="margin: 2%">
+                Shared : <input type="radio" ng-model="communicationType">
+            </div>-->
+            <form name="myForm">
+                <label>
+                    <input type="radio" ng-model="color.name"  ng-change="getVal(color.name,'Exclusive')" value="Exclusive">
+                    Exclusive
+                </label><br/>
+                <label>
+                    <input type="radio" ng-model="color.name" ng-change="getVal(color.name,'Shared')" value="Shared">
+                    Shared
+                </label><br/>
+
+            </form>
+
+        </div>
+    </fieldset>
+    <div class="modal-footer">
+        <button class="exportbtn"  data-ng-disabled="!color.name" ng-click="selectAccessType(color.name)" >Submit </button>
+    </div>
+</div>
+
+
+<style>
+    .exportbtn{
+        font-size:16px;
+        margin-left: 30% ;
+        width: 100px;
+        color: #FFF;
+        background-color: #5392ff;
+    }
+
+    .exportbtn[disabled] {
+        background-color: 	#ADD8E6
+    }
+    .modal-lg{
+        width: 1100px !important;
+        top:11%
+
+    }
+
+</style>

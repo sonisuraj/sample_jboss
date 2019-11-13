@@ -1,0 +1,269 @@
+﻿/*----------------------------------CSS for Menu, Button----------------------------------*/
+#container {
+    padding-top: 44px;
+}
+
+
+p {
+    margin: 0;
+    padding: 0;
+}
+
+#panel-02 {
+    width: 300px;
+    min-height: 100%;
+    border-width: 0;
+    position: absolute;
+    top: 0;
+    background-color: white;
+    left: -300px;
+    margin-left: -15px;
+    z-index: 199999;
+    overflow: hidden;
+    display: block;
+}
+
+#header {
+    font-family: 'Arial Regular', 'Arial';
+    font-weight: 700;
+    font-style: normal;
+    font-size: 30px;
+    color: #FFFFFF;
+    text-align: left;
+    line-height: 0;
+    background-color: #999999;
+    z-index: 99999;
+    padding: 10px;
+}
+
+    #header a, #header a:hover {
+        color: #FFFFFF;
+        text-decoration: none;
+    }
+
+    #header .title {
+        font-family: 'Arial Regular', 'Arial';
+        font-weight: 400;
+        font-style: normal;
+        text-align: left;
+        line-height: normal;
+        height: 25px;
+        font-size: 21px;
+        margin-left: 10px;
+    }
+
+
+#menu-header {
+    height: 210px;
+    background-color: #1299f6;
+    display: block;
+}
+
+    #menu-header img {
+        margin: 24px;
+        width: 96px;
+        height: 96px;
+    }
+
+    #menu-header span {
+        font-family: 'Roboto';
+        font-weight: 400;
+        font-style: normal;
+        font-size: 20px;
+        color: #FFFFFF;
+        text-align: left;
+        line-height: 40px;
+        width: 252px;
+        word-wrap: break-word;
+        margin-top: 10px;
+        margin-left: 24px;
+    }
+
+#menu-body {
+    font-family: 'Roboto';
+    font-weight: 400;
+    font-style: normal;
+    font-size: 23px;
+    color: #333333;
+    padding: 21px 0 0 24px;
+}
+
+    #menu-body div {
+        display: block;
+        height: 70px;
+        position: relative;
+    }
+
+        #menu-body div span {
+            position: absolute;
+            top: 21px;
+        }
+
+    #menu-body .horizontal_line {
+        border-bottom: solid 1px #e4e4e4;
+        overflow: hidden;
+        height: 0;
+    }
+
+#toggle-button {
+    left: 71px;
+    top: 56px;
+    width: 90px;
+    height: 32px;
+    font-family: 'Arial Regular', 'Arial';
+    font-weight: 400;
+    font-style: normal;
+    font-size: 14px;
+    color: #34475E;
+    line-height: 16px;
+}
+
+.toggle-button-blue {
+    display: inline-block;
+    margin: 12px 0 15px 0px;
+}
+
+.radio-button-blue {
+    width: 90px;
+    height: 32px;
+    font-family: 'Arial Regular', 'Arial';
+    font-weight: 400;
+    font-style: normal;
+    font-size: 14px;
+    color: #34475E;
+    line-height: 16px;
+    background-image: url('../images/patient_search/schedulebtn_u0.png');
+    background-repeat: no-repeat;
+    text-align: center;
+    vertical-align: middle;
+}
+
+    .radio-button-blue span {
+        margin-top: 8px;
+        display: inline-block;
+    }
+
+    .radio-button-blue:focus, .radio-button-blue-selected {
+        background-image: url('../images/patient_search/schedulebtn_u0_selected.png');
+        color: #ffffff;
+    }
+
+.clear-fix {
+    clear: both;
+}
+
+ul li a {
+    text-decoration: none;
+    color: #424242;
+}
+
+.patient_list {
+    margin-top: 10px;
+    padding: 10px;
+}
+
+.patientList_recenttitle {
+    margin-top: 20px;
+    padding: 2px;
+}
+
+.ui-input-text.ui-focus, .ui-input-search.ui-focus{
+    box-shadow: inset 0 0 4px 0px green !important;
+}
+/*----------------------------------End CSS for Menu, Button----------------------------------*/
+/*----------------------------------Start CSS for Search box and result----------------------------------*/
+.search_text_field {
+    width: 240px;
+    height: 46px;
+    color: #BDC3C7;
+    /*background-image: url('../images/patient_search/search-input-front_u18.png');
+    background-repeat: no-repeat;*/
+    margin: auto;
+    position: relative;
+}
+
+    .search_text_field div, .search_text_field div:focus {
+        position: absolute;
+        /*-moz-box-shadow: none;
+        -webkit-box-shadow: none;
+        box-shadow: none;*/
+    }
+
+    .search_text_field img {
+        vertical-align: middle;
+        position: absolute;
+        left: 180px;
+        top: 15px;
+    }
+
+#patientsearch_input {
+    width: 180px;
+    height: 40px;
+    background-color: transparent;
+    font-family: 'Roboto';
+    font-weight: 400;
+    font-style: normal;
+    font-size: 16px;
+    text-decoration: none;
+    color: #BDC3C7;
+    text-align: left;
+    border-color: transparent;
+    border: none;
+    outline-style: none;
+    padding-left: 15px;
+    padding-top: 3px;
+}
+
+#search-result {
+    margin-top: 20px;
+    width: 100%;
+    font-family: 'Arial Regular', 'Arial';
+    font-weight: 400;
+    font-style: normal;
+    font-size: 21px;
+    color: #424242;
+    text-align: center;
+}
+
+ul {
+    list-style-type: none;
+    margin: 10px 0 0 0;
+    padding: 0;
+}
+
+    ul li {
+        height: 36px;
+        font-size: 14px;
+    }
+
+/*----------------------------------End CSS for Search box and result----------------------------------*/
+/*@media (min-width: 1200px) {
+    .container {
+        width: 100% !important;
+    }
+}
+
+@media (min-width: 768px) {
+    .container {
+        width: 100% !important;
+        padding-right: 0px !important;
+        padding-left: 0px !important;
+    }
+
+    .row {
+        padding-right: 0px !important;
+        padding-left: 0px !important;
+    }
+}
+
+@media (min-width: 768px) {
+    .col-sm-11 {
+        width: 100%;
+    }
+}
+
+@media (min-width: 768px) {
+    .col-sm-4 {
+        padding-left: 60px !important;
+    }
+}*/

@@ -1,0 +1,149 @@
+div.box {
+  background: #EEE;
+  height: 100%;
+  width: 100%;
+}
+
+div.div1 {
+
+  float: left;
+  height: 100%;
+  width: 50%;
+}
+
+div.div2 {
+
+  height: 100%;
+}
+
+div.clear {
+  clear: both;
+  height: 1px;
+  overflow: hidden;
+  font-size: 0pt;
+  margin-top: -1px;
+}
+
+/*Logical Devices Document Model css*/
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 10px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+    position: relative;
+    background-color: #fefefe;
+    margin: auto;
+    padding: 0;
+    /*border: 1px solid #888;*/
+    width: 40%;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+    -webkit-animation-name: animatetop;
+    -webkit-animation-duration: 0.4s;
+    animation-name: animatetop;
+    animation-duration: 0.4s
+}
+
+/* Add Animation */
+@-webkit-keyframes animatetop {
+    from {top:-300px; opacity:0}
+    to {top:0; opacity:1}
+}
+
+@keyframes animatetop {
+    from {top:-300px; opacity:0}
+    to {top:0; opacity:1}
+}
+
+/* The Close Button */
+.modal-close {
+    color: white;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.modal-close:hover,
+.modal-close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.modal-header {
+    padding: 2px 5px;
+    /*background-color: #25467A;*/
+    color: white;
+}
+
+.modal-body {padding: 2px 16px;}
+.modal-footer{
+    padding: 2px 16px;
+    /*background-color: #25467A;*/
+    color: white;
+}
+/*Logical Devices Document Model css*/
+
+/*Start::Pagination box round corner fix*/
+.pagination > li > a, .pagination > li > span {
+
+  }
+
+.pagination > li:last-child > a, .pagination > li:last-child > span {
+  border-top-right-radius: 0px !important;
+  border-bottom-right-radius: 0px !important;
+}
+.pagination > li:first-child > a, .pagination > li:first-child > span {
+
+  border-top-left-radius: 0px !important;
+  border-bottom-left-radius: 0px !important;
+}
+/*End::Pagination box round corner fix*/
+
+/*/!*Import first column fix styles*!/
+.headcol {
+    position:absolute;
+    width:230px;
+    left:20px;
+    top:auto;
+    height:auto;
+    border-right: 0px none black;
+    border-top-width:1px; /!*only relevant for first row*!/
+    marging-left:3px;
+}
+ .long {  }
+
+
+table { }
+td, th {
+ margin:0;
+ border:1px solid grey;
+ border-top-width:0px;
+ white-space:nowrap;
+}
+div .table-responsive {
+
+ overflow-x:scroll;
+ margin-left:5em;
+ overflow-y:visible;
+
+}
+.headcol:nth-child(odd){
+background: white;
+}
+.name_content{
+    width: 230px !important;
+    height:auto;
+}
+/!*Import first column fix styles*!/*/

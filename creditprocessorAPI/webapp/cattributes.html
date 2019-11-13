@@ -1,0 +1,56 @@
+<div class="container" style="margin-top: 1%" ng-controller="logicalDevicesController">
+         <div class="row">
+             <div class="col-md-10 col-md-offset-1" style="border: 1px solid #ccc;background-color: #fff">
+              <div class="col-md-12">
+              <div class="col-md-6">
+                  <h4 class="fontHelvetica" style="padding-left:10px;padding-bottom:10px">
+                    <span style="color: #5392FF;font-size: 20px;border-right: 1px solid #5392FF;">Custom Attributes &nbsp;</span> &nbsp;<span style="color:#949394">Custom Attribute<!-- > Components--></span>
+                  </h4>
+              </div>
+              <div class="col-md-6">
+                  <!--<button class="btn fontHelveticaNeue" ng-click ="otdtable()" style="border-radius:0px;background-color: #5392FF;color:#FFFFFF;float: right;
+                          margin-right: 1%;margin-top: 1%;cursor:pointer">COMPONENT SELECTION</button>-->
+              </div>
+              </div>
+                    <div class="col-md-12">
+                                <div class="col-md-12" id="otd-table">
+                                    <div class="odth-sec clearfix" style="padding:10px;">
+
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered table-striped">
+                                            <thead>
+                                            <tr class="fontHelvetica" style="background-color:#25467A;color:#ffffff;font-size:15px;">
+                                                <td align="left" style="width:50%;border:1px solid #25467A">Attribute</td>
+                      													<!--<td align="left" style="width:20px;border:1px solid #25467A">Edit</td>-->
+                      													<td align="left" style="border:1px solid #25467A">Value</td>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                           <tr dir-paginate="ca in customAttribute | itemsPerPage:5 " pagination-id="pageMsp" style="color:#666666 ">
+                                          <td align="left">{{ca.attribute}}</td>
+                                          <!--<td>  <a href="javascript:void(0);" style="cursor:pointer">
+                                              <i class="fa fa-edit fa-lg rotate_45" />
+                                            </a></td>-->
+                                          <td align="left"><input type="text" id="{{ca.attribute}}" ng-model="ca.value" ng-click="allowEdit(ca.attribute)" ng-change="caValueChange(ca.attribute)" style="padding-left:2px;background-color:#e1e1e1;border:1px solid #ccc"/></td>
+                                        </tr>
+                                            </tbody>
+                                        </table>
+                                        <dir-pagination-controls pagination-id="pageMsp" data-num-pages="noOfPages" data-current-page="currentPage"  max-size="maxSize" class="Pagination"
+                                                                 max-size="6"
+                                                                 direction-links="true"
+                                                                 boundary-links="true" style="float:right;padding:0px;padding:0px;border-radius:0px;margin-top:0px">
+                                        </dir-pagination-controls>
+                                    </div>
+                                </div>
+
+
+                </div>
+        </div>
+        </div>
+    <!-- Add your site or application content here -->
+    <div class="footer">
+      <div class="container">
+        <!-- <p><span class="glyphicon glyphicon-heart"></span> Project</p> -->
+      </div>
+    </div>
+  </div>

@@ -1,0 +1,275 @@
+
+<div ng-init="clear()" class="container" style="background-color: #ececec;font-family:Helvetica Neue, Helvetica, Arial, sans-serif">
+	 <div class="row">
+		<div class="col-md-10 col-md-offset-1" style="margin-left: 7.7%;background-color: #ffffff;width: 84.8% !important;border-bottom: 1px solid #ccc">
+			<div class="col-xs-12" style="height: 60px;background-color: #ececec;font-size: 16px">
+				<p style="margin: 21px 0px 0px;color:#949394;font-size: 20px"><span style="color: #5392ff;"><label>Logical Device</label></span>
+				</p>
+			</div>
+			<hr style="border-top: 1px solid #ccc !important;margin-top: 0px !important;
+    margin-bottom: 0px !important;margin-left: -11%;width: 122%;">
+			<div class="col-xs-12" style="height: 48px;background-color: #ececec;font-size: 14px">
+				<p style="margin-top: 1%;">
+					<span style="color:#949394"><label>Home</label> > </span>  <span style="color: #5392ff;"><label>Add Logical Device</label></span>
+				</p>
+			</div>
+
+			<div class="col-xs-12" style="background-color: #25467a; color: #ffffff; padding: 3px 0px 10px 26px;text-align: left;font-size: 16px;border: 1px solid #ccc">
+				<label style="margin: 4px 0px 0px 17px"> Add Logical device</label>
+			</div>
+			<div class="col-xs-12" style="border: 1px solid #ccc;border-top: 0px !important;border-bottom: 0px !important;">
+				<div class="col-xs-4" style="margin-top: 1%">
+					<form name="myForm1" role ="form" novalidate style="margin-left: 4%">
+						<div class="control-group" ng-class="{true: 'error'}[submitted && form.myName.$invalid]">
+							<div class="form-group">
+								<label class="labelcolor mandat control-label"> Device Name</label>
+								<div class="controls">
+									<input name="myName" class = "form-control setwidth" ng-model="addDeviceName" maxlength="75" minlength="1" type="text" id="deviceName"  required>
+									<span style="color: #5392ff" ng-show="myForm1.myName.$touched && myForm1.myName.$invalid">Device name is mandatory.</span>
+									<!--<span ng-show="showErrorAlert" style="color: #5392ff">This Name exists,please use unique name</span>-->
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="labelcolor"> Device Type</label>
+									<input type="text" ng-model="addDeviceType" placeholder="Custom template" uib-typeahead="object.value for object in RDAddLogicalDevicedeviceType | filter: {value:$viewValue} | limitTo:8"  class="form-control setwidth" typeahead-show-hint="true" typeahead-min-length="0">
+
+							</div>
+
+							<div class="form-group">
+								<label class="labelcolor">Environment</label>
+								<div class="input-group" >
+									<input type="text" ng-model="addEnv" style="border-right:0px;width: 100% !important;" uib-typeahead="object.value for object in RDAddLogicalDeviceenvironment | filter: {value:$viewValue} | limitTo:8"  class="form-control setwidth" typeahead-show-hint="true" typeahead-min-length="0">
+										<span class="input-group-addon" id="basic-addon1" style="border-radius: 0px;background-color: #fff;font-size:11px;cursor:pointer ;width: 9.2% !important;"><i class="fa fa-chevron-down" style="cursor:pointer"></i></span>
+								</div>
+							</div>
+
+							<!-- <div class="form-group" >
+								<label class="labelcolor"> OS</label>
+
+									<input type="text" ng-model="addOs" uib-typeahead="object.value for object in RDAddLogicalDeviceOS | filter: {value:$viewValue} | limitTo:8"  class="form-control setwidth" typeahead-show-hint="true" typeahead-min-length="0">
+
+							</div> -->
+							<div class="form-group">
+								<label class="labelcolor">OS</label>
+								<div class="input-group" >
+									<input type="text" ng-model="addOs" style="border-right:0px;width: 100% !important;" uib-typeahead="object.value for object in RDAddLogicalDeviceOS | filter: {value:$viewValue} | limitTo:8"  class="form-control setwidth" typeahead-show-hint="true" typeahead-min-length="0">
+										<span class="input-group-addon" id="basic-addon1" style="border-radius: 0px;background-color: #fff;font-size:11px;cursor:pointer ;width: 9.2% !important;"><i class="fa fa-chevron-down" style="cursor:pointer"></i></span>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="labelcolor"> OS Version</label>
+								<input class="form-control setwidth" maxlength="255" ng-model="addOsVersion" type="text">
+							</div>
+
+							<div class="form-group">
+								<label class="labelcolor"> Memory</label>
+								<input only-digits class="form-control setwidth" ng-model="addMemory" id="addMemory" type="text">
+							</div>
+							<div class="form-group">
+
+								<label class="labelcolor"> OS Patch Level</label>
+								<input  class="form-control setwidth" maxlength="200" ng-model="addOsPatchLevel" type="text" >
+							</div>
+							<!-- <div class="form-group">
+								<label class="labelcolor"> DR Required</label>
+
+									<input type="text" ng-model="addDrReq" style="border-right:0px;box-shadow:none;" uib-typeahead="object.value for object in RDAddLogicalDevicedrRequired | filter: {value:$viewValue} | limitTo:8"  class="form-control setwidth" typeahead-show-hint="true" typeahead-min-length="0">
+
+							</div> -->
+							<div class="form-group">
+								<label class="labelcolor">DR Required</label>
+								<div class="input-group" >
+									<input type="text" ng-model="addDrReq" style="border-right:0px;width: 100% !important;" uib-typeahead="object.value for object in RDAddLogicalDevicedrRequired | filter: {value:$viewValue} | limitTo:8"  class="form-control setwidth" typeahead-show-hint="true" typeahead-min-length="0">
+										<span class="input-group-addon" id="basic-addon1" style="border-radius: 0px;background-color: #fff;font-size:11px;cursor:pointer ;width: 9.2% !important;"><i class="fa fa-chevron-down" style="cursor:pointer"></i></span>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="labelcolor"> DR Process</label>
+								<input  class="form-control setwidth" maxlength="255" ng-model="addDrProcess" type="text">
+							</div>
+							<!-- <div class="form-group" >
+								<label class="labelcolor"> LogicalDevice Host</label>
+								<input type="text" class="form-control setwidth" ng-model="addLogicalDeviceHost" uib-typeahead="object.value for object in RDAddLogicalDeviceldhost | filter: {value:$viewValue} | limitTo:8" typeahead-show-hint="true" typeahead-min-length="0">
+
+							</div> -->
+							<div class="form-group">
+								<label class="labelcolor">LogicalDevice Host</label>
+								<div class="input-group" >
+									<input type="text" ng-model="addLogicalDeviceHost" style="border-right:0px;width: 100% !important;" uib-typeahead="object.value for object in RDAddLogicalDeviceldhost | filter: {value:$viewValue} | limitTo:8"  class="form-control setwidth" typeahead-show-hint="true" typeahead-min-length="0">
+										<span class="input-group-addon" id="basic-addon1" style="border-radius: 0px;background-color: #fff;font-size:11px;cursor:pointer ;width: 9.2% !important;"><i class="fa fa-chevron-down" style="cursor:pointer"></i></span>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="col-xs-3 vr"></div>
+				<div class="col-xs-4" style="margin-left: 3%;margin-top: 1%">
+					<form name="myForm2" role="form" novalidate style="margin-left: 2.5%">
+						<div class="form-group">
+							<label class="labelcolor">Migration Approach</label>
+							<input class="form-control setwidth" maxlength="255" ng-model="addMigrationApproach" type="text"  required>
+						</div >
+						<div class="form-group">
+							<label class="labelcolor">Windows Domain</label>
+							<input class="form-control setwidth" maxlength="50" ng-model="addWidowsDomain" type="text" required>
+						</div>
+						<div class="form-group">
+							<label class="labelcolor">DR Physical Server Name</label>
+							<input class="form-control setwidth" maxlength="50" ng-model="addDRPhysicalServerName" type="text" required>
+						</div>
+						<!-- <div class="form-group">
+							<label class="labelcolor">Backup Method</label>
+							<input type="text" class="form-control setwidth" ng-model="addBackUpMethod" uib-typeahead="object.value for object in RDAddLogicalDevicebackupMethod | filter: {value:$viewValue} | limitTo:8" typeahead-show-hint="true" typeahead-min-length="0">
+
+						</div> -->
+						<div class="form-group">
+							<label class="labelcolor">Backup Method</label>
+							<div class="input-group" >
+								<input type="text" ng-model="addBackUpMethod" style="border-right:0px;width: 100% !important;" uib-typeahead="object.value for object in RDAddLogicalDevicebackupMethod | filter: {value:$viewValue} | limitTo:8"  class="form-control setwidth" typeahead-show-hint="true" typeahead-min-length="0">
+									<span class="input-group-addon" id="basic-addon1" style="border-radius: 0px;background-color: #fff;font-size:11px;cursor:pointer ;width: 9.001% !important;"><i class="fa fa-chevron-down" style="cursor:pointer"></i></span>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="labelcolor">Backup Schedule</label>
+							<input class="form-control setwidth" ng-model="addBackUpSchedule" maxlength="50" type="text"  required>
+						</div>
+						<!-- <div class="form-group">
+							<label class="labelcolor">Backup Offsite Location</label>
+							<input type="text" class="form-control setwidth" ng-model="addBackUpOffSiteLoc" uib-typeahead="object.value for object in RDAddLogicalDevicebackupoffsitelocation | filter: {value:$viewValue} | limitTo:8" typeahead-show-hint="true" typeahead-min-length="0">
+
+						</div> -->
+						<div class="form-group">
+							<label class="labelcolor">Backup Offsite Location</label>
+							<div class="input-group" >
+								<input type="text" ng-model="addBackUpOffSiteLoc" style="border-right:0px;width: 100% !important;" uib-typeahead="object.value for object in RDAddLogicalDevicebackupoffsitelocation | filter: {value:$viewValue} | limitTo:8"  class="form-control setwidth" typeahead-show-hint="true" typeahead-min-length="0">
+									<span class="input-group-addon" id="basic-addon1" style="border-radius: 0px;background-color: #fff;font-size:11px;cursor:pointer ;width: 9.001% !important;"><i class="fa fa-chevron-down" style="cursor:pointer"></i></span>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="labelcolor">Monitoring System</label>
+							<input class="form-control setwidth" maxlength="255" ng-model="addMonitoringSystem" type="text" required>
+						</div>
+						<!-- <div class="form-group">
+							<label class="labelcolor">Status</label>
+							<input type="text" class="form-control setwidth" ng-model="addStatus" uib-typeahead="object.value for object in RDAddLogicalDevicestatus | filter: {value:$viewValue} | limitTo:8" typeahead-show-hint="true" typeahead-min-length="0">
+
+						</div> -->
+						<div class="form-group">
+							<label class="labelcolor">Status</label>
+							<div class="input-group">
+								<input type="text" ng-model="addStatus" style="border-right:0px;width: 100% !important;" uib-typeahead="object.value for object in RDAddLogicalDevicestatus | filter: {value:$viewValue} | limitTo:8"  class="form-control setwidth" typeahead-show-hint="true" typeahead-min-length="0">
+									<span class="input-group-addon" id="basic-addon1" style="border-radius: 0px;background-color: #fff;font-size:11px;cursor:pointer ;width: 9.001% !important;"><i class="fa fa-chevron-down" style="cursor:pointer"></i></span>
+							</div>
+						</div>
+						<!-- <div class="form-group">
+							<label class="labelcolor">In Scope</label>
+							<input type="text" class="form-control setwidth" ng-model="addInScope" uib-typeahead="object.value for object in RDAddLogicalDeviceinscope | filter: {value:$viewValue} | limitTo:8" typeahead-show-hint="true" typeahead-min-length="0">
+						</div> -->
+						<div class="form-group">
+							<label class="labelcolor">In Scope</label>
+							<div class="input-group" >
+								<input type="text" ng-model="addInScope" style="border-right:0px;width: 100% !important;" uib-typeahead="object.value for object in RDAddLogicalDeviceinscope | filter: {value:$viewValue} | limitTo:8"  class="form-control setwidth" typeahead-show-hint="true" typeahead-min-length="0">
+									<span class="input-group-addon" id="basic-addon1" style="border-radius: 0px;background-color: #fff;font-size:11px;cursor:pointer ;width: 9.001% !important;"><i ng-click="addInScope" class="fa fa-chevron-down" style="cursor:pointer"></i></span>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="labelcolor">Logical CPU</label>
+							<input only-digits class="form-control setwidth" ng-model="addLogicalCpu" maxlength="50" type="text" required>
+						</div>
+
+					</form>
+				</div>
+				<div class="col-xs-1"></div>
+
+			</div>
+			<div class="col-xs-12" style="border-right: 1px solid #ccc;border-left: 1px solid #ccc;"><p style="font-size: 14px;
+    margin-right: 2%;
+    float: right; height: 33px;
+    color: #5392ff;"> *Mandatory Fields</p></div>
+		</div>
+		 <div class="col-xs-12" style=" margin-top: 1%; margin-bottom: 7%;margin-left: -0.3%;">
+			 <input type="submit" class="submitbtn" id="submit" data-ng-disabled="disableSave"  ng-click="submitted=true;submitFormData();" value="ADD LOGICAL DEVICE"/>
+			 <input type="submit" class="submitbtncancel" id="submit"   ng-click="navtoLanding()" value="CANCEL"/>
+		 </div>
+	 </div>
+
+
+</div>
+<style>
+	.vr {
+		border: 1px solid #cdd0d4;
+		width: 1px;
+		margin-left: 1%;
+		/* border-right: 1px dashed #cdd0d4; */
+		/* background-color: #000; */
+		position: absolute;
+		top: 25px;
+		bottom: 14px;
+		left: 33%;
+	}
+
+	.submitbtn{
+		color: #FFF;
+		background-color: #5392ff;
+		border: none;
+		margin-left: 8.1%;
+		/* margin-top: 4%; */
+		font-size: 13px;
+		width: 13%;
+		height: 35px;
+	}
+
+	.submitbtn[disabled] {
+		background-color: 	#ADD8E6
+	}
+	.setwidth{
+		width: 97% !important;
+		border-radius: 1px !important;
+		height: 25px !important;
+		font-size: 13px;
+	}
+
+	.submitbtncancel{
+		color: #FFF;
+		background-color: #5392ff;
+		border: none;
+		margin-left: 2.1%;
+		/* margin-top: 4%; */
+		font-size: 13px;
+		width: 13%;
+		height: 35px;
+	}
+
+	.labelcolor{
+		color: #949394;
+		font-size: 14px;
+		font-weight: normal;
+	}
+	.mandat:after{
+		content: "*";
+		color: #5392ff;
+		font-size: 14px;
+	}
+	select.input-lg1 {
+		padding: 0 0 !important;
+		-webkit-appearance: none;
+		-moz-appearance: none;
+		-o-appearance: none;
+		/* no standardized syntax available, no ie-friendly solution available */
+	}
+	select + i.fa {
+		color: #949394;
+		float: right;
+		margin-top: -22px;
+		margin-right: 34px;
+		pointer-events: none;
+		background-color: #fff;
+		padding-right: 5px;
+	}
+</style>
+
+<link href="css/Common.css" rel="stylesheet" />
+<!--
+<link href="css/style.css" rel="stylesheet" />-->

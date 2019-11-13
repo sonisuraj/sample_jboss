@@ -1,0 +1,313 @@
+
+app.controller('addotherDevicesController',['$scope','$http','$location','$rootScope','$uibModal','$routeParams',function($scope, $http,$location,$rootScope,$uibModal,$routeParams) {
+
+$scope.deviceIdName=$routeParams.deviceID.toLowerCase();
+
+$scope.device_add = [];
+$scope.table_loader=true;
+$scope.vertical_show=true;
+$scope.fileSystemsLogicalDevice=false;
+
+var url = __env.apiUrl+'/devices/fields/'+'/'+$scope.deviceIdName;
+
+
+$http.get(url).then(function (response) {
+  // response.data.fields.forEach(function(key,index) {
+  //   console.log( key.fieldtype);
+  //   // if( key.fieldtype =='select'){
+  //     $http.get(__env.apiUrl+'/devices/services/dropdown/'+key.key).then(function (response) {
+  //       $scope.key.fieldtype = response.data.dropdown;
+  //       console.log(scope.key.fieldtype);
+  //     });
+  //   }
+  //
+  // });
+
+
+  if($routeParams.deviceID =='Services'){
+      $http.get(__env.apiUrl+'/devices/services/dropdown/bunit').then(function (response) {
+        $scope.bunit = response.data.dropdown;
+      });
+      $http.get(__env.apiUrl+'/devices/services/dropdown/criticality').then(function (response) {
+        $scope.criticality = response.data.dropdown;
+      });
+      $http.get(__env.apiUrl+'/devices/services/dropdown/candidacy').then(function (response) {
+        $scope.candidacy = response.data.dropdown;
+      });
+      $http.get(__env.apiUrl+'/devices/services/dropdown/migrationcomplexity').then(function (response) {
+        $scope.migrationcomplexity = response.data.dropdown;
+      });
+      $http.get(__env.apiUrl+'/devices/services/dropdown/migrationapproach').then(function (response) {
+        $scope.migrationapproach = response.data.dropdown;
+      });
+      $http.get(__env.apiUrl+'/devices/services/dropdown/servverified').then(function (response) {
+        $scope.servverified = response.data.dropdown;
+      });
+      $http.get(__env.apiUrl+'/devices/services/dropdown/performance').then(function (response) {
+        $scope.performance = response.data.dropdown;
+      });
+
+      $http.get(__env.apiUrl+'/devices/services/dropdown/servicetype').then(function (response) {
+        $scope.servicetype = response.data.dropdown;
+      });
+      $http.get(__env.apiUrl+'/devices/services/dropdown/servicestatus').then(function (response) {
+        $scope.servicestatus = response.data.dropdown;
+      });
+      $http.get(__env.apiUrl+'/devices/services/dropdown/recovery').then(function (response) {
+        $scope.recovery = response.data.dropdown;
+      });
+      $http.get(__env.apiUrl+'/devices/services/dropdown/rpo').then(function (response) {
+        $scope.rpo = response.data.dropdown;
+      });
+      $http.get(__env.apiUrl+'/devices/services/dropdown/rto').then(function (response) {
+        $scope.rto = response.data.dropdown;
+      });
+        $scope.table_loader=false;
+  }
+  if($routeParams.deviceID =='Components'){
+    $http.get(__env.apiUrl+'/devices/components/dropdown/componenttype').then(function (response) {
+      $scope.componenttype = response.data.dropdown;
+    });
+    $http.get(__env.apiUrl+'/devices/components/dropdown/subcomponenttype').then(function (response) {
+      $scope.subcomponenttype = response.data.dropdown;
+    });
+    $http.get(__env.apiUrl+'/devices/components/dropdown/hcipaddr').then(function (response) {
+      $scope.hcipaddr = response.data.dropdown;
+    });
+    $http.get(__env.apiUrl+'/devices/components/dropdown/hcservernames').then(function (response) {
+      $scope.hcservernames = response.data.dropdown;
+    });
+    $http.get(__env.apiUrl+'/devices/components/dropdown/migrationapproach').then(function (response) {
+      $scope.migrationapproach = response.data.dropdown;
+    });
+    $http.get(__env.apiUrl+'/devices/components/dropdown/criticality').then(function (response) {
+      $scope.criticality = response.data.dropdown;
+    });
+    $http.get(__env.apiUrl+'/devices/components/dropdown/componentstatus').then(function (response) {
+      $scope.componentstatus = response.data.dropdown;
+    });
+      $scope.table_loader=false;
+  }
+
+  if($routeParams.deviceID =='FileSystems'){
+    $scope.fileSystemsLogicalDevice =true;
+    $scope.noResults = false;
+    $http.get(__env.apiUrl+'/devices/filesystems/dropdown/accessType').then(function (response) {
+      $scope.accessType = response.data.dropdown;
+    });
+    $http.get(__env.apiUrl+'/devices/filesystems/dropdown/migrationApproach').then(function (response) {
+      $scope.migrationApproach = response.data.dropdown;
+    });
+    $http.get(__env.apiUrl+'/devices/filesystems/dropdown/discoveryStatus').then(function (response) {
+      $scope.discoveryStatus = response.data.dropdown;
+    });
+    $http.get(__env.apiUrl+'/logicaldevices/getall').then(function(response){
+
+      $scope.logicalDevices = response.data.logicaldevices;
+      $scope.table_loader=false;
+      console.log($scope.logicalDevices);
+      console.log("ddddddddddddd");
+
+    });
+
+  }
+  if($routeParams.deviceID =='Clusters'){
+    //   $scope.vertical_show=false;
+    // $http.get(__env.apiUrl+'/devices/clusters/dropdown/clustertype').then(function (response) {
+    //   $scope.clustertype = response.data.dropdown;
+    // });
+    // $http.get(__env.apiUrl+'/devices/clusters/dropdown/approach').then(function (response) {
+    //   $scope.approach = response.data.dropdown;
+    // });
+    //   $scope.table_loader=false;
+  }
+
+  if($routeParams.deviceID =='PhysicalDevices'){
+      //$scope.vertical_show=false;
+    $http.get(__env.apiUrl+'/devices/physicaldevices/dropdown/businessUnit').then(function (response) {
+      $scope.clustertype = response.data.dropdown;
+    });
+    $http.get(__env.apiUrl+'/devices/physicaldevices/dropdown/deviceType').then(function (response) {
+      $scope.clustertype = response.data.dropdown;
+    });
+    $http.get(__env.apiUrl+'/devices/physicaldevices/dropdown/manufacturer').then(function (response) {
+      $scope.clustertype = response.data.dropdown;
+    });
+    $http.get(__env.apiUrl+'/devices/physicaldevices/dropdown/model').then(function (response) {
+      $scope.clustertype = response.data.dropdown;
+    });
+    $http.get(__env.apiUrl+'/devices/physicaldevices/dropdown/site').then(function (response) {
+      $scope.clustertype = response.data.dropdown;
+    });
+    $http.get(__env.apiUrl+'/devices/physicaldevices/dropdown/building').then(function (response) {
+      $scope.clustertype = response.data.dropdown;
+    });
+    $http.get(__env.apiUrl+'/devices/physicaldevices/dropdown/fcnetworkports').then(function (response) {
+      $scope.clustertype = response.data.dropdown;
+    });
+    $http.get(__env.apiUrl+'/devices/physicaldevices/dropdown/discoveryStatus').then(function (response) {
+      $scope.clustertype = response.data.dropdown;
+    });
+    $http.get(__env.apiUrl+'/devices/physicaldevices/dropdown/migrationApproach').then(function (response) {
+      $scope.clustertype = response.data.dropdown;
+    });
+    $http.get(__env.apiUrl+'/devices/physicaldevices/dropdown/status').then(function (response) {
+      $scope.clustertype = response.data.dropdown;
+    });
+    $http.get(__env.apiUrl+'/devices/physicaldevices/dropdown/site').then(function (response) {
+      $scope.clustertype = response.data.dropdown;
+    });
+    $http.get(__env.apiUrl+'/devices/physicaldevices/dropdown/model').then(function (response) {
+      $scope.clustertype = response.data.dropdown;
+    });
+  $scope.table_loader=false;
+  }
+
+    $scope.devicedata = response.data.fields;
+    $scope.changeClassMand =false;
+    for ( var indexc = 0 ; $scope.devicedata && indexc < $scope.devicedata.length ; indexc++) {
+      if ( $scope.devicedata[indexc].group == "relevant" ) {
+        $scope.changeClassMand =true;
+        break;
+      }
+    }
+   $scope.devicedataAdd=[];
+    for ( var i = 0 ; $scope.devicedata && i < $scope.devicedata.length ; i++) {
+      if ( $scope.devicedata[i].returntype != "showtouser") {
+          if($scope.devicedata[i].returntype.split(":")[2] ==1){
+            $scope.devicedataAdd.push($scope.devicedata[i]);
+          }
+
+      }else{
+          $scope.devicedataAdd.push($scope.devicedata[i]);
+      }
+
+    }
+    console.log($scope.devicedataAdd);
+
+}).catch(function (response) {
+
+
+});
+
+$scope.getDropDowns = function(val) {
+			console.log(val);
+		 	return $scope[val];
+}
+$scope.cancel=function(){
+  $scope.device_add.text="";
+}
+var deviceName= $scope.deviceIdName.toLowerCase();
+var url = __env.apiUrl+'/devices/'+deviceName+'/add';
+
+var formData =""
+
+var config = {
+  headers : {
+    'Content-Type': 'application/json',
+  }
+}
+
+$scope.AddOtherDevices =function(){
+  var formData = $scope.device_add.otherDevice;
+  console.log(formData);
+  $http.post(url, formData, config)
+    .success(function (data, status, headers, config) {
+      alert($scope.deviceIdName+"Added Successfully!!");
+      $location.url('/otherDevices/'+$scope.deviceIdName);
+
+      $scope.device_add.otherDevice="";
+    })
+    .catch(function (response) {
+      console.log(response);
+      alert(response.data.errorMessage)
+    });
+}
+
+
+	$rootScope.openexportstab = function(){
+		console.log('inside open exports');
+		$rootScope.showexptab = true;
+		$rootScope.showcustatt = false;
+	};
+	$rootScope.opencustatt = function(){
+		console.log('inside cust att');
+		$rootScope.showexptab = false;
+		$rootScope.showcustatt = true;
+
+	};
+
+	$rootScope.openlogDevicexls = function(deviceType,format){
+		console.log('inside open log device');
+		console.log('deviceType===' + deviceType);
+		console.log('format===' + format);
+		$rootScope.showdropdownlogDevices = true;
+		$rootScope.showexptab= true;
+		$uibModal.open({
+			animation: $scope.animationsEnabled,
+			templateUrl: 'selectiveLG.html',
+			controller: 'ModalController',
+			size: 'lg',
+			windowClass: 'app-modal-window-selectpro',
+			resolve: {
+				DeviceType: function() {
+					return deviceType
+				},
+				Format : function(){
+					return format
+				}
+			}
+		});
+	}
+	$rootScope.openlogDevice = function(deviceType,format){
+		console.log('inside open log device');
+		console.log('deviceType===' + deviceType);
+		console.log('format===' + format);
+		$rootScope.showdropdownlogDevices = true;
+		$rootScope.showexptab= true;
+		$uibModal.open({
+			animation: $scope.animationsEnabled,
+			templateUrl: 'selectiveLG.html',
+			controller: 'ModalController',
+			size: 'lg',
+			windowClass: 'app-modal-window-selectpro',
+			resolve: {
+				DeviceType: function() {
+					return deviceType
+				},
+				Format : function(){
+					return format
+				}
+			}
+		});
+	}
+	$rootScope.exportLDCsv = function(devicetype){
+		//alert('inside export LD function' + devicetype);
+		console.log('devicetype===' + devicetype);
+		$http.get(__env.apiUrl+'/'+devicetype+'/getall').then(function (response) {
+			console.log('success!!!')
+			console.log('response.data===' +JSON.stringify(response.data));
+			console.log('response.data[devicetype]===' + JSON.stringify(response.data[devicetype]));
+			$scope.items = response.data[devicetype];
+			console.log('$scope.items===' +JSON.stringify($scope.items));
+			var filename = devicetype + '.csv'
+			alasql('SELECT * INTO CSV("'+ filename+'", {headers:true,separator:","}) FROM ?',[$scope.items]);
+		})
+	}
+	$rootScope.exportLDXls = function(devicetype){
+		//alert('inside export LD function' + devicetype);
+		console.log('devicetype===' + devicetype);
+		$http.get(__env.apiUrl+'/'+devicetype+'/getall').then(function (response) {
+			console.log('success!!!')
+			console.log('response.data===' +JSON.stringify(response.data));
+			console.log('response.data[devicetype]===' + JSON.stringify(response.data[devicetype]));
+			$scope.items = response.data[devicetype];
+			console.log('$scope.items===' +JSON.stringify($scope.items));
+			var filename = devicetype + '.xlsx'
+			alasql('SELECT * INTO XLSX("'+ filename+'", {headers:true}) FROM ?',[$scope.items]);
+		})
+	}
+
+
+
+}]);

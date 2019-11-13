@@ -1,0 +1,120 @@
+<div class="container" style="background-color: #ececec;margin-top: 1%">
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1" style="border: 1px solid grey;background-color: #fff">
+            <div class="col-md-12">
+                <div class="col-md-6">
+                    <h4 class="fontHelvetica" style="margin-left: 1%;"><span style="color: #5392FF;font-size: 20px;border-right: 1px solid #000;">Components &nbsp;</span> &nbsp;<span style="color:#949394">Components > components</span></h4>
+                </div>
+                <div class="col-md-6">
+                    <button class="btn fontHelveticaNeue" ng-click ="otdtable()" style="border-radius:0px;background-color: #5392FF;color:#FFFFFF;float: right;
+                                margin-right: 1%;
+                        margin-top: 1%;">COMPONENT SELECTION</button>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="col-md-12" id="otd-table">
+                    <div class="odth-sec clearfix" style="padding: 0px 0px 10px;">
+                        <div class="odths-form" style="width: 90%;float: left;">
+                            <div class="form-inline">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control fontHelveticaNeue" style="font-size:14px;height:25px;border-right: 0px;box-shadow:none"placeholder="Service Filter" aria-describedby="basic-addon1">
+                                        <span class="input-group-addon" id="basic-addon1" style="border-radius: 0px;background-color: #fff;font-size:11px;"><i class="fa fa-search"></i></span>
+                                    </div>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control fontHelveticaNeue" style="font-size:14px;height:25px;box-shadow:none" placeholder="Add a new Component" aria-describedby="basic-addon1">
+                                    </div>
+                                    <a><i class="fa fa-plus" style="cursor:pointer; color: #949394;width:26px;height:26px;line-height:26px;border-radius:100%;text-align:center;border:1px solid #949394"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        <!--div class="pull-right" style="width: 10%;text-align:center" >
+                            <a href="javascript void(0);" data-toggle="tooltip" data-placement="top" title="Remove All"><i style="color: #949394 "class="fa fa-trash fa-lg" ></i></a>
+                        </div-->
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                            <tr class="fontHelvetica" style="background-color:#25467A;color:#ffffff;font-size:15px">
+                                <th></th>
+                                <td>Component Name</td>
+                                <td>Type</td>
+                                <td>Status</td>
+                                <td>Environment</td>
+                                <td>Migration Approach</td>
+                                <td></td>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="d in data" style="color:#666666 ">
+                                <td style="text-align:center"><i class="fa fa-info-circle fa-lg" ></i></td>
+                                <td>{{d.name}}</td>
+                                <td>{{d.clustertype}}</td>
+                                <td></td>
+                                <td></td>
+                                <td>{{d.migrationapproach}}</td>
+                                <td style="text-align:center"><i class="fa fa-plus-circle fa-lg rotate_45" ></i></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="otd-table-2"  id="otd-table-2" ng-show="otdtable2">
+                    <div class="clearfix">
+                        <div class="form-group pull-left" style="width:60%;">
+                            <div class="input-group">
+                                <input type="text" class="form-control" style="font-size:13px;height:25px;border-right: 0px"placeholder="Service Filter" aria-describedby="basic-addon1">
+                                <span class="input-group-addon" id="basic-addon1" style="border-radius: 0px;background-color: #fff;font-size:12px;"><i class="fa fa-search"></i></span>
+                            </div>
+                        </div>
+                        <!--div class="pull-right" style="width: 10%;text-align:right" >
+                            <a href="javascript void(0);" data-toggle="tooltip" data-placement="top" title="Tooltip on top"><i class="fa fa-trash" ></i></a>
+                        </div-->
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td></td>
+                                <td>Lorem</td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>Lorem</td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+    <!-- Add your site or application content here -->
+
+
+
+    <div class="footer">
+      <div class="container">
+        <!-- <p><span class="glyphicon glyphicon-heart"></span> Project</p> -->
+      </div>
+    </div>
+
+
+
+
+
+<script src="controllers/LandingController2.js"></script>
+<script>
+$(function () {
+   $('[data-toggle="tooltip"]').tooltip();
+})
+ </script>

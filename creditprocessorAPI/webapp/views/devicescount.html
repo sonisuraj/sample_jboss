@@ -1,0 +1,98 @@
+<div class="col-md-offset-1" align="center">
+    <div class="row" style="background-color: #fff;" id="top_div">
+        <div ng-if="$index < 14" class="col-md-10" style="height:250px;width:253px;margin-top:10px;background-color: #FBFCFC; margin-right: 50px; border: 1px solid #c7c7c7; margin-bottom:30px;" ng-repeat="obj in relatedVersions">
+
+            <div style="padding-left:10px;height:40px;width:250px;padding-top:12px;font:Helvetica neue regular;font-size: 14px;color:#fff;background-color: #313B3B;">
+                <div align="center" class="col-md-6">
+                    <div class="col-md-4" ng-if="obj.scope != -1" style="text-align: left; max-width: 35px; height:21px;color:white;">
+                        <strong>{{obj.scope}}</strong>
+                    </div>
+
+                    <div class="col-md-6" ng-if="obj.scope != -1" style="white-space: nowrap;">In-Scope</div>
+                </div>
+                <div  class="col-md-5">
+                    <div class="col-md-4" style="text-align: left; height:21px;color:white; ">
+                        <strong>{{obj.count}}</strong>
+                    </div>
+                    <div class="col-md-6"  style="white-space: nowrap;">Summary</div>
+                </div>
+            </div>
+
+            <div>
+                <div align="center" style="height:120px;width:250px; background-image: url( {{imageArray[$index].imagename}}); background-size: 100% 100%;  ">
+                </div>
+
+                <div style="height:20px;width:200px; color: #734098;font-size:22px; padding-top: 10px;" align="center">
+                    {{obj.displayname ? obj.displayname : obj.id }}</div>
+
+            </div>
+
+            <div align="center">
+                <div ng-if=" obj.count > 0 " align="center" class="col-md-4 " style="border-right: 1px solid #e5e5e5; height: 30px;margin-top: 38px;padding:3px; color: #949394;">
+
+                    <p class="ibm-ind-link"  style="padding-left: 8px;"><a class="ibm-list-link" ng-click="showListView(obj.id,$index)" href="javascript:void(0);" data-widget="tooltip" title="List View">List</a></p>
+
+
+                </div>
+                <div ng-if=" obj.count > 0 " align="center" class="col-md-4" style="border-right: 1px solid #e5e5e5; height: 30px;margin-top: 38px;padding:3px;">
+
+                    <p class="ibm-ind-link"  style="padding-left: 8px;"><a class="ibm-view-link " ng-click="showFirstLogicaldevice('/logicalDevices',obj.id,$index)" href="javascript:void(0);" data-widget="tooltip" title="Detail View">View</a></p>
+
+
+                </div>
+
+                <div ng-if=" obj.count < 1 " align="center" class="col-md-4 " style="border-right: 1px solid #e5e5e5; height: 30px;margin-top: 38px;padding:3px; font: Helvetica neue regular; font-size: 14px;color: #949394;">
+
+                    <p class="ibm-ind-link"  style="padding-left: 8px;"><a onclick="javascrip:void();" class="ibm-list-link" data-widget="tooltip" title="No data on this List View">List</a></p>
+
+
+                </div>
+
+                <div ng-if=" obj.count < 1 " align="center" class="col-md-4" style="border-right: 1px solid #e5e5e5; height: 30px;margin-top: 38px;padding:3px;">
+
+                     <p class="ibm-ind-link"  style="padding-left: 8px;"><a onclick="javascrip:void();" class="ibm-view-link" data-widget="tooltip" title="No data on this Detail View">View</a></p>
+
+
+                </div>
+
+                <div align="center" class="col-md-4" style="height:30px;margin-top:38px;padding:3px;" ng-if="globals.currentUser.role !=='' && globals.currentUser.role == 'SCOPE+ Admin'">
+                  <p class="ibm-ind-link" style="padding-left: 8px;" ng-if="obj.id !=='Documents' && obj.id !='ComponenttoComponents'"><a class="ibm-add-link" href="javascript:void(0);" ng-click="navigateAddLg(obj.id)" data-widget="tooltip" title="Add {{obj.id}} ">Add</a></p>
+                  <!--<p class="ibm-ind-link" style="padding-left: 8px;" ng-if="obj.id =='Documents' || obj.id =='ComponenttoComponents'"><a class="ibm-add-link" data-widget="tooltip" title="Add {{obj.id}} " style="color:#cccccc" disabled="disabled">Add</a></p>-->
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+    </div>
+    <style>
+    .col-md-10_active{
+     border-style: solid;
+     border-color: lightgray;
+}
+    </style>
+    <script>
+        $('#click_up').click(function () {
+
+            $("html, body").animate({
+                scrollTop: 0
+            }, 600);
+            return false;
+        });
+    </script>
+    <script>
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();
+});
+
+
+    $('.my-dropdown').dropdown();
+    $('.my-tooltip').tooltip();
+</script>
+
+<link href="css/Common.css" rel="stylesheet" /><!--
+<link href="css/style.css" rel="stylesheet" />-->
+    <!--  <div class="col-md-12"><a ng-click="moveToAnchor('top_div');">Go to top</a></div>-->
+    </div>

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+    <base href=".">
+    <title>creditprocessor</title>
+    <!-- Page meta data -->
+    <meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <!-- Bootstrap responsive css -->
+    <!-- Application Css -->
+    <link href="css/loginStyle.css" rel="stylesheet" />
+    <!--<link href="css/Common.css" rel="stylesheet" />-->
+    <!--<link href="css/style.css" rel="stylesheet" />-->
+    <link rel="stylesheet" type="text/css" href="css/SourceView.css">
+    <link href="css/bootstrap/bootstrap.css" rel="stylesheet" />
+    <!--<link href="css/bootstrap/bootstrap_320.css" rel="stylesheet" />
+    <link href="css/bootstrap/bootstrap_480.css" rel="stylesheet" />
+    <link href="css/bootstrap/bootstrap_768.css" rel="stylesheet" />-->
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link href="css/www.css" rel="stylesheet">
+    <link rel="stylesheet"href="css/angular-datepicker.css">
+    <!-- Basic js files -->
+    <script src="scripts/js/www.js"></script>
+    <!--script type ="text/javascript" charset="utf-8" src="scripts/js/jquery.min.js"></script-->
+
+	<script type="text/javascript" src="scripts/js/jquery-ui-min.js"></script>
+    <script type ="text/javascript" charset="utf-8" src="scripts/js/jquery.js"></script>
+    <script type ="text/javascript" charset="utf-8" src="scripts/js/bootstrap-typeahead.js"></script>
+    <!--script type ="text/javascript" charset="utf-8" src="scripts/js/colResizable-1.5.min.js"></script-->
+    <script type ="text/javascript" charset="utf-8" src="scripts/js/angular.min.js"></script>
+    <script type ="text/javascript" charset="utf-8" src="scripts/js/dirPagination.js"></script>
+    <script type ="text/javascript" charset="utf-8" src="scripts/js/angular-route.min.js"></script>
+	<script src="scripts/js/angular-ui-min.js"></script>
+    <script src="scripts/js/Filesaver.js"></script>
+    <script src="scripts/js/jquery.wordexport.js"></script>
+    <script src="scripts/js/angular-cookies.min.js"></script>
+    <script src="scripts/js/lodash.min.js"></script>
+    <script src="scripts/js/underscore.min.js"></script>
+    <script src="scripts/typehead.js"></script>
+    <script src="scripts/js/ui-bootstrap-tpls-1.2.5.js"></script>
+    <script src="scripts/js/alasql.min.js"></script>
+    <script src="scripts/js/xlsx.core.min.js"></script>
+    <script src="scripts/js/ng-file-upload-shim.js"></script>
+    <script src="scripts/js/ng-file-upload.js"></script>
+    <script src="scripts/js/angular-datepicker.js"></script>
+    <script src="scripts/js/moment.min.js"></script>
+    <script src="scripts/js/ngIpAddress.min.js"></script>
+    <!--script src="//code.angularjs.org/1.5.6/angular-cookies.js"></script-->
+    <!--script type ="text/javascript" charset="utf-8" src="scripts/js/angular-cookies.js"></script-->
+</head>
+<body align="center" ng-app="landingApp2" style="background-color:#f7f7f7">
+<script src="scripts/js/env.js"></script>
+
+<script src="controllers/LandingController2.js"></script>
+<script src="controllers/AddLogicalDeviceController.js"></script>
+<script src="controllers/app.config.js"></script>
+<script src="controllers/app.directives.js"></script>
+<script src="controllers/CustomAttributeController.js"></script>
+<script src="controllers/HomeControler.js"></script>
+<script src="controllers/LogoutController.js"></script>
+<script src="controllers/LoginController.js"></script>
+<script src="controllers/registerController.js"></script>
+<script src="controllers/changePasswordController.js"></script>
+<script src="controllers/deleteUserController.js"></script>
+<script src="controllers/updateUserController.js"></script>
+<script src="controllers/forcePasswordController.js"></script>
+<script src="controllers/forgotPasswordController.js"></script>
+<script src="controllers/generateKeyController.js"></script>
+<script src="controllers/showgeneratedKeysController.js"></script>
+<script src="controllers/LogicalDeviceListController.js"></script>
+<script src="controllers/LogicalDeviceController.js"></script>
+<script src="controllers/utilities.js"></script>
+<script src="controllers/ServiceController.js"></script>
+<script src="controllers/PhysicalDeviceController.js"></script>
+<script src="controllers/OtherDeviceController.js"></script>
+<script src="controllers/transactionManagerController.js"></script>
+<script src="controllers/SortRecordsController.js"></script>
+<!--Start::Defect21651-->
+<script src="controllers/ImportDetailsController.js"></script>
+<script src="controllers/ImportJobListController.js"></script>
+<script src="controllers/ImportLogController.js"></script>
+<script src="controllers/modalPopUpController.js"></script>
+<script src="controllers/StakeHolderDevicesController.js"></script>
+<script src="controllers/ClusterDevicesController.js"></script>
+<script src="controllers/DocumentDevicesController.js"></script>
+<script src="controllers/NotesController.js"></script>
+<script src="controllers/ComponentDevicesController.js"></script>
+<script src="controllers/ServicesDevicesController.js"></script>
+<script src="controllers/deviceDetailListController.js"></script>
+<script src="controllers/AddOtherDeviceController.js"></script>
+<script src="controllers/ConfigureFields.controller.js"></script>
+<script src="controllers/MarkForDeletionController.js"></script>
+<script src="controllers/MarkForReviewController.js"></script>
+<script src="controllers/AutoLoadController.js"></script>
+<script src="controllers/framworkCtrl.js"></script>
+<script src="controllers/GraphController.js"></script>
+<script src="controllers/GraphController3.js"></script>
+<script src="controllers/GraphServiceController.js"></script>
+<script src="controllers/VisualEachServiceController.js"></script>
+
+<!--End::Defect21651-->
+<ng-include ng-if="globals.currentUser.username" src="'views/header.html'"></ng-include>
+<div ng-view class="container" style="background-color: #fff;" ng-controller="landingController2">
+    <ng-include  ng-if="statusCode >=200 && statusCode < 300" src="'views/devicescount.html'"></ng-include>
+    <ng-include ng-if="statusCode <200 || statusCode > 300 " src="'views/error.html'"></ng-include>
+</div>
+<div class="container" style="background-color: #fff;" ng-controller="landingController2">
+Release No : {{releaseData.RELEASE_NO}}
+Build No : {{releaseData.RELEASE_BUILD_NO}}
+</div>
+</body>
+<script>
+    $(document).ready(function(){
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+</script>
+</html>

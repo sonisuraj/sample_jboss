@@ -1,0 +1,29 @@
+applist = ['creditprocessorAPI', 'creditprocessorAPIAPI']
+
+pipeline{
+    agent
+    {
+        node {
+                label 'master'
+                customWorkspace "${env.JobPath}"
+              }
+    }
+    stages	{
+        stage('Start') {
+            steps {
+                sh 'echo start pipeline'
+            }
+        }
+        stage ('components') {
+            steps	{
+				script{
+					for (int i = 0; i < applist.size(); i++) {
+						sh "echo Test Var ${applist[i]}"
+						sh 'echo i'
+						build job: "${applist[i]}", propagate: true, wait: true
+					}
+			      }
+            }
+        }
+    }
+}

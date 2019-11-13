@@ -1,0 +1,61 @@
+<div class="modal-body" ng-show="ngShowModalSearchProfileDoc" style="padding: 0 !important;">
+    <fieldset>
+        <div class="container-fluid">
+            <div class="row header" style="background-color: #25467a;height: 60px;">
+                <p class="modal-title text-center" style="color: #fff;font-size: 20px;">
+                    <span style="font-size: 25px"> Warning</span>
+                </p>
+                <i class="fa fa-times" aria-hidden="true" style="font-size: 20px; margin-top: -5%;margin-right: 3%;color: #fff !important;float: right;" ng-click="dismissPopup()"></i>
+            </div>
+            <div class="row" style="margin-top: 3%;margin-left: 3%">
+                Create a Single Profile Document for Port or Create {{Datalength}} Profile Documents for each one of the found Set?
+                <div class="col-md-12" style="margin-bottom: 2%;margin-top: 2%;">
+                    <button class="exportbtn" ng-click="ExportMode('single')">Single</button>
+                    <button class="exportbtn" ng-click="ExportMode('All')">All</button>
+                    <button style="font-size:16px; width: 100px;color: #FFF;background-color: #949394" ng-click="dismissPopup()">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </fieldset>
+</div>
+<style>
+    .app-modal-window-sam-Plan  .modal-dialog{
+        width:300px;
+    }
+
+    .modal-content{
+        width: 60%; !important;
+        border-radius: 0px !important;
+    }
+
+    /*.table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
+
+      border-top: none !important;
+
+    }
+    .table{
+      margin-bottom: 0px !important;
+    }*/
+
+    .table{
+        margin-bottom: 0px !important;
+        border-top: none !important;
+    }
+    .exportbtn{
+        font-size:16px;
+        /*margin-left: 30% ;*/
+        width: 100px;
+        color: #FFF;
+        background-color: #5392ff;
+    }
+
+    .exportbtn[disabled] {
+        background-color: 	#ADD8E6
+    }
+
+
+
+   /* .modal-dialog{
+        top: -12% !important;
+    }*/
+</style>

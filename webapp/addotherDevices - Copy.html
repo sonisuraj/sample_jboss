@@ -1,0 +1,237 @@
+
+
+<img ng-if="table_loader" style="display: block;
+margin: 0 auto;
+height: 33px;" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="/>
+<div class="otd-table">
+
+<div ng-init="clear()" class="container" style="background-color: #ececec;font-family:Helvetica Neue, Helvetica, Arial, sans-serif">
+	 <div class="row">
+		<div class="col-md-10 col-md-offset-1" style="margin-left: 8%;background-color: #ffffff;width: 84.333333% !important;border-bottom: 1px solid #ccc">
+			<div class="col-xs-12" style="height: 60px;background-color: #ececec;font-size: 16px">
+				<p style="margin: 21px 0px 0px;color:#949394;font-size: 20px"><span style="color: #5392ff;"><label>{{deviceIdName}}</label></span>
+				</p>
+			</div>
+			<hr style="border-top: 1px solid #ccc !important;margin-top: 0px !important;
+    margin-bottom: 0px !important;margin-left: -11%;width: 122%;">
+			<div class="col-xs-12" style="height: 48px;background-color: #ececec;font-size: 16px">
+				<p style="margin-top: 1%;">
+					<span style="color:#949394"><label>Home</label> > </span>  <span style="color: #5392ff;"><label>Add {{deviceIdName}}</label></span>
+				</p>
+			</div>
+
+
+			<div class="col-xs-12" style="background-color: #25467a; color: #ffffff; padding: 3px 0px 10px 26px;text-align: left;font-size: 16px;border: 1px solid #ccc">
+				<p style="margin: 4px 0px 0px 17px;"> Add {{deviceIdName}}</p>
+			</div>
+			<div class="col-xs-12" style="border: 1px solid #ccc;border-top: 0px !important;border-bottom: 0px !important;">
+				<div class="col-xs-4" style="margin-top: 1%">
+					<form name="myForm1" role ="form" novalidate style="margin-left: 4%">
+						<div class="control-group" ng-class="{true: 'error'}[submitted && form.myName.$invalid]" ng-if ="d.group =='mandatory'" ng-repeat="d in devicedata">
+
+							<div class="form-group"  ng-if=d.fieldtype=='text'>
+								<label ng-if ="d.required=='required'" class="labelcolor mandat control-label"> {{d.fieldname}}</label>
+								<label ng-if ="d.required !='required'" class="labelcolor control-label"> {{d.fieldname}}</label>
+
+								<div class="controls" >
+									<input ng-if ="d.required=='required'" name={{d.fieldname}} id={{d.fieldname}} class = "form-control setwidth" ng-model=device_add.otherDevice[d.key] maxlength={{d.maxlength}} minlength={{d.minlength}}  required type="text" >
+									<input ng-if ="d.required !='required'" name="myName" class = "form-control setwidth" ng-model=device_add.otherDevice[d.key] maxlength={{d.maxlength}} minlength={{d.minlength}}  type="text" >
+									<span ng-if ="d.required =='required'" class="mandat-text" ng-show="myForm1.{{d.fieldname}}.$error.maxlength">{{d.fieldname}}  must be {{d.maxlength}} character maximum</span>
+				 					<span ng-if ="d.required =='required'" class="mandat-text" ng-show="myForm1.{{d.fieldname}}.$error.minlength">{{d.fieldname}}  must be {{d.minlength}} character minimum</span>
+									<span ng-if ="d.required =='required'" class="mandat-text" ng-show="myForm1.{{d.fieldname}}.$error.required && !userForm.username.$pristine">{{d.fieldname}}  is required</span>
+
+
+								</div>
+
+						</div>
+						<div class="form-group"  ng-if=d.fieldtype=='integer'>
+							<label class="labelcolor control-label"> {{d.fieldname}}</label>
+							<div class="controls" >
+								<input name="myName" class = "form-control setwidth" ng-model=device_add.otherDevice[d.key] maxlength={{d.maxlength}} minlength={{d.minlength}} type="number">
+								<!--<span ng-show="showErrorAlert" style="color: #5392ff">This Name exists,please use unique name</span>-->
+							</div>
+
+					</div>
+					<div class="form-group"  ng-if=d.fieldtype=='date'>
+
+						<label class="labelcolor"> {{d.fieldname}}</label>
+						<div class="input-group" >
+						<datepicker date-format="yyyy-MM-dd">
+							<input type="text" class="form-control setwidth"  ng-model=device_add.otherDevice[d.key] placeholder="yyyy-MM-dd" style="width: 216% !important"/>
+						</datepicker>
+							</div>
+					</div>
+
+						<div class="form-group" ng-if=d.fieldtype=='select'>
+							<label class="labelcolor">{{d.fieldname}}</label>
+							<div class="input-group" >
+								<input type="text" ng-model="device_add.otherDevice[d.key]" style="border-right:0px;width: 100% !important;" uib-typeahead="object.value for object in getDropDowns(d.key) | filter: {value:$viewValue} | limitTo:8"  uib-typeahead-no-results="noResults" class="form-control setwidth typeahead" typeahead-show-hint="true" typeahead-min-length="0">
+									<span class="input-group-addon" id="basic-addon1" style="border-radius: 0px;background-color: #fff;font-size:11px;cursor:pointer ;width: 9.2% !important;"><i class="fa fa-chevron-down" style="cursor:pointer"></i></span>
+							</div>
+						</div>
+
+						</div>
+					</form>
+				</div>
+				<div class="col-xs-3 vr" ng-show ="vertical_show"></div>
+				<div class="col-xs-4" style="margin-left: 3%;margin-top: 1%">
+					<form name="myForm2" role="form" novalidate style="margin-left: 2.5%">
+
+						<div class="control-group" ng-class="{true: 'error'}[submitted && form.myName.$invalid]" ng-if ="d.group =='relevant' || d.group ==''" ng-repeat="d in devicedata">
+
+							<div class="form-group"  ng-if=d.fieldtype=='text'>
+								<label ng-if ="d.required=='required'" class="labelcolor mandat control-label"> {{d.fieldname}}</label>
+								<label ng-if ="d.required !='required'" class="labelcolor control-label"> {{d.fieldname}}</label>
+								<div class="controls" >
+									<input ng-if ="d.required=='required'" name={{d.fieldname}} id={{d.fieldname}} class = "form-control setwidth" ng-model=device_add.otherDevice[d.key] maxlength={{d.maxlength}} minlength={{d.minlength}}  required type="text" >
+									<input ng-if ="d.required !='required'" name="myName" class = "form-control setwidth" ng-model=device_add.otherDevice[d.key] maxlength={{d.maxlength}} minlength={{d.minlength}}  type="text" >
+									<span ng-if ="d.required =='required'" class="mandat-text" ng-show="myForm1.{{d.fieldname}}.$error.maxlength">{{d.fieldname}}  must be {{d.maxlength}} character maximum</span>
+				 					<span ng-if ="d.required =='required'" class="mandat-text" ng-show="myForm1.{{d.fieldname}}.$error.minlength">{{d.fieldname}}  must be {{d.minlength}} character minimum</span>
+									<span ng-if ="d.required =='required'" class="mandat-text" ng-show="myForm1.{{d.fieldname}}.$error.required && !userForm.username.$pristine">{{d.fieldname}}  is required</span>
+
+
+								</div>
+
+						</div>
+						<div class="form-group"  ng-if=d.fieldtype=='integer'>
+							<label class="labelcolor control-label"> {{d.fieldname}}</label>
+							<div class="controls" >
+								<input name="myName" class = "form-control setwidth" ng-model=device_add.otherDevice[d.key] maxlength={{d.maxlength}} minlength={{d.minlength}} type="number">
+								<!--<span ng-show="showErrorAlert" style="color: #5392ff">This Name exists,please use unique name</span>-->
+							</div>
+
+					</div>
+						<div class="form-group"  ng-if=d.fieldtype=='date'>
+							<label class="labelcolor  control-label"> {{d.fieldname}}</label>
+							<div class="controls" >
+								<input name="myName" class = "form-control setwidth" ng-model=device_add.otherDevice[d.key] maxlength="75" minlength="1" type="date">
+								<!--<span ng-show="showErrorAlert" style="color: #5392ff">This Name exists,please use unique name</span>-->
+							</div>
+
+					</div>
+					<div class="form-group"  ng-if=d.fieldtype=='date'>
+						<label class="labelcolor mandat control-label"> {{d.fieldname}}</label>
+						<div class="input-group" >
+						<datepicker date-format="yyyy-MM-dd">
+							<input type="text" class = "form-control setwidth" ng-model=device_add.otherDevice[d.key] placeholder="yyyy-MM-dd" />
+						</datepicker>
+							</div>
+					</div>
+
+
+
+
+						<div class="form-group" ng-if=d.fieldtype=='select'>
+							<label class="labelcolor">{{d.fieldname}}</label>
+							<div class="input-group" >
+								<input type="text" ng-model="device_add.otherDevice[d.key]" style="border-right:0px;width: 100% !important;" uib-typeahead="object.value for object in getDropDowns(d.key) | filter: {value:$viewValue} | limitTo:8"  class="form-control setwidth" typeahead-show-hint="true" typeahead-min-length="0">
+									<span class="input-group-addon" id="basic-addon1" style="border-radius: 0px;background-color: #fff;font-size:11px;cursor:pointer ;width: 9.2% !important;"><i class="fa fa-chevron-down" style="cursor:pointer"></i></span>
+							</div>
+						</div>
+						</div>
+					</form>
+				</div>
+				<div class="col-xs-1"></div>
+
+			</div>
+			<div class="col-xs-12" style="border: 1px solid #ccc;border-top: 0px !important;border-bottom: 0px !important;" ng-if="fileSystemsLogicalDevice">
+				<div class="col-xs-4" style="margin-top: 1%">
+					<form name="myForm17" role ="form" novalidate style="margin-left: 4%">
+						<div class="control-group" ng-class="{true: 'error'}[submitted && form.myName.$invalid]">
+							<div class="form-group">
+							  <label class="labelcolor">Logical</label>
+							  <input  required type="text" ng-model="device_add.otherDevice[d.key]" typeahead-editable="false" uib-typeahead="object.name for object in logicalDevices | filter:$viewValue | limitTo:8" class="form-control setwidth " typeahead-min-length="0" typeahead-no-results="noResults">
+
+							   <span ng-if="noResults" uib-dropdown uib-dropdown-toggle auto-close="disabled" is-open="true">
+							      <ul class="uib-dropdown-menu" >
+							        <li><span style="color:red">No results. Please Select correct Type</span></li>
+							      </ul>
+							    </span>
+
+							  </div>
+
+						</div>
+						</form>
+						</div>
+			</div>
+			<div class="col-xs-12" style="border-right: 1px solid #ccc;border-left: 1px solid #ccc;"><p style="font-size: 14px;
+    margin-right: 2%;
+    float: right; height: 33px;
+    color: #5392ff;"> *Mandatory Fields</p></div>
+		</div>
+		 <div class="col-xs-12" style=" margin-top: 1%; margin-bottom: 7%;">
+
+			 <input type="submit"  class="submitbtn" id="submit"  ng-disabled="!myForm1.$valid" ng-click="submitted=true;AddOtherDevices();" value="ADD {{deviceIdName}}"/>
+			 <input type="submit" class="submitbtn " ng-click="cancel()"  value="CANCEL"/>
+
+		 </div>
+	 </div>
+
+
+</div>
+<style>
+	.vr {
+		border: 1px solid #cdd0d4;
+		width: 1px;
+		margin-left: 1%;
+		/* border-right: 1px dashed #cdd0d4; */
+		/* background-color: #000; */
+		position: absolute;
+		top: 25px;
+		bottom: 14px;
+		left: 33%;
+	}
+
+	.submitbtn{
+		color: #FFF;
+		background-color: #5392ff;
+		border: none;
+		margin-left: 8.1%;
+		/* margin-top: 4%; */
+		font-size: 13px;
+		width: 10%;
+		height: 35px;
+	}
+	.submitbtn[disabled] {
+		background-color: 	#ADD8E6
+	}
+	.setwidth{
+		width: 98% !important;
+		border-radius: 1px !important;
+		height: 25px !important;
+		font-size: 13px;
+	}
+
+	.labelcolor{
+		color: #949394;
+		font-size: 14px;
+	}
+	.mandat:after{
+		content: "*";
+		color: #5392ff;
+		font-size: 14px;
+	}
+	.mandat-text{
+		color: #5392ff;
+	}
+	select.input-lg1 {
+		padding: 0 0 !important;
+		-webkit-appearance: none;
+		-moz-appearance: none;
+		-o-appearance: none;
+		/* no standardized syntax available, no ie-friendly solution available */
+	}
+	select + i.fa {
+		color: #949394;
+		float: right;
+		margin-top: -22px;
+		margin-right: 34px;
+		pointer-events: none;
+		background-color: #fff;
+		padding-right: 5px;
+	}
+</style>
+
+<link href="css/Common.css" rel="stylesheet" />
+<!--
+<link href="css/style.css" rel="stylesheet" />-->

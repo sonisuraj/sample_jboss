@@ -1,0 +1,86 @@
+<div class="container" align="center" style="width: 1417px;">
+   <div class="row" style="background-color: #f7f7f7;" id="top_div">
+       <div class="col-md-10 col-md-offset-1">
+     <div class="col-md-12" align="left" style="margin-bottom: 20px;">
+              <a  style="color:#5392ff; font-size:31px;font: Helvetica neue regular;">Source View</a>
+        </div>
+          <div class="col-md-6" style="height:227px;width:220px;margin-top:10px; margin-right: 60px; margin-bottom:60px;box-shadow: 17px 5px 5px 3px #d7d7d7;" ng-repeat="obj in relatedVersions">
+               <div style="height:40px;width:220px;padding-top:12px;font:Helvetica neue regular;font-size: 14px;color:#949394;background-color: #ffffff;">
+                    <div align="center" class="col-md-6" style="padding-left:10px;">
+                    <div class="col-md-1" style="background-image:url(img/folder.png);padding:1px;font-size: 14px;width:20px;height:21px;color:white;">
+                      {{obj.count}}
+                    </div><div class="col-md-1" style="padding:4px 0px 0px 5px;white-space: nowrap;">In-Focus</div>
+                    </div>
+                    <div  class="col-md-6" style="padding-right:7px;">
+                        <div class="col-md-1" style="background-image:url(img/file.png);padding:1px;width:20px;height:21px;color:white">
+                    {{obj.count}}
+                  </div>
+                    <div class="col-md-1" style="padding:4px 0px 0px 5px;"> Summary</div>
+                    </div>
+               </div>
+
+               <div>
+               <div align="center" style="height:160px;width:220px; background-image: url( {{imageArray[$index].imagename}}); ">
+               </div>
+
+                  <div style="padding-top:4px;height:40px;width:220px; margin-top: -77px;background: transparent;background-color:rgba(192,192,192,0.6); color: white;font-size:20px;" align="center">
+                  {{obj.id}}</div>
+
+               </div>
+
+               <div align="center" style="height:30px;width:220px;">
+                  <div ng-if=" obj.count > 0 " align="left" class="col-md-4 " style="border-right: 1px solid #e5e5e5; height: 30px;margin-top: 38px;padding:3px; color: #949394;background-color: #ffffff;">
+
+
+                  <a href="#logicalDeviceListView" style="font: Helvetica neue regular; font-size: 14px;color: #949394;">
+                  <div class="col-md-1" style="padding-left:8px !important;">
+                      <img alt="" src="img/listicon.png">
+                  </div>
+                  <div class="col-md-1" style="padding-left:21px !important;padding-top:3px !important;">List</div>
+                  </a>
+
+                  </div>
+                  <div ng-if=" obj.count > 0 " align="center" class="col-md-4" style="border-right: 1px solid #e5e5e5; height: 30px;margin-top: 38px;padding:3px;background-color: #ffffff;">
+                     <a href="#logicalDevices" style="font: Helvetica neue regular; font-size: 14px;color: #949394;">
+
+                  <div class="col-md-1" style="padding-left:8px !important;">
+                     <img alt="" src="img/lensView.png"/>
+                  </div>
+                  <div class="col-md-1" style="padding-left:21px !important;padding-top:3px !important;">View</div>
+                </a>
+                  </div >
+
+                  <div ng-if=" obj.count < 1 " align="center" class="col-md-4 " style="border-right: 1px solid #e5e5e5; height: 30px;margin-top: 38px;padding:3px; font: Helvetica neue regular; font-size: 14px;color: #949394;background-color: #ffffff;">
+                   <a onclick="javascrip:void();" style="font: Helvetica neue regular; font-size: 14px; color: #949394;">
+                  <div class="col-md-1" style="padding-left:8px !important;">
+                     <img alt="" src="img/listicon.png">
+                  </div>
+                  <div class="col-md-1" style="padding-left:21px !important;padding-top:3px !important;">List</div>
+                </a>
+                  </div>
+                  <div ng-if=" obj.count < 1 " align="center" class="col-md-4" style="border-right: 1px solid #e5e5e5; height: 30px;margin-top: 38px;padding:3px; background-color: #ffffff;">
+                     <a onclick="javascrip:void();" style="font: Helvetica neue regular; font-size: 14px; color: #949394;">
+
+
+                  <div class="col-md-1" style="padding-left:8px !important;">
+                     <img alt="" src="img/lensView.png">
+                  </div>
+                  <div class="col-md-1" style="padding-left:21px !important;padding-top:3px !important;">View</div>
+                </a>
+                  </div>
+
+                <div align="center" class="col-md-4" style="height:31px;margin-top:37px;padding:3px;background-color: #ffffff;">
+                <a href="#addlogicalDevices" style="font: Helvetica neue regular; font-size: 14px; color: #949394;">
+                <div class="col-md-1" style="padding-left:8px !important;">
+                    <img alt="" src="img/addLink.png"/>
+                </div>
+                <div class="col-md-1" style="padding-left:21px !important;padding-top:3px !important;">Add</div>
+              </a>
+
+              </div>
+
+          </div>
+</div>
+</div>
+<!--  <div class="col-md-12"><a ng-click="moveToAnchor('top_div');">Go to top</a></div>-->
+</div>

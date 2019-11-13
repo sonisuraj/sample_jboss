@@ -1,0 +1,1687 @@
+<div class="main-header-outer">
+    <div id="sticky-anchor"></div>
+    <div id="sticky" class="header-outer clearfix" style="padding: 1.5% 8%;">
+        <div class="ho-left pull-left">
+            <label style="color: #5392ff;font-size: 20px">Logical Device Name:</label> &nbsp;
+            <label style="color: #949394;font-size: 20px">{{logicalDeviceData[currentIndex].name}}</label>
+            <label class="ibm-icononly"><a href="#" class="ibm-maximize-link" style="margin-bottom: 0;" id="dynoverlay"></a></label>
+        </div>
+<script>
+    (function($, IBM){
+        $("#dynoverlay").on("click", function (evt) {
+            evt.preventDefault();
+             
+            // Create the overlay object,
+            // then init it,
+            // then show it.
+            var myOverlay = IBM.common.widget.overlay.createOverlay({
+                contentHtml: '<p>This is the content of a dynamically generated overlay. This is the content of a dynamically generated overlay. This is the content of a dynamically generated overlay. This is the content of a dynamically generated overlay. This is the content of a dynamically generated overlay. </p>',
+                classes: 'ibm-common-overlay ibm-overlay-alt-two'
+            });
+             
+            myOverlay.init();
+            myOverlay.show();
+        });
+    })(jQuery, IBMCore);
+</script>
+        
+        <style>
+            .ibm-close-link{
+                padding: 8px 26px 20px 10px !important;
+            }  
+            
+            
+            .input[disabled], input[disabled]:hover, input[class*='ibm-btn-'][disabled], input[class*='ibm-btn-'][disabled]:hover, button[disabled], button[disabled]:hover, button[class*='ibm-btn-'][disabled], button[class*='ibm-btn-'][disabled]:hover
+            
+        </style>
+      
+
+        <div class="ho-right pull-right" style="width: 400px; margin-bottom: 0px;">
+            <div class="search-filter-outer">
+                <span class="newserach">
+                    <span class="dropdown" style=" padding: 0 20px 0 0 !important;">
+                        
+                         <input placeholder="Search by Name" name="srch-term" id="srch-term" style="color: #949394; margin-left: 8px; padding-bottom: 4px;  width: 130px;" data-ns-focus-id="searchtext" type="text" data-toggle="dropdown">
+                        <style>
+                            ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+                                font-size: 12px;
+                                line-height: 28px;
+                                font-weight: 600;
+                                color: #403C40 !important;
+                                padding-left: 4px;
+                            
+                                
+                            }
+                            ::-moz-placeholder { /* Firefox 19+ */
+                              font-size: 12px;
+                                line-height: 28px;
+                                font-weight: 600;
+                                color: #403C40 !important;
+                                padding-left: 4px;
+                            }
+                        </style>
+                                           
+                        <ul class="dropdown-menu border-outer parent-dp" style="padding: 20px 20px ;">
+                            <div class="search-input-outer" style="padding: 10px 0px 0px;">
+                                <h5 style="color:#949394">Search By</h5>
+                                <div class="input-group">
+                                    <input  id="searchbyname" type="text"  ng-model="q.name" id="searchtext" class="form-control" placeholder="Search for device name ..." style="border-right:0px;color: #949394" ng-change="searchByName(q.name)">
+        					<span class="input-group-btn">
+        						<button class="btn btn-default" type="button"  style="border-left:0px;"><i class="fa fa-search" aria-hidden="true"></i></button>
+        					</span>
+                                </div>
+                            </div>
+                        </ul>
+                    </span>
+                </span>
+
+                <button class="btn btn-default " data-ns-focus-id="searchtext" type="button"  style="border-radius:0px !important;font-size: 12px;line-height: 28px;font-weight: 600;color: #777;padding: 0px 8px;" data-toggle="collapse" data-target="#demo12">Advanced Search
+                    <span class="" style="font-size: 18px;position: relative;top: 1px;">
+                      <i class="fa fa-angle-down"></i>
+                    </span>
+                </button>
+            </div>
+            <div class="list-outer">
+                <a href="javascript:void(0);" ng-click="navigateViewList()" style="float: right" data-toggle="tooltip" data-placement="top" title="List View">
+                    <span style="margin-left: 5px;position: relative;top: 4px;background-color:#e1ebf7 ; ">List View</span>
+                </a>
+                <div class="dropdown ldiv clearfix" style="float: right">
+                    <img src="img/grid.png"  style="margin-left: -7%" class="dropdown" data-toggle="dropdown" />
+                    <ul class="dropdown-menu">
+                        <li class="dropdown-submenu">
+                            <a class="test" href="#" ><span class="glyphicon glyphicon-plus" aria-hidden="true" style="margin-right:10px;"></span>Components</a>
+                            <ul class="dropdown-menu dp-submenu-position" style="font-size: 12px; margin-left: 30px; color: #939494 !important;">
+                                <li><a ng-click="getAssociatedDeviceDetail('components')">Components</a></li>
+                                <li><a href="#">Components to Services</a></li>
+                                <li><a href="#">Components to Components</a></li>
+                            </ul>
+                        </li>
+                        <li style="margin-left: 25px;"><a ng-click="getAssociatedDeviceDetail('services')">Services</a><br/></li>
+                        <li style="margin-left: 25px;"><a ng-click="getAssociatedDeviceDetail('document')">Documents</a><br/></li>
+                        <li style="margin-left: 25px;"><a ng-click="getAssociatedDeviceDetail('notes')">Notes</a><br/></li>
+                        <li class="dropdown-submenu">
+                            <a class="test" href="#" ><span class="glyphicon glyphicon-plus" aria-hidden="true" style="margin-right:10px;"></span>Clusters</a>
+                            <ul class="dropdown-menu dp-submenu-position" style="font-size: 12px; margin-left: 30px; color: #939494 !important;">
+                                <li><a ng-click="getAssociatedDeviceDetail('service_cluster')">Cluster Membership</a></li>
+                                <li><a href="#">Cluster Resources</a></li>
+                                <li><a href="#">Services in Cluster</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown-submenu">
+                            <a class="test" href="#" ><span class="glyphicon glyphicon-plus" aria-hidden="true" style="margin-right:10px;"></span>Stakeholder</a>
+                            <ul class="dropdown-menu dp-submenu-position" style="font-size: 12px; margin-left: 30px; color: #939494 !important;">
+                                <li><a ng-click="getAssociatedDeviceDetail('stakeholder')">Stakeholders Direct</a></li>
+                                <li><a href="#">Stakeholders Component</a></li>
+                                <li><a href="#">Stakeholders Services</a></li>
+                                <li><a href="#">Stakeholders Physical Device</a></li>
+                            </ul>
+                        </li>
+                        <li style="margin-left: 25px;"><a ng-click="getAssociatedDeviceDetail('service_cluster')">Service Cluster</a><br/></li>
+                        <li style="margin-left: 25px;"><a ng-click="getAssociatedDeviceDetail('component_services')">Component Services</a><br/></li>
+                        <li style="margin-left: 25px;"><a ng-click="getAssociatedDeviceDetail('audit')">Audit</a><br/></li>
+                        <li style="margin-left: 25px;"><a ng-click="getAssociatedDeviceDetail('data_model')">Custom Attributes</a><br/></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--</br>-->
+
+    <ul id="demo12"  class="collapse border-outer parent-dp arrow_box " style="padding: 20px 20px ;height: auto !important; width:100% important;  background-color: #fff !important;  list-style-type: none !important;">
+        <div class="search-input-outer " style="padding: 10px 0px 0px;">
+            <h5>Search By</h5>
+            <div class="input-group">
+                <input type="text" ng-model ="searchdevicename" id="searchtext" class="form-control" placeholder="Search for..." style="border-right:0px;">
+              <span class="input-group-btn">
+                <button class="btn btn-default" type="button"  style="border-left:0px;"><i class="fa fa-search" aria-hidden="true"></i></button>
+              </span>
+            </div><!-- /input-group -->
+        </div>
+        
+        <style>
+            .form-control[disabled], fieldset[disabled]{
+            cursor: not-allowed;
+            border-bottom: 1px solid #777677 !important;
+            border: none;
+            }
+            
+            
+            input[disabled], input[disabled]:hover, input[class*='ibm-btn-'][disabled], input[class*='ibm-btn-'][disabled]:hover, button[disabled], button[disabled]:hover, button[class*='ibm-btn-'][disabled], button[class*='ibm-btn-'][disabled]:hover {
+            cursor: not-allowed;
+            border-bottom: 1px solid #777677 !important;
+            border: none;
+            }
+            
+             .form-control[enabled], fieldset[enabled]{
+            cursor: not-allowed;
+            border: 1px solid #777677 !important;
+            }
+            
+            input[enabled], input[enabled]:hover, input[class*='ibm-btn-'][enabled], input[class*='ibm-btn-'][enabled]:hover, button[enabled], button[enabled]:hover, button[class*='ibm-btn-'][enabled], button[class*='ibm-btn-'][enabled]:hover {
+            cursor: not-allowed;
+            border: 1px solid #777677 !important;
+            }            
+        </style>
+        
+        <hr style="border-style: solid;border-color: #ddd;" />
+        <div class="container-fluid search-filter-inner">
+            <div class="row">
+                <h5>Filter By</h5>
+                <div class="col-md-3">
+
+                    <li class="dropdown-submenu list-right-margin">
+                        <a class="test" tabindex="-1" href="#">
+                            <span class="caret"></span>
+                            Mandatory Attributes
+                        </a>
+                        <ul class="dropdown-menu dp-submenu-position">
+
+                            <li class="dropdown-submenu">
+                                <a class="test" href="#"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Device Type </a>
+                                <ul class="dropdown-menu dp-submenu-position">
+                                    <li><div class="input-group filter-input-size">
+                                        <input type="text" class="form-control" ng-model ="devicetype" placeholder="Search for..." style="border-right:0px;">
+                          <span class="input-group-btn">
+                            <button class="btn btn-default" type="button"  style="border-left:0px;"><i class="fa fa-search" aria-hidden="true"></i></button>
+                          </span>
+                                    </div><!-- /input-group --></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown-submenu">
+                                <a class="test" href="#"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Environment </a>
+                                <ul class="dropdown-menu dp-submenu-position">
+                                    <li><div class="input-group filter-input-size">
+                                        <input type="text" class="form-control" ng-model ="environment" placeholder="Search for..." style="border-right:0px;">
+                          <span class="input-group-btn">
+                            <button class="btn btn-default" type="button"  style="border-left:0px;"><i class="fa fa-search" aria-hidden="true"></i></button>
+                          </span>
+                                    </div><!-- /input-group --></li>
+                                </ul>
+                            </li>
+
+                            <li class="dropdown-submenu">
+                                <a class="test" href="#"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Os </a>
+                                <ul class="dropdown-menu dp-submenu-position">
+                                    <li><div class="input-group filter-input-size">
+                                        <input type="text" class="form-control" ng-model ="os" placeholder="Search for..." style="border-right:0px;">
+                          <span class="input-group-btn">
+                            <button class="btn btn-default" type="button"  style="border-left:0px;"><i class="fa fa-search" aria-hidden="true"></i></button>
+                          </span>
+                                    </div><!-- /input-group --></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown-submenu">
+                                <a class="test" href="#"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Os Version </a>
+                                <ul class="dropdown-menu dp-submenu-position">
+                                    <li><div class="input-group filter-input-size">
+                                        <input type="text" class="form-control" ng-model="osversion" placeholder="Search for..." style="border-right:0px;">
+                          <span class="input-group-btn">
+                            <button class="btn btn-default" type="button"  style="border-left:0px;"><i class="fa fa-search" aria-hidden="true"></i></button>
+                          </span>
+                                    </div><!-- /input-group --></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown-submenu">
+                                <a class="test" href="#"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Os Arch </a>
+                                <ul class="dropdown-menu dp-submenu-position">
+                                    <li><div class="input-group filter-input-size">
+                                        <input type="text" ng-model="osarchitecture" class="form-control" placeholder="Search for..." style="border-right:0px;">
+                          <span class="input-group-btn">
+                            <button class="btn btn-default" type="button"  style="border-left:0px;"><i class="fa fa-search" aria-hidden="true"></i></button>
+                          </span>
+                                    </div><!-- /input-group --></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown-submenu">
+                                <a class="test" href="#"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Os Patch Level </a>
+                                <ul class="dropdown-menu dp-submenu-position">
+                                    <li><div class="input-group filter-input-size">
+                                        <input type="text" ng-model="ospatchlevel"class="form-control" placeholder="Search for..." style="border-right:0px;">
+                          <span class="input-group-btn">
+                            <button class="btn btn-default" type="button"  style="border-left:0px;"><i class="fa fa-search" aria-hidden="true"></i></button>
+                          </span>
+                                    </div><!-- /input-group --></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown-submenu">
+                                <a class="test" href="#"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Memory </a>
+                                <ul class="dropdown-menu dp-submenu-position">
+                                    <li><div class="input-group filter-input-size">
+                                        <input type="text" ng-model ="memory" class="form-control" placeholder="Search for..." style="border-right:0px;">
+                          <span class="input-group-btn">
+                            <button class="btn btn-default" type="button"  style="border-left:0px;"><i class="fa fa-search" aria-hidden="true"></i></button>
+                          </span>
+                                    </div><!-- /input-group --></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown-submenu">
+                                <a class="test" href="#"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> DR Required </a>
+                                <ul class="dropdown-menu dp-submenu-position">
+                                    <li><div class="input-group filter-input-size">
+                                        <input type="text" ng-model ="drrequired" class="form-control" placeholder="Search for..." style="border-right:0px;">
+                          <span class="input-group-btn">
+                            <button class="btn btn-default" type="button"  style="border-left:0px;"><i class="fa fa-search" aria-hidden="true"></i></button>
+                          </span>
+                                    </div><!-- /input-group --></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown-submenu">
+                                <a class="test" href="#"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> DR Process </a>
+                                <ul class="dropdown-menu dp-submenu-position">
+                                    <li><div class="input-group filter-input-size">
+                                        <input type="text" ng-model="drprocess" class="form-control" placeholder="Search for..." style="border-right:0px;">
+                          <span class="input-group-btn">
+                            <button class="btn btn-default" type="button"  style="border-left:0px;"><i class="fa fa-search" aria-hidden="true"></i></button>
+                          </span>
+                                    </div><!-- /input-group --></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown-submenu">
+                                <a class="test" href="#"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Logical Device Host </a>
+                                <ul class="dropdown-menu dp-submenu-position">
+                                    <li><div class="input-group filter-input-size">
+                                        <input type="text" ng-model="logicaldevicehost" class="form-control" placeholder="Search for..." style="border-right:0px;">
+                          <span class="input-group-btn">
+                            <button class="btn btn-default" type="button"  style="border-left:0px;"><i class="fa fa-search" aria-hidden="true"></i></button>
+                          </span>
+                                    </div><!-- /input-group --></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown-submenu">
+                                <a class="test" href="#"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Host Type </a>
+                                <ul class="dropdown-menu dp-submenu-position">
+                                    <li><div class="input-group filter-input-size">
+                                        <input type="text" ng-model="hosttype" class="form-control" placeholder="Search for..." style="border-right:0px;">
+                          <span class="input-group-btn">
+                            <button class="btn btn-default" type="button"  style="border-left:0px;"><i class="fa fa-search" aria-hidden="true"></i></button>
+                          </span>
+                                    </div><!-- /input-group --></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown-submenu">
+                                <a class="test" href="#"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Migration Aprroach </a>
+                                <ul class="dropdown-menu dp-submenu-position">
+                                    <li><div class="input-group filter-input-size">
+                                        <input type="text" ng-model ="migrationapproach" class="form-control" placeholder="Search for..." style="border-right:0px;">
+                          <span class="input-group-btn">
+                            <button class="btn btn-default" type="button"  style="border-left:0px;"><i class="fa fa-search" aria-hidden="true"></i></button>
+                          </span>
+                                    </div><!-- /input-group --></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown-submenu">
+                                <ul class="dropdown-menu dp-submenu-position">
+                                    <a class="test" href="#"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Discovery Status </a>
+                                    <li><div class="input-group filter-input-size">
+                                        <input type="text" ng-model="discoverystatus" class="form-control" placeholder="Search for..." style="border-right:0px;">
+                          <span class="input-group-btn">
+                            <button class="btn btn-default" type="button"  style="border-left:0px;"><i class="fa fa-search" aria-hidden="true"></i></button>
+                          </span>
+                                    </div><!-- /input-group --></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown-submenu">
+                                <a class="test" href="#"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Sites </a>
+                                <ul class="dropdown-menu dp-submenu-position">
+                                    <li><div class="input-group filter-input-size">
+                                        <input type="text" ng-model="sites" class="form-control" placeholder="Search for..." style="border-right:0px;">
+                          <span class="input-group-btn">
+                            <button class="btn btn-default" type="button"  style="border-left:0px;"><i class="fa fa-search" aria-hidden="true"></i></button>
+                          </span>
+                                    </div><!-- /input-group --></li>
+                                </ul>
+                            </li>
+
+
+                        </ul>
+                    </li>
+
+
+                    <li class="dropdown-submenu list-right-margin" style="padding: 6px 0px 10px;">
+                        <a class="test" tabindex="-1" href="#"><span class="caret"></span>Relevant Attributes</a>
+                        <ul class="dropdown-menu dp-submenu-position">
+
+
+                            <li class="dropdown-submenu">
+                                <a class="test" href="#"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Window Domain </a>
+                                <ul class="dropdown-menu dp-submenu-position">
+                                    <li><div class="input-group filter-input-size">
+                                        <input type="text" ng-model="windowsdomain" class="form-control" placeholder="Search for..." style="border-right:0px;">
+                        <span class="input-group-btn">
+                          <button class="btn btn-default" type="button"  style="border-left:0px;"><i class="fa fa-search" aria-hidden="true"></i></button>
+                        </span>
+                                    </div><!-- /input-group --></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown-submenu">
+                                <a class="test" href="#"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Dr Phy Server </a>
+                                <ul class="dropdown-menu dp-submenu-position">
+                                    <li><div class="input-group filter-input-size">
+                                        <input type="text" ng-model="drphysicalserver" class="form-control" placeholder="Search for..." style="border-right:0px;">
+                        <span class="input-group-btn">
+                          <button class="btn btn-default" type="button"  style="border-left:0px;"><i class="fa fa-search" aria-hidden="true"></i></button>
+                        </span>
+                                    </div><!-- /input-group --></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown-submenu">
+                                <a class="test" href="#"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> BackUp Method </a>
+                                <ul class="dropdown-menu dp-submenu-position">
+                                    <li><div class="input-group filter-input-size">
+                                        <input type="text" ng-model="backupmethod" class="form-control" placeholder="Search for..." style="border-right:0px;">
+                        <span class="input-group-btn">
+                          <button class="btn btn-default" type="button"  style="border-left:0px;"><i class="fa fa-search" aria-hidden="true"></i></button>
+                        </span>
+                                    </div><!-- /input-group --></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown-submenu">
+                                <a class="test" href="#"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Backup Schedule </a>
+                                <ul class="dropdown-menu dp-submenu-position">
+                                    <li><div class="input-group filter-input-size">
+                                        <input type="text" ng-model="backupschedule" class="form-control" placeholder="Search for..." style="border-right:0px;">
+                        <span class="input-group-btn">
+                          <button class="btn btn-default" type="button"  style="border-left:0px;"><i class="fa fa-search" aria-hidden="true"></i></button>
+                        </span>
+                                    </div><!-- /input-group --></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown-submenu">
+                                <a class="test" href="#"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Backupoff Site Loc </a>
+                                <ul class="dropdown-menu dp-submenu-position">
+                                    <li><div class="input-group filter-input-size">
+                                        <input type="text" ng-model="backupoffsitelocation" class="form-control" placeholder="Search for..." style="border-right:0px;">
+                        <span class="input-group-btn">
+                          <button class="btn btn-default" type="button"  style="border-left:0px;"><i class="fa fa-search" aria-hidden="true"></i></button>
+                        </span>
+                                    </div><!-- /input-group --></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown-submenu">
+                                <a class="test" href="#"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Monitorings System </a>
+                                <ul class="dropdown-menu dp-submenu-position">
+                                    <li><div class="input-group filter-input-size">
+                                        <input type="text" ng-model="monitoringsystem" class="form-control" placeholder="Search for..." style="border-right:0px;">
+                        <span class="input-group-btn">
+                          <button class="btn btn-default" type="button"  style="border-left:0px;"><i class="fa fa-search" aria-hidden="true"></i></button>
+                        </span>
+                                    </div><!-- /input-group --></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown-submenu">
+                                <a class="test" href="#"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Status </a>
+                                <ul class="dropdown-menu dp-submenu-position">
+                                    <li><div class="input-group filter-input-size">
+                                        <input type="text" ng-model="status" class="form-control" placeholder="Search for..." style="border-right:0px;">
+                        <span class="input-group-btn">
+                          <button class="btn btn-default" type="button"  style="border-left:0px;"><i class="fa fa-search" aria-hidden="true"></i></button>
+                        </span>
+                                    </div><!-- /input-group --></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown-submenu">
+                                <a class="test" href="#"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Logical CPU </a>
+                                <ul class="dropdown-menu dp-submenu-position">
+                                    <li><div class="input-group filter-input-size">
+                                        <input type="text" ng-model="logicalcpu" class="form-control" placeholder="Search for..." style="border-right:0px;">
+                        <span class="input-group-btn">
+                          <button class="btn btn-default" type="button"  style="border-left:0px;"><i class="fa fa-search" aria-hidden="true"></i></button>
+                        </span>
+                                    </div><!-- /input-group --></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown-submenu">
+                                <a class="test" href="#"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Role </a>
+                                <ul class="dropdown-menu dp-submenu-position">
+                                    <li><div class="input-group filter-input-size">
+                                        <input type="text" ng-model="role" class="form-control" placeholder="Search for..." style="border-right:0px;">
+                        <span class="input-group-btn">
+                          <button class="btn btn-default" type="button"  style="border-left:0px;"><i class="fa fa-search" aria-hidden="true"></i></button>
+                        </span>
+                                    </div><!-- /input-group --></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown-submenu">
+                                <a class="test" href="#"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> IsVirtual </a>
+                                <ul class="dropdown-menu dp-submenu-position">
+                                    <li><div class="input-group filter-input-size">
+                                        <input type="text" ng-model="isvirtual" class="form-control" placeholder="Search for..." style="border-right:0px;">
+                        <span class="input-group-btn">
+                          <button class="btn btn-default" type="button"  style="border-left:0px;"><i class="fa fa-search" aria-hidden="true"></i></button>
+                        </span>
+                                    </div><!-- /input-group --></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown-submenu">
+                                <a class="test" href="#"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Inscope </a>
+                                <ul class="dropdown-menu dp-submenu-position">
+                                    <li><div class="input-group filter-input-size">
+                                        <input type="text" ng-model="inscope" class="form-control" placeholder="Search for..." style="border-right:0px;">
+                        <span class="input-group-btn">
+                          <button class="btn btn-default" type="button"  style="border-left:0px;"><i class="fa fa-search" aria-hidden="true"></i></button>
+                        </span>
+                                    </div><!-- /input-group --></li>
+                                </ul>
+                            </li>
+
+
+
+
+                        </ul>
+                    </li>
+
+                </div>
+                <div class="col-md-3">
+                    <li class="dropdown-submenu list-right-margin" style="padding: 0px 0px 10px;">
+                        <a class="test" tabindex="-1" href="#"><span class="caret"></span>Service</a>
+                        <ul class="dropdown-menu dp-submenu-position">
+                            <li class="dropdown-submenu">
+                                <a class="test" href="#"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Service Name </a>
+                                <ul class="dropdown-menu dp-submenu-position">
+                                    <li><div class="input-group filter-input-size">
+                                        <input type="text" class="form-control" ng-model="servicename" placeholder="Search for..." style="border-right:0px;">
+                          <span class="input-group-btn">
+                            <button class="btn btn-default" type="button"  style="border-left:0px;"><i class="fa fa-search" aria-hidden="true"></i></button>
+                          </span>
+                                    </div><!-- /input-group --></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown-submenu">
+                                <a class="test" href="#"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Service Type </a>
+                                <ul class="dropdown-menu dp-submenu-position">
+                                    <li><div class="input-group filter-input-size">
+                                        <input type="text" class="form-control" ng-model="servicetype" placeholder="Search for..." style="border-right:0px;">
+                          <span class="input-group-btn">
+                            <button class="btn btn-default" type="button"  style="border-left:0px;"><i class="fa fa-search" aria-hidden="true"></i></button>
+                          </span>
+                                    </div><!-- /input-group --></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown-submenu">
+                                <a class="test" href="#"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Service Status</a>
+                                <ul class="dropdown-menu dp-submenu-position">
+                                    <li><div class="input-group filter-input-size">
+                                        <input type="text" class="form-control" ng-model="servicestatus" placeholder="Search for..." style="border-right:0px;">
+                          <span class="input-group-btn">
+                            <button class="btn btn-default" type="button"  style="border-left:0px;"><i class="fa fa-search" aria-hidden="true"></i></button>
+                          </span>
+                                    </div><!-- /input-group --></li>
+
+                                </ul>
+                            </li>
+                            <li class="dropdown-submenu">
+                                <a class="test" href="#"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Discovery Status</a>
+                                <ul class="dropdown-menu dp-submenu-position">
+                                    <li><div class="input-group filter-input-size">
+                                        <input type="text" class="form-control" ng-model="servicediscoverystatus"  placeholder="Search for..." style="border-right:0px;">
+                          <span class="input-group-btn">
+                            <button class="btn btn-default" type="button"  style="border-left:0px;"><i class="fa fa-search" aria-hidden="true"></i></button>
+                          </span>
+                                    </div><!-- /input-group --></li>
+
+                                </ul>
+                            </li>
+                            <li class="dropdown-submenu">
+                                <a class="test" href="#"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Criticality</a>
+                                <ul class="dropdown-menu dp-submenu-position">
+                                    <li><div class="input-group filter-input-size">
+                                        <input type="text" class="form-control" ng-model="servicecriticality" placeholder="Search for..." style="border-right:0px;">
+                          <span class="input-group-btn">
+                            <button class="btn btn-default" type="button"  style="border-left:0px;"><i class="fa fa-search" aria-hidden="true"></i></button>
+                          </span>
+                                    </div><!-- /input-group --></li>
+
+                                </ul>
+                            </li>
+                            <li class="dropdown-submenu">
+                                <a class="test" href="#"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Migration Approach</a>
+                                <ul class="dropdown-menu dp-submenu-position">
+                                    <li><div class="input-group filter-input-size">
+                                        <input type="text" class="form-control" ng-model="servicemigrationapproach" placeholder="Search for..." style="border-right:0px;">
+                          <span class="input-group-btn">
+                            <button class="btn btn-default" type="button"  style="border-left:0px;"><i class="fa fa-search" aria-hidden="true"></i></button>
+                          </span>
+                                    </div><!-- /input-group --></li>
+
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown-submenu list-right-margin" style="padding: 0px 0px 10px;">
+                        <a class="test" tabindex="-1" href="#"><span class="caret"></span>Clusters</a>
+                        <ul class="dropdown-menu dp-submenu-position">
+                            <li class="dropdown-submenu">
+                                <a class="test" href="#"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Cluster Name </a>
+                                <ul class="dropdown-menu dp-submenu-position">
+                                    <li><div class="input-group filter-input-size">
+                                        <input type="text" class="form-control" ng-model="clustername" placeholder="Search for..." style="border-right:0px;">
+                          <span class="input-group-btn">
+                            <button class="btn btn-default" type="button"  style="border-left:0px;"><i class="fa fa-search" aria-hidden="true"></i></button>
+                          </span>
+                                    </div><!-- /input-group --></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown-submenu">
+                                <a class="test" href="#"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Cluster Type </a>
+                                <ul class="dropdown-menu dp-submenu-position">
+                                    <li><div class="input-group filter-input-size">
+                                        <input type="text" class="form-control" ng-model="clustertype" placeholder="Search for..." style="border-right:0px;">
+                          <span class="input-group-btn">
+                            <button class="btn btn-default" type="button"  style="border-left:0px;"><i class="fa fa-search" aria-hidden="true"></i></button>
+                          </span>
+                                    </div><!-- /input-group --></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown-submenu">
+                                <a class="test" href="#"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Cluster Description</a>
+                                <ul class="dropdown-menu dp-submenu-position">
+                                    <li><div class="input-group filter-input-size">
+                                        <input type="text" class="form-control" ng-model="clusterdescription" placeholder="Search for..." style="border-right:0px;">
+                          <span class="input-group-btn">
+                            <button class="btn btn-default" type="button"  style="border-left:0px;"><i class="fa fa-search" aria-hidden="true"></i></button>
+                          </span>
+                                    </div><!-- /input-group --></li>
+
+                                </ul>
+                            </li>
+                            <li class="dropdown-submenu">
+                                <a class="test" href="#"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Discovery Status</a>
+                                <ul class="dropdown-menu dp-submenu-position">
+                                    <li><div class="input-group filter-input-size">
+                                        <input type="text" class="form-control" ng-model="clusterdiscoverystatus"  placeholder="Search for..." style="border-right:0px;">
+                          <span class="input-group-btn">
+                            <button class="btn btn-default" type="button"  style="border-left:0px;"><i class="fa fa-search" aria-hidden="true"></i></button>
+                          </span>
+                                    </div><!-- /input-group --></li>
+
+                                </ul>
+                            </li>
+
+                            <li class="dropdown-submenu">
+                                <a class="test" href="#"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Migration Approach</a>
+                                <ul class="dropdown-menu dp-submenu-position">
+                                    <li><div class="input-group filter-input-size">
+                                        <input type="text" class="form-control" ng-model="clustermigrationapproach" placeholder="Search for..." style="border-right:0px;">
+                          <span class="input-group-btn">
+                            <button class="btn btn-default" type="button"  style="border-left:0px;"><i class="fa fa-search" aria-hidden="true"></i></button>
+                          </span>
+                                    </div><!-- /input-group --></li>
+
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown-submenu list-right-margin" style="padding: 0px 0px 10px;">
+                        <a class="test" tabindex="-1" href="#"><span class="caret"></span>Stakeholders</a>
+                        <ul class="dropdown-menu dp-submenu-position">
+                            <li class="dropdown-submenu">
+                                <a class="test" href="#"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>  Name </a>
+                                <ul class="dropdown-menu dp-submenu-position">
+                                    <li><div class="input-group filter-input-size">
+                                        <input type="text" class="form-control" ng-model="stackholdername" placeholder="Search for..." style="border-right:0px;">
+                          <span class="input-group-btn">
+                            <button class="btn btn-default" type="button"  style="border-left:0px;"><i class="fa fa-search" aria-hidden="true"></i></button>
+                          </span>
+                                    </div><!-- /input-group --></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown-submenu">
+                                <a class="test" href="#"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Role </a>
+                                <ul class="dropdown-menu dp-submenu-position">
+                                    <li><div class="input-group filter-input-size">
+                                        <input type="text" class="form-control" ng-model="stackholderrole" placeholder="Search for..." style="border-right:0px;">
+                          <span class="input-group-btn">
+                            <button class="btn btn-default" type="button"  style="border-left:0px;"><i class="fa fa-search" aria-hidden="true"></i></button>
+                          </span>
+                                    </div><!-- /input-group --></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown-submenu">
+                                <a class="test" href="#"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Primary Contact</a>
+                                <ul class="dropdown-menu dp-submenu-position">
+                                    <li><div class="input-group filter-input-size">
+                                        <input type="text" class="form-control" ng-model="stackholderprimarycontact" placeholder="Search for..." style="border-right:0px;">
+                          <span class="input-group-btn">
+                            <button class="btn btn-default" type="button"  style="border-left:0px;"><i class="fa fa-search" aria-hidden="true"></i></button>
+                          </span>
+                                    </div><!-- /input-group --></li>
+
+                                </ul>
+                            </li>
+                            <li class="dropdown-submenu">
+                                <a class="test" href="#"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Telephone</a>
+                                <ul class="dropdown-menu dp-submenu-position">
+                                    <li><div class="input-group filter-input-size">
+                                        <input type="text" class="form-control" ng-model="stackholdertelephone"  placeholder="Search for..." style="border-right:0px;">
+                          <span class="input-group-btn">
+                            <button class="btn btn-default" type="button"  style="border-left:0px;"><i class="fa fa-search" aria-hidden="true"></i></button>
+                          </span>
+                                    </div><!-- /input-group --></li>
+
+                                </ul>
+                            </li>
+                            <li class="dropdown-submenu">
+                                <a class="test" href="#"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Email</a>
+                                <ul class="dropdown-menu dp-submenu-position">
+                                    <li><div class="input-group filter-input-size">
+                                        <input type="text" class="form-control" ng-model="stackholderemail" placeholder="Search for..." style="border-right:0px;">
+                          <span class="input-group-btn">
+                            <button class="btn btn-default" type="button"  style="border-left:0px;"><i class="fa fa-search" aria-hidden="true"></i></button>
+                          </span>
+                                    </div><!-- /input-group --></li>
+
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li class="dropdown-submenu dropdown-submenu list-right-margin">
+                        <a class="test" tabindex="-1" href="#"><span class="caret"></span>Components </a>
+                        <ul class="dropdown-menu dp-submenu-position">
+                            <li class="dropdown-submenu">
+                                <a class="test" href="#"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Component Name </a>
+                                <ul class="dropdown-menu dp-submenu-position">
+                                    <li><div class="input-group filter-input-size">
+                                        <input type="text" class="form-control" ng-model="componentname" placeholder="Search for..." style="border-right:0px;">
+                          <span class="input-group-btn">
+                            <button class="btn btn-default" type="button"  style="border-left:0px;"><i class="fa fa-search" aria-hidden="true"></i></button>
+                          </span>
+                                    </div><!-- /input-group --></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown-submenu">
+                                <a class="test" href="#"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Component Type </a>
+                                <ul class="dropdown-menu dp-submenu-position">
+                                    <li><div class="input-group filter-input-size">
+                                        <input type="text" class="form-control" ng-model="componenttype" placeholder="Search for..." style="border-right:0px;">
+                          <span class="input-group-btn">
+                            <button class="btn btn-default" type="button"  style="border-left:0px;"><i class="fa fa-search" aria-hidden="true"></i></button>
+                          </span>
+                                    </div><!-- /input-group --></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown-submenu">
+                                <a class="test" href="#"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Component Status</a>
+                                <ul class="dropdown-menu dp-submenu-position">
+                                    <li><div class="input-group filter-input-size">
+                                        <input type="text" class="form-control" ng-model="componentstatus" placeholder="Search for..." style="border-right:0px;">
+                          <span class="input-group-btn">
+                            <button class="btn btn-default" type="button"  style="border-left:0px;"><i class="fa fa-search" aria-hidden="true"></i></button>
+                          </span>
+                                    </div><!-- /input-group --></li>
+
+                                </ul>
+                            </li>
+                            <li class="dropdown-submenu">
+                                <a class="test" href="#"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Discovery Status</a>
+                                <ul class="dropdown-menu dp-submenu-position">
+                                    <li><div class="input-group filter-input-size">
+                                        <input type="text" class="form-control" ng-model="componentdiscoverystatus"  placeholder="Search for..." style="border-right:0px;">
+                          <span class="input-group-btn">
+                            <button class="btn btn-default" type="button"  style="border-left:0px;"><i class="fa fa-search" aria-hidden="true"></i></button>
+                          </span>
+                                    </div><!-- /input-group --></li>
+
+                                </ul>
+                            </li>
+                            <li class="dropdown-submenu">
+                                <a class="test" href="#"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Environment</a>
+                                <ul class="dropdown-menu dp-submenu-position">
+                                    <li><div class="input-group filter-input-size">
+                                        <input type="text" class="form-control" ng-model="componentenvironment"  placeholder="Search for..." style="border-right:0px;">
+                          <span class="input-group-btn">
+                            <button class="btn btn-default" type="button"  style="border-left:0px;"><i class="fa fa-search" aria-hidden="true"></i></button>
+                          </span>
+                                    </div><!-- /input-group --></li>
+
+                                </ul>
+                            </li>
+
+                            <li class="dropdown-submenu">
+                                <a class="test" href="#"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Migration Approach</a>
+                                <ul class="dropdown-menu dp-submenu-position">
+                                    <li><div class="input-group filter-input-size">
+                                        <input type="text" class="form-control" ng-model="componentmigrationapproach" placeholder="Search for..." style="border-right:0px;">
+                          <span class="input-group-btn">
+                            <button class="btn btn-default" type="button"  style="border-left:0px;"><i class="fa fa-search" aria-hidden="true"></i></button>
+                          </span>
+                                    </div><!-- /input-group --></li>
+
+                                </ul>
+                            </li>
+                        </ul>
+
+                    </li>
+
+                </div>
+                <div class="col-md-3">
+
+                    <li class="dropdown-submenu list-right-margin">
+                        <a class="test" tabindex="-1" href="#"><span class="caret"></span>File System </a>
+                        <ul class="dropdown-menu dp-submenu-position">
+
+                            <li class="dropdown-submenu">
+                                <a class="test" href="#"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Device Type </a>
+                                <ul class="dropdown-menu dp-submenu-position">
+                                    <li><div class="input-group filter-input-size">
+                                        <input type="text" class="form-control" placeholder="Search for..." style="border-right:0px;">
+                          <span class="input-group-btn">
+                            <button class="btn btn-default" type="button"  style="border-left:0px;"><i class="fa fa-search" aria-hidden="true"></i></button>
+                          </span>
+                                    </div><!-- /input-group --></li>
+
+                                </ul>
+                            </li>
+                            <li class="dropdown-submenu">
+                                <a class="test" href="#"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Device Type </a>
+                                <ul class="dropdown-menu dp-submenu-position">
+                                    <li><div class="input-group filter-input-size">
+                                        <input type="text" class="form-control" placeholder="Search for..." style="border-right:0px;">
+                          <span class="input-group-btn">
+                            <button class="btn btn-default" type="button"  style="border-left:0px;"><i class="fa fa-search" aria-hidden="true"></i></button>
+                          </span>
+                                    </div><!-- /input-group --></li>
+
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                </div>
+                <div class="col-md-3">
+
+                    <li class="dropdown-submenu list-left-margin">
+                        <a class="test" tabindex="-1" href="#"><span class="caret"></span>Planning </a>
+                        <ul class="dropdown-menu dp-submenu-position">
+
+                            <li class="dropdown-submenu">
+                                <a class="test" href="#"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Device Type </a>
+                                <ul class="dropdown-menu dp-submenu-position">
+                                    <li><div class="input-group filter-input-size">
+                                        <input type="text" class="form-control" placeholder="Search for..." style="border-right:0px;">
+                          <span class="input-group-btn">
+                            <button class="btn btn-default" type="button"  style="border-left:0px;"><i class="fa fa-search" aria-hidden="true"></i></button>
+                          </span>
+                                    </div><!-- /input-group --></li>
+
+                                </ul>
+                            </li>
+                            <li class="dropdown-submenu">
+                                <a class="test" href="#"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Environment Type</a>
+                                <ul class="dropdown-menu dp-submenu-position">
+                                    <li><div class="input-group filter-input-size">
+                                        <input type="text" class="form-control" placeholder="Search for..." style="border-right:0px;">
+                          <span class="input-group-btn">
+                            <button class="btn btn-default" type="button"  style="border-left:0px;"><i class="fa fa-search" aria-hidden="true"></i></button>
+                          </span>
+                                    </div><!-- /input-group --></li>
+
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                </div>
+
+            </div>
+
+        </div>
+        <hr style="border-style: solid;border-color: #ddd;" />
+        <div class="text-center">
+            <button class="btn update-btn" ng-click="submitSearch()" id="updateResult" style="background-color:#5392ff; border:1px solid #fff; color:#fff">Update Result</button>
+            <button class="btn update-btn dropdown dropdown-toggle" data-toggle="dropdown" style="background-color:#5392ff; border:1px solid #fff; color:#fff">Export Result</button>
+            <ul class="dropdown-menu" style="margin-top: -1%;margin-left: 55%;min-width: 85px !important;">
+                <li><a ng-click="exportSearch('csv')">CSV</a><br/></li>
+                <li><a ng-click="exportSearch('excel')">Excel</a><br/></li>
+            </ul>
+        </div>
+    </ul>
+
+
+
+</div>
+
+
+<div class="row">
+    <hr style="width: 100%;border-top: 1px solid #ccc !important;margin-top: 0px !important;
+        margin-bottom: 0px !important;">
+    <div class="col-md-12" style="height: 4em;">
+        <div class="col-md-10 col-md-offset-1" style="margin-top: 1%;margin-left: 8.5%;">
+            <div class="col-md-6" style="margin-top: 0.5%">
+
+                <!--  -->
+                <button  style="border: 0px;background-color: #F7F7F7;padding-right: 0px !important;"  ng-click ="next_previous_data(logicalDeviceData[currentIndex-1].name,-1)">
+                    <!--<img src="img/previous.jpg" alt="next" >-->
+                    <i class="fa fa-chevron-left" aria-hidden="true" style="color: #949394 !important;"></i>
+                </button>
+                <!--<span class="recordCnt">{{recordID}}</span>-->
+                  <input type="number" value="{{recordID}}" id="recordID" ng-model="recordID" min="1" max="{{totalLDcount}}" class="recordCnt" ng-keyup="$event.keyCode == 13 ? inputDeviceIDView(recordID) : null" style="width:auto;"/>
+                <button  style="border: 0px;background-color: #F7F7F7;padding-left: 0px !important;"  ng-click ="next_previous_data(logicalDeviceData[currentIndex+1].name,1)">
+                    <!--<img src="img/next.jpg" alt="next">-->
+                    <i class="fa fa-chevron-right" aria-hidden="true" style="color: #949394 !important;"></i>
+                </button>
+                <label style="font-size: 14px" class="labelcolor">Records Out of {{totalLDcount}} </label>
+            </div>
+            <div class="col-md-6">
+                <a href="" class="dropdown dropdown-toggle my-tooltip my-dropdown" data-placement="top" title="Export" data-toggle="dropdown" style="float: right;margin-left: 3%;">  <img style="height: 34px" src="img/exportUnselected.png">
+                    <ul class="dropdown-menu border-outer parent-dp" style="margin-left: 90%">
+                        <li><a ng-click="exportContent()">CSV</a><br/></li>
+                        <li><a ng-click="exportContentXls()">Excel</a><br/></li>
+                    </ul>
+                </a>
+                <a class="my-tooltip" data-toggle="tooltip" data-placement="top" title="Print" href="" style="float: right;margin-left: 3%;">  <img style="height: 34px" src="img/printUnselected.png"> </a>
+                <a  class="my-tooltip"  data-toggle="tooltip" data-placement="top" title="Edit" href="" style="float: right;margin-left: 3%;">  <img ng-click="editContent()"  style="height: 34px" src="img/editUnselected.png"> </a>
+                <a  class="my-tooltip"  data-toggle="tooltip" data-placement="top" title="Sort" href="" style="float: right;margin-left: 3%;">  <img style="height: 34px" src="img/sortingUnselected.png"> </a>
+                <a  class="my-tooltip"  href="javascript:void(0);" ng-click="navigateViewList()" style="float: right;margin-left: 3%;" data-toggle="tooltip" data-placement="top" title="List View">
+                    <img style="height: 34px" src="img/listViewUnselected.png">
+                </a>
+                <a  class="my-tooltip"  data-toggle="tooltip" data-placement="top" title="Normal View" href="" style="float: right;margin-left: 3%;">  <img style="height: 34px" src="img/normailViewUnselected.png"> </a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-10 col-md-offset-1" style="margin-top: 1%">
+        <div class="col-md-6" style="padding-left: 10px !important;">
+            <div class="" style="background-color: #25467a;border: 1px solid #ccc;border-bottom: 0px !important; ">
+                <label style="color: #fff;
+        font-size: 16px;margin-top: 2%; margin-bottom: 2%;
+        margin-left: 3%;font-weight: normal">Mandatory Attributes</label>
+                <form name="myForm" id="myForms" role = "form" novalidate class="formsetwidth" style="border: 1px solid #ccc;border-top: 0px !important;">
+                    <div class="col-md-6" style="padding-left: 15px !important; padding-right: 15px !important; margin-top: 3%">
+                        <div class="form-group">
+                            <label class="labelcolor "> Device Type</label>
+                            <input type="text"  id="devicetype" class="form-control inputset hide_input_box" data-ng-disabled="disableFields"  value="{{logicalDeviceData[currentIndex].devicetype}}"/>
+                        </div>
+
+                        <div class="form-group" >
+            							<label class="labelcolor">Environment</label>
+            							<div class="input-group" >
+                            <input type="text" class="form-control inputset hide_input_box" data-ng-disabled="disableFields" ng-model="drop_down_value_env" uib-typeahead="object.value for object in drop_down_env | filter: {value:$viewValue} | limitTo:8" typeahead-show-hint="true" typeahead-min-length="0">
+            									<span class="input-group-addon select_typehead" id="basic-addon1" style="border-radius: 0px;background-color: #fff;font-size:11px;cursor:pointer ;width: 9.001% !important;"><i class="fa fa-chevron-down" style="cursor:pointer"  id="droplist" ></i></span>
+                                           
+            							</div>
+            						</div>
+                        
+                    
+                        <div class="form-group">
+            							<label class="labelcolor">OS</label>
+            							<div class="input-group" >
+                            <input type="text" class="form-control inputset hide_input_box" data-ng-disabled="disableFields" ng-model="drop_down_value_os" uib-typeahead="object.value for object in drop_down_os | filter: {value:$viewValue} | limitTo:8" typeahead-show-hint="true" typeahead-min-length="0">
+            									<span class="input-group-addon select_typehead" id="basic-addon1" style="border-radius: 0px;background-color: #fff;font-size:11px;cursor:pointer ;width: 9.001% !important;"><i class="fa fa-chevron-down" style="cursor:pointer"></i></span>
+            							</div>
+            						</div>
+                        <div class="form-group">
+                            <label class="labelcolor">OS Version</label>
+                            <input type="text"  id="osversion" data-ng-disabled="disableFields" class="form-control inputset hide_input_box" value="{{logicalDeviceData[currentIndex].osversion}}"/>
+                        </div>
+                        <div class="form-group">
+                            <label class="labelcolor"> OS Arch</label>
+                            <input type="text"  id="osarch" data-ng-disabled="disableFields" class="form-control inputset hide_input_box" value="{{logicalDeviceData[currentIndex].osarchitecture}}"/>
+                        </div>
+                        <div class="form-group">
+                            <label class="labelcolor"> OS Patch Level</label>
+                            <input type="text"  id="ospatch" data-ng-disabled="disableFields" class="form-control inputset hide_input_box" value="{{logicalDeviceData[currentIndex].ospatchlevel}}"/>
+                        </div>
+                        <div class="form-group">
+                            <label class="labelcolor">Memory</label>
+                            <input type="text"  only-digits id="memory" data-ng-disabled="disableFields" class="form-control inputset hide_input_box" ng-model="memorydetail" value="{{logicalDeviceData[currentIndex].memory}}"/>
+                        </div>
+                    </div>
+                    
+                    
+                    <div class="col-md-6" style="padding-left: 15px !important; padding-right: 15px !important; margin-top: 3%">
+                        <div class="form-group">
+            							<label class="labelcolor">DR Required</label>
+            							<div class="input-group" >
+                            <input type="text" class="form-control inputset hide_input_box" data-ng-disabled="disableFields" ng-model="drop_down_value_drRequired" uib-typeahead="object.value for object in drop_down_drRequired | filter: {value:$viewValue} | limitTo:8" typeahead-show-hint="true" typeahead-min-length="0">
+            									<span class="input-group-addon select_typehead" id="basic-addon1" style="border-radius: 0px;background-color: #fff;font-size:11px;cursor:pointer ;width: 9.001% !important;"><i class="fa fa-chevron-down" style="cursor:pointer"></i></span>
+            							</div>
+            						</div>
+                        <div class="form-group">
+                            <label class="labelcolor">DR Process</label>
+                            <input type="text"  id="drprocess" class="form-control inputset hide_input_box" data-ng-disabled="disableFields" value="{{logicalDeviceData[currentIndex].drprocess}}"/>
+                        </div>
+                        <div class="form-group">
+                            <label class="labelcolor">Logical Device Host</label>
+                            <input type="text"  id="devhost" data-ng-disabled="disableFields" class="form-control inputset hide_input_box" value="{{logicalDeviceData[currentIndex].logicaldevicehost}}"/>
+                        </div>
+                        <div class="form-group">
+                            <label class="labelcolor">Host Type</label>
+                            <input id="hosttype" type="text" data-ng-disabled="disableFields" class="form-control inputset hide_input_box" value="{{logicalDeviceData[currentIndex].hosttype}}"/>                            </div>
+
+                        <div class="form-group">
+                          <label class="labelcolor">Migration Approach</label>
+                          <div class="input-group" >
+                            <input type="text" class="form-control inputset hide_input_box" data-ng-disabled="disableFields" ng-model="drop_down_value_migrationApp" uib-typeahead="object.value for object in drop_down_migrationApp | filter: {value:$viewValue} | limitTo:8" typeahead-show-hint="true" typeahead-min-length="0">
+                              <span class="input-group-addon select_typehead" id="basic-addon1" style="border-radius: 0px;background-color: #fff;font-size:11px;cursor:pointer ;width: 9.001% !important;"><i class="fa fa-chevron-down" style="cursor:pointer"></i></span>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="labelcolor">Discovery Status</label>
+                            <input id="discoverystatus" type="text"  data-ng-disabled="disableFields" class="form-control inputset hide_input_box" value="{{logicalDeviceData[currentIndex].discoverystatus}}"/>
+                        </div>
+                        <div class="form-group">
+                            <label class="labelcolor">Sites</label>
+                            <input type="text"  id="sites" data-ng-disabled="disableFields" class="form-control inputset hide_input_box" value="{{logicalDeviceData[currentIndex].sites}}"/>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="col-md-6" style="padding-left: 13px !important;">
+            <div class="" style="background-color: #25467a;border: 1px solid #ccc;border-bottom:0px !important; ">
+                <label style="color: #fff; font-size: 16px;margin-top: 2%; margin-bottom: 2%; margin-left: 3%;font-weight: normal">Relevant Attributes</label>
+            </div>
+            <form name="myFormRel" id="myFormRel" role="form" novalidate class="formsetwidth1" style="border: 1px solid #ccc ; border-top: 0px !important;">
+                <div class="col-md-6" style="padding-left: 15px !important;padding-right: 15px !important; margin-top: 3%">
+
+                    <div class="form-group">
+                      <label class="labelcolor">Windows Domain</label>
+                      <div class="input-group" >
+                        <input type="text" class="form-control inputset hide_input_box" data-ng-disabled="disableFields" ng-model="drop_down_value_windowsDomain" uib-typeahead="object.value for object in drop_down_windowsDomain | filter: {value:$viewValue} | limitTo:8" typeahead-show-hint="true" typeahead-min-length="0">
+                          <span class="input-group-addon select_typehead" id="basic-addon1" style="border-radius: 0px;background-color: #fff;font-size:11px;cursor:pointer ;width: 9.001% !important;"><i class="fa fa-chevron-down" style="cursor:pointer"></i></span>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label class="labelcolor">Backup Method</label>
+                      <div class="input-group" >
+                        <input type="text" class="form-control inputset hide_input_box" data-ng-disabled="disableFields" ng-model="drop_down_value_backupMethod" uib-typeahead="object.value for object in drop_down_backupMethod | filter: {value:$viewValue} | limitTo:8" typeahead-show-hint="true" typeahead-min-length="0">
+                          <span class="input-group-addon select_typehead" id="basic-addon1" style="border-radius: 0px;background-color: #fff;font-size:11px;cursor:pointer ;width: 9.001% !important;"><i class="fa fa-chevron-down" style="cursor:pointer"></i></span>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="labelcolor"> Backup Schedule</label>
+                        <input type="text" id="backschedule"  data-ng-disabled="disableFields" class="form-control inputset hide_input_box" value="{{logicalDeviceData[currentIndex].backupschedule}}"/>
+                    </div>
+                    <div class="form-group">
+                        <label class="labelcolor">DR Physical Server Name</label>
+                        <input type="text"id="physerver"  data-ng-disabled="disableFields" class="form-control inputset hide_input_box" value="{{logicalDeviceData[currentIndex].drphysicalserver}}"/>
+                    </div>
+
+                    <div class="form-group">
+                      <label class="labelcolor">Backup Offsite Location</label>
+                      <div class="input-group" >
+                        <input type="text" class="form-control inputset hide_input_box" data-ng-disabled="disableFields" ng-model="drop_down_value_backupoffsitelocation" uib-typeahead="object.value for object in drop_down_backupoffsitelocation | filter: {value:$viewValue} | limitTo:8" typeahead-show-hint="true" typeahead-min-length="0">
+                          <span class="input-group-addon select_typehead" id="basic-addon1" style="border-radius: 0px;background-color: #fff;font-size:11px;cursor:pointer ;width: 9.001% !important;"><i class="fa fa-chevron-down" style="cursor:pointer"></i></span>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="labelcolor">Monitoring System</label>
+                        <input type="text" id="monsystem"  data-ng-disabled="disableFields" class="form-control textbox inputset hide_input_box" value="{{logicalDeviceData[currentIndex].monitoringsystem}}"/>
+                    </div>
+
+                    <div class="form-group">
+                      <label class="labelcolor">Status</label>
+                      <div class="input-group" >
+                        <input type="text" class="form-control inputset hide_input_box" data-ng-disabled="disableFields" ng-model="drop_down_value_status" uib-typeahead="object.value for object in drop_down_status | filter: {value:$viewValue} | limitTo:8" typeahead-show-hint="true" typeahead-min-length="0">
+                          <span class="input-group-addon select_typehead" id="basic-addon1" style="border-radius: 0px;background-color: #fff;font-size:11px;cursor:pointer ;width: 9.001% !important;"><i class="fa fa-chevron-down" style="cursor:pointer"></i></span>
+                      </div>
+                    </div>
+                </div>
+                
+                
+                
+                
+                <div class="col-md-6" style="padding-left: 15px !important;padding-right: 15px !important; margin-top: 3%">
+                    <div class="form-group">
+                        <label class="labelcolor">Logical CPU</label>
+                        <input only-digits type="text" id="logcpu" ng-model="logicalcpudetail"  data-ng-disabled="disableFields"  class="form-control inputset hide_input_box" value="{{logicalDeviceData[currentIndex].logicalcpu}}"/>
+                    </div>
+                    <div class="form-group">
+                        <label class="labelcolor">Role</label>
+                        <input id="role" data-ng-disabled="disableFields" type="text" class="form-control inputset hide_input_box" value="{{logicalDeviceData[currentIndex].role}}"/>
+                    </div>
+                    <div class="form-group">
+                        <label class="labelcolor">Is Virtual</label>
+                        <input type="text"  id="isvirt" data-ng-disabled="disableFields" class="form-control inputset hide_input_box" value="{{logicalDeviceData[currentIndex].isvirtual}}"/>
+                    </div>
+                    <div class="form-group">
+                      <label class="labelcolor">In Scope</label>
+                      <div class="input-group" >
+                        <input type="text" class="form-control inputset hide_input_box" data-ng-disabled="disableFields" ng-model="drop_down_value_inscope" uib-typeahead="object.value for object in drop_down_inscope | filter: {value:$viewValue} | limitTo:8" typeahead-show-hint="true" typeahead-min-length="0">
+                          <span class="input-group-addon select_typehead" id="basic-addon1" style="border-radius: 0px;background-color: #fff;font-size:11px;cursor:pointer ;width: 9.001% !important;"><i class="fa fa-chevron-down" style="cursor:pointer"></i></span>
+                      </div>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+</div>
+    <div class="col-md-10 col-md-offset-1" style="margin-top: 1%">
+        
+        <div class="col-md-9" style="padding-left: 10px !important;">
+            <div class="" style="background-color: #25467a ; border: 1px solid #ccc ; border-bottom: 0px !important;">
+                <label style="color: #fff;font-size: 16px;margin-top: 2%;margin-bottom: 2%; margin-left: 3%;font-weight: normal">Custom Attributes</label>
+            </div>
+            <form name="myFormCounts" id="myFormCounts" role="form" novalidate class="formsetwidth1" style="border: 1px solid #ccc ; border-top: 0px !important;">
+                <div class="col-md-12" style="padding-left: 15px !important;padding-right: 15px !important; margin-top: 3%;">
+				    <table id="customattributestable">
+					<tr>
+                        <td>
+                            <table style="margin-right:30px">
+                                 <tr>
+                                    <td style="width:100%; display:block;" ng-if="$index < 6" class="form-group" ng-repeat="ca in customAttributes | orderBy:'attribute'">
+                                    <span class="labelcolor">
+                                        {{ca.attribute}}
+                                    </span>
+                                    Value of ca is "{{ca.value}}"
+                                    <input type="text" data-ng-disabled="disableFields" class="form-control inputset hide_input_box_extended" id="custAttributeInput_{{ca.attribute}}" value="{{ca.value}}"/>
+                                    </td>
+                                   
+                                </tr>
+                            </table>
+                         </td>
+                        <td>
+                             <table style="margin-right:30px">
+                                 <tr>
+                                    <td style="width:100%; display:block;" ng-if="$index > 5 && $index <11" class="form-group" ng-repeat="ca in customAttributes | orderBy:'attribute'">
+                                            <span class="labelcolor">
+                                                {{ca.attribute}}
+                                            </span>
+                                            <input type="text" data-ng-disabled="disableFields" class="form-control inputset hide_input_box_extended" id="custAttributeInput_{{ca.attribute}}" value="{{ca.value}}"/>
+                                        </td>
+                                   
+                                </tr>
+                            </table>
+                        </td>
+                        <td>
+                            <table style="margin-right:30px">
+                                 <tr>
+                                     <td style="width:100%; display:block;" ng-if="$index > 10 && $index <16" class="form-group" ng-repeat="ca in customAttributes | orderBy:'attribute'">
+                                        <span class="labelcolor">
+                                            {{ca.attribute}}
+                                        </span>
+                                        <input type="text" data-ng-disabled="disableFields" class="form-control inputset hide_input_box_extended" id="custAttributeInput_{{ca.attribute}}" value="{{ca.value}}"/>
+                                    </td>
+                                   
+                                </tr>
+                            </table>
+                        </td>
+                        <td>
+                            <table>
+                                 <tr>
+                                     <td style="width:100%; display:block;" ng-if="$index > 15 && $index <21" class="form-group" ng-repeat="ca in customAttributes | orderBy:'attribute'">
+                                        <span class="labelcolor">
+                                            {{ca.attribute}}
+                                        </span>
+                                        <input type="text" data-ng-disabled="disableFields" class="form-control inputset hide_input_box_extended" id="custAttributeInput_{{ca.attribute}}" value="{{ca.value}}"/>
+                                    </td>
+
+                                   
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+					</table>
+                </div>
+            </form>
+        </div>
+        <!--End::Defect21321 Made it disabled -->
+        <!--End::Extented Attributes-->
+        <!-- Related counts-->
+    
+        <div class="col-md-3 sticky-sidebar" style="padding-left: 13px !important;">
+            <div class="" style="background-color: #25467a;border: 1px solid #ccc ;border-bottom: 0px !important; overflow:fixed;">
+                <label style="color: #fff;font-size: 16px;float: left;width: 100% !important;margin-bottom: 0px!important;background-color:#25467a;font-weight: normal;padding-top: 2%;padding-left: 5%;">Related Counts</label>
+            </div>
+            <form name="myFormCounts" role="form" novalidate class="formsetwidthRelatedCounts" style="border: 1px solid #ccc;border-top: 0px !important;">
+                <div class="col-md-12" style="padding-left: 15px !important;padding-right: 15px !important;margin-top: 3%; margin-bottom: 5%;">
+                    
+                    <table style="padding-bottom: 2%;">
+                        <tr>
+                            <td></td>
+                            
+                            <td></td>
+                        </tr>
+                        
+                        <tr>
+                            <td><label class="fa fa-cogs fa-small" style="color: white; width: 40px;">
+                        </label></td>
+                            
+                            <td style=" padding-top: 10px;"><input type="text" disabled="disabled" class="form-control inputset" style="float: right;" href"javascript:;" value="{{logicalDeviceData.servicecount}}"/></td>
+                        </tr>
+                        
+                        <tr>
+                            <td><label class="fa fa-cubes fa-small" style="color: white; width: 40px;">
+                        </label></td>
+                            
+                            <td style=" padding-top: 10px;"><input type="text" disabled="disabled" class="form-control inputset" style="float: right;" href"javascript:;" value="{{logicalDeviceData.compcount}}"/></td>
+                        </tr>
+                        
+                        <tr>
+                            <td><label class="fa fa-cogs fa-small" style="color: white; width: 40px;">
+                        </label></td>
+                            
+                            <td style=" padding-top: 10px;"><input type="text" disabled="disabled" class="form-control inputset" style="float: right;" href"javascript:;" value="{{logicalDeviceData.clustercount}}"/></td>
+                        </tr>
+                        
+                        <tr>
+                            <td><label class="fa fa-cubes fa-small" style="color: white; width: 40px;">
+                        </label></td>
+                            
+                            <td style=" padding-top: 10px;"><input type="text" disabled="disabled" class="form-control inputset" style="float: right;" href"javascript:;" value="0"/></td>
+                        </tr>
+                        
+                        <tr>
+                            <td><label class="fa fa-cogs fa-small" style="color: white; width: 40px;">
+                        </label></td>
+                            
+                            <td style=" padding-top: 10px;"><input type="text" disabled="disabled" class="form-control inputset" style="float: right;" href"javascript:;" value="0"/></td>
+                        </tr>
+                        
+                        <tr>
+                            <td><label class="fa fa-cubes fa-small" style="color: white; width: 40px;">
+                        </label></td>
+                            
+                            <td style=" padding-top: 10px;"><input type="text" disabled="disabled" class="form-control inputset" style="float: right;" href"javascript:;" value="0"/></td>
+                        </tr>
+                        
+                        <tr>
+                            <td><label class="fa fa-cogs fa-small" style="color: white; width: 40px;">
+                        </label></td>
+                            
+                            <td style=" padding-top: 10px;"><input type="text" disabled="disabled" class="form-control inputset" style="float: right;" href"javascript:;" value="0"/></td>
+                        </tr>
+                        
+                        <tr>
+                            <td><label class="fa fa-cubes fa-small" style="color: white; width: 40px;">
+                        </label></td>
+                            
+                            <td style=" padding-top: 10px;"><input type="text" disabled="disabled" class="form-control inputset" style="float: right;" href"javascript:;" value="0"/></td>
+                        </tr>
+                        
+                        <tr>
+                            <td><label class="fa fa-cogs fa-small" style="color: white; width: 40px;">
+                        </label></td>
+                            
+                            <td style=" padding-top: 10px;"><input type="text" disabled="disabled" class="form-control inputset" style="float: right;" href"javascript:;" value="0"/></td>
+                        </tr>
+                        
+                    
+                    
+                    </table>
+                    <style>
+                        .td {                            
+                            vertical-align: top !important;
+                            height: 50px;
+                            text-align: left;
+                        }
+                        
+                        .table {
+                            border-spacing: 15px;
+                            vertical-align: top !important;
+                        }
+                        .tr {
+                            vertical-align: top !important;
+                        }
+                    </style>
+                    
+
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
+<loading ng-show="saveSpinner" style="margin-top: 2%"></loading>
+<div class="col-xs-12">
+    <input type="submit"  id="submit" class="savebtn" ng-click="submitEditedData(logicalDeviceData[currentIndex].name)" data-ng-disabled="disableSave" value="SAVE"/>
+</div>
+
+<!--<div class="col-xs-12">
+    <input type="submit"  id="submit" class="savebtn" ng-click="submitEditedData(logicalDeviceData[currentIndex].name)" data-ng-disabled="disableSave" value="SAVE"/>
+</div>-->
+
+
+
+<ng-include ng-if="deviceID=='services'" src="'./services.html'"></ng-include>
+<ng-include ng-if="deviceID=='components'" src="'./component_component.html'"></ng-include>
+<ng-include ng-if="deviceID=='stakeholder'" src="'./stakeholder.html'"></ng-include>
+<ng-include ng-if="deviceID=='notes'" src="'./notes.html'"></ng-include>
+<ng-include ng-if="deviceID=='document'" src="'./document.html'"></ng-include>
+<ng-include ng-if="deviceID=='service_cluster'" src="'./service_cluster.html'"></ng-include>
+<ng-include ng-if="deviceID=='component_services'" src="'./component_services.html'"></ng-include>
+<ng-include ng-if="deviceID=='audit'" src="'./audit.html'"></ng-include>
+<ng-include ng-if="deviceID=='cattributes'" src="'./cattributes.html'"></ng-include>
+
+
+<style>
+    .inputset{
+        /*width: 96% !important;*/
+        height: 24px !important;
+        border-radius: 0px !important;
+    }
+    .labelcolor{
+        color: #949394;
+        font-weight: normal;
+        font-size: 16px;
+    }
+
+    .formsetwidth{
+        background: white !important;
+        float: left;
+        width: 100% !important;
+    }
+    .formsetwidth1{
+        background: white !important;
+        float: right;
+        width: 100% !important;
+    }
+
+    .formsetwidthRelatedCounts{
+        background: #25467a !important;
+        float: left;
+        width: 100% !important;
+    }
+
+
+    .setpadding{
+        padding-bottom: 0px !important;
+        padding-top: 0px !important;
+    }
+    .recordCnt
+    {
+        /*padding: 1% 2%;*/
+        padding: 0.7% 1.7%;
+        text-align: center;
+        font-size: 16px;
+        height: 37px;
+        width: 32px;
+        background-color: #ffffff;
+        border: 1px solid #949394;
+
+    }
+    .savebtn{
+        border: none;
+        margin-left: 37%;
+        margin-top: 4%;
+        font-size: 13px;
+        width: 13%;
+        height: 37px;
+        margin-bottom: 2%;
+        color: #FFF;
+        background-color: #5392ff;
+    }
+    .savebtn[disabled] {
+        background-color: 	#ADD8E6
+    }
+
+    .selectbox2{
+        background-color: #fff;
+        height: 25px;
+        width: 108px;
+        border: 1px solid #ccc;
+        color: #949394;
+        float: left;
+        margin-right: 10px;
+    }
+</style>
+
+<script>
+    $(function() { $( ".dropdown-submenu .test span" ).click(function() {
+        //$('#outer_audit .inner_audit button').removeClass('active_button_audit');
+        //$(this).addClass('active_button_audit');
+        $(this).toggleClass("glyphicon glyphicon-plus glyphicon glyphicon-minus");
+    }); });
+
+</script>
+<script>
+    $(document).ready(function(){
+        $('.dropdown-submenu a.test').on("click", function(e){
+            $(this).next('ul').toggle();
+            e.stopPropagation();
+            e.preventDefault();
+        });
+    });
+</script>
+
+<style>
+    #sticky.stick {
+        margin-top: 0 !important;
+        position: fixed;
+        top: 0;
+        z-index: 10000;
+        width: 100%;
+        background: #FFF;
+        border-bottom: 1px solid #ccc;
+    }
+        /* CSS used here will be applied after bootstrap.css */
+
+    .dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus {
+        background-image:none !important;
+    }
+    .dropdown-menu > li > a:hover {
+        background-color:transparent !important;
+    }
+    .dropdown-menu > li > a {
+        padding: 3px 20px !important;
+        cursor: pointer;
+    }
+
+    #demo12 h5{
+        color: #777 !important;
+    }
+    .main-header-outer .dropdown-menu {
+        width:100%;
+        background-color: #fff !important;
+        color: black !important;
+    }
+    .list-outer .dropdown-menu {
+        width: inherit;
+        background-color: #fff !important;
+        color: black !important;
+    }
+    .main-header-outer .dropdown-menu .dropdown-submenu{
+        margin: 4px 0px;
+    }
+    .main-header-outer .dropdown-menu .dropdown-submenu .test .glyphicon{
+        font-size: 10px;
+        top: 0px;
+    }
+    .main-header-outer .parent-dp{
+        min-width: 900px;
+        right: 0;
+        left: inherit;
+        border-radius: 0px;
+        border: 0px;
+        box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.15);
+
+    }
+    .main-header-outer .dropdown button{
+
+        border-radius: 0px;
+    }
+    .dp-input{
+        background: transparent;
+        border: 0px;
+        box-shadow: none;
+    }
+    .main-header-outer .dropdown-menu.device-type-list>li>a:focus, .dropdown-menu.device-type-list>li>a:hover{
+        background-color: transparent;
+        outline: 0;
+
+    }
+    .main-header-outer .dropdown-menu{
+        background: #fff;
+        border:none;
+        box-shadow:none;
+    }
+    .main-header-outer .dp-input input{
+        margin-left: 32px;
+    }
+    .main-header-outer .search-filter-inner .form-control{
+        color: #777;
+        background: transparent;
+        font-weight: 400;
+        font-size: 13px;
+    }
+    .search-input-outer .btn, .parent-dp .btn{
+        font-size: 14px;
+        border-color: #ccc !important;
+        border-left: 0px !important;
+        border-radius: 0px;
+        color: #ddd !important;
+    }
+    .search-input-outer .btn, .parent-dp .btn:focus{
+        outline: 0;
+        box-shadow: none;
+        border: 0px;
+    }
+    .search-input-outer .btn, .parent-dp .btn i{
+        color: #555 !important;
+    }
+    .parent-dp .btn.update-btn{
+        color: #fff !important;
+        border: 0px;
+        border-color: transparent !important;
+        box-shadow: none;
+    }
+    .main-header-outer .input-group-btn .btn, .main-header-outer .input-group-btn .btn:hover, .main-header-outer .input-group-btn .btn:focus{
+        color: black !important;
+        background: transparent !important;
+        border: 1px solid #aaa;
+        outline: 0;
+    }
+    ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+        color: rgba(255, 255, 255, 0.5) !important;
+    }
+    ::-moz-placeholder { /* Firefox 19+ */
+        color: rgba(255, 255, 255, 0.5) !important;
+    }
+    :-ms-input-placeholder { /* IE 10+ */
+        color: rgba(255, 255, 255, 0.5) !important;
+    }
+    :-moz-placeholder { /* Firefox 18- */
+        color: rgba(255, 255, 255, 0.5) !important;
+    }
+    .main-header-outer .caret{
+        margin: 0px 5px;
+    }
+    .main-header-outer .border-outer{
+        border:1px solid #ddd;
+    }
+    .main-header-outer .dropdown-menu>li>a:hover {
+        background-color: black
+    }
+    .main-header-outer .caret{
+        position: initial;
+        top: 0px;
+        right: 0px;
+    }
+    .dp-submenu-position{
+        position: inherit;
+    }
+    .dp-submenu-position li .input-group{
+        margin-left: 24px;
+    }
+    .dp-submenu-position li.dropdown-submenu:nth-child(even) button{
+        font-size: 13px;
+    }
+    .search-filter-outer{
+        float: left;
+    }
+    .main-header-outer input{
+        border-radius:0px;
+        box-shadow: none;
+    }
+    .filter-input-size input{
+        font-size:13px;
+    }
+    .filter-input-size .input-group-btn i{
+        font-size: 13px;
+    }
+    li:nth-child(even) .filter-input-size .input-group-btn i{
+        font-size: 13px;
+        padding-bottom: 0.45em;
+    }
+    .list-right-margin{
+        margin-right: 10px;
+    }
+    .test, .test:hover, .test:focus{
+        color: #777 !important;
+        text-decoration: none !important;
+        background: transparent !important;
+        outline: 0;
+        text-decoration: none !important;
+    }
+    .select_remove_arrow {
+        -webkit-appearance: none !important;
+        -moz-appearance: none !important;
+        text-indent: 1px !important;
+        text-overflow: '';
+        background: transparent !important;
+        border:0px;
+        border-bottom: 1px solid #aaa;
+        -webkit-box-shadow: none !important;
+        box-shadow: none !important;
+    }
+    .hide_input_box{
+        background: transparent !important;
+        border:0px;
+        border-bottom: 1px solid #aaa;
+        outline:0;
+        -webkit-box-shadow: none !important;
+        box-shadow: none !important;
+        border-radius:none;
+    }
+    .hide_input_box_extended{
+        background: transparent !important;
+        border:0px;
+        border-bottom: 1px solid #aaa;
+        outline:0;
+        -webkit-box-shadow: none !important;
+        box-shadow: none !important;
+        border-radius:none;
+        /*color:#aaa !important*/
+    }
+    select.input-lg1 {
+        padding: 0 0 !important;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        -o-appearance: none;
+        /* no standardized syntax available, no ie-friendly solution available */
+    }
+    select + i.fa {
+        color: #949394;
+        float: right;
+        margin-top: -22px;
+        margin-right: 5px;
+        pointer-events: none;
+        background-color: #fff;
+        padding-right: 5px;
+    }
+    .pagination > li:last-child > a, .pagination > li:last-child > span {
+        border-top-right-radius: 0px !important;
+        border-bottom-right-radius: 0px !important;
+    }
+    .pagination > li:first-child > a, .pagination > li:first-child > span {
+
+        border-top-left-radius: 0px !important;
+        border-bottom-left-radius: 0px !important;
+    }
+    .table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td{
+        vertical-align: middle;
+        padding: 6px 8px 4px;
+    }
+    .pagination > .disabled > span, .pagination > .disabled > span:hover, .pagination > .disabled > span:focus, .pagination > .disabled > a, .pagination > .disabled > a:hover, .pagination > .disabled > a:focus{
+        color: #337ab7;
+    }
+    .component-outer .fa{
+        font-size: 25px;
+    }
+    .component-outer .fa.fa-trash{
+        position: relative;
+        top: 4px;
+    }
+    .component-outer .fa.fa-plus{
+        font-size: 18px;
+        top: 0px;
+    }
+    .component-outer .fa.fa-search{
+        font-size: 12px;
+        top: 0px;
+    }
+    .arrow_box {
+        position: relative;
+        background: #fff;
+        border: 1px solid #ddd;
+    }
+    .arrow_box:after, .arrow_box:before {
+        bottom: 100%;
+        left: 81%;
+        border: solid transparent;
+        content: " ";
+        height: 0;
+        width: 0;
+        position: absolute;
+        pointer-events: none;
+    }
+
+    .arrow_box:after {
+        border-color: rgba(255, 255, 255, 0);
+        border-bottom-color: #fff;
+        border-width: 11px;
+        margin-left: -14px;
+    }
+    .arrow_box:before {
+        border-color: rgba(221, 221, 221, 0);
+        border-bottom-color: #ddd;
+        border-width: 12px;
+        margin-left: -16px;
+    }
+    ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+        color: #aaa !important;
+    }
+    ::-moz-placeholder { /* Firefox 19+ */
+        color:  #aaa !important;
+    }
+    :-ms-input-placeholder { /* IE 10+ */
+        color:  #aaa !important;
+    }
+    :-moz-placeholder { /* Firefox 18- */
+        color:  #aaa !important;
+    }
+
+    .addScroll{
+        height: 570px;
+        overflow: auto;
+    }
+    .select_typehead{
+      border-bottom: 0px;
+      border-top: 0px;
+      border-right: 0px;
+    }
+    .input_right_border{
+      border-right: 0px;
+    }
+    
+    
+    
+    .input-border{
+        border: 1px solid black !important;
+    }
+</style>
+<script>
+    $("#demo12 input[type=text]").keypress(function(e) {
+        if(e.which == 13) {
+            //alert('You pressed enter!');
+            var value = $(this).val();
+            if(!value){
+                alert("Please enter value");
+                return;
+            }
+            $('#updateResult').click();
+
+        }
+    });
+
+    $('.my-dropdown').dropdown();
+    $('.my-tooltip').tooltip();
+    function sticky_relocate() {
+        var window_top = $(window).scrollTop();
+        var div_top = $('#sticky-anchor').offset().top;
+        if (window_top > div_top) {
+            $('#sticky').addClass('stick');
+            $('#sticky-anchor').height($('#sticky').outerHeight());
+        } else {
+            $('#sticky').removeClass('stick');
+            $('#sticky-anchor').height(0);
+        }
+    }
+
+    $(function() {
+        $(window).scroll(sticky_relocate);
+        sticky_relocate();
+    });
+</script>
+<link href="css/Common.css" rel="stylesheet" /><!--
+<link href="css/style.css" rel="stylesheet" />-->
+
+
+</div>
+
+
+
+
+
+
+

@@ -1,0 +1,478 @@
+<div class="row" style="padding: 20px 100px;">
+    <div class="col-md-10 col-md-offset-1">
+        <div class="header-outer clearfix">
+            <div class="ho-left pull-left">
+                <label style="color: #5392ff;font-size: 20px">
+                    Framework
+                </label> &nbsp;
+                <label style="color: #949394;"> | Administration >> Settings >> Framework</label>
+            </div>
+
+        </div>
+    </div>
+</div>
+        <div class="row" style="background-color: #f7f7f7;">
+            <hr style="width: 100%;border-top: 1px solid #ccc !important;margin-top: 0px !important;
+        margin-bottom: 0px !important;"/>
+            <div class="col-md-10 col-md-offset-1">
+<div class="row" style="margin-top: 3%;background-color: #f7f7f7 !important;">
+<div id="exTab1" class="container">
+    <ul  class="nav nav-pills" style="list-style-type: none">
+        <li class="active">
+            <a href="javascript:void(0);" data-target="#1a" ng-click="openTab('Environment')" data-toggle="tab">Environment</a>
+        </li>
+        <li><a href="javascript:void(0);" data-target="#2a" ng-click="openTab('Status')" data-toggle="tab">Status</a>
+        </li>
+        <li><a href="javascript:void(0);"data-target="#3a" ng-click="openTab('DiscoveryStatus')" data-toggle="tab">Discovery Status</a>
+        </li>
+        <li><a  href="javascript:void(0);"data-target="#4a" ng-click="openTab('MigrationApproach')" data-toggle="tab">Migration Approach</a>
+        </li>
+        <li><a  href="javascript:void(0);"data-target="#5a" ng-click="openTab('DocType')" data-toggle="tab">Document Type</a>
+        </li>
+        <li><a  href="javascript:void(0);"data-target="#6a" ng-click="openTab('StakeholderRoles')" data-toggle="tab">Stakeholder Roles</a>
+        </li>
+        <li><a  href="javascript:void(0);"data-target="#7a" ng-click="openTab('Scope')" data-toggle="tab">Scope</a>
+        </li>
+
+
+    </ul>
+
+    <div class="tab-content clearfix">
+        <div class="tab-pane active" id="1a">
+            <div class="form-inline" style="padding:20px 20px 0px 0px;">
+            <div class="input-group" style="width: 30%">
+                <input ng-model="customname" type="text" class="form-control fontHelveticaNeue" style="color:#666;font-size:14px;height:33px;border-right: 0px;border-radius:0px;box-shadow:none;" placeholder="Environment Filter..." aria-describedby="basic-addon1">
+                            <span class="input-group-addon" id="basic-addon1" style="background-color: #fff;font-size:11px;border-radius:0px;">
+                              <i class="fa fa-search" style="cursor:pointer"></i></span>
+
+            </div> <!--&nbsp;-->
+                <div class="input-group">
+                    <i class="fa fa-times" ng-show="customname.length >0" ng-click="customname = ''" style="color: #25467A;font-size: 24px;" aria-hidden="true"></i>
+                </div>
+            <div class="input-group">
+            <i ng-show="customname.length >0" ng-click="AddFramework('environment',customname,'framework')" class="fa fa-plus" style="color: #949394;width:26px;height:26px;line-height:26px;border-radius:100%;text-align:center;border:1px solid #949394;cursor:pointer">
+                </i>
+            </div>
+
+                </div>
+            <div class="table-responsive" style="padding:10px">
+                <loading></loading>
+                <table class="table table-bordered table-striped">
+                    <thead>
+                    <tr class="fontHelvetica" style="background-color:#25467A;color:#ffffff;font-size:15px;">
+                        <td style="border:1px solid #25467A">Environments </td>
+                        <!--<td style="border:1px solid #25467A">Sort</td>-->
+                        <td style="border:1px solid #25467A"></td>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    <tr  ng-repeat="x in data | filter:customname" style="color:#666666 " >
+                        <td>
+                            {{x.value}}
+                        </td>
+                        <td>
+                          <span>  <i style="color:red;cursor:pointer" class="fa fa-minus-circle" aria-hidden="true" ng-confirm-click="Would to like to Delete?" ng-click=deletionDevices('environment',x.value,'framework')></i></span>
+                        </td>
+                    </tr>
+
+                    </tbody>
+                </table>
+
+            </div>
+</div>
+        <div class="tab-pane" id="2a">
+            <!--<h3>Status tab</h3>-->
+            <div class="form-inline" style="padding:20px 20px 0px 0px;">
+            <div class="input-group" style="width: 30%">
+                <input ng-model="custom.name" type="text" class="form-control fontHelveticaNeue" style="color:#666;font-size:14px;height:33px;border-right: 0px;border-radius:0px;box-shadow:none;" placeholder="Environment Filter" aria-describedby="basic-addon1">
+                            <span class="input-group-addon" id="basic-addon1" style="background-color: #fff;font-size:11px;border-radius:0px;">
+                              <i class="fa fa-search" style="cursor:pointer"></i></span>
+            </div> &nbsp;
+                <div class="input-group">
+                    <i class="fa fa-times" ng-show="custom.name.length > 0" ng-click="custom.name = ''" style="color: #25467A;font-size: 24px;" aria-hidden="true"></i>
+                </div> &nbsp;
+            <div class="input-group">
+                <select name="enetySelction" class="fontHelveticaNeue" id="aEntity" ng-model="custom.entity1" style="color:#666;font-size:14px;margin-right: 5%;border: 1px solid #ccc;border-radius:0px;height: 33px;">
+                    <option value="">Entity Filter</option>
+                    <option value="{{en.value}}" ng-repeat="en in FinalDisplayArr">{{en.value}}</option>
+                </select>
+
+            </div>&nbsp;
+                <div class="input-group">
+                    <i class="fa fa-times" ng-show="custom.entity1.length > 0" ng-click="custom.entity1 = ''" style="color: #25467A;font-size: 24px;" aria-hidden="true"></i>
+                </div> &nbsp;
+
+                <div class="input-group">
+                    <i ng-show="custom.entity1.length > 0" ng-click="AddFramework('status',custom.name,custom.entity1)" class="fa fa-plus" style="color: #949394;width:26px;height:26px;line-height:26px;border-radius:100%;text-align:center;border:1px solid #949394;cursor:pointer">
+                    </i>
+                </div>
+            </div>
+            <div class="table-responsive" style="padding:10px">
+                <loading></loading>
+                <table class="table table-bordered table-striped">
+                    <thead>
+                    <tr class="fontHelvetica" style="background-color:#25467A;color:#ffffff;font-size:15px;">
+                        <td style="border:1px solid #25467A">Statuses </td>
+                        <td style="border:1px solid #25467A">Entity</td>
+                        <td style="border:1px solid #25467A"></td>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    <tr  dir-paginate="x in data | startsWithLetter1:custom.name:custom.entity1 | filter:custom.name |filter:custom.entity1 | itemsPerPage:10" pagination-id="pageMsp"" style="color:#666666 " >
+                        <td>
+                            {{x.value}}
+                        </td>
+                        <td>
+                            {{x.Entity}}
+                        </td>
+                        <td>
+                            <i style="color:red;cursor:pointer" class="fa fa-minus-circle" aria-hidden="true" ng-confirm-click="Would to like to Delete?" ng-click=deletionDevices('status',x.value,x.Entity)></i>
+                        </td>
+                    </tr>
+
+                    </tbody>
+                </table>
+                <dir-pagination-controls pagination-id="pageMsp" data-num-pages="noOfPages" data-current-page="currentPage"  max-size="maxSize" class="Pagination"
+                                         max-size="10"
+                                         direction-links="true"
+                                         boundary-links="true" style="float:right;padding:0px;padding:0px">
+                </dir-pagination-controls>
+
+            </div>
+        </div>
+        <div class="tab-pane" id="3a">
+           <!-- <h3>Discovery Status tab</h3>-->
+            <div class="form-inline">
+            <div class="input-group" style="width: 30%">
+                <input ng-model="custom.name1" type="text" class="form-control fontHelveticaNeue" style="color:#666;font-size:14px;height:33px;border-right: 0px;border-radius:0px;box-shadow:none;" placeholder="Environment Filter" aria-describedby="basic-addon1">
+                            <span class="input-group-addon" id="basic-addon1" style="background-color: #fff;font-size:11px;border-radius:0px;">
+                              <i class="fa fa-search" style="cursor:pointer"></i></span>
+            </div>&nbsp;
+                <div class="input-group">
+                    <i class="fa fa-times" ng-show="custom.name1.length > 0" ng-click="custom.name1 = ''" style="color: #25467A;font-size: 24px;" aria-hidden="true"></i>
+                </div>
+            <div class="input-group">
+                <i ng-show="custom.name1.length > 0" ng-click="AddFramework('discoverystatus',custom.name1,'framework')" class="fa fa-plus" style="color: #949394;width:26px;height:26px;line-height:26px;border-radius:100%;text-align:center;border:1px solid #949394;cursor:pointer">
+                </i>
+            </div>
+            </div>
+            <!--<div class="input-group">
+                <select name="enetySelction" class="fontHelveticaNeue" id="aEntity" ng-model="custom.entity" style="color:#666;font-size:14px;margin-right: 5%;border: 1px solid #ccc;border-radius:0px;height: 33px;">
+                    <option value="">Entity Filter</option>
+                    <option value="{{en.value}}" ng-repeat="en in customEntity">{{en.value}}</option>
+                </select>
+
+            </div>&nbsp;-->
+
+            <div class="table-responsive" style="padding:10px">
+                <loading></loading>
+                <table class="table table-bordered table-striped">
+                    <thead>
+                    <tr class="fontHelvetica" style="background-color:#25467A;color:#ffffff;font-size:15px;">
+                        <td style="border:1px solid #25467A">Discovery Statuses</td>
+                        <!--<td style="border:1px solid #25467A">Report Column</td>-->
+                        <td style="border:1px solid #25467A"></td>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    <tr ng-repeat="x in data | filter:custom.name1" style="color:#666666 " >
+                        <td>
+                            {{x.value}}
+                        </td>
+                        <!--<td>
+                            abcd
+                        </td>-->
+                        <td>
+                            <i style="color:red;cursor:pointer" class="fa fa-minus-circle" aria-hidden="true" ng-confirm-click="Would to like to Delete?" ng-click=deletionDevices('discoverystatus',x.value,'framework')></i>
+                        </td>
+                    </tr>
+
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+        <div class="tab-pane" id="4a">
+            <!--<h3>Migration Approach tab</h3>-->
+            <div class="form-inline" style="padding:20px 20px 0px 0px;">
+                <div class="input-group" style="width: 30%">
+                    <input ng-model="custom.name2" type="text" class="form-control fontHelveticaNeue" style="color:#666;font-size:14px;height:33px;border-right: 0px;border-radius:0px;box-shadow:none;" placeholder="Environment Filter" aria-describedby="basic-addon1">
+                            <span class="input-group-addon" id="basic-addon1" style="background-color: #fff;font-size:11px;border-radius:0px;">
+                              <i class="fa fa-search" style="cursor:pointer"></i></span>
+                </div> &nbsp;
+                <div class="input-group">
+                    <i class="fa fa-times" ng-show="custom.name2.length > 0"  ng-click="custom.name2 = ''"  style="color: #25467A;font-size: 24px;" aria-hidden="true"></i>
+                </div> &nbsp;
+                <div class="input-group">
+                    <select name="enetySelction" class="fontHelveticaNeue" id="aEntity" ng-model="custom.entity" style="color:#666;font-size:14px;margin-right: 5%;border: 1px solid #ccc;border-radius:0px;height: 33px;">
+                        <option value="">Entity Filter</option>
+                        <option value="{{en.value}}" ng-repeat="en in FinalDisplayArr">{{en.value}}</option>
+                    </select>
+
+                </div>&nbsp;
+                <div class="input-group">
+                    <i class="fa fa-times" ng-show="custom.entity.length > 0"  ng-click="custom.entity = ''" style="color: #25467A;font-size: 24px;" aria-hidden="true"></i>
+                </div> &nbsp;
+
+                <div class="input-group">
+                    <i ng-show="custom.entity.length > 0"  ng-click="AddFramework('migrationapproach',custom.name2,custom.entity)" class="fa fa-plus" style="color: #949394;width:26px;height:26px;line-height:26px;border-radius:100%;text-align:center;border:1px solid #949394;cursor:pointer">
+                    </i>
+                </div>
+
+            </div>
+
+            <div class="table-responsive" style="padding:10px">
+                <loading></loading>
+                <table class="table table-bordered table-striped">
+                    <thead>
+                    <tr class="fontHelvetica" style="background-color:#25467A;color:#ffffff;font-size:15px;">
+                        <td style="border:1px solid #25467A">Migration Approach</td>
+                        <!--<td style="border:1px solid #25467A">Final Flag</td>-->
+                        <td style="border:1px solid #25467A">Entity</td>
+                        <td style="border: 1px solid #25467A"></td>
+                        <!--<td style="border:1px solid #25467A">Target Requirements</td>-->
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    <tr ng-repeat="x in data | startsWithLetter1:custom.name2:custom.entity| filter:custom.name2 |filter:custom.entity" style="color:#666666 " >
+                        <td>
+                            {{x.value}}
+                        </td>
+                        <td>
+                            {{x.Entity}}
+                        </td>
+                        <td>
+                            <i style="color:red;cursor:pointer" class="fa fa-minus-circle" aria-hidden="true" ng-confirm-click="Would to like to Delete?" ng-click=deletionDevices('migrationapproach',x.value,x.Entity)></i>
+                        </td>
+                       <!-- <td>
+                        Component
+                        </td>
+                        <td>
+                            TR1
+                        </td>-->
+                    </tr>
+
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+        <div class="tab-pane" id="5a">
+            <!--<h3>Document type tab</h3>-->
+            <div class="form-inline">
+            <div class="input-group" style="width: 30%">
+                <input ng-model="custom.name3" type="text" class="form-control fontHelveticaNeue" style="color:#666;font-size:14px;height:33px;border-right: 0px;border-radius:0px;box-shadow:none;" placeholder="Environment Filter" aria-describedby="basic-addon1">
+                            <span class="input-group-addon" id="basic-addon1" style="background-color: #fff;font-size:11px;border-radius:0px;">
+                              <i class="fa fa-search" style="cursor:pointer"></i></span>
+            </div>&nbsp;
+                <div class="input-group">
+                    <i class="fa fa-times" ng-show="custom.name3.length > 0" ng-click="custom.name3 = ''" style="color: #25467A;font-size: 24px;" aria-hidden="true"></i>
+                </div>
+            <div class="input-group">
+                <i ng-click="AddFramework('doctype',custom.name3,'framework')" ng-show="custom.name3.length > 0" class="fa fa-plus" style="color: #949394;width:26px;height:26px;line-height:26px;border-radius:100%;text-align:center;border:1px solid #949394;cursor:pointer">
+                </i>
+            </div>
+            </div>
+            <!--<div class="input-group">
+                <select name="enetySelction" class="fontHelveticaNeue" id="aEntity" ng-model="custom.entity" style="color:#666;font-size:14px;margin-right: 5%;border: 1px solid #ccc;border-radius:0px;height: 33px;">
+                    <option value="">Entity Filter</option>
+                    <option value="{{en.value}}" ng-repeat="en in customEntity">{{en.value}}</option>
+                </select>
+
+            </div>&nbsp;-->
+
+            <div class="table-responsive" style="padding:10px">
+                <loading></loading>
+                <table class="table table-bordered table-striped">
+                    <thead>
+                    <tr class="fontHelvetica" style="background-color:#25467A;color:#ffffff;font-size:15px;">
+                        <td style="border:1px solid #25467A">Document types</td>
+                        <td style="border:1px solid #25467A"></td>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    <tr ng-repeat="x in data | filter:custom.name3" style="color:#666666 " >
+                        <td>
+                            {{x.value}}
+                        </td>
+                        <td>
+                            <i style="color:red;cursor:pointer" class="fa fa-minus-circle" aria-hidden="true" ng-confirm-click="Would to like to Delete?" ng-click=deletionDevices('doctype',x.value,'framework')></i>
+                        </td>
+                    </tr>
+
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+        <div class="tab-pane" id="6a">
+            <!--<h3>stakeholder role tab</h3>-->
+            <div class="form-inline">
+            <div class="input-group" style="width: 30%">
+                <input ng-model="custom.name4" type="text" class="form-control fontHelveticaNeue" style="color:#666;font-size:14px;height:33px;border-right: 0px;border-radius:0px;box-shadow:none;" placeholder="Environment Filter" aria-describedby="basic-addon1">
+                            <span class="input-group-addon" id="basic-addon1" style="background-color: #fff;font-size:11px;border-radius:0px;">
+                              <i class="fa fa-search" style="cursor:pointer"></i></span>
+            </div>&nbsp;
+                <div class="input-group">
+                    <i class="fa fa-times" ng-show="custom.name4.length > 0" ng-click="custom.name4 = '' " style="color: #25467A;font-size: 24px;" aria-hidden="true"></i>
+                </div>
+            <div class="input-group">
+                <i ng-click="AddFramework('stakeholderroles',custom.name4,'framework')" ng-show="custom.name4.length > 0" class="fa fa-plus" style="color: #949394;width:26px;height:26px;line-height:26px;border-radius:100%;text-align:center;border:1px solid #949394;cursor:pointer">
+                </i>
+            </div>
+            </div>
+            <!--<div class="input-group">
+                <select name="enetySelction" class="fontHelveticaNeue" id="aEntity" ng-model="custom.entity" style="color:#666;font-size:14px;margin-right: 5%;border: 1px solid #ccc;border-radius:0px;height: 33px;">
+                    <option value="">Entity Filter</option>
+                    <option value="{{en.value}}" ng-repeat="en in customEntity">{{en.value}}</option>
+                </select>
+
+            </div>&nbsp;-->
+
+            <div class="table-responsive" style="padding:10px">
+                <loading></loading>
+                <table class="table table-bordered table-striped">
+                    <thead>
+                    <tr class="fontHelvetica" style="background-color:#25467A;color:#ffffff;font-size:15px;">
+                        <td style="border:1px solid #25467A">Stakeholder Roles</td>
+                        <td style="border:1px solid #25467A"></td>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    <tr ng-repeat="x in data | filter:custom.name4" style="color:#666666 " >
+                        <td>
+                            {{x.value}}
+                        </td>
+
+                        <td>
+                            <i style="color:red;cursor:pointer" class="fa fa-minus-circle" aria-hidden="true" ng-confirm-click="Would to like to Delete?" ng-click=deletionDevices('stakeholderroles',x.value,'framework')></i>
+                        </td>
+                    </tr>
+
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+        <div class="tab-pane" id="7a">
+            <!--<h3>Scope tab</h3>-->
+            <div class="form-inline">
+            <div class="input-group" style="width: 30%">
+                <input ng-model="custom.name5" type="text" class="form-control fontHelveticaNeue" style="color:#666;font-size:14px;height:33px;border-right: 0px;border-radius:0px;box-shadow:none;" placeholder="Environment Filter" aria-describedby="basic-addon1">
+                            <span class="input-group-addon" id="basic-addon1" style="background-color: #fff;font-size:11px;border-radius:0px;">
+                              <i class="fa fa-search" style="cursor:pointer"></i></span>
+            </div>&nbsp;
+                <div class="input-group">
+                    <i class="fa fa-times" ng-show="custom.name5.length > 0" ng-click="custom.name5 = ''" style="color: #25467A;font-size: 24px;" aria-hidden="true"></i>
+                </div>
+            <div class="input-group">
+                <i ng-click="AddFramework('scope',custom.name5,'framework')" ng-show="custom.name5.length > 0" class="fa fa-plus" style="color: #949394;width:26px;height:26px;line-height:26px;border-radius:100%;text-align:center;border:1px solid #949394;cursor:pointer">
+                </i>
+            </div>
+            </div>
+            <!--<div class="input-group">
+                <select name="enetySelction" class="fontHelveticaNeue" id="aEntity" ng-model="custom.entity" style="color:#666;font-size:14px;margin-right: 5%;border: 1px solid #ccc;border-radius:0px;height: 33px;">
+                    <option value="">Entity Filter</option>
+                    <option value="{{en.value}}" ng-repeat="en in customEntity">{{en.value}}</option>
+                </select>
+
+            </div>&nbsp;-->
+
+            <div class="table-responsive" style="padding:10px">
+                <loading></loading>
+                <table class="table table-bordered table-striped">
+                    <thead>
+                    <tr class="fontHelvetica" style="background-color:#25467A;color:#ffffff;font-size:15px;">
+                        <td style="border:1px solid #25467A">Scope Roles</td>
+                        <!--<td style="border:1px solid #25467A">Sort</td>-->
+                        <td style="border:1px solid #25467A"></td>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    <tr ng-repeat="x in data | filter:custom.name5" style="color:#666666 " >
+                        <td>
+                            {{x.value}}
+                        </td>
+                        <!--<td>
+                            abcd
+                        </td>-->
+                        <td>
+                            <i style="color:red;cursor:pointer" class="fa fa-minus-circle" aria-hidden="true" ng-confirm-click="Would to like to Delete?" ng-click=deletionDevices('scope',x.value,'framework')></i>
+                        </td>
+                    </tr>
+
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+                </div>
+            </div>
+
+
+
+<style>
+
+    ul>li::before, ol>li::before {
+        color: #959595;
+        content: ' ' !important;
+        display: inline-block;
+        font-family: Arial, sans-serif;
+        font-size: 1.5rem;
+        margin-left: -1.3rem;
+        margin-left: -20px\9;
+        position: absolute;
+    }
+
+    body {
+        padding : 10px ;
+
+    }
+
+    #exTab1 .tab-content {
+        color : #428bca;
+        /*background-color: #428bca;*/
+        padding : 5px 15px;
+    }
+
+    #exTab2 h3 {
+        color : white;
+        background-color: #428bca;
+        padding : 5px 15px;
+    }
+
+    /* remove border radius for the tab */
+
+    #exTab1 .nav-pills > li > a {
+        border-radius: 0;
+    }
+
+    /* change border radius for the tab , apply corners on top*/
+
+    #exTab3 .nav-pills > li > a {
+        border-radius: 4px 4px 0 0 ;
+    }
+
+    #exTab3 .tab-content {
+        color : white;
+        background-color: #428bca;
+        padding : 5px 15px;
+    }
+
+
+
+
+
+
+</style>

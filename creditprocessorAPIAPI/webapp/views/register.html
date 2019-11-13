@@ -1,0 +1,195 @@
+<div class="container">
+
+    <div class="row main">
+      <div class="main-login main-center">
+      <h2><b>Registration Page</b></h2>
+      <div ng-show="error" class="alert alert-danger">{{error}}</div>
+      <div ng-show="registerSuccess">Do you want to register one more user ? <a href="#/register" ng-click="resetForm();">Yes</a> | <a href="#/index">No</a></div>
+        <!--<p>
+        Please register new user with valid information.
+      </p>-->
+    <div class="ibm-two-column" ng-show="!registerSuccess">
+      <img ng-if="dataLoading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="/>
+
+            <form class="form-horizontal" id="registerform" name="form" role="form" ng-submit="registerUser()">
+                <div class="form-group">
+                  <div class="col-md-5">
+                      <label for="username" class="cols-sm-2 control-label">First Name:</label>
+                      <div class="input-group">
+                          <span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
+                          <input type="text" class="form-control" name="firstname" id="firstname" ng-model="firstname" placeholder="Enter your First Name"  required data-placement="bottom" required data-toggle="tooltip_input" title="Only alphabets are allowed."/>
+                          <!--<span ng-show="form.username.$dirty && form.username.$error.required" class="help-block">Username is required</span>-->
+                      </div>
+                  </div>
+                    <div class="col-md-5" style="margin-left:52px">
+                        <label for="username" class="cols-sm-2 control-label">Last Name:</label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
+                            <input type="text" class="form-control" name="lastname" id="username" ng-model="lastname" placeholder="Enter your Last Name"  required data-placement="bottom" required data-toggle="tooltip_input" title="Only alphabets are allowed."/>
+                            <!--<span ng-show="form.username.$dirty && form.username.$error.required" class="help-block">Username is required</span>-->
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group col-md-12">
+                    <!--<label for="username" class="cols-sm-2 control-label">Username:</label>-->
+                    <div class="col-md-12">
+                      <label for="username" class="cols-sm-2 control-label">Username:</label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
+                            <input type="text" class="form-control" name="username" id="username" ng-model="username" placeholder="Enter your Username" data-placement="bottom" required data-toggle="tooltip_input" title="Username can include alphabets, numbers, . and/or _"/>
+                            <!--<span ng-show="form.username.$dirty && form.username.$error.required" class="help-block">Username is required</span>-->
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                  <div class="col-md-5">
+                    <label for="password" class="cols-sm-2 control-label">Password:</label>
+                      <div class="input-group">
+                          <span class="input-group-addon"><i class="fa fa-lock fa" aria-hidden="true"></i></span>
+                          <input type="password" class="form-control" name="password" id="password" ng-model="password" placeholder="Enter your Password"  required data-placement="bottom" required data-toggle="tooltip_input" title="Password must contain 8 characters and at least one capital letter and number."/>
+                          <!--<span ng-show="form.username.$dirty && form.username.$error.required" class="help-block">Username is required</span>-->
+                      </div>
+                  </div>
+                  <div class="col-md-5" style="margin-left:52px">
+                    <label for="password" class="cols-sm-2 control-label">Confirm Password:</label>
+                      <div class="input-group">
+                          <span class="input-group-addon"><i class="fa fa-lock fa" aria-hidden="true"></i></span>
+                          <input type="password" class="form-control" name="confirmpassword" id="confirmpassword" ng-model="confirmpassword" placeholder="Enter confirm Password"  required data-placement="bottom" required data-toggle="tooltip_input"/>
+                          <!--<span ng-show="form.username.$dirty && form.username.$error.required" class="help-block">Username is required</span>-->
+                      </div>
+                  </div>
+
+                </div>
+                <div class="form-group">
+                  <!--<div class="col-md-5">
+                      <label for="username" class="cols-sm-2 control-label">Project:</label>
+                      <div class="input-group">
+                          <span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
+                          <select type="text" class="form-control" name="project" id="project" ng-model="project" placeholder="Select your Project"  ng-options="x for x in projects" required>
+                            <option value="">-- Select Project --</option>
+
+                          </select>
+                      </div>
+                  </div>-->
+                  <div class="col-md-5">
+                        <label for="username" class="cols-sm-2 control-label">Email:</label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
+                            <input type="email" class="form-control" name="email" id="email" ng-model="email" placeholder="Enter your Email"  required/>
+                        </div>
+                        <span ng-show="form.email.$dirty && form.email.$error.required" class="help-block">Please enter valid email address</span>
+                    </div>
+                    <div class="col-md-5" style="margin-left:52px">
+                        <label for="username" class="cols-sm-2 control-label">Role:</label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
+                            <select type="text" class="form-control" name="role" id="role" ng-model="role" placeholder="Select your Role"  ng-options="x for x in roles"  required>
+                            <!--<select type="text" class="form-control" name="role" id="role" ng-model="role" placeholder="Select your Role"  required>-->
+                              <option value="">-- Select Role --</option>
+                              <!--<option ng-repeat="x in roles" value="{{x}}" ng-if="x == 'Scopeplus Admin' || x == 'Scopeplus Others'">{{x}}</option>-->
+                              <!--<option value="admin" selected="selected">Admin</option>
+                              <option value="scopeplus">Scope Plus</option>-->
+                            </select>
+                            <!--<span ng-show="form.username.$dirty && form.username.$error.required" class="help-block">Username is required</span>-->
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                <!--  <div class="col-md-5">
+                      <label for="username" class="cols-sm-2 control-label">Email:</label>
+                      <div class="input-group">
+                          <span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
+                          <input type="email" class="form-control" name="email" id="email" ng-model="email" placeholder="Enter your Email"  required/>
+                      </div>
+                  </div>
+                  <div class="col-md-5" style="margin-left:52px">
+                      <label for="phone" class="cols-sm-2 control-label">Phone:</label>
+                      <div class="input-group">
+                          <span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
+                          <input type="text" class="form-control" name="phone" id="phone" ng-model="phone" placeholder="Enter your phone number"  required />
+
+                      </div>
+                  </div>-->
+                </div>
+                <div class="form-actions">
+                  <br/>
+                  <br/>
+                  <button type="submit" class="btn btn-primary btn-lg btn-block login-button" ng-disabled="dataLoading" style="text-align:center;color:blue;background-color: #5392FF;color:#FFFFFF;">Register</button>
+                    <!--<button type="submit" class="btn btn-primary btn-lg btn-block login-button" ng-disabled="form.$invalid || dataLoading" class="btn btn-danger">Login</button>-->
+
+                </div>
+            </form>
+            <script>
+            $(document).ready(function(){
+                $('[data-toggle="tooltip_input"]').tooltip();
+            });
+            </script>
+</div>
+</div>
+</div>
+</div>
+ <style>
+    body, html{
+        height: 100%;
+        background-repeat: no-repeat;
+        background-color: #d3d3d3;
+        font-family: 'Oxygen', sans-serif;
+    }
+
+    .main{
+        margin-top: 70px;
+    }
+
+    h1.title {
+        font-size: 50px;
+        font-family: 'Passion One', cursive;
+        font-weight: 400;
+    }
+
+    hr{
+        width: 10%;
+        color: #fff;
+    }
+
+    .form-group{
+        margin-bottom: 15px;
+    }
+
+    label{
+        margin-bottom: 15px;
+    }
+
+    input,
+    input::-webkit-input-placeholder {
+        font-size: 11px;
+        padding-top: 3px;
+    }
+
+    .main-login{
+        background-color: #fff;
+        /* shadows and rounded borders */
+        -moz-border-radius: 2px;
+        -webkit-border-radius: 2px;
+        border-radius: 2px;
+        -moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+        -webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+        box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+
+    }
+
+    .main-center{
+        margin-top: 30px;
+        margin: 0 auto;
+        /*max-width: 330px;*/
+        /*max-width: 422px;*/
+        max-width: 550px;
+        padding: 40px 40px;
+        /*height: 372px;*/
+    }
+
+    .login-button{
+        margin-top: 5px;
+    }
+
+
+</style>

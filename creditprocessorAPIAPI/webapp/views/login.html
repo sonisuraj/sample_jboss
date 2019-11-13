@@ -1,0 +1,156 @@
+<div class="container">
+    <div class="row main">
+        <div class="main-login main-center">
+<h2>Sign in </h2>
+<div ng-show="error" class="alert alert-danger">{{error}}</div>
+
+<p ng-if="loginModeValue=='BLUEPAGES'">
+Please sign in using your intranet e-mail ID and password.
+</p>
+
+<p ng-if="loginModeValue=='LOCALAUTH'" style="font-size: 14px;">
+Please sign in using your User ID and password.
+</p>
+
+<div class="ibm-two-column" ng-if="loginModeValue !=='LOCALAUTH'" ng-controller="LoginController">
+            <form class="form-horizontal"name="form" role="form" ng-submit="login()">
+                <div class="form-group">
+                    <label for="username" class="cols-sm-2 control-label">Username</label>
+                    <div class="cols-sm-10">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
+                            <input type="text" class="form-control" name="username" id="username" ng-model="username" placeholder="Enter your Username"/>
+                            <span ng-show="form.username.$dirty && form.username.$error.required" class="help-block">Username is required</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="password" class="cols-sm-2 control-label">Password</label>
+                    <div class="cols-sm-10">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+                            <input type="password" class="form-control" name="password" id="password" ng-model="password" placeholder="Enter your Password"/>
+                            <span ng-show="form.password.$dirty && form.password.$error.required" class="help-block">Password is required</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary btn-lg btn-block login-button" ng-disabled="form.$invalid || dataLoading" class="btn btn-danger">Login</button>
+                    <img ng-if="dataLoading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="/>
+                </div>
+            </form>
+</div>
+<div class="ibm-two-column" ng-if="loginModeValue=='LOCALAUTH'">
+			<form class="form-horizontal"name="form" role="form" ng-submit="loginLocalAuth(usernameLocal,passwordLocal)">
+                <div class="form-group">
+                    <label for="usernameLocal" class="cols-sm-2 control-label">Username *</label>
+                    <div class="cols-sm-10">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
+                            <input type="text" class="form-control" name="usernameLocal" id="usernameLocal" ng-model="usernameLocal" placeholder="Enter your Username" required />
+
+                        </div>
+                        <span ng-show="form.usernameLocal.$dirty && form.usernameLocal.$error.required" class="help-block">Username is required</span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="passwordLocal" class="cols-sm-2 control-label">Password *</label>
+                    <div class="cols-sm-10">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+                            <input type="password" class="form-control" name="passwordLocal" id="passwordLocal" ng-model="passwordLocal" placeholder="Enter your Password" required/>
+
+                        </div>
+                          <span ng-show="form.passwordLocal.$dirty && form.passwordLocal.$error.required" class="help-block">Password is required</span>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary btn-lg btn-block login-button" ng-disabled="form.$invalid || dataLoading" class="btn btn-danger" style="color:white">Login</button>
+                    <img ng-if="dataLoading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="/>
+                </div>
+            </form>
+
+      			<table border="0">
+      				<tbody>
+      				<tr>
+      					<td align="left">
+                  <br/>
+      					<a href="#/forgotPassword" style="font-size: 14px;">Forgot Password ? </a> <!--| <a href="#/register" style="font-size: 14px;">New User?</a>-->
+      					</td>
+      				</tr>
+      				</tbody>
+      			</table>
+  </div>
+
+
+ <style>
+    body, html{
+        height: 100%;
+        background-repeat: no-repeat;
+        background-color: #d3d3d3;
+        font-family: 'Oxygen', sans-serif;
+    }
+
+    .main{
+        margin-top: 70px;
+    }
+
+    h1.title {
+        font-size: 50px;
+        font-family: 'Passion One', cursive;
+        font-weight: 400;
+    }
+
+    hr{
+        width: 10%;
+        color: #fff;
+    }
+
+    .form-group{
+        margin-bottom: 15px;
+    }
+
+    label{
+        margin-bottom: 15px;
+    }
+
+    input,
+    input::-webkit-input-placeholder {
+        font-size: 11px;
+        padding-top: 3px;
+    }
+
+    .main-login{
+        background-color: #fff;
+        /* shadows and rounded borders */
+        -moz-border-radius: 2px;
+        -webkit-border-radius: 2px;
+        border-radius: 2px;
+        -moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+        -webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+        box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+
+    }
+
+    .main-center{
+        margin-top: 30px;
+        margin: 0 auto;
+        /*max-width: 330px;*/
+        max-width: 422px;
+        padding: 40px 40px;
+        /*height: 372px;*/
+    }
+
+    .login-button{
+        margin-top: 5px;
+    }
+
+    .login-register{
+        font-size: 11px;
+        text-align: center;
+    }
+
+</style>

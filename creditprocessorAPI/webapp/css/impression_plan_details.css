@@ -1,0 +1,40 @@
+/*------------------------------------------------------Start: Container CSS------------------------------------------------*/
+body {
+	background-color: #F2F2F2;
+}
+
+#container-top {
+    padding-top: 44px;
+}
+
+#container-middle {
+	margin-bottom: 70px;
+}
+
+.content-row {
+	padding-top: 2px;
+	color: #4C4C4C;
+	margin-top: 9px;
+}
+
+.content-row_Heading {
+	left: 16px;
+	font-family: 'Helvetica Light', 'Helvetica';
+	font-size: 20px;
+	line-height: 30px;
+}
+
+.content-row_Discription {
+	font-family: 'Helvetica';
+	line-height: normal;
+	margin-top: 6px;
+	margin-bottom: 19px;
+}
+
+.section-left {	
+	background-color: #FFFFFF;
+	width: 100%;
+	padding: 4px 7px 4px 7px;
+	box-shadow: 0px 1px 3px #AAA;
+}
+/*------------------------------------------------------End: Container CSS------------------------------------------------*/

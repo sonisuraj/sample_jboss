@@ -1,0 +1,134 @@
+/*------------------------------------------------------Start: Container CSS------------------------------------------------*/
+body {
+    background-image: none;
+    background-color: #ffffff;
+    margin: 0;
+    text-align: left;
+    width: 100%;
+    height: 100%;
+}
+
+.fixfixed .container #header, 
+.fixfixed .container #footer { 
+    position: absolute; 
+} 
+
+#container {
+    padding-top: 44px;
+}
+
+.button-center {
+    padding-bottom: 70px;
+}
+
+.create_note_type {
+	font-family: 'Roboto Regular', 'Roboto';
+	font-weight: 400;
+	font-style: normal;
+	font-size: 16px;
+	color: #5A6673;
+	margin-top: 26px;
+	line-height: normal;
+}
+
+.dropdown-menu {
+	margin-top: 10px;
+	min-width: auto;
+	width: 100%;
+}
+
+.align-right {
+	margin-top: -19px;
+	margin-left: 100%;
+}
+
+.create_note_drop_down/*, .btn:hover, .btn:focus*/ {
+	width: 100%;
+	height: 36px;
+	font-family: 'Roboto Regular', 'Roboto';
+	text-align: left;
+	font-weight: 400;
+	font-size: 13px;
+	background: url("../images/img_drop_downList.png");
+	margin-top: 2px;
+	margin-bottom: -11px;
+	border: 2px;
+	border-style: solid;
+	border-radius: 4px;
+	border-color: #BDC3C7;
+}
+
+.arrow-positioning {
+	vertical-align: middle;
+	height: 10px;
+	width: 10px;
+	pointer-events: none;
+	float: right;
+	margin-top: -13px;
+	margin-right: 6px;
+}
+
+.overlay-arrow {
+	position: absolute;
+	background-image: url("../images/create_note/minus.gif");
+	background-repeat: no-repeat;
+	height: 10px;
+	width: 10px;
+}
+
+textarea {
+	width: 100%;
+    min-height: 210px !important;
+	font-family: 'Arial Regular', 'Arial';
+	font-weight: 400;
+	font-size: 13px;
+	resize: none;
+}
+
+.text-container {
+}
+
+.create_note_button {
+	width: 180px;
+	height: 45px;
+	margin-top: 2px;
+	margin: 0 auto;
+}
+
+/*.create_note_button_Text {
+	font-family: 'Roboto Medium', 'Roboto';
+	font-weight: 500;
+	font-size: 16px;
+	color: #FFFFFF;
+}*/
+
+.button_height {
+	height: 45px;
+	padding: 12px 0 0 50px;
+}
+.name-title{
+    font-size: 18px;
+    position: relative;
+    left: 4.2%;
+}
+select option {
+    font-family: 'Roboto Regular', 'Roboto';
+    font-weight: 400;
+    font-style: normal;
+    font-size: 13px;
+}
+
+
+.create_note_button_Text {
+    font-family: 'Roboto Medium', 'Roboto';
+    font-weight: 500;
+    font-size: 16px;
+    color: #FFFFFF;
+    background-color: #1bbc9c;
+    border: transparent;
+    min-width: 180px;
+    min-height: 45px;
+    margin: 0 auto;
+}
+/*------------------------End: Container Middle CSS------------------------*/
+/*------------------------------------------------------End: Container CSS------------------------------------------------*/

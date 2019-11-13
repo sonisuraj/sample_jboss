@@ -1,0 +1,373 @@
+
+<div class="container" style="margin-top: 1%" ng-if="deviceID!='first' && deviceID !='Notes' && deviceID !='SetReviewNotes' && deviceID !='UnSetReviewNotes' && deviceID !='Documents' && deviceID !='rationale' && deviceID !='fieldaudit'" ng-controller="logicalDevicesController_extended">
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1 component-outer" style="border: 1px solid #ccc;background-color: #fff">
+            <div class="col-md-12">
+                <div class="col-md-6">
+                    <h4 class="fontHelvetica" style="padding-left:10px;padding-bottom:10px">
+                        <span style="color: #5392FF;font-size: 24px;border-right: 1px solid #5392FF;">{{headingAssociationTitle}} &nbsp;</span> &nbsp;
+                        <span style="color:#949394;;font-size:15px;"> {{associateLowerTitle != "0" ? associateLowerTitle : ""}} </span>
+                    </h4>
+                </div>
+                <div class="col-md-6" ng-show="showSelectionDiv=='true'" ng-if="roleBasedCanBeAssociated">
+                    <button ng-if="setSelectionButton  == 'normaView'" class="btn fontHelveticaNeue" ng-click="otdtable()" style="border-radius:0px;background-color: #5392FF;color:#FFFFFF;float: right;
+                             margin-right: 1%;margin-top: 1%;cursor:pointer" data-toggle="collapse" data-target="#demo16">{{headingAssociationTitle}} Selection</button>
+
+                    <button ng-if="setSelectionButton  == 'clusterView'" class="btn fontHelveticaNeue" ng-click="otdtable()" style="border-radius:0px;background-color: #5392FF;color:#FFFFFF;float: right;
+                             margin-right: 1%;margin-top: 1%;cursor:pointer" data-toggle="collapse" data-target="#demo16">{{headingAssociationTitle}} Selection</button>
+                    <!-- show this button only when associating services to logicAL DEVICE-->
+                    <button ng-if="setSelectionButton == 'associateSerToLg'" class="btn fontHelveticaNeue" ng-click="otdtable()" style="border-radius:0px;background-color: #5392FF;color:#FFFFFF;float: right;
+                             margin-right: 1%;margin-top: 1%;cursor:pointer" data-toggle="collapse" data-target="#demo18"> Component Selection</button>
+                    <!-- code chnges ends-->
+                    <!-- show this button incase of stakeholder selection-->
+                    <button ng-if="setSelectionButton == 'stakeholders'" class="btn fontHelveticaNeue" ng-click="otdtable()" style="border-radius:0px;background-color: #5392FF;color:#FFFFFF;float: right;
+                             margin-right: 1%;margin-top: 1%;cursor:pointer" data-toggle="collapse" data-target="#"> Stakeholder Selection</button>
+                    <!-- code change ends-->
+
+                    <!-- cmt-1012 starts-->
+                    <button ng-if="setSelectionButton == 'associateFStoClusters'" class="btn fontHelveticaNeue" ng-click="otdtable()" style="border-radius:0px;background-color: #5392FF;color:#FFFFFF;float: right;
+                             margin-right: 1%;margin-top: 1%;cursor:pointer" data-toggle="collapse" data-target="#demoFsCluster"> Logical Device Selection</button>
+                    <!-- cmt-1012 ends-->
+
+                </div>
+            </div>
+            <!-- if service to Lg selection then show a different filter for component search-->
+            <ul id="demo18" class="collapse border-outer parent-dp arrow_box " style="background-color: #fff !important;margin-right: 1%">
+                <div class=" form-inline form-group pull-left" style="padding-top:10px;margin-left: 3%">
+                    <div class="input-group" style="width:60%">
+                        <input type="text" my-enter="searchOtherCompForLD(associationMainHeading,associationSubHeading,searchCompNameServAssociation)" class="form-control fontHelveticaNeue" style="width:220px;border-radius: 0px;font-size:14px;height:26px;border-right:0px;box-shadow:none;" placeholder="{{headingAssociationTitle}} Filter" aria-describedby="basic-addon1" ng-model="searchCompNameServAssociation" >
+                        <span class="input-group-addon" id="basic-addon1" style="border-radius: 0px;background-color: #fff;font-size:11px;cursor:pointer">
+                                   <i class="fa fa-search" ng-click="searchOtherCompForLD(associationMainHeading,associationSubHeading,searchCompNameServAssociation)"></i>
+                                     <!--<i  class="fa fa-plus" style="cursor:pointer; color: #949394;width:26px;height:26px;line-height:26px;border-radius:100%;text-align:center;border:1px solid #949394;" ng-click="addServiceToLD()"/>-->
+                                 </span>
+                        <!--<span> <i  class="fa fa-plus" style="cursor:pointer; color: #949394;width:26px;height:26px;line-height:26px;border-radius:100%;text-align:center;border:1px solid #949394;" ng-click="addServiceToLD()"/></span>-->
+
+                    </div>
+                    <div class="input-group" ng-show="showadd">
+                        <i class="fa fa-plus" style="cursor:pointer; color: #949394;width:26px;height:26px;line-height:26px;border-radius:100%;text-align:center;border:1px solid #949394;" ng-click="addDevicesToLD(searchCompName,associationMainHeading,associationSubHeading)" />
+                    </div>
+                </div>
+            </ul>
+            <!-- code change ends-->
+            <!-- cmt -1012 strts-->
+            <ul id="demoFsCluster" class="collapse border-outer parent-dp arrow_box " style="background-color: #fff !important;margin-right: 1%">
+                <div class=" form-inline form-group pull-left" style="padding-top:10px;margin-left: 3%">
+                    <div class="input-group" style="width:60%">
+                        <input type="text" my-enter="searchOtherLDForClus(associationMainHeading,associationSubHeading,searchCompNameFSassociateToCluster)" class="form-control fontHelveticaNeue" style="width:220px;border-radius: 0px;font-size:14px;height:26px;border-right:0px;box-shadow:none;" placeholder="{{headingAssociationTitle}} Filter" aria-describedby="basic-addon1" ng-model="searchCompNameFSassociateToCluster" >
+                        <span class="input-group-addon" id="basic-addon1" style="border-radius: 0px;background-color: #fff;font-size:11px;cursor:pointer">
+                                   <i class="fa fa-search" ng-click="searchOtherLDForClus(associationMainHeading,associationSubHeading,searchCompNameFSassociateToCluster)"></i>
+                                     <!--<i  class="fa fa-plus" style="cursor:pointer; color: #949394;width:26px;height:26px;line-height:26px;border-radius:100%;text-align:center;border:1px solid #949394;" ng-click="addServiceToLD()"/>-->
+                                 </span>
+                        <!--<span> <i  class="fa fa-plus" style="cursor:pointer; color: #949394;width:26px;height:26px;line-height:26px;border-radius:100%;text-align:center;border:1px solid #949394;" ng-click="addServiceToLD()"/></span>-->
+
+                    </div>
+                    <!--<div class="input-group" ng-show="showadd">
+                        <i class="fa fa-plus" style="cursor:pointer; color: #949394;width:26px;height:26px;line-height:26px;border-radius:100%;text-align:center;border:1px solid #949394;" ng-click="addDevicesToLD(searchCompName,associationMainHeading,associationSubHeading)" />
+                    </div>-->
+                </div>
+            </ul>
+            <!-- cmt 1012 ends-->
+            <ul id="demo16" class="collapse border-outer parent-dp arrow_box " style="background-color: #fff !important;margin-right: 1%">
+                <div class=" form-inline form-group pull-left" style="padding-top:10px;margin-left: 3%">
+                    <div class="input-group" style="width:60%">
+                        <input type="text" my-enter="searchOtherForLD(associationMainHeading,associationSubHeading)" class="form-control fontHelveticaNeue" style="width:220px;border-radius: 0px;font-size:14px;height:26px;border-right:0px;box-shadow:none;" placeholder="{{headingAssociationTitle}} Filter" aria-describedby="basic-addon1" ng-model="searchCompName" ng-change="checkforEmpty()">
+                        <span class="input-group-addon" id="basic-addon1" style="border-radius: 0px;background-color: #fff;font-size:11px;cursor:pointer">
+                                   <i class="fa fa-search" ng-click="searchOtherForLD(associationMainHeading,associationSubHeading)"></i>
+                                     <!--<i  class="fa fa-plus" style="cursor:pointer; color: #949394;width:26px;height:26px;line-height:26px;border-radius:100%;text-align:center;border:1px solid #949394;" ng-click="addServiceToLD()"/>-->
+                                 </span>
+                        <!--<span> <i  class="fa fa-plus" style="cursor:pointer; color: #949394;width:26px;height:26px;line-height:26px;border-radius:100%;text-align:center;border:1px solid #949394;" ng-click="addServiceToLD()"/></span>-->
+
+                    </div>
+                    <div class="input-group" ng-show="showadd">
+                        <i class="fa fa-plus" style="cursor:pointer; color: #949394;width:26px;height:26px;line-height:26px;border-radius:100%;text-align:center;border:1px solid #949394;" ng-click="addDevicesToLD({'name':searchCompName},associationMainHeading,associationSubHeading,true,'newFSAdd')" />
+                    </div>
+                </div>
+            </ul>
+
+            <div class="col-md-12">
+                <div class="col-md-12 change_col" id="otd-table" >
+                    <div class="odth-sec clearfix" style="padding:10px;">
+                        <div class="odths-form" style="width: 90%;float: left;">
+                            <div class="form-inline" >
+                                <div class="input-group">
+                                    <input type="text" class="form-control fontHelveticaNeue" style="width:200px;border-radius: 0px;font-size:14px;height:25px;border-right:0px;box-shadow:none;" placeholder="{{headingAssociationTitle}} Filter" aria-describedby="basic-addon1" ng-model="filterText.name">
+
+                                    <span class="input-group-addon" id="basic-addon1" style="border-radius: 0px;background-color: #fff;font-size:11px;cursor:pointer"><i class="fa fa-search" style="cursor:pointer"></i></span>
+                                </div>
+                                <!--  <div class="input-group" ng-show="AddAssociationShowHide" ng-if="showAddoption(LowerOtherDeviceName,deviceID)">
+                                      <div class="form-inline">
+                                          <input type="text" class="form-control fontHelveticaNeue" style="width:220px;border-radius: 0px;margin-left:10px;font-size:14px;height:25px;box-shadow:none;float:left" placeholder="Add a new {{headingAssociationTitle}}" aria-describedby="basic-addon1" ng-model="newCompName"> &nbsp;
+                                          <i class="fa fa-plus" style="color: #949394;width:26px;height:26px;line-height:26px;border-radius:100%;text-align:center;border:1px solid #949394;cursor:pointer" ng-click="addDevicesToLD(newCompName,associationMainHeading,associationSubHeading)" />
+                                          <loading ng-show="showaddSpinner"></loading>
+                                      </div>
+
+                                  </div>-->
+                            </div>
+                        </div>
+                        <!--div class="pull-right" style="width: 7%;text-align:center">
+                            <a href="javascript void(0);" data-toggle="tooltip" data-placement="top" title="Remove All"><i style="color: #949394 " class="fa fa-trash fa-lg" style="cursor:pointer"></i></a>
+                        </div-->
+                    </div>
+                    <loading ng-show="spinsleft"></loading>
+                    <div class="table-responsive" style="padding:10px">
+
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                            <tr class="fontHelvetica" style="background-color:#25467A;color:#ffffff;font-size:15px;">
+
+                                <td ng-if="deviceID !='aliases' && deviceID !='componenttoservice' && deviceID !='componenttocomponent' && deviceID !='clusterslogicaldevices' " style="border:1px solid #25467A"></td>
+
+                                <td ng-if="deviceID =='clusterslogicaldevices' " style="border:1px solid #25467A"></td>
+
+                                <td ng-if="canbeDeleted && deviceID !='componenttoservice' && deviceID !='aliases' && deviceID !='clusterslogicaldevices' && headingAssociationTitle!='Stakeholders'" style="border:1px solid #25467A"> </td>
+                                <td ng-if="deviceID =='componenttoservice'" style="border:1px solid #25467A;text-align:center" ng-repeat="column in cols">{{column.fieldname}}</td>
+                                <td ng-if="deviceID !='componenttoservice'" style="border:1px solid #25467A;text-align:center" ng-repeat="column in cols">{{column.fieldname}}
+                                </td>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            <tr dir-paginate="row in rows  |filter:filterText | itemsPerPage:5 " pagination-id="pageMsp" style="color:#666666 ">
+
+                                <td ng-if="deviceID !='aliases' && deviceID !='componenttoservice' && deviceID !='componenttocomponent' && deviceID !='clusterslogicaldevices' " style="text-align:center"><a><i class="fa fa-info-circle fa-lg" ng-click="navigationOther(row.name,row.id,headingAssociationTitle,deviceID)" style="cursor:pointer"></i></a></td>
+
+                                <td ng-if="deviceID =='clusterslogicaldevices'" style="text-align:center"><a><i class="fa fa-info-circle fa-lg" ng-click="navigationOther(row.name,row.id,'logicaldevices',deviceID)" style="cursor:pointer"></i></a></td>
+
+                                <td ng-if="canbeDeleted && deviceID !='componenttoservice' && deviceID !='aliases' && deviceID !='clusterslogicaldevices' && headingAssociationTitle!='Stakeholders' && deviceID !='clusterslogicaldevices_servers'" style="font-size:25px;color:#9B9A9B;cursor:pointer"><i style="rotate:"class="glyphicon glyphicon-remove-circle" data-toggle="collapse" ng-confirm-click="Would you really like to Disassociate?" ng-click="disassociateDevicesToDevices(row.name,headingAssociationTitle,row.id)" style="cursor:pointer"></i></td>
+								<td ng-if="deviceID =='componenttoservice'" ng-repeat="column in cols" style="text-align:center">
+								<a><i ng-click="navigationOtherNew(row,column.fieldname)" style="cursor:pointer">{{row[column.key]}}</i></a></td>
+                                <td ng-if="deviceID !='componenttoservice'" ng-repeat="column in cols">{{row[column.key]}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <ul id="demoDetail" class="collapse border-outer parent-dp arrow_box " style="background-color: #ddd !important;margin-right: 1%;padding-left: 15px !important;position: absolute;margin-top: -15%;z-index:10000;margin-left: 20%;width: 76%;">
+                            <div class="row">
+                                <div class="col-md-6" style="padding-left: 15px !important;">
+                                    <table style="margin-top: 10px">
+                                        <tr style="width:30%">
+                                            <td style="color: #5392ff">Name:</td>
+                                            <td>{{AssociationDevInfo.name}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="color: #5392ff">Type:</td>
+                                            <td>{{AssociationDevInfo.devicetype}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="color: #5392ff">OS:</td>
+                                            <td>{{AssociationDevInfo.os}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="color: #5392ff">Status:</td>
+                                            <td>{{AssociationDevInfo.status}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="color: #5392ff">isVirtual:</td>
+                                            <td>{{AssociationDevInfo.isvirtual}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="color: #5392ff">Migration Approach:</td>
+                                            <td>{{AssociationDevInfo.migrationapproach}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="color: #5392ff">Logical Device Host:</td>
+                                            <td>{{AssociationDevInfo.logicaldevicehost}}</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div class="col-md-6"></div>
+
+                            </div>
+                        </ul>
+                        <dir-pagination-controls pagination-id="pageMsp" data-num-pages="noOfPages" data-current-page="currentPage" max-size="maxSize" class="Pagination" max-size="6" direction-links="true" boundary-links="true" style="float:right;padding:0px;padding:0px;border-radius:0px;margin-top:0px">
+                        </dir-pagination-controls>
+                    </div>
+
+                </div>
+
+                <div class="change_col2" id="otd-table-2" ng-show="otdtable2" >
+                    <div class="clearfix">
+                        <loading ng-show="showSpinnerSearch"></loading>
+
+                        <!--div class="pull-right" style="width: 14%;text-align:center;padding-top:10px">
+                            <a href="javascript void(0);" data-toggle="tooltip" data-placement="top" title="Tooltip on top"><i style="color: #949394;cursor:pointer" class="fa fa-trash fa-lg" ></i></a>
+                        </div-->
+                    </div>
+                    <loading ng-show="spinsRight"></loading>
+                    <loading ng-show="showassociateSpinner"></loading>
+                    <div class="table-responsive" style="padding-top:5px;padding-right:10px;margin-top: 5%;" ng-show="showRightTable">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                            </thead>
+                            <tbody>
+                            <tr ng-if="searchCompName == '*' && otherSearchResult" ng-repeat="sc in otherSearchResult" style="color:#666666">
+                                <td><i class="fa fa-info-circle fa-lg" style="cursor:pointer"></i></td>
+                                <td style="font-size:16px">{{sc.name}}</td>
+                                <td ng-if="compAdd == '3' "> <i ng-click="addDevicesToLD(sc,associationMainHeading,associationSubHeading)" class="fa fa-plus" style="color: #949394;width:26px;height:26px;line-height:26px;border-radius:100%;text-align:center;border:1px solid #949394;cursor:pointer" /></td>
+                            </tr>
+                            <tr ng-if="searchCompName !== '*' && otherSearchResult" ng-repeat="sc in otherSearchResult " style="color:#666666">
+                                <td><i class="fa fa-info-circle fa-lg" style="cursor:pointer"></i></td>
+                                <td style="font-size:16px">{{sc.name}}</td>
+                                <td ng-if="compAdd == '3' "> <i ng-click="addDevicesToLD(sc,associationMainHeading,associationSubHeading)" class="fa fa-plus" style="color: #949394;width:26px;height:26px;line-height:26px;border-radius:100%;text-align:center;border:1px solid #949394;cursor:pointer" /></td>
+                                <td ng-if="compAdd == '1' "> <i ng-click="associateSerToLD(sc.name,associationMainHeading,associationSubHeading)" class="fa fa-plus" style="color: #949394;width:26px;height:26px;line-height:26px;border-radius:100%;text-align:center;border:1px solid #949394;cursor:pointer" /></td>
+                                <td ng-if="compAdd == '2' "> <i ng-click="associateFSToClus(sc.name,associationMainHeading,associationSubHeading)" class="fa fa-plus" style="color: #949394;width:26px;height:26px;line-height:26px;border-radius:100%;text-align:center;border:1px solid #949394;cursor:pointer" /></td>
+                                <td ng-if="compAdd == '4' "> <i ng-click="associateInboundToComp(sc.name,associationMainHeading,associationSubHeading)" class="fa fa-plus" style="color: #949394;width:26px;height:26px;line-height:26px;border-radius:100%;text-align:center;border:1px solid #949394;cursor:pointer" /></td>
+                                <td> <span class="glyphicon glyphicon-remove-circle" aria-hidden="true" style="font-size:25px;color:#9B9A9B;cursor:pointer"></span></td>
+                            </tr>
+
+                            <tr ng-if="searchCompName == '*' && $parent.otherSearchResult" ng-repeat="sc in $parent.otherSearchResult" style="color:#666666">
+                                <td><i class="fa fa-info-circle fa-lg" style="cursor:pointer"></i></td>
+                                <td style="font-size:16px">{{sc.name}}</td>
+                                <td ng-if="compAdd == '3' "> <i ng-click="addDevicesToLD(sc,associationMainHeading,associationSubHeading)" class="fa fa-plus" style="color: #949394;width:26px;height:26px;line-height:26px;border-radius:100%;text-align:center;border:1px solid #949394;cursor:pointer" /></td>
+                            </tr>
+                            <tr ng-if="searchCompName !== '*' && $parent.otherSearchResult" ng-repeat="sc in $parent.otherSearchResult " style="color:#666666">
+                                <td><i class="fa fa-info-circle fa-lg" style="cursor:pointer"></i></td>
+                                <td style="font-size:16px">{{sc.name}}</td>
+                                <td ng-if="compAdd == '3' "> <i ng-click="addDevicesToLD(sc,associationMainHeading,associationSubHeading)" class="fa fa-plus" style="color: #949394;width:26px;height:26px;line-height:26px;border-radius:100%;text-align:center;border:1px solid #949394;cursor:pointer" /></td>
+                                <td ng-if="compAdd == '1' "> <i ng-click="associateSerToLD(sc.name,associationMainHeading,associationSubHeading)" class="fa fa-plus" style="color: #949394;width:26px;height:26px;line-height:26px;border-radius:100%;text-align:center;border:1px solid #949394;cursor:pointer" /></td>
+                                <td ng-if="compAdd == '2' "> <i ng-click="associateFSToClus(sc.name,associationMainHeading,associationSubHeading)" class="fa fa-plus" style="color: #949394;width:26px;height:26px;line-height:26px;border-radius:100%;text-align:center;border:1px solid #949394;cursor:pointer" /></td>
+                                <td ng-if="compAdd == '4' "> <i ng-click="associateInboundToComp(sc.name,associationMainHeading,associationSubHeading)" class="fa fa-plus" style="color: #949394;width:26px;height:26px;line-height:26px;border-radius:100%;text-align:center;border:1px solid #949394;cursor:pointer" /></td>
+                                <td> <span class="glyphicon glyphicon-remove-circle" aria-hidden="true" style="font-size:25px;color:#9B9A9B;cursor:pointer"></span></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    })
+</script>
+
+
+<style>
+    .col-md-4.col-item-pad{
+        padding-right: 5px !important;
+        padding-left: 5px !important;
+    }
+    .notes-item-outer{
+        margin-bottom: 10px;
+    }
+    .notes-item-outer h4{
+        font-size: 18px;
+        line-height: 28px;
+        margin: 0px 0px 3px;
+        color: #777;
+    }
+    .notes-item-outer .content-outer{
+        border: 1px solid #ddd;
+        height: 400px;
+
+    }
+    .ci-header {
+        background: #25467a;
+    }
+    .ci-header .form-group{
+        padding: 2px 10px;
+        padding-bottom: 4px;
+        margin-bottom: 0px;
+    }
+    .ci-header .form-control{
+        border-radius: 0px;
+        border: 0px;
+        border-bottom: 1px solid #fff;
+        background-color: transparent;
+    }
+    .ci-content-outer{
+        padding: 10px 10px;
+    }
+    .ci-content-outer:nth-child(odd){
+        border-bottom: 1px solid #ddd;
+    }
+    .ci-content-outer:nth-child(even){
+        background: #EAEAEA;
+    }
+    .ci-content{
+        width: 100%;
+        height: 362px;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+    .form-control:focus{
+        outline: 0;
+        box-shadow: none;
+    }
+</style>
+
+<script>
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    })
+</script>
+
+
+<style>
+    #demo16{
+        float: right;
+        width: 33.5%;
+        margin-top: 1% !important;
+        margin-bottom: 10px;
+    }
+    #demoDocs{
+        float: right;
+        width: 33.5%;
+        margin-top: 0;
+        margin-bottom: 10px;
+    }
+    #demoDetail{
+        /*float: right;*/
+        /*width: 33.5%;*/
+        margin-top: 0;
+        margin-bottom: 10px;
+    }
+
+    #demo18{
+        float: right;
+        width: 33.5%;
+        margin-top: 1% !important;
+        margin-bottom: 10px;
+    }
+
+    #demoDocs{
+        float: right;
+        width: 33.5%;
+        margin-top: 0;
+        margin-bottom: 10px;
+    }
+
+    #{
+        float: right;
+        width: 35.5%;
+        margin-top: 0;
+        margin-bottom: 10px;
+    }
+
+
+    #demoFsCluster{
+        float: right;
+        width: 35.5%;
+        margin-top: 0;
+        margin-bottom: 10px;
+    }
+
+
+    .submitbtn{
+        color: #FFF;
+        background-color: #5392ff;
+        border: none;
+        margin-left: 8.5%;
+        /* margin-top: 4%; */
+        font-size: 14px;
+        /*width: 21%;*/
+        height: 29px;
+    }
+    .submitbtn[disabled] {
+        background-color: 	#ADD8E6
+    }
+
+</style>

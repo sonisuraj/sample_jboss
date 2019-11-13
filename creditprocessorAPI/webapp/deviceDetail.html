@@ -1,0 +1,63 @@
+<div class="modal-body" ng-show="showDeviceDetailModal" style="height: 550px; overflow-y: auto;">
+    <fieldset>
+        <div class="container-fluid">
+            <div class="row header">
+                <div class="modal-title col-md-9" style="color: #5392ff;font-size: 20px;text-align: center">
+                    {{DeviceName}}
+                </div>
+                <div class="col-md-3">
+                    <i class="fa fa-times" aria-hidden="true" style="color: #949394 !important;float: right;font-size: 20px" ng-click="dismissPopup()"></i>
+                </div>
+               <!-- <p class="modal-title text-center" style="color: #5392ff;font-size: 20px;">{{DeviceName}}</p>
+                <i class="fa fa-times" aria-hidden="true" style="color: #949394 !important;"></i>-->
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="col-md-10">
+                    <table class="table" style="margin-top: 10px">
+                        <tr ng-if="key != 'index' && key != 'importid'" ng-repeat="(key , value) in DeviceArray track by $index">
+                            <!--<td style="width: 30px !important;color: #5392ff">{{FieldData[$index].fieldname}}</td>-->
+                            <td style="width: 30px !important;color: #5392ff">{{FieldData[$index].fieldname}}</td>
+                            <td style="width: 20px !important;">
+                                {{value}}
+                            </td>
+                        </tr>
+
+                    </table>
+                    </div>
+                    <div class="col-md-2"></div>
+                </div>
+            </div>
+            </div>
+    </fieldset>
+    </div>
+
+<style>
+    .app-modal-window-sam-Plan  .modal-dialog{
+        width:500px;
+    }
+
+    .modal-content{
+        width: 60%; !important;
+        border-radius: 0px !important;
+    }
+
+    .table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
+
+
+        border: 1px solid #ccc !important;
+
+    }
+    .table{
+        margin-bottom: 0px !important;
+        border-top: 0px solid #ccc !important;
+
+
+    }
+    td {
+        max-width: 100px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+</style>

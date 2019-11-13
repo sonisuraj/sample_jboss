@@ -1,0 +1,391 @@
+<div class="row" style="padding: 20px 100px;">
+    <div class="col-md-10 col-md-offset-1">
+
+<div class="header-outer clearfix">
+  <div class="ho-left pull-left">
+    <label style="color: #5392ff;font-size: 20px">
+      Data Model
+    </label> &nbsp;
+    <label style="color: #949394;"> | Administration >> Settings <span ng-if="!subSection">>> DataModel</span> <span ng-if="subSection =='heatmap'"> >> Heat Map</span></label>
+  </div>
+                <div class="col-md-6 ho-right pull-right">
+                    <div class="search-filter-outer ho-right pull-right">
+                        <div class="">
+                            <div class="dropdown ">
+                                <button class="btn btn-default dropdown-toggle"  data-ns-focus-id="searchtext" type="button" data-toggle="dropdown" ng-if="!subSection">Search/Filter
+                                    <span class="caret"></span>
+                                </button>
+
+                                <ul class="dropdown-menu border-outer parent-dp" style="padding: 20px 20px ;">
+                                    <div class="search-input-outer" style="padding: 10px 0px 0px;">
+                                        <h5>Search By</h5>
+                                        <div class="input-group">
+                                            <input type="text"  ng-model="showcustom.attribute" id="searchtext" class="form-control" placeholder="Search for Custom Attribute ..." style="border-right:0px;">
+        					<span class="input-group-btn">
+        						<button class="btn btn-default" type="button"  style="border-left:0px;"><i class="fa fa-search" aria-hidden="true"></i></button>
+        					</span>
+
+                                        </div><!-- /input-group -->
+
+                                        </div>
+                                </ul>
+					  <a href="javascript:void(0);" ng-click="navigateListView()" style="float: right" data-toggle="tooltip" data-placement="top" title="List View" ng-if="!subSection">
+						<span style="margin-left: 5px;position: relative;top: 4px;background-color:#e1ebf7 ; ">List View</span>
+					  </a>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+</div>
+
+
+<style>
+/* CSS used here will be applied after bootstrap.css */
+.search-filter-outer .dropdown-menu {
+  min-width: auto;
+  width:100%;
+  background-color: #5392ff !important;
+  color: #fff !important;
+}
+.search-filter-outer .dropdown-menu.parent-dp{
+  min-width: 900px;
+  right: 0;
+  left: inherit;
+  border-radius: 0px;
+  border: 0px;
+  box-shadow:  0px 0px 6px 0px rgba(0,0,0,0.5);
+}
+.search-filter-outer .dropdown button{
+
+  border-radius: 0px;
+}
+.search-filter-outer .dropdown-menu.device-type-list, .dropdown-menu.dp-input{
+  background: transparent;
+  border: 0px;
+  box-shadow: none;
+}
+.search-filter-outer .dropdown-menu.device-type-list>li>a:focus, .dropdown-menu.device-type-list>li>a:hover{
+  background-color: transparent;
+  outline: 0;
+
+}
+.search-filter-outer .dropdown-menu{
+  background: #fff;
+  border:none;
+box-shadow:none;
+}
+.search-filter-outer .dp-input input{
+  margin-left: 32px;
+}
+.search-filter-outer .form-control{
+  color: #fff;
+  background: transparent;
+  border-color: #fff;
+  font-weight: 400;
+  font-size: 13px;
+}
+.search-filter-outer .form-control:focus{
+  border-color: #fff;
+}
+.search-filter-outer .input-group-btn .btn, .search-filter-outer .input-group-btn .btn:hover, .search-filter-outer .input-group-btn .btn:focus{
+  color: #fff !important;
+  background: transparent !important;
+  border-color: #fff !important;
+  border: 1px solid;
+  outline: 0;
+}
+::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  color: rgba(255, 255, 255, 0.5) !important;
+}
+::-moz-placeholder { /* Firefox 19+ */
+  color: rgba(255, 255, 255, 0.5) !important;
+}
+:-ms-input-placeholder { /* IE 10+ */
+  color: rgba(255, 255, 255, 0.5) !important;
+}
+:-moz-placeholder { /* Firefox 18- */
+  color: rgba(255, 255, 255, 0.5) !important;
+}
+.search-filter-outer .caret{
+  margin: 0px 5px;
+}
+.search-filter-outer .border-outer{
+  border:1px solid #aaa;
+}
+.search-filter-outer .dropdown-menu>li>a:hover {
+  background-color: white
+}
+.search-filter-outer .caret{
+  position: initial;
+  top: 0px;
+  right: 0px;
+}
+.dp-submenu-position{
+  position: inherit;
+}
+.dp-submenu-position li .input-group{
+  margin-left: 24px;
+}
+.search-filter-outer{
+      float: left;
+}
+.search-filter-outer input{
+  border-radius:0px;
+  box-shadow: none;
+}
+.filter-input-size input{
+  font-size:12px;
+}
+.filter-input-size .input-group-btn i{
+  font-size: 12px;
+}
+li:nth-child(even) .filter-input-size .input-group-btn i{
+  font-size: 12px;
+  padding-bottom: 0.45em;
+}
+.list-right-margin{
+  margin-right: 10px;
+}
+.test, .test:hover, .test:focus{
+  color: #fff !important;
+  text-decoration: none !important;
+  background: transparent !important;
+}
+
+.no-spin, .no-spin:hover, no-spin:focus {
+    -webkit-appearance: none;
+    margin: 0;
+    -moz-appearance:none;
+}
+</style>
+
+</div></div>
+
+      <div class="row" style="background-color: #f7f7f7;">
+        <hr style="width: 100%;border-top: 1px solid #ccc !important;margin-top: 0px !important;
+        margin-bottom: 0px !important;"/>
+      <div class="col-md-10 col-md-offset-1">
+
+        <div class="otd-table" >
+          <div class="row" style="background:#FFFFFF;">
+            <img ng-if="table_loader" style="display: block;
+margin: 0 auto;
+height: 33px;" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="/>
+              <div class="col-md-12" id="otd-table">
+                <div class="odth-sec clearfix" style="padding: 1px 0px 0px 0px;text-align:right;border:1px solid #ccc">
+                  <div class="odths-form">
+                    <div class="form-inline">
+                      <div class="form-inline" style="text-align:left;float:left;padding-left:15px;padding:30px 0px 0px 20px;color:#666666">
+                      <!--<input type="checkbox" href="javascript:void(0);"  ng-model="showcustom.iscustattr" ng-true-value="'Y'" ng-false-value="" style="background-color: white;border-radius: 0px;"/>-->
+                      <!--<input type="checkbox" href="javascript:void(0);"  ng-model="showcustom.iscustattr" data-ng-true-value="'Y'" data-ng-false-value="" style="background-color: white;border-radius: 0px;"/>-->
+                      <input type="checkbox" href="javascript:void(0);" ng-model="showcustom.iscustattr" data-ng-true-value="'YES'" data-ng-false-value="" style="background-color: white;border-radius: 0px;"/> Show custom attributes Only
+                    </div>
+                        <div class="form-group" style="padding:20px 20px 0px 0px;">
+                          <!--<a style="cursor:pointer" href="javascript:void(0);" ng-click="navigateCA('ca')" ng-if="subSection =='heatmap'"><button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" style="cursor:pointer;border-radius: 0px">Custom Attribute</button></a>
+                            <a style="cursor:pointer" href="javascript:void(0);" ng-click="navigateCA('hm')" ng-if="!subSection"><button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" style="cursor:pointer;border-radius: 0px">Heat Map</button></a>-->
+                          <div class="input-group">
+                            <input ng-model="custom.name" type="text" class="form-control fontHelveticaNeue" style="color:#666;font-size:14px;height:33px;border-right: 0px;border-radius:0px;box-shadow:none;" placeholder="Custom Attribute Filter" aria-describedby="basic-addon1">
+                            <span class="input-group-addon" id="basic-addon1" style="background-color: #fff;font-size:11px;border-radius:0px;">
+                              <i class="fa fa-search" style="cursor:pointer"></i></span>
+                          </div>&nbsp;
+                          <div class="input-group">
+                            <select name="enetySelction" class="fontHelveticaNeue" id="aEntity" ng-model="custom.entity" style="color:#666;font-size:14px;margin-right: 5%;border: 1px solid #ccc;border-radius:0px;height: 33px;" ng-change="entitySelection()">
+                              <option value="">Entity Filter</option>
+                            <option value="{{en.value}}" ng-repeat="en in customEntity">{{en.value}}</option>
+                            </select>
+
+                          </div>&nbsp;
+                          <a href="javascript:void(0);" ng-click="addCustomAtt();" data-toggle="tooltip" data-placement="top" title="Add Custom Attribute" ng-if="!subSection"><i class="fa fa-plus" style="cursor:pointer; color: #949394;width:26px;height:26px;line-height:26px;border-radius:100%;text-align:center;border:1px solid #949394;margin-right:5px;"></i></a>
+                          <input type="submit"  id="submit" class="savebtn" ng-click="saveHeatMap()" value="Visualize" ng-if="subSection =='heatmap'"/>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-12" style="text-align:center;" id="contentDiv">
+
+                      <div class="table-responsive" style="padding:5px 20px 20px 20px;background-color:#ffffff">
+                        <table class="table table-bordered table-striped">
+                          <thead>
+                            <tr class="fontHelvetica" style="background-color:#25467A;color:#ffffff;font-size:15px">
+                              <td width="4%" style="border:1px solid #25467A"></td>
+                              <td width="21%" align="left" style="border:1px solid #25467A">
+                                <div class="dropdown ldiv clearfix" >
+                                  Field Name  <span class="glyphicon glyphicon-chevron-down dropdown" aria-hidden="true" data-toggle="dropdown" style="cursor:pointer"></span>
+                                <ul class="dropdown-menu" style="border-radius: 0px;">
+                                    <li><a ng-click="sortbyColumn('displayname','asc')" style="cursor:pointer">Sort Ascending</a><br/></li>
+                                      <li><a ng-click="sortbyColumn('displayname','des')" style="cursor:pointer">Sort Descending</a><br/></li>
+
+                                </ul>
+                                </div>
+                              </td>
+                              <td width="10%" align="left" style="border:1px solid #25467A">
+                                <div class="dropdown ldiv clearfix" style="float: left">
+                                Entity  <span class="glyphicon glyphicon-chevron-down dropdown" aria-hidden="true" data-toggle="dropdown" style="cursor:pointer"></span>
+                                <ul class="dropdown-menu">
+                                <li><a ng-click="sortbyColumn('entity','asc')" style="cursor:pointer">Sort Ascending</a><br/></li>
+                                  <li><a ng-click="sortbyColumn('entity','des')" style="cursor:pointer">Sort Descending</a><br/></li>
+
+                                </ul>
+                                </div>
+                              </td>
+                              <td width="10%" align="left" style="border:1px solid #25467A" ng-if="!subSection">Dashboard</td>
+                              <td width="10%" align="left" style="border:1px solid #25467A" ng-if="!subSection">Custom</td>
+                              <td width="25%" align="left" style="border:1px solid #25467A" ng-if="!subSection">Rename</td>
+                              <td width="5%" style="border:1px solid #25467A" ng-if="!subSection"></td>
+                              <td width="10%" align="left" style="border:1px solid #25467A" ng-if="subSection =='heatmap'">Row</td>
+                              <td width="10%" align="left" style="border:1px solid #25467A" ng-if="subSection =='heatmap'">Column</td>
+                              <td width="25%" align="left" style="border:1px solid #25467A" ng-if="subSection =='heatmap'">Hot Spot Title</td>
+                              <!--<td width="5%" style="border:1px solid #25467A" ng-if="subSection =='heatmap'"></td>-->
+
+                            </tr>
+                          </thead>
+                          <tbody>
+
+                            <tr ng-repeat="c1 in addcustomArr" style="color:#666666 ">
+                            <td><input type="checkbox" style="background-color: white;border-radius: 0px;"/></td>
+                            <td align="left">{{c1.attribute}}</td>
+                              <td align="left">{{c1.entity}}</td>
+                              <td><input type="checkbox" ng-model="c1.dashboard" ng-true-value="'Y'" ng-false-value="'N'"/></td>
+                              <td><input type="checkbox" checked="{{c1.iscustattr}}" style="background-color: white;border-radius: 0px;"/></td>
+                              <td></td>
+                              <td style="text-align:center">
+                                  <a class="glyphicon glyphicon-remove-circle" aria-hidden="true"></a>
+                              </td>
+                            </tr>
+
+
+                          <tr dir-paginate="ca in customAttribute | startsWithLetter:custom.name:custom.entity |filter:custom.entity | filter:showcustom | itemsPerPage:500" pagination-id="pageMsp" style="color:#666666">
+                          <!--<tr dir-paginate="ca in customAttribute | startsWithLetter:custom.name | itemsPerPage:100" pagination-id="pageMsp" style="color:#666666">-->
+                              <td><input type="checkbox"/></td>
+                          <td align="left">{{ca.displayname}}</td>
+                            <td align="left">{{ca.entity}}</td>
+
+                            <td ng-if="!subSection"><input type="checkbox" name ="{{$index}}"  ng-model="ca.dashboard"  ng-true-value="'YES' || 'TRUE'" ng-false-value="'NO' || 'FALSE'" ng-click ="dashboardUpdate(ca.dashboard,custom.entity,ca.attribute)"/></td>
+                            <td ng-if="!subSection">
+                            <!--  <input type="checkbox" ng-if="ca.iscustattr =='Y'"  checked="checked"/>
+                              <input type="checkbox" ng-if="ca.iscustattr !=='Y'"/>-->
+                              <input type="checkbox" ng-model="ca.iscustattr" ng-true-value="'YES'" ng-false-value="" disabled="disabled"/>
+
+                            </td>
+                            <td ng-if="!subSection">
+                              <div class="col-xs-12" id="allowedit_{{ca.attribute}}_{{ca.entity}}" ng-click="allowEdit(ca.attribute,ca.entity)" ng-if="ca.iscustattr =='YES'">
+                                <span class="glyphicon glyphicon-edit" style="font-size:20px;color:#9B9A9B;"></span>
+                              </div>
+                              <div class="col-xs-12" id="editmode_{{ca.attribute}}_{{ca.entity}}" style="display:none">
+                                <input type="text" id="input_{{ca.attribute}}_{{ca.entity}}" class="form-control fontHelveticaNeue" placeholder="Rename Custom Attribute" style="width:200px;float:left;color:#666;font-size:14px;margin-right: 5%;border: 1px solid #ccc;border-radius:0px;height: 26px;"/>&nbsp;<span class="glyphicon glyphicon-check" style="font-size:20px;color:#9B9A9B;" ng-click="update_CA(ca.attribute,ca.entity,'rename')"></span>
+                              </div>
+                            </td>
+                            <td style="text-align:center" ng-if="!subSection">
+                              <a class="glyphicon glyphicon-remove-circle" aria-hidden="true" style="font-size:25px;color:#9B9A9B;cursor:pointer" ng-click="update_CA(ca.attribute,ca.entity,'delete')" ng-if="ca.iscustattr =='YES'"></a>
+                            </td>
+                            <!--heatmap options-->
+                            <td style="text-align:center" ng-if="subSection =='heatmap'">
+                            <input type="text" onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')" value="{{ca.rowno}}" id="{{ca.attribute}}_{{ca.entity}}_rowno" class="form-control fontHelveticaNeue" placeholder="Row" style="width:50px;float:left;color:#666;font-size:14px;margin-right: 5%;border: 1px solid #ccc;border-radius:0px;height: 26px;" ng-keyup="changeHeatMap(ca.attribute,ca.entity)"/>
+                            </td>
+                            <td style="text-align:center" ng-if="subSection =='heatmap'">
+                            <input type="text" onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')" value="{{ca.columnno}}" id="{{ca.attribute}}_{{ca.entity}}_columnno" class="form-control fontHelveticaNeue" placeholder="Col" style="width:50px;float:left;color:#666;font-size:14px;margin-right: 5%;border: 1px solid #ccc;border-radius:0px;height: 26px;" ng-keyup="changeHeatMap(ca.attribute,ca.entity)"/>
+                            </td>
+                            <td style="text-align:center" ng-if="subSection =='heatmap'">
+                            <input type="text"  value="{{ca.hotspottitle}}" id="{{ca.attribute}}_{{ca.entity}}_hotspottitle" class="form-control fontHelveticaNeue" placeholder="Hot Spot Title" style="width:200px;float:left;color:#666;font-size:14px;margin-right: 5%;border: 1px solid #ccc;border-radius:0px;height: 26px;" ng-keyup="changeHeatMap(ca.attribute,ca.entity)"/>
+                            </td>
+                            <!--<td style="text-align:center" ng-if="subSection =='heatmap'">-->
+                                  <!--<input type="submit"  id="submit" class="savebtn" ng-click="saveHeatMap()" value="Visualize"/>-->
+                            <!--</td>-->
+                            <!--heatmap options-->
+                          </tr>
+
+                          </tbody>
+                        </table>
+
+                        <dir-pagination-controls pagination-id="pageMsp" data-num-pages="noOfPages" data-current-page="currentPage"  max-size="maxSize" class="Pagination"
+                                                 max-size="10"
+                                                 direction-links="true"
+                                                 boundary-links="true" style="float:right;padding:0px;padding:0px">
+                        </dir-pagination-controls>
+
+                      </div>
+
+                    </div>
+                    <div class="col-xs-4" style="overflow-x:auto;padding-right:5px;text-align:left;float:left;font-size:14px" class="fontHelveticaNeue" ng-if="rangeColumnno" id="previewDiv">
+                      <br/>&nbsp;<b>Heat Map Visualization</b>
+                        <table class="table table-bordered table-striped">
+                          <tr ng-repeat="row in rangeRowno">
+                            <td align="center" ng-repeat="col in rangeColumnno" height="30" width="50%" style="font-size:11px">
+                               <span id="display_{{row}}_{{col}}"></span>
+                              <!--<span ng-if="col == columnno && row == rowno">-->
+                                {{getMapValDisplay(row,col)}}
+                                <!--<span style="color:blue">{{hotspottitle}}</span>
+                                <br/>
+                                {{previewEntity}}::{{previewAttribute}}-->
+
+                            </td>
+                          <tr>
+                        </table>
+                    </div>
+                  </div>
+
+
+
+              </div>
+
+
+              <div class="otd-table-2"  id="otd-table-2" ng-show="otdtable2">
+                <div class="clearfix">
+                  <!--<div class="form-group pull-left" style="width:60%;">
+                    <div class="input-group">
+
+
+                    </div>-->
+                  </div>
+                  <div class="pull-right" style="width: 10%;text-align:right" >
+
+                  </div>
+                </div>
+
+                <div class="table-responsive">
+                  <table class="table table-bordered table-striped">
+                    <thead>
+
+                    </thead>
+                    <tbody>
+                    <tr>
+                      <td width="5%"></td>
+                      <td width="20%"></td>
+                      <td width="10%">Lorem</td>
+                      <td width="15%"></td>
+                      <td width="10%"></td>
+                      <td width="20%"></td>
+                      <td width="5%"></td>
+
+                    </tr>
+                    <tr>
+                      <td></td>
+                      <td></td>
+                      <td>Lorem</td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+
+                    </tr>
+                    </tbody>
+                  </table>
+
+              </div>
+
+              </div>
+
+          </div>
+        </div>
+
+
+
+      </div>
+    </div>
+</div>
+<script>
+$(function () {
+   $('[data-toggle="tooltip"]').tooltip();
+})
+ </script>

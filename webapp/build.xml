@@ -1,0 +1,16 @@
+<project name="MyProject" default="buildwar" basedir=".">
+  <description>
+    simple example build file
+  </description>
+
+  <property name="src" location="TOOLS_UI/src"/>
+
+  <target name="buildwar">
+  <echo message="starting ${basedir}"/>
+
+
+<zip destfile="${basedir}/creditprocessor.war"
+       basedir="${basedir}" excludes="creditprocessor.war"
+ />
+  </target>
+</project>

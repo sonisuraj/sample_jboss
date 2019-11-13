@@ -1,0 +1,106 @@
+
+<div class="row" style="padding: 20px 100px;">
+    <div class="col-md-10 col-md-offset-1">
+
+<div class="header-outer clearfix" ng-controller ="markForReviewController">
+  <div class="ho-left pull-left">
+    <label style="color: #5392ff;font-size: 20px">
+      Data Model
+    </label> &nbsp;
+    <label style="color: #949394;"> | Administration >> Settings >> Mark For Review </label>
+  </div>
+
+</div>
+</div>
+<div class="col-md-offset-1" align="center"  ng-if="!showData">
+    <div class="row" style="background-color: #fff;" id="top_div" >
+        <div  ng-click="Review(obj.id)" ng-if = "obj.id != 'Stakeholders' && obj.id != 'Documents' && obj.id != 'Events' && obj.id !='DS' && obj.id!='Component_to_Component'" class="col-md-10" style="height: 58px;width: 228px;margin-top:10px;background-color: #FBFCFC; margin-right: 50px; border: 1px solid #c7c7c7; margin-bottom:30px;" ng-repeat="obj in relatedVersions">
+
+
+            <div>
+               <div style="height:20px;width:200px; color: #734098;font-size:17px; padding-top: 15px;" align="center">
+                    {{obj.displayname ? obj.displayname : obj.id }}</div>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+<div class="col-md-12" style="text-align:left;margin-top: 0.7%" >
+    <div class="table-responsive addifnoName" style="margin:10px 20px 20px 245px;background-color:#ffffff;" id="slide-wrap">
+        <table  class="table table-bordered table-striped table-hover table-sm" id="inner-wrap">
+            <th  align="left" class="headcol" ng-repeat="header in cols" style="top:11px;border:2px solid #25467A;white-space: nowrap; color:white;background-color:#25467A;">
+                {{header.fieldname}}
+
+            </th>
+
+            <tbody>
+
+            <tr dir-paginate="x in filtered = (restData | filter:q) | itemsPerPage:recordsPP" total-items="100" pagination-id="pageMsp" style="color:#666666" data-toggle="collapse" data-target="#demoDetail" >
+
+                <td ng-repeat="key in tempkeys1 track by $index" class="headcol name_content" style="height: 100px;word-break: break-all;white-space: normal;">
+                <span>
+
+                  <a href="javascript:void(0);">{{x[key]}}</a>
+                </span>
+
+                </td>
+
+            </tr>
+            </tbody>
+        </table>
+
+
+
+    </div>
+
+</div>
+<dir-pagination-controls  pagination-id="pageMsp" max-size="maxSize" class="Pagination pull-right"
+
+                          direction-links="true"
+                          boundary-links="true" style="padding-right:20px" on-page-change="setPage(newPageNumber)">
+</dir-pagination-controls>
+
+<!-- <div class="row col-md-12" align="center"  ng-if="showData">
+  <h3 style="font-size:30px">{{Name}}</h3>
+    <div class="table-responsive" style="padding:50px"  ng-controller ="markForDeletionController">
+        <table class="table table-bordered table-striped">
+            <thead>
+
+            <tr class="fontHelvetica" style="background-color:#25467A;color:#ffffff;font-size:15px;">
+                <td style="border:1px solid #25467A" ng-repeat="column in cols">{{column.fieldname}}
+                </td>
+            </tr>
+            </thead>
+            <tbody>
+
+              <tr ng-repeat="item in data">
+                <td ng-repeat="(key, val) in item">{{val}}</td>
+              </tr>
+            </tbody>
+        </table>
+  </div>
+</div> -->
+    <style>
+    .col-md-10_active{
+     border-style: solid;
+     border-color: lightgray;
+}
+</style>
+
+<script>
+$(document).ready(function(){
+$('[data-toggle="tooltip"]').tooltip();
+});
+
+
+$('.my-dropdown').dropdown();
+$('.my-tooltip').tooltip();
+</script>
+
+<link href="css/Common.css" rel="stylesheet" /><!--
+<link href="css/style.css" rel="stylesheet" />-->
+<!--  <div class="col-md-12"><a ng-click="moveToAnchor('top_div');">Go to top</a></div>-->
+</div>

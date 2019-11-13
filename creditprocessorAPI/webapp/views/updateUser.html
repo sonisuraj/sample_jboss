@@ -1,0 +1,130 @@
+<div class="container">
+    <div class="row main">
+      <div class="main-login main-center">
+
+      <h2><b>Enable/Disable Users Page</b></h2>
+      <div ng-show="error" class="alert alert-danger">{{error}}</div>
+    <div class="ibm-two-column">
+      <img ng-if="dataLoading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="/>
+
+            <form class="form-horizontal" name="form" id="form" role="form" ng-submit="deleteUser()">
+
+              <div class="otd-table">
+                    <!--<div class="col-md-12" id="otd-table" style="font-size:14px">-->
+          <label ng-if="!activeUsers"> <input type="checkbox" id="active" name="active" checked="checked" ng-click="showUsers('inactive')"> Activate Users</input></label>
+          <label ng-if="activeUsers">  <input type="checkbox" id="active" name="active" ng-click="showUsers('active')"> Activate Users</input></label>
+
+          <label ng-if="!activeUsers"> <input type="checkbox" id="inactive" name="inactive" ng-click="showUsers('inactive')"> De-Activate Users</input></label>
+          <label ng-if="activeUsers">  <input type="checkbox" id="inactive" name="inactive" checked="checked" ng-click="showUsers('active')"> De-Activate Users</input></label>
+
+    <button class="btn fontHelveticaNeue" ng-click ="updateUser()" style="border-radius:0px;background-color: #5392FF;color:#FFFFFF;float: right;margin-bottom: 10px;cursor:pointer" ng-if="!activeUsers">Activate Selected User</button>
+    <button class="btn fontHelveticaNeue" ng-click ="updateUser()" style="border-radius:0px;background-color: #5392FF;color:#FFFFFF;float: right;margin-bottom: 10px;cursor:pointer" ng-if="activeUsers">De-Activate Selected User</button>
+  <div class="input-group" style="width:200px;float:left;margin-bottom:10px;">
+    <input ng-model="filterUser.name" type="text" class="form-control fontHelveticaNeue" style="color:#666;font-size:14px;height:33px;border-right: 0px;border-radius:0px;box-shadow:none;" placeholder="Search User Name" aria-describedby="basic-addon1">
+    <span class="input-group-addon" id="basic-addon1" style="background-color: #fff;font-size:11px;border-radius:0px;">
+      <i class="fa fa-search" style="cursor:pointer"></i></span>
+    </div>
+   <table class="table table-bordered table-striped table-hover table-sm">
+     <tr>
+       <th>User ID</th>
+       <th></th>
+     </tr>
+     <tr dir-paginate="x in filtered = (users) | filter:filterUser.name | itemsPerPage:10 " pagination-id="pageMsp">
+     <td width="80%" align="left">{{x}}</td>
+     <td width="20%" align="center"><input id="user_{x}" type="checkbox" name="selectuser" ng-click="selectUser(x)"/></td>
+   </tr>
+
+   </table>
+
+
+
+
+              </div>
+              <dir-pagination-controls pagination-id="pageMsp" data-num-pages="noOfPages" data-current-page="currentPage"  max-size="maxSize" class="Pagination"
+                                           max-size="5"
+                                           direction-links="true"
+                                           boundary-links="false" style="list-style-type:none;padding:0px;list-style:none;">
+              </dir-pagination-controls>
+            </form>
+</div>
+
+</div>
+</div>
+</div>
+ <style>
+    body, html{
+        height: 100%;
+        background-repeat: no-repeat;
+        background-color: #d3d3d3;
+        font-family: 'Oxygen', sans-serif;
+    }
+
+    .main{
+        margin-top: 70px;
+    }
+
+    h1.title {
+        font-size: 50px;
+        font-family: 'Passion One', cursive;
+        font-weight: 400;
+    }
+
+    hr{
+        width: 10%;
+        color: #fff;
+    }
+
+    .form-group{
+        margin-bottom: 15px;
+    }
+
+    label{
+        margin-bottom: 15px;
+    }
+
+    input,
+    input::-webkit-input-placeholder {
+        font-size: 11px;
+        padding-top: 3px;
+    }
+
+    .main-login{
+        background-color: #fff;
+        /* shadows and rounded borders */
+        -moz-border-radius: 2px;
+        -webkit-border-radius: 2px;
+        border-radius: 2px;
+        -moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+        -webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+        box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+
+    }
+
+    .main-center{
+        margin-top: 30px;
+        margin: 0 auto;
+        /*max-width: 330px;*/
+        /*max-width: 422px;*/
+        max-width: 550px;
+        padding: 40px 40px;
+        /*height: 372px;*/
+    }
+
+    .login-button{
+        margin-top: 5px;
+    }
+    ul>li::before, ol>li::before {
+           color: #959595;
+           content: ' ' !important;
+           display: inline-block;
+           font-family: Arial, sans-serif;
+           font-size: 1.5rem;
+           margin-left: -1.3rem;
+           margin-left: -20px\9;
+           position: absolute;
+       }
+       ul>li, ol>li {
+           padding-left: 0px !important;
+       }
+
+</style>

@@ -1,0 +1,206 @@
+<div class="container" style="margin-top: 1%" ng-controller="ClusterDevicesController">
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1 component-outer" style="border: 1px solid #ccc;background-color: #fff">
+            <div class="col-md-12">
+                <div class="col-md-6">
+                    <h4 class="fontHelvetica" style="padding-left:10px;padding-bottom:10px">
+                        <span style="color: #5392FF;font-size: 24px;border-right: 1px solid #5392FF;">Clusters &nbsp;</span> &nbsp;<span style="color:#949394;;font-size:15px;">Clusters </span>
+                    </h4>
+                </div>
+                <div class="col-md-6" ng-if="roleBasedCanBeAssociated">
+                    <button class="btn fontHelveticaNeue" ng-click ="otdtable()" data-toggle="collapse" data-target="#demoCluster" style="border-radius:0px;background-color: #5392FF;color:#FFFFFF;float: right;
+                             margin-right: 1%;margin-top: 1%;cursor:pointer">CLUSTER SELECTION</button>
+                </div>
+            </div>
+            <ul id="demoCluster"  class="collapse border-outer parent-dp arrow_box " style="background-color: #fff !important;margin-right: 1%; margin-top: 1%;">
+                <div class="form-inline form-group pull-left" style="width:60%;padding-top:10px;margin-left: 2%">
+                    <div class="input-group" >
+                        <input type="text" my-enter="searchClusForLD()" class="form-control fontHelveticaNeue" style="width:220px;border-radius: 0px;font-size:14px;height:25px;border-right:0px;box-shadow:none;" placeholder="Cluster Filter" aria-describedby="basic-addon1" ng-model="searchClusName" ng-change="checkforEmpty()">
+                                             <span class="input-group-addon" id="basic-addon1" style="border-radius: 0px;line-height:10px;background-color: #fff;font-size:11px;border-left: 0px;cursor:pointer" >
+                                               <i class="fa fa-search" ng-click="searchClusForLD()" style="cursor:pointer"></i>
+                                             </span>
+                    </div>
+                    <div class="input-group" ng-show="showadd">
+                        <i  class="fa fa-plus" style="cursor:pointer; color: #949394;width:26px;height:26px;line-height:26px;border-radius:100%;text-align:center;border:1px solid #949394;" ng-click="addClusToLD(searchClusName )"/>
+                    </div>
+                </div>
+            </ul>
+            <loading ng-show="clusterSpinner"></loading>
+            <div class="col-md-12">
+                <div class="col-md-12 change_col" id="otd-table">
+                    <div class="odth-sec clearfix" style="padding:10px;">
+                        <div class="odths-form" style="width: 90%;float: left;">
+                            <div class="form-inline">
+                                <div class="form-group">
+                                    <div class="input-group" >
+                                        <input type="text" class="form-control fontHelveticaNeue" style="width:200px;border-radius: 0px;font-size:14px;height:25px;border-right:0px;box-shadow:none;" placeholder="Cluster Filter" aria-describedby="basic-addon1" ng-model="filterText.clustername" ng-change="filterAssociation(filterText.clustername,'clusterdata')">
+
+                                        <span class="input-group-addon" id="basic-addon1" style="border-radius: 0px;background-color: #fff;font-size:11px;cursor:pointer"><i class="fa fa-search" style="cursor:pointer"></i></span>
+                                    </div>
+                                    <!--<div class="input-group">
+                                    <div class="form-inline">
+                                      <input type="text" class="form-control fontHelveticaNeue" style="width:220px;border-radius: 0px;margin-left:10px;font-size:14px;height:25px;box-shadow:none;float:left" placeholder="Add a new Cluster" aria-describedby="basic-addon1" ng-model="newClusName">
+                                         &nbsp;<i class="fa fa-plus" style="color: #949394;width:26px;height:26px;line-height:26px;border-radius:100%;text-align:center;border:1px solid #949394;cursor:pointer" ng-click="addClusToLD(newClusName )"/>
+                                    </div>
+                                  </div>-->
+                                </div>
+                            </div>
+                        </div>
+                        <!--div class="pull-right" style="width: 7%;text-align:center" >
+                            <a href="javascript void(0);" data-toggle="tooltip" data-placement="top" title="Remove All"><i style="color: #949394 " class="fa fa-trash fa-lg" style="cursor:pointer"></i></a>
+                        </div-->
+                    </div>
+                    <div class="table-responsive" style="padding:10px">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                            <tr class="fontHelvetica" style="background-color:#25467A;color:#ffffff;font-size:15px">
+                                <th></th>
+                                <td style="font-size:18px" ng-if="roleBasedCanBeAssociated"></td>
+                                <td style="font-size:18px">Cluster Name</td>
+                                <td style="font-size:18px">Type</td>
+                                <td style="font-size:18px">Status</td>
+                                <td style="font-size:18px">Description</td>
+                                <td style="font-size:18px">Migration Approach</td>
+
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            <tr dir-paginate="d in clusterdata | itemsPerPage:recordsPP " pagination-id="pageMsp" style="color:#666666 ">
+                                <td style="text-align:center"><a><i class="fa fa-info-circle fa-lg" ng-click="navigationOther(d.name,d.id,'clusters')" style="cursor:pointer"></i></a></td>
+
+                                <td style="font-size:25px;color:#9B9A9B;cursor:pointer" ng-if="roleBasedCanBeAssociated"><i class="glyphicon glyphicon-remove-circle" data-toggle="collapse" ng-confirm-click="Would you really like to Disassociate?" ng-click="disassociateDevicesToDevices(d.name)" style="cursor:pointer"></i></td>
+
+                                <td style="font-size:16px">{{d.name}}</td>
+                                <td style="font-size:16px">{{d.clustertype}}</td>
+                                <td style="font-size:16px">{{d.status}}</td>
+                                <td style="font-size:16px">{{d.description}}</td>
+                                <td style="font-size:16px">{{d.approach}}</td>
+
+                            </tbody>
+                        </table>
+                        <ul id="demoDetail" class="collapse border-outer parent-dp arrow_box " style="background-color: #ddd !important;margin-right: 1%;padding-left: 15px !important;position: absolute;z-index: 1000;margin-top: -17%;margin-left: 20%;width: 70%;">
+                            <div class="row" style="overflow: auto;height: 250px !important;">
+                                <div class="col-md-6" style="padding-left: 15px !important;">
+                                    <table style="margin-top: 10px">
+                                        <!--<tr style="width:30%">
+                                            <td style="color: #5392ff">Name:</td>
+                                            <td>{{deviceInfo.name}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="color: #5392ff">Hostname:</td>
+                                            <td>{{deviceInfo.hostname}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="color: #5392ff">Component Type:</td>
+                                            <td>{{deviceInfo.componenttype}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="color: #5392ff">Environment:</td>
+                                            <td>{{deviceInfo.environment}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="color: #5392ff">Migration Approach:</td>
+                                            <td>{{deviceInfo.migrationapproach}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="color: #5392ff">Created:</td>
+                                            <td>{{deviceInfo.created}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="color: #5392ff">Component Status:</td>
+                                            <td>{{deviceInfo.componentstatus}}</td>
+                                        </tr>-->
+                                        <tr ng-repeat="(key ,value) in deviceInfo track by $index">
+                                            <td style="color: #5392ff">{{key|capitalize}}</td>
+                                            <td>{{value}}</td>
+                                        </tr>
+                                        <!--<tr>
+                                        <td style="width: 30px !important;color: #5392ff"></td>
+                                            <td style="width: 20px !important;">
+                                                {{deviceInfo.hostname}}
+                                            </td>
+                                        </tr>-->
+                                    </table>
+                                </div>
+                                <div class="col-md-6"></div>
+
+                            </div>
+                        </ul>
+                        <!--<div class="otd-table-4" style="float:left;color:#949394;font-size:15px;" ng-if="devicesCount || devicesCount>0"><br/>
+                            {{recordStart}} - {{recordEnd}} Records Out of {{devicesCount}}
+                        </div>-->
+                        <dir-pagination-controls pagination-id="pageMsp" data-num-pages="noOfPages" data-current-page="currentPage"  max-size="maxSize" class="Pagination"
+                                                 max-size="6"
+                                                 direction-links="true"
+                                                 boundary-links="true" style="float:right;padding:0px;padding:0px;border-radius:0px;margin-top:0px;list-style:none" on-page-change="setPage(newPageNumber)">
+                        </dir-pagination-controls>
+                    </div>
+
+                </div>
+
+                <div class="otd-table-2"  id="otd-table-2" ng-show="otdtable2">
+                    <div class="clearfix">
+                        <!--<div class="form-group pull-left" style="width:60%;padding-top:10px">
+                            <div class="input-group" >
+                                <input type="text" class="form-control fontHelveticaNeue" style="width:220px;border-radius: 0px;font-size:14px;height:25px;border-right:0px;box-shadow:none;" placeholder="Component Filter" aria-describedby="basic-addon1" ng-model="searchClusName" ng-change="searchClusForLD()">
+                                <span class="input-group-addon" id="basic-addon1" style="border-radius: 0px;line-height:10px;background-color: #fff;font-size:11px;border-left: 0px;cursor:pointer" >
+                                  <i class="fa fa-search" ng-click="searchClusForLD()" style="cursor:pointer"></i>
+                                </span>
+                            </div>
+                        </div>-->
+                        <!--div class="pull-right" style="width: 14%;text-align:center;padding-top:10px" >
+                            <a href="javascript void(0);" data-toggle="tooltip" data-placement="top" title="Tooltip on top"><i style="color: #949394;cursor:pointer" class="fa fa-trash fa-lg" ></i></a>
+                        </div-->
+                    </div>
+                    <div class="table-responsive" ng-show="showRightTable" style="margin-top: 5.4%">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                            </thead>
+                            <tbody>
+
+                            <tr ng-if="searchClusName == '*'" ng-repeat="sc in $parent.clusSearchResult" style="color:#666666">
+                                <td><i class="fa fa-info-circle fa-lg" ></i></td>
+                                <td style="font-size:16px">{{sc.name}}</td>
+                                <td></td>
+                                <td>  <i ng-click="associateClusToLD(sc.name)"  class="fa fa-plus" style="color: #949394;width:26px;height:26px;line-height:26px;border-radius:100%;text-align:center;border:1px solid #949394;"/></td>
+                            </tr>
+
+                            <tr ng-if="searchClusName !== '*'" ng-repeat="sc in $parent.clusSearchResult " style="color:#666666">
+                                <td><i class="fa fa-info-circle fa-lg" ></i></td>
+                                <td style="font-size:16px">{{sc.name}}</td>
+                                <td></td>
+                                <td>  <i ng-click="associateClusToLD(sc.name)"  class="fa fa-plus" style="color: #949394;width:26px;height:26px;line-height:26px;border-radius:100%;text-align:center;border:1px solid #949394;"/></td>
+                            </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Add your site or application content here -->
+<div class="footer">
+    <div class="container">
+        <!-- <p><span class="glyphicon glyphicon-heart"></span> Project</p> -->
+    </div>
+</div>
+<script>
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    })
+</script>
+
+
+<style>
+    #demoCluster{
+        float: right;
+        width: 33.5%;
+        margin-top: 0;
+        margin-bottom: 10px;
+    }
+</style>

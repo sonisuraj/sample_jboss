@@ -1,0 +1,11 @@
+---
+applications:
+  - name: creditprocessor
+    path: webapp/creditprocessor.war
+    memory: 1G
+    instances: 1
+    disk_quota: 2G
+    health-check-type: http
+    health-check-http-endpoint: /
+    random-route: true
+    

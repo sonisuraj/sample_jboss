@@ -1,0 +1,65 @@
+/*------------------------------------------------------Start: Container CSS------------------------------------------------*/
+.view_note_lable {
+	color: #4C4C4C;
+	font-family: "Helvetica Bold", "Helvetica";
+	font-size: 16px;
+	font-weight: 700;
+	margin-top: 4px;
+}
+
+#container {
+    padding-top: 44px;
+}
+
+.view_note_moreinfo {
+	font-family: "Arial Regular" "Arial" !important;
+	line-height: normal;
+	color: #333333;
+	margin-top: 13px;
+}
+
+.view_note_moreinfo {
+	display: inline-block;
+	font-family: "Arial Regular" "Arial" !important;
+	font-style: normal;
+	line-height: normal;
+	color: #333333;
+	margin-top: 13px;
+	margin-bottom: 60px;
+}
+
+.view_note_Info_date {
+	color: #4C4C4C;
+	margin-top: -2px;
+}
+
+.view_note_patient-Info {
+	color: #4C4C4C;
+}
+
+.view_Note_approved {
+	font-weight: 400;
+	font-size: 14px;
+}
+
+.horizontal_line {
+	margin-top: 8px;
+	border-bottom-color: #DDD !important;
+}
+
+.right-adjust {
+	left-margin: 10px;
+}
+
+.right-align {
+	float: right;	
+	margin-top: -2px;
+	margin-right: 4px;
+}
+
+.left-align {
+	float: left;	
+	margin-left: -10px;
+}
+
+/*------------------------End: Container Middle CSS------------------------*/

@@ -1,0 +1,166 @@
+<div class="row" style="padding: 20px 100px;">
+    <div class="col-md-10 col-md-offset-1">
+   <ng-include src="'views/search_nav.html'"></ng-include>
+</div>
+</div>
+
+      <div class="row" style="background-color: #f7f7f7;">
+        <hr style="width: 100%;border-top: 1px solid #ccc !important;margin-top: 0px !important;
+        margin-bottom: 0px !important;">
+      <div class="col-md-10 col-md-offset-1">
+        <div class="odth-first clearfix fontHelvetica" style="padding:10px 0px;">
+            <h4 class="pull-left fontHelvetica" style="margin:0px;font-size: 14px;line-height: 24px;">
+
+            </span>
+            <span style="color:#949394">Administrator&nbsp;&nbsp;>&nbsp;&nbsp;Import&nbsp;&nbsp;>&nbsp;&nbsp;{{heading}}&nbsp;&nbsp;></span>
+              <span style="color: #5392FF;">&nbsp;&nbsp;{{importTitle}}&nbsp;
+          </h4>
+            <!--<button class="btn  pull-right fontHelveticaNeue" ng-click ="otdtable()" style="border-radius:0px;background-color: #5392FF;color:#FFFFFF">COMPONENT SELECTION</button>-->
+        </div>
+        <div class="otd-table">
+              <div class="col-md-12" id="otd-table">
+                <div class="odth-sec clearfix" style="padding: 1px 0px 0px 0px;text-align:right;border:1px solid #ccc;background:#FFFFFF;">
+                  <div class="odths-form">
+                    <div class="form-inline" style="margin-bottom:20px">
+                        <!--left side area-->
+                        <div class="input-group pull-left" style="padding:20px 20px 0px 20px;"><span class="fontHelveticaNeue" style="color: #949394;top:5;float:left;font-size:14px">Search by Job Detail:&nbsp;</span>
+                          <input type="text" class="form-control fontHelveticaNeue" style="width:200px;border-radius: 0px;font-size:14px;height:28px;border-right:0px;box-shadow:none;" placeholder="Component Filter" aria-describedby="basic-addon1" ng-model="filterText.jobDetail">
+
+                            <span class="input-group-addon" id="basic-addon1" style="border-radius: 0px;background-color: #fff;font-size:11px;cursor:pointer"><i class="fa fa-search" style="cursor:pointer;font-size:14px"></i></span>
+                        </div>
+                        <div class="form-group" style="padding:20px 20px 0px 0px;padding-right:450px">
+                          <a onclick="scrollFull('Go_L')" id='scroll_L_Arrow' type="button" class="btn btn-default btn-circle btn-sm" style="border-radius: 4px;"><i class="glyphicon glyphicon-chevron-left" style="color:#5339FF"/><i class="glyphicon glyphicon-chevron-left" style="color:#5339FF"></i></a>
+                          <a onclick="scrollThumb('Go_L')" id='scroll_L_Arrow' type="button" class="btn btn-default btn-circle btn-sm" style="border-radius: 4px;"><i class="glyphicon glyphicon-chevron-left" style="color:#5339FF"></i></a>
+                          <a onclick="scrollThumb('Go_R')" id='scroll_R_Arrow' type="button" class="btn btn-default btn-circle btn-sm" style="border-radius: 4px;"><i class="glyphicon glyphicon-chevron-right" style="color:#5339FF"></i></a>
+                          <a onclick="scrollFull('Go_R')" id='scroll_R_Arrow' type="button" class="btn btn-default btn-circle btn-sm" style="border-radius: 4px;"><i class="glyphicon glyphicon-chevron-right" style="color:#5339FF"/><i class="glyphicon glyphicon-chevron-right" style="color:#5339FF"></i></a>
+
+
+                        </div>
+                      </div>
+                    </div>
+
+                    <img ng-if="table_loader" style="display: block;
+    margin: 0 auto;
+    height: 33px;" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="/>
+  <div class="otd-table" style="background:#FFFFFF;">
+    <div class="col-md-12" style="text-align:center;" ng-if="!table_loader">
+      <div class="table-responsive" style="margin:10px 20px 20px 337px;background-color:#ffffff;" id="slide-wrap">
+                        <table   class="table table-bordered table-striped table-hover table-sm" id="inner-wrap">
+                          <th align="left" ng-if="header.name == 'name'" class="headcol" ng-repeat="header in columnName" style="top:10px;border:2px solid #25467A;white-space: nowrap; color:white;background-color:#25467A;">
+                           Job Details
+                          </th>
+
+
+                          <th align="left"  ng-if="header.name != 'name'"  class="long" ng-repeat="header in columnName" style="border:2px solid #25467A;white-space: nowrap;padding-right:63px;color:white;background-color:#25467A;">
+                            {{header.name}}
+                          </th>
+                      <tbody>
+                      <tr dir-paginate="x in filtered = (restData | filter:q) | filter:filterText | itemsPerPage:5 " pagination-id="pageMsp" style="color:#666666 ">
+                    <!--  <tr ng-repeat="x in filtered = (restData | filter:q) | filter:filterText" style="color:#666666">-->
+                        <!--<td align="left" ng-repeat="key in tempkeys" ng-if="key !='filter' && key !='importid'">
+
+                            <span ng-if="key == 'name'">{{x.name}}</span>
+                            <span ng-if="key == 'commit'"><input type="checkbox" ng-model="x.commit" ng-true-value="'Y'" ng-false-value="'N'"></input></span>
+                            <span ng-if="key == 'commited'"><input type="checkbox" ng-model="x.commited" ng-true-value="'Y'" ng-false-value="'N'"></input></span>
+                            <span ng-if="key != 'name' && key != 'commit' && key != 'commited'">{{x[key]}}</span>
+                        </td> -->
+                        <td align="left" ng-repeat="key in tempkeys" class="headcol name_content" ng-if="key == 'jobDetail'" style="height: 40px;word-break: break-all;white-space: normal;">
+                            <span ng-if="key == 'jobDetail'" ><a href="javascript:void(0);" ng-click="navigateImportDetail(x.PKID,x.DeviceType,x.source)" style="cursor:pointer">{{x[key]}}</a></span>
+                        </td>
+
+                        <td align="left" ng-repeat="key in tempkeys" ng-if="key != 'jobDetail' && key !='filter' && key !='importid' && key != 'commited' && key != 'commit'">
+                            <span ng-if="key != 'jobDetail'" >{{x[key]}}</span>
+                        </td>
+
+                      </tr>
+                      </tbody>
+                      </table>
+
+                    <!--  <div style="position:fixed; top:415px;float:left;" onclick="scrollThumb('Go_L')">
+                                  <a id='scroll_L_Arrow' type="button" class="btn btn-default btn-circle btn-sm" style="border-radius: 25px;"><i class="glyphicon glyphicon-chevron-left" style="color:#5339FF"></i></a>
+                              </div>
+                              <div style="position:fixed; top:415px;margin-left:830px" onclick="scrollThumb('Go_R')">
+                                  <a id='scroll_R_Arrow' type="button" class="btn btn-default btn-circle btn-sm" style="border-radius: 25px;"><i class="glyphicon glyphicon-chevron-right" style="color:#5339FF"></i></a>
+                              </div>-->
+                      </div>
+
+                  </div>
+                  <dir-pagination-controls pagination-id="pageMsp" data-num-pages="noOfPages" data-current-page="currentPage"  max-size="maxSize" class="Pagination pull-right" direction-links="true"
+                                               boundary-links="true" style="padding-right:20px">
+                      </dir-pagination-controls>
+                      <!--<pagination data-boundary-links="true" data-num-pages="noOfPages" data-current-page="currentPage" max-size="maxSize" class="pagination-small" data-previous-text="&laquo;" data-next-text="&raquo;"></pagination>
+                -->
+                </div>
+                  </div>
+
+
+
+              </div>
+
+
+              <div class="otd-table-2"  id="otd-table-2" ng-show="otdtable2">
+                <div class="clearfix">
+                  <!--<div class="form-group pull-left" style="width:60%;">
+                    <div class="input-group">
+
+
+                    </div>-->
+                  </div>
+                  <div class="pull-right" style="width: 10%;text-align:right" >
+
+                  </div>
+                </div>
+              </div>
+          </div>
+
+
+
+
+      </div>
+    </div>
+</div>
+
+<script>
+$(function () {
+   $('[data-toggle="tooltip"]').tooltip();
+})
+ </script>
+
+<style>
+    /*Import first column fix styles*/
+    .headcol {
+        position:absolute;
+        width:320px;
+        left:20px;
+        top:auto;
+        height:auto;
+        border-right: 0px none black;
+        border-top-width:1px; /*only relevant for first row*/
+        marging-left:3px;
+    }
+    .long {  }
+
+
+    table { }
+    td, th {
+        margin:0;
+        border:1px solid grey;
+        border-top-width:0px;
+        white-space:nowrap;
+    }
+    div .table-responsive {
+
+        overflow-x:scroll;
+        margin-left:5em;
+        overflow-y:visible;
+
+    }
+    .headcol:nth-child(odd){
+        background: white;
+    }
+    .name_content{
+        width: 320px !important;
+        height:auto;
+    }
+    /*Import first column fix styles*/
+</style>

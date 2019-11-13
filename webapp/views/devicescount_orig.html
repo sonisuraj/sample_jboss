@@ -1,0 +1,41 @@
+<div   class="row" style=" background-color: #EFF1F0; width: 100%;margin-top:1px; margin-bottom: 28px;margin-left: 30px;" >
+    <div class="col-md-6" style="height:180px;width:180px;margin-top: 10px; margin-left: 2px; margin-right: 35px; margin-bottom:25px; border: 1px solid black" ng-repeat="obj in relatedVersions">
+        <div style="height:30px;width:180px ; border-bottom: 1px solid black" >
+            <div align="center" class="col-md-6" style="border-right: 1px solid black; height: 30px">
+                In Scope- {{obj.count}}
+            </div>
+            <div align="center" class="col-md-6">
+                Summary-{{obj.count}}
+            </div>
+        </div>
+        <div >
+               <div align="center" style="height:120px; width:180px; border-bottom: 1px solid black; background-image: url({{ imageArray[$index].imagename }} ); ">
+               </div>
+                  <div style="margin-top: -63px;background: transparent;background-color:rgba(192,192,192,0.6); color: white;font-size:17px;" align="center">{{obj.id}}</div>
+               </div>
+                <div  align="bottom" style="height:30px;width:180px ;">
+                  <div  ng-if=" obj.count > 0 " align="center" class="col-md-4 " style="border-right: 1px solid black; height: 25px;margin-top: 42px;">
+                   <a href="#logicalDeviceListView"><img alt="" src="img/listicon.png">
+                  List</a>
+                  </div>
+                  <div ng-if=" obj.count > 0 " align="center" class="col-md-4" style="border-right: 1px solid black; height: 25px;margin-top: 42px;">
+                     <a href="#logicalDevices"> <img alt="" src="img/viewicon.png">
+                  View</a>
+                  </div >
+                  <div  ng-if=" obj.count < 1 " align="center" class="col-md-4 " style="border-right: 1px solid black; height: 25px;margin-top: 42px;">
+                   <a onclick="javascrip:void();"><img alt="" src="img/listicon.png">
+                  List</a>
+                  </div>
+                  <div ng-if=" obj.count < 1 " align="center" class="col-md-4" style="border-right: 1px solid black; height: 25px;margin-top: 42px;">
+                     <a onclick="javascrip:void();" > <img alt="" src="img/viewicon.png">
+                  View</a>
+                  </div >
+                  <div align="center" class="col-md-4" style="margin-top: 42px;">
+                  <img alt="" src="img/addicon.png"/>
+                  Add
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+ 

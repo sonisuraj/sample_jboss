@@ -1,0 +1,73 @@
+
+
+
+
+/*------------------------------------------------------Start: Container CSS------------------------------------------------*/
+#container {
+    padding-bottom: 60px;
+}
+
+#container-top {
+    margin-top:11px;
+    height: 36px;
+    font-family: 'Arial Regular', 'Arial';
+    font-weight: 400;
+    font-style: normal;
+    font-size: 18px;
+    color: #666666;
+    text-align: left;
+    background-color: #D7D7D7;
+    padding: 7px 7px 3px;
+}
+
+.content-row {
+  
+    font-family: 'Roboto Regular', 'Roboto';
+    font-weight: 400;
+    font-style: normal;
+    font-size: 18px;
+    text-align: left;
+    padding-top: 2px;
+    padding-left: 10px;
+    color: #4C4C4C;
+    background-color: #FAFAFA;
+}
+
+.section-left {
+    width: 210px;
+    float: left;
+    text-align: left;
+}
+
+.section-left-title {
+    width: 120px;
+}
+
+.section-left-middle, .section-left-bottom {
+    color: #A1A1A1;
+    font-size: 13px;
+}
+
+.section-left-middle {
+    padding-top: 7px;
+}
+
+.section-right {
+    float: right;
+    text-align: left;
+    margin: 10px 0 0 10px
+}
+
+.section-right_addnew{
+   
+}
+.heading_comp {
+      padding-left: 25px;
+}
+.complaint-name-title{
+    font-size: 18px;
+    position: relative;
+    left: 4.2%;
+}
+/*------------------------End: Container Middle CSS------------------------*/
+/*------------------------------------------------------End: Container CSS------------------------------------------------*/

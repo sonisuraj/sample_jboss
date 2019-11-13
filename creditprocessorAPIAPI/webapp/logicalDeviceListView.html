@@ -1,0 +1,888 @@
+<div class="row" style="padding: 20px 100px;" ng-controller="logicalDeviceListViewController">
+    <div class="col-md-10 col-md-offset-1">
+        <div class="col-md-6">
+            <label style="color: #5392ff;font-size: 20px">{{heading}}</label>
+        </div>
+        <div class="pull-right" style="width: 120px;">
+            <button class="btn btn-default pull-right " data-ns-focus-id="searchtext" type="button"  style="border-radius:0px !important;font-size: 12px;line-height: 28px;font-weight: 600;color: #777;padding: 0px 8px;" data-toggle="collapse" data-target="#demo12">SEARCH BY
+                <span class="" style="font-size: 18px;position: relative;top: 1px;">
+                  <i class="fa fa-angle-down"></i>
+                </span>
+            </button>
+        </div>
+        <div class="col-md-10 ho-right pull-right">
+           <div class="search-filter-outer ho-right pull-right" style="width:120%">
+             <div class="">
+
+            <div class="dropdown ">
+                        <ul id="demo12"  class="collapse border-outer parent-dp arrow_box " style="padding: 20px 20px ;height: auto !important; width:100%; important;  background-color: #fff !important;  list-style-type: none !important;margin-top: 15px;margin-left: 117px;width: 100%;
+	max-width: 1904px !important;">
+                            <hr style="width: 100%;border-style: solid;border-color: #ddd;" />
+                            <div class="container-fluid search-filter-inner">
+                                <div class="row">
+									<div class="search-input-outer " style="padding: 10px 0px 0px;">
+										<h5>Search By</h5>
+										<div class="input-group">
+											<input type="text" name="Name" ng-keypress="keyPressed($event)" ng-model="searchManRel['name']" id="searchtext" class="form-control" placeholder="Search for..." style="border-right:0px;">
+										  <span class="input-group-btn">
+											<button class="btn btn-default" type="button"  style="border-left:0px;font-size:15px!important"><i class="fa fa-search" aria-hidden="true"></i></button>
+										  </span>
+										</div><!-- /input-group -->
+									</div>
+                                    <h5>Filter By</h5>
+                                    <div class="col-md-3" >
+                                        <li class="dropdown-submenu list-right-margin" style="padding: 5px 0px;" >
+                                            <a class="test" tabindex="-1" href="#" onclick="test(event); $(this).next('ul.dropdown-menu').toggle();">
+                                                <span class="caret"></span>
+                                                Mandatory
+                                            </a>
+                                            <ul class="dropdown-menu dp-submenu-position" >
+                                                <li class="dropdown-submenu dropx" ng-repeat="d in devicedata" ng-if="d.group =='mandatory' && d.key != 'name' ">
+                                                    <a class="test" href="javascript:void(0)" onclick="$(this).parents('.dropx').find('.input-group').toggleClass('hidden');"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> {{d.fieldname}}</a>
+                                                    <div class="input-group hidden filter-input-size">
+                                                        <input type="text" class="form-control" name="{{d.fieldname}}" ng-keypress="keyPressed($event)"  ng-model="searchManRel[d.key]" placeholder="Search for..." style="border-right:0px;">
+                                                            <span class="input-group-btn">
+                                                                <button class="btn btn-default" ng-click ="check()" type="button"  style="border-left:0px;"><i class="fa fa-search" aria-hidden="true"></i></button>
+                                                            </span>
+                                                    </div>
+                                                </li>
+
+                                            </ul>
+
+                                        </li>
+                                    </div>
+                                    <div class="col-md-3" ng-if="showRelevantAttributes" >
+                                      <li class="dropdown-submenu list-right-margin" style="padding: 5px 0px;" >
+                                          <a class="test" tabindex="-1" href="#" onclick="test(event); $(this).next('ul.dropdown-menu').toggle();">
+                                              <span class="caret"></span>
+                                              Relevant
+                                          </a>
+                                          <ul class="dropdown-menu dp-submenu-position" >
+
+                                              <li class="dropdown-submenu dropx" ng-repeat="d in devicedata" ng-if="d.group =='relevant'">
+                                                  <a class="test" href="" onclick="$(this).parents('.dropx').find('.input-group').toggleClass('hidden');"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> {{d.fieldname}}</a>
+
+                                                  <div class="input-group hidden filter-input-size">
+                                                      <input type="text" class="form-control" name="{{d.fieldname}}" ng-keypress="keyPressed($event)"  ng-model ="searchManRel[d.key]"  placeholder="Search for..." style="border-right:0px;">
+                                                          <span class="input-group-btn">
+                                                              <button class="btn btn-default" type="button"  style="border-left:0px;"><i class="fa fa-search" aria-hidden="true"></i></button>
+                                                          </span>
+                                                  </div>
+                                              </li>
+
+                                          </ul>
+
+                                      </li>
+
+                                    </div>
+                                    <div class="col-md-3" ng-if="showCustomAttributes" >
+                                      <li class="dropdown-submenu list-right-margin" style="padding: 5px 0px;" >
+                                          <a class="test" tabindex="-1" href="#" onclick="test(event); $(this).next('ul.dropdown-menu').toggle();">
+                                              <span class="caret"></span>
+                                              Custom Attribute
+                                          </a>
+                                          <ul class="dropdown-menu dp-submenu-position" >
+
+                                              <li class="dropdown-submenu dropx" ng-repeat="d in devicedata " ng-if="d.group =='customattribute'">
+                                                  <a class="test" href="" onclick="$(this).parents('.dropx').find('.input-group').toggleClass('hidden');"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> {{d.fieldname}}</a>
+
+                                                  <div class="input-group hidden filter-input-size">
+                                                      <input type="text" class="form-control" name="{{d.fieldname}}" ng-keypress="keyPressed($event)" ng-model="searchCustomAttribute[d.key]"  placeholder="Search for..." style="border-right:0px;">
+                                                          <span class="input-group-btn">
+                                                              <button class="btn btn-default" type="button"  style="border-left:0px;"><i class="fa fa-search" aria-hidden="true"></i></button>
+                                                          </span>
+                                                  </div>
+                                              </li>
+
+                                          </ul>
+
+                                      </li>
+
+                                    </div>
+
+                                    <!--div class="col-md-3">
+                                      <li class="dropdown-submenu list-right-margin" style="padding: 5px 0px;">
+                                          <a class="test" tabindex="-1" href="#" onclick="test(event); $(this).next('ul.dropdown-menu').toggle();">
+                                              <span class="caret"></span>
+                                              Related Count
+
+                                          </a>
+                                          <ul class="dropdown-menu dp-submenu-position" >
+
+                                              <li class="dropdown-submenu dropx" ng-repeat="d in relatedCount">
+                                                  <a class="test" href="" onclick="$(this).parents('.dropx').find('.input-group').toggleClass('hidden');"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> {{d.id}}</a>
+
+                                                  <div class="input-group hidden filter-input-size">
+                                                      <input type="text" class="form-control" ng-model ="searchRelatedCount[d.associationkey]"  placeholder="Search for..." style="border-right:0px;">
+                                                          <span class="input-group-btn">
+                                                              <button class="btn btn-default" type="button"  style="border-left:0px;"><i class="fa fa-search" aria-hidden="true"></i></button>
+                                                          </span>
+                                                  </div>
+                                              </li>
+
+                                          </ul>
+
+                                      </li>
+                                    </div-->
+                                </div>
+                            </div>
+                            <hr style="border-style: solid;border-color: #ddd;" />
+                            <div class="text-center">
+								<button class="btn update-btn" ng-click="submitSearch()" id="updateResult" style="background-color:#5392ff; border:1px solid #fff; color:#fff">Update Result</button>
+								<button class="btn update-btn dropdown dropdown-toggle" data-toggle="dropdown" style="background-color:#5392ff; border:1px solid #fff; color:#fff">Export Result</button>
+
+								<ul class="dropdown-menu" style="margin-top: -1%;margin-left: 55%;min-width: 85px !important;">
+									<li><a ng-click="exportSearch('csv')">CSV</a><br/></li>
+									<li><a ng-click="exportSearch('xlsx')">Excel</a><br/></li>
+								</ul>
+                            </div>
+                        </ul>
+                    </div>
+			</div>
+		</div>
+        </div>
+    </div>
+    <div class="row" style="background-color: #f7f7f7;">
+        <hr style="width: 100%;border-top: 1px solid #ccc !important;margin-top: 0px !important;
+    margin-bottom: 0px !important;">
+        <img ng-if="table_loader" style="display: block;
+margin: 0 auto;
+height: 33px;" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="/>
+
+        <img ng-if="table_loader_search" style="display: block;
+margin: 0 auto;
+height: 33px;" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="/>
+
+
+        <div class="col-md-10 col-md-offset-1" ng-if="!table_loader">
+                            <dir-pagination-controls  pagination-id="pageMsp" max-size="maxSize" class="Pagination pull-right"
+
+                                                      direction-links="true"
+                                                      boundary-links="true" style="padding-right:20px" on-page-change="submitSearch(newPageNumber)">
+                            </dir-pagination-controls>
+
+            <div class="otd-table" style="margin-top: 4%">
+                <div class="col-md-12" id="otd-table">
+                    <div class="odth-sec clearfix" style="padding: 1px 0px 0px 0px;text-align:right;border:1px solid #ccc;background:#FFFFFF;">
+                        <div class="otd-table" style="background:#FFFFFF;">
+                            <div class="form-inline" style="padding-left: 15px !important;padding-right: 15px !important;">
+                                <a href="javascript:void(0);" ng-click="openConfigureFieldsModal()" style="font-size: 18px"> Select/Configure Fields</a>
+								<a href="javascript:void(0);" ng-click="doSorting()" style="font: Helvetica Normal regular; font-size: 14px;background-color: #5392ff;padding:7px 10px 7px 10px;    border-radius: 0px !important; color:white;border: none"> Sort By</a>
+                            </div>
+                            <div class="form-inline">
+                                <!--left side area-->
+
+                                <div class="input-group pull-left" style="padding:20px 20px 0px 20px;color: #949394;">
+
+                                    {{recordStart}} - {{recordEnd}} Records Out of {{devicesCount}}
+                                </div>
+
+                                <div class="form-group" style="padding:20px 20px 0px 0px;color: #949394;">
+                                    <div style="padding-right:20px;float:left">
+                                        <a onclick="scrollFull('Go_L')" id='scroll_L_Arrow' type="button" class="btn btn-default btn-circle btn-sm" style="border-radius: 4px;"><i class="glyphicon glyphicon-chevron-left" style="color:#5339FF"/><i class="glyphicon glyphicon-chevron-left" style="color:#5339FF"></i></a>
+                                        <a onclick="scrollThumb('Go_L')" id='scroll_L_Arrow' type="button" class="btn btn-default btn-circle btn-sm" style="border-radius: 4px;"><i class="glyphicon glyphicon-chevron-left" style="color:#5339FF"></i></a>
+                                        <a onclick="scrollThumb('Go_R')" id='scroll_R_Arrow' type="button" class="btn btn-default btn-circle btn-sm" style="border-radius: 4px;"><i class="glyphicon glyphicon-chevron-right" style="color:#5339FF"></i></a>
+                                        <a onclick="scrollFull('Go_R')" id='scroll_R_Arrow' type="button" class="btn btn-default btn-circle btn-sm" style="border-radius: 4px;"><i class="glyphicon glyphicon-chevron-right" style="color:#5339FF"/><i class="glyphicon glyphicon-chevron-right" style="color:#5339FF"></i></a>
+                                    </div>
+                                    <input class="recordCnt" type="number" value="{{recordsPP}}" id="recordPP" ng-model="recordPP" min="0" max="100000000" class="recordCnt" ng-keyup="$event.keyCode == 13 ? inputRecordPP(recordPP) : null" style="width:auto;text-align:center"/>
+                                    Records Per Page
+                                </div>
+                                <div class="input-group ho-right pull-right" style="color:#939493">
+                                    <!--div class="dropdown keep-open ho-right pull-right" id="sortMenu">
+                                        <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" style="border:1px solid #ccc;cursor:pointer;border-radius: 0px;margin-top:20px;margin-right:20px;" ng-click="openSortby()" data-toggle="dropdown">Sort By&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-down" aria-hidden="true" style="color:#949394;top:3px"></button>
+                                        <ul ng-show="showsortby" class="dropdown-menu border-outer parent-dp" style="overflow-x:auto;padding: 18px 18px; width: 265px;border-radius: 0px;">
+                                            <div class="search-input-outer row" style="padding: 0px 0px 0px;">
+                                                <div class="vertical-menu col-xs-12" >
+                                                    <div ng-repeat="x in showtoUserFields" style="font-size:14px;font-weight:normal;">
+                                                        <label style="font-weight:normal"><input type="checkbox" id="sortby_{{x.key}}" ng-model="multisort[x.key]" ng-change="sortMultiChange(x.key,multisort[x.key]);"/>&nbsp;{{x.fieldname}}</label>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </ul>
+                                    </div-->
+                                </div>
+                            </div>
+
+                            <!--right side area-->
+                            <div class="col-md-12" style="text-align:left;margin-top: 0.7%" ng-if="!table_loader">
+                                <div class="table-responsive addifnoName" style="margin:10px 20px 20px 319px;background-color:#ffffff;" id="slide-wrap">
+                                    <table  class="table table-bordered table-striped table-hover table-sm" id="inner-wrap">
+                                        <th ng-click="setsortType('name',!sortReverse)"  align="left" ng-if="header.key == 'name'" class="headcol" ng-repeat="header in getColumnData.fields" style="width:300px;top:11px;border:2px solid #25467A;white-space: nowrap; color:white;background-color:#25467A;">
+                                            {{header.fieldname}}
+                                            <!--<span ng-click="sortbyColumn(header.key,'asc','up')" id="up_{{header.key}}" style="cursor:pointer;font-size:10px" class="glyphicon glyphicon-triangle-top" aria-hidden="true" ></span>
+                                            <span ng-click="sortbyColumn(header.key,'desc','down')" id="down_{{header.key}}" style="cursor:pointer;font-size:10px" class="glyphicon glyphicon-triangle-bottom" aria-hidden="true" ></span>
+                                          -->
+                                          <span ng-show="sortType == 'name' && sortReverse" class="fa fa-caret-down"></span>
+                                          <span ng-show="sortType == 'name' && !sortReverse" class="fa fa-caret-up"></span>
+                                        </th>
+
+                                        <!--<th  ng-if="header.key != 'name' &&  ( header.returntype == 'showtouser' || header.returntype.startsWith('1:') )  "  class="long" ng-repeat="header in getColumnData.fields" style="border:2px solid #25467A;white-space: nowrap;padding-right:63px;color:white;background-color:#25467A;">-->
+                                        <th ng-click="setsortType(header.key,!sortReverse)"  ng-if="heading != 'Events' && header.key != 'name' &&  ( header.returntype == 'showtouser' || header.returntype.startsWith('1:') )  "  class="long" ng-repeat="header in getColumnData.fields" style="border:2px solid #25467A;white-space: nowrap;padding-right:63px;color:white;background-color:#25467A;">
+                                            {{header.fieldname}}
+                                            <!--<span ng-click="sortbyColumn(header.key,'asc','up')" id="up_{{header.key}}"  style="cursor:pointer;font-size:10px" class="glyphicon glyphicon-triangle-top" aria-hidden="true" ></span>
+                                            <span ng-click="sortbyColumn(header.key,'desc','down')" id="down_{{header.key}}" style="cursor:pointer;font-size:10px" class="glyphicon glyphicon-triangle-bottom" aria-hidden="true" ></span>  -->
+                                          <span ng-show="(sortType == header.key) && sortReverse" class="fa fa-caret-down"></span>
+                                          <span ng-show="(sortType == header.key) && !sortReverse" class="fa fa-caret-up"></span>
+                                        </th>
+										
+										 <th ng-click="setsortType(header.key,!sortReverse)"  ng-if="heading === 'Events' && header.key != 'name' &&  header.group && ( header.group == 'mandatory' || header.group == 'relevant') || header.key === 'minto' || header.key === 'minfrom' "  class="long" ng-repeat="header in getColumnData.fields" style="border:2px solid #25467A;white-space: nowrap;padding-right:63px;color:white;background-color:#25467A;">
+                                            {{header.fieldname}}
+                                            <!--<span ng-click="sortbyColumn(header.key,'asc','up')" id="up_{{header.key}}"  style="cursor:pointer;font-size:10px" class="glyphicon glyphicon-triangle-top" aria-hidden="true" ></span>
+                                            <span ng-click="sortbyColumn(header.key,'desc','down')" id="down_{{header.key}}" style="cursor:pointer;font-size:10px" class="glyphicon glyphicon-triangle-bottom" aria-hidden="true" ></span>  -->
+                                            <span ng-show="(sortType == header.key) && sortReverse" class="fa fa-caret-down"></span>
+                                            <span ng-show="(sortType == header.key) && !sortReverse" class="fa fa-caret-up"></span>
+                                        </th>
+                                        <tbody>
+
+                                        <!--<tr dir-paginate="x in filtered = (restData | filter:q) | itemsPerPage:recordsPP" total-items="{{devicesCount}}" pagination-id="pageMsp" style="color:#666666;height: auto!important;"  id="name{{x.PKID}}">-->
+                                        <!--<tr dir-paginate="x in filtered = (restData | filter:q | orderBy:sortType:sortReverse ) | itemsPerPage:recordsPP" total-items="{{devicesCount}}" pagination-id="pageMsp" style="color:#666666;height: auto!important;"  id="name{{x.PKID}}">-->
+                                        <tr dir-paginate="x in filtered = restData | itemsPerPage:recordsPP" total-items="{{devicesCount}}" pagination-id="pageMsp" style="color:#666666;height: auto!important;"  id="name{{x.PKID}}">
+
+
+
+                                            <td ng-repeat="key in tempkeys1 track by $index" class="headcol name_content" ng-if="key == 'name'" style="height: auto !important;min-height: 40px !important;word-break: break-all;white-space: normal">
+                                <span ng-if="key == 'name'" style="word-break: break-all;white-space: normal;height: auto !important;">
+                                    <span ng-if="deletion ==true && canbeDeleted"><i style="color:red;cursor:pointer" class="fa fa-minus-circle" aria-hidden="true" ng-confirm-click="Would you like to Delete {{heading}} named <{{x.name}}>" ng-click=deletionDevices(x.name,x.PKID,heading)></i></span>
+                                    <a style="padding-left: 10px;"class="pull-center" ng-click="navigateView(devicetype,x.index,$index,x.name,x.PKID)" href="javascript:void(0);">{{x.name}}</a>
+                                </span>
+
+                                            </td>
+                                            <td ng-repeat="key in tempkeys1 track by $index"  ng-if="key != 'name'" >
+                                                <span ng-if="key != 'name' && x[key] !== 0" >{{x[key]}} </span>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+
+                                    <ul id="demoDetail" class="centered collapse border-outer parent-dp  " style="margin-right: 1%;padding-left: 15px !important;position: absolute;z-index: 1000;margin-top: -62%;margin-left: 20%;width: 50%;">
+                                        <div class="row" style="height: 350px; overflow-y: auto;">
+                                            <div class="col-md-12">
+                                                <!--<div class="col-md-8">-->
+                                                <table class="table" style="margin-top: 10px;border-top: 1px solid grey !important; background:#ddd">
+                                                    <!--<tr ng-if="key != 'index' && key != 'importid'" ng-repeat="(key , value) in DeviceArray track by $index">-->
+                                                    <tr ng-if="x.key != 'index' && x.key != 'importid'" ng-repeat="x in DeviceArray">
+                                                        <!--<td style="width: 30px !important;color: #5392ff">{{FieldData[$index].fieldname}}</td>-->
+                                                        <td class="settd" style="width: 30px !important;color: #5392ff;padding: 3px !important;">
+                                                            {{x.key}}
+
+                                                        </td>
+                                                        <td class="settd" style="width: 20px !important;padding: 3px !important;">
+                                                            {{x.value}}
+                                                        </td>
+                                                    </tr>
+
+                                                </table>
+                                                <!--</div>-->
+                                                <!--<div class="col-md-4"></div>-->
+                                            </div>
+                                        </div>
+                                    </ul>
+
+                                    <!--<div style="position:fixed; top:58%;float:left;" onclick="scrollThumb('Go_L')">
+                                        <a id='scroll_L_Arrow' type="button" class="btn btn-default btn-circle btn-sm" style="border-radius: 25px;"><i class="glyphicon glyphicon-chevron-left" style="color:#5339FF"></i></a>
+                                    </div>
+                                    <div style="position:fixed; top:58%;margin-left:830px" onclick="scrollThumb('Go_R')">
+                                        <a id='scroll_R_Arrow' type="button" class="btn btn-default btn-circle btn-sm" style="border-radius: 25px;"><i class="glyphicon glyphicon-chevron-right" style="color:#5339FF"></i></a>
+                                    </div>-->
+                                </div>
+
+                            </div>
+                            <dir-pagination-controls  pagination-id="pageMsp" max-size="maxSize" class="Pagination pull-right"
+
+                                                      direction-links="true"
+                                                      boundary-links="true" style="padding-right:20px" >
+                            </dir-pagination-controls>
+
+                        </div>
+                        <!--<pagination data-boundary-links="true" data-num-pages="noOfPages" data-current-page="currentPage" max-size="maxSize" class="pagination-small" data-previous-text="&laquo;" data-next-text="&raquo;"></pagination>
+                  -->
+                    </div>
+                </div>
+
+
+
+
+            </div>
+
+
+            <div class="otd-table-2"  id="otd-table-2" ng-show="otdtable2">
+                <div class="clearfix">
+                    <!--<div class="form-group pull-left" style="width:60%;">
+                      <div class="input-group">
+
+
+                      </div>-->
+                </div>
+                <div class="pull-right" style="width: 10%;text-align:right" >
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+</div>
+
+
+<style>
+    .selectbox2{
+        background-color: #fff;
+        height: 25px;
+        width: 108px;
+        border: 1px solid #ccc;
+        color: #949394;
+        float: left;
+        margin-right: 10px;
+    }
+    .search-filter-outer{
+        float: left;
+    }
+    .search-filter-outer input{
+        border-radius:0px;
+        box-shadow: none;
+    }
+    .search-filter-outer .caret{
+        margin: 0px 5px;
+    }
+    .search-filter-outer .border-outer{
+        border:1px solid #aaa;
+    }
+    .search-filter-outer .dropdown-menu>li>a:hover {
+        background-color: white
+    }
+    .search-filter-outer .caret{
+        position: initial;
+        top: 0px;
+        right: 0px;
+    }
+    .search-filter-outer .caret{
+        margin: 0px 5px;
+    }
+    .search-filter-outer .border-outer{
+        border:1px solid #aaa;
+    }
+    .search-filter-outer .dropdown-menu>li>a:hover {
+        background-color: white
+    }
+    .search-filter-outer .caret{
+        position: initial;
+        top: 0px;
+        right: 0px;
+    }
+    .search-filter-outer .dropdown-menu {
+        min-width: auto;
+        width:100%;
+        background-color: #fff !important;
+        color: #000 !important;
+    }
+    .search-filter-outer .dropdown-menu.parent-dp{
+        min-width: 454px;
+        right: 0;
+        left: inherit;
+        border-radius: 0px;
+        border: 0px;
+        box-shadow:  0px 0px 6px 0px rgba(0,0,0,0.5);
+    }
+    .search-filter-outer .dropdown button{
+
+        border-radius: 0px;
+    }
+    .search-filter-outer .dropdown-menu.device-type-list, .dropdown-menu.dp-input{
+        background: transparent;
+        border: 0px;
+        box-shadow: none;
+    }
+    .search-filter-outer .dropdown-menu.device-type-list>li>a:focus, .dropdown-menu.device-type-list>li>a:hover{
+        background-color: transparent;
+        outline: 0;
+
+    }
+    .search-filter-outer .dropdown-menu{
+        background: #fff;
+        border:none;
+        box-shadow:none;
+    }
+    .search-filter-outer .dp-input input{
+        margin-left: 32px;
+    }
+    .search-filter-outer .form-control{
+        color: #000;
+        background: transparent;
+        border-color: #000;
+        font-weight: 400;
+        font-size: 14px;
+    }
+    .search-filter-outer .form-control:focus{
+        border-color: #000;
+    }
+    .search-filter-outer .input-group-btn .btn, .search-filter-outer .input-group-btn .btn:hover, .search-filter-outer .input-group-btn .btn:focus{
+        color: #000 !important;
+        background: transparent !important;
+        border-color: #000 !important;
+        border: 1px solid;
+        outline: 0;
+    }
+    .pagination > li > a, .pagination > li > span {
+
+    }
+
+    .pagination > li:last-child > a, .pagination > li:last-child > span {
+        border-top-right-radius: 0px !important;
+        border-bottom-right-radius: 0px !important;
+    }
+    .pagination > li:first-child > a, .pagination > li:first-child > span {
+
+        border-top-left-radius: 0px !important;
+        border-bottom-left-radius: 0px !important;
+    }
+
+
+    /*.headcol {
+        position:absolute;
+        width:7em;
+        left:0;
+        top:auto;
+        border-right: 0px none black;
+        border-top-width:3px; /!*only relevant for first row*!/
+        margin-top:0px; /!*compensate for top border*!/
+        marging-left:3px;
+    }
+    .long  {
+    }*/
+    table { border-collapse:separate; border-top: 3px solid grey; }
+    td, th {
+        margin:0;
+        border:3px solid grey;
+        border-top-width:0px;
+        white-space:nowrap;
+        height:40px !important;
+    }
+    div .table-responsive {
+
+        overflow-x:scroll;
+        margin-left:5em;
+        overflow-y:visible;
+        padding-bottom:1px;
+    }
+    /*.headcol:nth-child(odd){
+        background: white;
+
+    }
+    .name_content{
+        width: 142px !important;
+    }*/
+    /*Import first column fix styles*/
+    .headcol {
+        position:absolute;
+        width:230px;
+        left:20px;
+        top:auto;
+        height:auto;
+        word-break: break-all;
+        font-size:15px;
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        border-right: 0px none black;
+        border-top-width:1px; /*only relevant for first row*/
+        marging-left:3px;
+    }
+    .long {  }
+
+
+    table { }
+    td, th {
+        margin:0;
+        border:1px solid grey;
+        border-top-width:0px;
+        white-space:nowrap;
+
+    }
+    div .table-responsive {
+
+        overflow-x:scroll;
+        margin-left:5em;
+        overflow-y:visible;
+
+    }
+    .headcol:nth-child(odd){
+        background: white;
+    }
+    .name_content{
+        width: 300px !important;
+        height:auto;
+    }
+    /*Import first column fix styles*/
+    #demoDetail{
+        /*float: right;*/
+        /*width: 33.5%;*/
+        margin-top: 0;
+        margin-bottom: 10px;
+    }
+    .settd{
+        max-width: 100px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        height: 40px !important;
+    }
+
+
+
+    /*.addClassTable{
+        margin:10px 20px 20px 24px !important;
+    }*/
+    .adjustMargin{
+        margin-top: -17% !important;
+    }
+
+    .centered{
+        position:fixed !important;
+        z-index: 100 !important;
+        top:60% !important;
+        left:50% !important;
+        margin-top: 30px!important;
+        margin:-100px 0 0 -100px !important;
+        width:550px !important;
+        height:200px !important;
+
+    }
+
+    .table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
+        padding: 0 !important;
+        padding-left: 5px !important;
+        line-height: 1.42857143;
+        vertical-align: top;
+        border-top: 1px solid #ddd !important;
+    }
+    <style>
+        /* CSS used here will be applied after bootstrap.css */
+
+        .dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus {
+            background-image:none !important;
+        }
+        .dropdown-menu > li > a:hover {
+            background-color:transparent !important;
+        }
+        .dropdown-menu > li > a {
+            padding: 3px 20px !important;
+            cursor: pointer;
+        }
+
+        #demo12 h5{
+            color: #777 !important;
+        }
+        .main-header-outer .dropdown-menu {
+            width:100%;
+            background-color: #fff !important;
+            color: black !important;
+        }
+        .list-outer .dropdown-menu {
+            width: inherit;
+            background-color: #fff !important;
+            color: black !important;
+        }
+        .main-header-outer .dropdown-menu .dropdown-submenu{
+            margin: 4px 0px;
+        }
+        .main-header-outer .dropdown-menu .dropdown-submenu .test .glyphicon{
+            font-size: 10px;
+            top: 0px;
+        }
+        .main-header-outer .parent-dp{
+            min-width: 900px;
+            right: 0;
+            left: inherit;
+            border-radius: 0px;
+            border: 0px;
+            box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.15);
+
+        }
+        .main-header-outer .dropdown button{
+
+            border-radius: 0px;
+        }
+        .dp-input{
+            background: transparent;
+            border: 0px;
+            box-shadow: none;
+        }
+        .main-header-outer .dropdown-menu.device-type-list>li>a:focus, .dropdown-menu.device-type-list>li>a:hover{
+            background-color: transparent;
+            outline: 0;
+
+        }
+        .main-header-outer .dropdown-menu{
+            background: #fff;
+            border:none;
+            box-shadow:none;
+        }
+        .main-header-outer .dp-input input{
+            margin-left: 32px;
+        }
+        .main-header-outer .search-filter-inner .form-control{
+            color: #777;
+            background: transparent;
+            font-weight: 400;
+            font-size: 13px;
+        }
+        .search-input-outer .btn, .parent-dp .btn{
+            font-size: 14px;
+            border-color: #ccc !important;
+            border-left: 0px !important;
+            border-radius: 0px;
+            color: #ddd !important;
+        }
+        .search-input-outer .btn, .parent-dp .btn:focus{
+            outline: 0;
+            box-shadow: none;
+            border: 0px;
+        }
+        .search-input-outer .btn, .parent-dp .btn i{
+            color: #555 !important;
+        }
+        .parent-dp .btn.update-btn{
+            color: #fff !important;
+            border: 0px;
+            border-color: transparent !important;
+            box-shadow: none;
+        }
+        .main-header-outer .input-group-btn .btn, .main-header-outer .input-group-btn .btn:hover, .main-header-outer .input-group-btn .btn:focus{
+            color: black !important;
+            background: transparent !important;
+            border: 1px solid #aaa;
+            outline: 0;
+        }
+        ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+            color: rgba(255, 255, 255, 0.5) !important;
+        }
+        ::-moz-placeholder { /* Firefox 19+ */
+            color: rgba(255, 255, 255, 0.5) !important;
+        }
+        :-ms-input-placeholder { /* IE 10+ */
+            color: rgba(255, 255, 255, 0.5) !important;
+        }
+        :-moz-placeholder { /* Firefox 18- */
+            color: rgba(255, 255, 255, 0.5) !important;
+        }
+        .main-header-outer .caret{
+            margin: 0px 5px;
+        }
+        .main-header-outer .border-outer{
+            border:1px solid #ddd;
+        }
+        .main-header-outer .dropdown-menu>li>a:hover {
+            background-color: black
+        }
+        .main-header-outer .caret{
+            position: initial;
+            top: 0px;
+            right: 0px;
+        }
+        .dp-submenu-position{
+            position: inherit;
+        }
+        .dp-submenu-position li .input-group{
+            margin-left: 24px;
+        }
+        .dp-submenu-position li.dropdown-submenu:nth-child(even) button{
+            font-size: 13px;
+        }
+        .search-filter-outer{
+            float: left;
+        }
+        .main-header-outer input{
+            border-radius:0px;
+            box-shadow: none;
+        }
+        .filter-input-size input{
+            font-size:13px;
+        }
+        .filter-input-size .input-group-btn i{
+            font-size: 13px;
+        }
+        li:nth-child(even) .filter-input-size .input-group-btn i{
+            font-size: 13px;
+            padding-bottom: 0.45em;
+        }
+        .list-right-margin{
+            margin-right: 10px;
+        }
+        .test, .test:hover, .test:focus{
+            color: #777 !important;
+            text-decoration: none !important;
+            background: transparent !important;
+            outline: 0;
+            text-decoration: none !important;
+        }
+        .select_remove_arrow {
+            -webkit-appearance: none !important;
+            -moz-appearance: none !important;
+            text-indent: 1px !important;
+            text-overflow: '';
+            background: transparent !important;
+            border:0px;
+            border-bottom: 1px solid #aaa;
+            -webkit-box-shadow: none !important;
+            box-shadow: none !important;
+        }
+        .hide_input_box{
+            background: transparent !important;
+            border:0px;
+            border-bottom: 1px solid #aaa;
+            /*border: 1px solid #ccc;*/
+            outline:0;
+            -webkit-box-shadow: none !important;
+            box-shadow: none !important;
+            border-radius:none;
+        }
+        .hide_input_box_extended{
+            background: transparent !important;
+            border:0px;
+            border-bottom: 1px solid #aaa;
+            outline:0;
+            /*border: 1px solid #ccc;*/
+            -webkit-box-shadow: none !important;
+            box-shadow: none !important;
+            border-radius:none;
+            /*color:#aaa !important*/
+        }
+        select.input-lg1 {
+            padding: 0 0 !important;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            -o-appearance: none;
+            /* no standardized syntax available, no ie-friendly solution available */
+        }
+        select + i.fa {
+            color: #949394;
+            float: right;
+            margin-top: -22px;
+            margin-right: 5px;
+            pointer-events: none;
+            background-color: #fff;
+            padding-right: 5px;
+        }
+        .pagination > li:last-child > a, .pagination > li:last-child > span {
+            border-top-right-radius: 0px !important;
+            border-bottom-right-radius: 0px !important;
+        }
+        .pagination > li:first-child > a, .pagination > li:first-child > span {
+
+            border-top-left-radius: 0px !important;
+            border-bottom-left-radius: 0px !important;
+        }
+        .table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td{
+            vertical-align: middle;
+            padding: 6px 8px 4px;
+        }
+        .pagination > .disabled > span, .pagination > .disabled > span:hover, .pagination > .disabled > span:focus, .pagination > .disabled > a, .pagination > .disabled > a:hover, .pagination > .disabled > a:focus{
+            color: #337ab7;
+        }
+        .component-outer .fa{
+            font-size: 25px;
+        }
+        .component-outer .fa.fa-trash{
+            position: relative;
+            top: 4px;
+        }
+        .component-outer .fa.fa-plus{
+            font-size: 18px;
+            top: 0px;
+        }
+        .component-outer .fa.fa-search{
+            font-size: 12px;
+            top: 0px;
+        }
+        .arrow_box {
+            position: relative;
+            background: #fff;
+            border: 1px solid #ddd;
+        }
+        .arrow_box:after, .arrow_box:before {
+            bottom: 100%;
+            left: 96%;
+            border: solid transparent;
+            content: " ";
+            height: 0;
+            width: 0;
+            position: absolute;
+            pointer-events: none;
+        }
+
+        .arrow_box:after {
+            border-color: rgba(255, 255, 255, 0);
+            border-bottom-color: #fff;
+            border-width: 11px;
+            margin-left: -14px;
+        }
+        .arrow_box:before {
+            border-color: rgba(221, 221, 221, 0);
+            border-bottom-color: #ddd;
+            border-width: 12px;
+            margin-left: -16px;
+        }
+        ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+            color: #aaa !important;
+        }
+        ::-moz-placeholder { /* Firefox 19+ */
+            color:  #aaa !important;
+        }
+        :-ms-input-placeholder { /* IE 10+ */
+            color:  #aaa !important;
+        }
+        :-moz-placeholder { /* Firefox 18- */
+            color:  #aaa !important;
+        }
+
+        .addScroll{
+            height: 570px;
+            overflow: auto;
+        }
+        .select_typehead{
+            border-bottom: 0px;
+            border-top: 0px;
+            border-right: 0px;
+        }
+        .input_right_border{
+            border-right: 0px;
+        }#myForms .input-group .form-control {
+             width:136% !important;
+         }
+        .mandat:after{
+            content: "*";
+            color: #5392ff;
+            font-size: 14px;
+        }
+        .mandat-text{
+            color: #5392ff;
+        }
+    </style>
+    <script>
+        $('.my-dropdown').dropdown();
+        $('.my-dropdown').tooltip();
+    </script>
+    <style>
+        #sticky.stick {
+            margin-top: 0 !important;
+            position: fixed;
+            top: 0;
+            z-index: 10000;
+            width: 100%;
+            background: #FFF;
+            border-bottom: 1px solid #ccc;
+        }
+        ul>li::before, ol>li::before {
+            color: #959595;
+            content: ' ' !important;
+            display: inline-block;
+            font-family: Arial, sans-serif;
+            font-size: 1.5rem;
+            margin-left: -1.3rem;
+            margin-left: -20px\9;
+            position: absolute;
+        }
+        ul>li, ol>li {
+            padding-left: 0px !important;
+        }
+    </style>
+</style>

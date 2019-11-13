@@ -1,0 +1,45 @@
+<div class="modal-body" ng-show="ngShowModalparams" style="padding: 0 !important;">
+    <fieldset>
+        <div class="container-fluid">
+            <div class="row header" style="background-color: #25467a;height: 39px">
+                <p class="modal-title text-center" style="color: #fff;font-size: 20px;">
+                    Enter Fields
+                    <!--( Escape to cancel )-->
+                </p>
+                <i class="fa fa-times" aria-hidden="true" style="font-size: 20px; margin-top: -6%;margin-right: 3%;color: #fff !important;float: right;" ng-click="dismissModalPopup()"></i>
+
+            </div>
+            <div class="row" style="margin: 2%">
+                Protocol : <input type="text" ng-model="protocolname" style="margin-left: 23%" placeholder="Enter Protocol">
+                </div>
+            <div class="row" style="margin: 2%">
+                Communication Type : <input type="text" ng-model="communicationType" placeholder="Enter Communication Type">
+            </div>
+
+        </div>
+    </fieldset>
+    <div class="modal-footer">
+        <button class="exportbtn"  data-ng-disabled="!protocolname || !communicationType" ng-click="AssociatesubmitParams(protocolname,communicationType)" >Submit </button>
+    </div>
+</div>
+
+
+<style>
+    .exportbtn{
+        font-size:16px;
+        margin-left: 30% ;
+        width: 100px;
+        color: #FFF;
+        background-color: #5392ff;
+    }
+
+    .exportbtn[disabled] {
+        background-color: 	#ADD8E6
+    }
+    .modal-lg{
+        width: 1100px !important;
+        top:11%
+
+    }
+
+</style>

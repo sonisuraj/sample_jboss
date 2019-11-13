@@ -1,0 +1,196 @@
+<div class="container" style="background-color: #ffffff;border-bottom: 1px solid #cccccc;" ng-controller="landingController2">
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1" style="margin-top: 2%;">
+            <div class="col-md-7">
+                <a href="javascript:void(0);" ng-click="navigateHome()" > <img alt="" src="img/homeMenu.png"  width="33" height="26" style="margin-bottom:12px"/></a>
+                <a  class="dropdown dropdown-toggle" ng-click="openimporttab()" data-toggle="dropdown" style ="color: #949394; font: Helvetica Normal regular; font-size: 16px ;margin-right: 5%;cursor:pointer;">Import<span class="glyphicon glyphicon-chevron-down" aria-hidden="true" style="position:relative; top:3px;left:10px"/></a>
+                <!--Import links-->
+                <ul ng-show="showimporttab" class="dropdown-menu border-outer parent-dp" style="padding: 16px 16px ; width: 100%">
+                    <div class="search-input-outer row" style="padding: 10px 0px 0px; background-color: #fff">
+                        <div class="vertical-menu col-xs-6">
+                            <a>
+                                Services
+                                <!--<br/>
+                                Service Aliasses-->
+                            </a>
+                            <a>
+                                Components
+                                <!--<br/>
+                                Components to Components
+                                <br/>
+                                Component Service
+                                <br/>
+                                Component to Logical Device-->
+                            </a>
+                            <a class="active" ng-click="import_LD()" style="cursor:pointer">
+                                <input type="file" ngf-select ng-model="importfile" id="importfile" on-read-file="importFileChange($fileContent)" class="ng-hide"/>
+                                <b style="color: #5392ff">Logical Devices</b>
+                                <!--<br/>
+                                Logical Device to Physical Device-->
+                            </a>
+                            <a class="active">
+                                Physical Devices
+                                <!--<br/>
+                                Physical Device to Physical Device-->
+                            </a>
+                            <a class="active">
+                                Logical Networks
+                            </a>
+                        </div>
+                        <div class="vertical-menu col-xs-6">
+                            <a class="active" >
+                                Clusters
+                                <!--<br>
+                                Logical Device to Cluster
+                                <br/>
+                                Cluster Resources-->
+                                <a >
+                                    Documents
+                                    <!--<br/>
+                                    Documents Imports-->
+                                </a>
+                                <a >
+                                    File Systems
+
+                                </a>
+                                <a >
+                                    Device Interface
+
+                                </a>
+
+                                <a>
+                                    Stakeholders
+                                    <!--  <br/>
+                                      Stakeholder to Service
+                                      <br/>
+                                      Stakeholder to Component
+                                      <br/>
+                                      Stakeholder to Logical Device
+                                      <br/>
+                                      Stakeholder to Physical Device-->
+                                </a>
+                            </a>
+                        </div>
+                    </div>
+
+                </ul>
+                <!--Import Links-->
+
+                <a  class="dropdown dropdown-toggle" ng-click="openexportstab()" data-toggle="dropdown"style ="color: #949394; font: Helvetica Normal regular; font-size: 16px ;margin-right: 5%;cursor:pointer;">Export<span class="glyphicon glyphicon-chevron-down" aria-hidden="true" style="position:relative; top:3px;left:10px"></a>
+                <ul ng-show="showexptab" class="dropdown-menu border-outer parent-dp" style="padding: 16px 16px ; width: 100%">
+                    <div class="search-input-outer row" style="padding: 10px 0px 0px; background-color: #fff">
+                        <div class="vertical-menu col-xs-6">
+                            <a  style="border: none"  class="dropdown-toggle"  data-toggle="dropdown" >
+                                Logical Devices
+                                <span> <button style="border: none" ng-click="openlogDevice('logicaldevices','CSV')">CSV </button></span>
+                                <span> <button style="border: none" ng-click="openlogDevicexls('logicaldevices','XLS')">Excel</button></span>
+                            </a>
+                            <a>
+                                Components
+                                <span> <button ng-click="exportLDCsv('components')" style="border: none;margin-left: 5%">CSV </button></span>
+                                <span> <button ng-click="exportLDXls('components')" style="border: none">Excel</button></span>
+                            </a>
+                            <a>
+                                Stakeholders
+                                <span> <button ng-click="exportLDCsv('stakeholders')" style="border: none;margin-left: 5%">CSV </button></span>
+                                <span> <button ng-click="exportLDXls('stakeholders')" style="border: none">Excel</button></span>
+                            </a>
+                        </div>
+                        <div class="vertical-menu col-xs-6">
+                            <a class="active">
+                                Clusters
+
+                                <span> <button ng-click="exportLDCsv('clusters')" style="border: none;margin-left: 5%">CSV </button></span>
+                                <span> <button ng-click="exportLDXls('clusters')" style="border: none">Excel</button></span>
+                            </a>
+                            <a>
+                                Documents
+                                <span> <button ng-click="exportLDCsv('documents')" style="border: none">CSV </button></span>
+                                <span> <button ng-click="exportLDXls('documents')" style="border: none">Excel</button></span>
+                            </a>
+                            <a>
+                                Services
+                                <span> <button ng-click="exportLDCsv('services')" style="border: none;margin-left: 5%">CSV </button></span>
+                                <span> <button ng-click="exportLDXls('services')" style="border: none">Excel</button></span>
+                            </a>
+                        </div>
+                    </div>
+
+                </ul>
+                <a  style ="color: #949394; font: Helvetica Normal regular; font-size: 16px;margin-right: 5%;cursor:pointer;">Reporting<span class="glyphicon glyphicon-chevron-down" aria-hidden="true" style="position:relative; top:3px;left:10px"></span></a>
+                <a  class="dropdown dropdown-toggle" ng-click="opencustatt()" id="myTab" data-toggle="dropdown" style =" color: #949394; font: Helvetica Normal regular; font-size: 16px;cursor:pointer;">Administration<span class="glyphicon glyphicon-chevron-down" aria-hidden="true" style="position:relative; top:3px;left:10px"></span>
+                    <ul ng-show="showcustatt" class="dropdown-menu" role="menu" style="margin-left:58%;">
+                        <li>
+                            <a for="dd" style ="color: #949394; font: Helvetica Normal regular; font-size: 16px;margin-right: 5%;cursor:pointer;">Settings<span class="caret" style="top:51%"></span></a>
+                            <input type="checkbox" id="dd" hidden>
+                            <ul class="sub-menu dropdown-menu">
+                                <li>
+                                    <a href="javascript:void(0);" ng-click="navigateCustAtt()" style ="color: #949394; font: Helvetica Normal regular; font-size: 16px;margin-right: 5%;cursor:pointer;">Data Model</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </a>            </div>
+            <div class="col-md-5" style="text-align: right">
+                <!--Start::Defect21651-->
+                <a  href="javascript:void(0);" ng-click="navigateimport()"  style="font: Helvetica Normal regular; font-size: 14px;background-color: #5392ff;padding:7px 10px 7px 10px; margin-right: 3%;   border-radius: 0px !important; color:white;border: none">JOB LISTING</a>
+                <!--End::Defect21651-->
+                <button type="button" class="btn" style="font: Helvetica Normal regular; font-size: 14px;background-color: #5392ff; padding:5px 10px 5px 10px;   border-radius: 0px !important; color:white;border: none">PLANNING&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-down" aria-hidden="true" ></button>
+            </div>
+
+            <!-- <div class="col-md-6" style="background-color: #5392ff; color:white;border: solid 1px font-size: 14px;">
+                     Job Listing <b>&or;</b>
+             </div>
+             <div class="col-md-1"  style="background-color: #5392ff; color:white; font-size: 14px; margin-left: 2%">
+
+                     Planning <b>&or;</b>
+
+             </div>-->
+
+
+        </div>
+    </div>
+</div>
+
+<link href="css/Common.css" rel="stylesheet" />
+<!--
+<link href="css/style.css" rel="stylesheet" />-->
+<style>
+
+    .dropdown-menu .sub-menu {
+        left: 100%;
+        position: absolute;
+        top: 0;
+        visibility: hidden;
+        margin-top: -1px;
+    }
+    #dd:checked ~ .sub-menu .dropdown-menu{
+        display:block;
+    }
+    .dropdown-menu li:hover > .sub-menu {
+        visibility: visible;
+        display: block;
+    }
+    .vertical-menu {
+        /*width: 200px;*/ /* Set a width if you like */
+    }
+
+    .vertical-menu a {
+        /*background-color: #5392ff;*/ /* Grey background color */
+        color: black; /* Black text color */
+        display: block; /* Make the links appear below each other */
+        padding: 12px; /* Add some padding */
+        text-decoration: none; /* Remove underline from links */
+    }
+
+    .vertical-menu a:hover {
+        background-color: #ccc; /* Dark grey background on mouse-over */
+    }
+
+    .vertical-menu a.active {
+        /* background-color: #4CAF50;*/ /* Add a green color to the "active/current" link */
+        color: black;
+    }
+</style>
+</div>
+</div>

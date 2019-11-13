@@ -1,0 +1,360 @@
+﻿/*--------------------------------------------------Start Parent page style----------------------------------------------*/
+/*Css style for Menu slider, Header and container radio button*/
+
+#container {
+    padding-top: 44px;
+}
+
+.body {
+    max-width: 100% !important;
+    overflow-x: hidden !important;
+    overflow-y: scroll;
+}
+#panel-02 {
+    width: 300px;
+    min-height: 100%;
+    border-width: 0;
+    position: absolute;
+    top: 0;
+    background-color: white;
+    left: -300px;
+    margin-left: -15px;
+    z-index: 199999;
+    overflow-x: scroll;
+    display: block;
+}
+
+#header {
+    font-family: 'Arial Regular', 'Arial';
+    font-weight: 700;
+    font-style: normal;
+    font-size: 30px;
+    color: #FFFFFF;
+    line-height: 0;
+    background-color: #999999;
+    padding: 10px;
+}
+
+    #header a, #header a:hover {
+        color: #FFFFFF;
+        text-decoration: none;
+    }
+
+    #header .title {
+        font-family: 'Arial Regular', 'Arial';
+        font-weight: 400;
+        font-style: normal;
+        line-height: normal;
+        height: 25px;
+        font-size: 21px;
+    }
+
+
+#menu-header {
+    height: 210px;
+    background-color: #1299f6;
+    display: block;
+}
+
+    #menu-header img {
+        margin: 24px;
+        height: 96px;
+    }
+
+    #menu-header span {
+        font-family: 'Roboto';
+        font-weight: 400;
+        font-style: normal;
+        font-size: 20px;
+        color: #FFFFFF;
+        line-height: 40px;
+        word-wrap: break-word;
+        margin-top: 10px;
+        margin-left: 24px;
+    }
+
+#menu-body {
+    font-family: 'Roboto';
+    font-weight: 400;
+    font-style: normal;
+    font-size: 23px;
+    color: #333333;
+    padding: 21px 0 0 24px;
+}
+
+    #menu-body div {
+        display: block;
+        height: 70px;
+        position: relative;
+    }
+
+        #menu-body div span {
+            position: absolute;
+            top: 21px;
+        }
+
+    #menu-body .horizontal_line {
+        border-bottom: solid 1px #e4e4e4;
+        overflow: hidden;
+        height: 0;
+    }
+
+#toggle-button {
+    top: 56px;
+    width: 90px;
+    height: 32px;
+    font-family: 'Arial Regular', 'Arial';
+    font-weight: 400;
+    font-style: normal;
+    font-size: 14px;
+    color: #34475E;
+    line-height: 16px;
+}
+
+.toggle-button-blue {
+    display: inline-block;
+    margin: 12px 0 10px 0px;
+}
+
+.radio-button-blue {
+    width: 90px;
+    height: 32px;
+    font-family: 'Arial Regular', 'Arial';
+    font-weight: 400;
+    font-style: normal;
+    font-size: 14px;
+    color: #34475E;
+    line-height: 16px;
+    background-image: url('../images/schedule/schedulebtn_u0.png');
+    background-repeat: no-repeat;
+    text-align: center;
+    vertical-align: middle;
+}
+
+    .radio-button-blue span {
+        margin-top: 8px;
+        display: inline-block;
+    }
+
+    .radio-button-blue:focus, .radio-button-blue-selected {
+        background-image: url('../images/schedule/schedulebtn_u0_selected.png');
+        background-repeat: no-repeat;
+        color: #ffffff;
+    }
+
+.clear-fix {
+    clear: both;
+    display: none;
+}
+
+/*--------------------------------------------------End Parent page style----------------------------------------------*/
+
+/*--------------------------------------------------Start Schedule list page style----------------------------------------------*/
+#container-top {
+    margin-bottom: -31px !important;
+}
+
+#schedule-section {
+    font-family: 'Arial Regular', 'Arial'   !important ;
+    font-weight: 400 !important;
+    font-style: normal !important;
+    font-size: 16px !important;
+    color: #333333 !important;
+    text-align: left !important;
+    line-height: normal !important;
+    margin-top: 10px;
+}
+
+    #schedule-section:first-child {
+        margin-top: 0;
+    }
+
+#schedule-date {
+    background-image: url('../images/schedule/u19.png');
+    background-repeat: repeat;
+    padding: 7px 8px;
+    margin-top: 0px;
+}
+
+    #schedule-date > p > span {
+        margin-left: 10px;
+    }
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+    ul li {
+        margin-top: 10px;
+    }
+
+        ul li > div:first-child {
+            display: inline-block;
+        }
+
+li a {
+    text-decoration: none;
+    color: #333333;
+}
+
+.vertical-line {
+    border: solid 1px #999999;
+    margin: 0 4px;
+    display: inline-block;
+    min-height: 38px;
+}
+
+.horizontal_line {
+    margin-top: 6px;
+    display: block;
+    border-top: solid 0px #BCBCBC;
+}
+
+
+.patient-info {
+    font-family: 'Helvetica'!important;
+    font-size: 13px !important;
+    color: #999999 !important;
+    margin-top: 5px !important;
+    box-sizing: border-box !important;
+    color: rgb(153, 153, 153) !important;
+    cursor: auto !important;
+    display: inline !important;
+    font-family: Helvetica !important;
+    font-size: 13px !important;
+    font-style: normal !important;
+    font-weight: normal !important;
+    height: auto !important;
+    line-height: normal !important;
+    list-style-type: none !important;
+    text-align: left !important ;
+    width: auto !important;
+}
+
+.display-left {
+    margin-left: 15px;
+    float: left;
+}
+
+.display-right {
+    float: right;
+    margin-left: 35px;
+}
+
+.padding_right_10 {
+    padding-right: 10px;
+}
+
+.left-fix {
+    font-family: 'Helvetica';
+    font-size: 13px;
+    margin-top: 5px;
+}
+
+.left_date_first {
+    box-sizing: border-box !important;
+    color: rgb(0, 0, 0) !important;
+    cursor: auto !important;
+    display: inline !important;
+    font-family: Helvetica !important;
+    font-size: 13px !important;
+    font-style: normal !important;
+    font-weight: normal !important;
+    height: auto !important;
+    line-height: normal !important ;
+    list-style-type: none !important;
+    margin-left: 10px !important;
+    text-align: left !important;
+    margin-left: 10px !important;
+    color: #000000 !important;
+}
+
+.left_date_second {
+    box-sizing: border-box !important;
+    color: rgb(188, 188, 188) !important;
+    cursor: auto !important;
+    display: inline !important;
+    font-family: Helvetica !important;
+    font-size: 13px !important;
+    font-style: normal !important;
+    font-weight: normal !important;
+    height: auto !important;
+    line-height: normal !important ;
+    list-style-type: none !important ;
+    margin-left: 10px !important ;
+    text-align: left;
+    width: auto !important;
+    color: #BCBCBC !important;
+    margin-left: 10px;
+    width: auto !important;
+}
+.otv{
+    box-sizing: border-box !important;
+    color: rgb(51, 51, 51) !important;
+    cursor: auto !important;
+    display: inline !important;
+    font-family: 'Arial Regular', Arial !important;
+    font-size: 16px !important;
+    font-style: normal !important;
+    font-weight: normal !important ;
+    height: auto !important;
+    line-height: normal !important;
+    list-style-type: none !important;
+    text-align: left !important;
+    width: auto !important;
+}
+
+.patient-info-slider {
+    float: right;
+    margin-right: -5px;
+    margin-top: -55px;
+    font-size: 12px;
+    height: 55px;
+    width: 80px;
+    background-color: #BCBCBC;
+    visibility: hidden;
+}
+.appointment_heading {
+    text-shadow:none;
+    background-repeat: repeat;
+    font-style: normal;
+    font-size: 20px;
+    color: #34475E;
+}
+.container {
+    padding-right: 0px; 
+    padding-left: 0px; 
+    margin-right: auto;
+    margin-left: auto;
+}
+.row{
+    margin-right: auto;
+    margin-left: auto;
+}
+#container-middle{
+    padding-top: 0px;
+    padding-right: 0px;;
+}
+.date-fix {
+    width: 20% !important;
+}
+#slidingElements {
+    z-index: 10;
+}
+.ui-btn-active {
+     color: red !important; 
+     background: none !important; 
+     background-color: none !important;  
+
+}
+.ui-collapsible h2 .ui-btn-inner
+{
+    text-align:center;
+}
+.ui-collapsible-content {
+   padding: 0px 0px !important; 
+
+}
+/*--------------------------------------------------End  Schedule list page style----------------------------------------------*/
