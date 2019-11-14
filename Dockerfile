@@ -1,4 +1,5 @@
-FROM jboss/wildfly
-ADD webapp/creditprocessor.war /opt/jboss/wildfly/standalone/deployments/
+FROM tomcat:8.0
+ADD webapp/target/creditprocessor.war /usr/local/tomcat/webapps/
 USER root
-RUN chmod 777 /opt/jboss/wildfly/standalone/deployments/creditprocessor.war
+RUN chmod 777 /usr/local/tomcat/webapps/creditprocessor.war
+
